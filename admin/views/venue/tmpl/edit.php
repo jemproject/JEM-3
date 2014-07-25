@@ -60,8 +60,8 @@ $slidesOptions = array(
 	}
 
 	function test(){			
-			var form = document.getElementById('venue-form');
-			var map = $('jform_map');
+			var form 		= document.getElementById('venue-form');
+			var map 		= $('jform_map');
 			var streetcheck = $(form.jform_street).hasClass('required');
 
 			if(map && map.checked == true) {
@@ -77,12 +77,10 @@ $slidesOptions = array(
 						removerequired();
 					}
 				}
-				$('mapdiv').show();
 			}
 
 			if(map && map.checked == false) {
 				removerequired();
-				$('mapdiv').hide();
 			}
 	}
 
@@ -104,79 +102,87 @@ $slidesOptions = array(
 		$(form.jform_country).removeClass('required');
 	}
 
-
 	jQuery(function() {
-		jQuery("#geocomplete").geocomplete({
-			map: ".map_canvas",
-			<?php echo $location; ?>
-			details: "form ",
-			detailsAttribute: "geo-data",
-			types: ['establishment', 'geocode'],
-			mapOptions: {
-			      zoom: 16,
-			      <?php echo 'mapTypeId:'.$mapType; ?>
-			    },
-			markerOptions: {
-				draggable: true
-			}
-			
-		});
 
-		jQuery("#geocomplete").bind('geocode:result', function(){
-				var street = jQuery("#tmp_form_street").val();
-				var route  = jQuery("#tmp_form_route").val();
+		var chkGeocode = function() {
+		var chk = jQuery( "#geocode:checked" ).length;
+			if (chk) {
+
+				jQuery("#mapdiv").show();
 				
-				if (route) {
-					/* something to add */
-				} else {
-					jQuery("#tmp_form_street").val('');
+				jQuery("#geocomplete").geocomplete({
+					map: ".map_canvas",
+					<?php echo $location; ?>
+					details: "form ",
+					detailsAttribute: "geo-data",
+					types: ['establishment', 'geocode'],
+					mapOptions: {
+					      zoom: 16,
+					      <?php echo 'mapTypeId:'.$mapType; ?>
+					    },
+					markerOptions: {
+						draggable: true
+					}
+					
+				});
+
+				jQuery("#geocomplete").bind('geocode:result', function(){
+						var street = jQuery("#tmp_form_street").val();
+						var route  = jQuery("#tmp_form_route").val();
+						
+						if (route) {
+							/* something to add */
+						} else {
+							jQuery("#tmp_form_street").val('');
+						}
+				});
+
+				jQuery("#geocomplete").bind("geocode:dragged", function(event, latLng){
+					jQuery("#tmp_form_latitude").val(latLng.lat());
+					jQuery("#tmp_form_longitude").val(latLng.lng());
+				});
+
+				jQuery("#find-left").click(function() {
+					jQuery("#geocomplete").val(jQuery("#jform_street").val() + ", " + jQuery("#jform_postalCode").val() + " " + jQuery("#jform_city").val());
+					jQuery("#geocomplete").trigger("geocode");
+				});
+
+				jQuery("#cp-latlong").click(function() {
+					document.getElementById("jform_latitude").value = document.getElementById("tmp_form_latitude").value;
+					document.getElementById("jform_longitude").value = document.getElementById("tmp_form_longitude").value;
+					test();
+				});
+
+				jQuery("#cp-address").click(function() {
+					document.getElementById("jform_street").value = document.getElementById("tmp_form_street").value;
+					document.getElementById("jform_postalCode").value = document.getElementById("tmp_form_postalCode").value;
+					document.getElementById("jform_city").value = document.getElementById("tmp_form_city").value;
+					document.getElementById("jform_state").value = document.getElementById("tmp_form_state").value;	
+					document.getElementById("jform_country").value = document.getElementById("tmp_form_country").value;
+				});
+
+				jQuery("#cp-venue").click(function() {
+					var venue = document.getElementById("tmp_form_venue").value;
+					if (venue) {
+						document.getElementById("jform_venue").value = venue;
+					}
+				});
+
+				jQuery("#cp-all").click(function() {
+					jQuery("#cp-address").click();
+					jQuery("#cp-latlong").click();
+					jQuery("#cp-venue").click();
+				});	
+			} else {
+				jQuery("#mapdiv").hide();
+
 				}
-		});
+		};
+		chkGeocode();
 
-		jQuery("#geocomplete").bind("geocode:dragged", function(event, latLng){
-			jQuery("#tmp_form_latitude").val(latLng.lat());
-			jQuery("#tmp_form_longitude").val(latLng.lng());
-		});
 
-		/* option to attach a reset function to the reset-link
-			jQuery("#reset").click(function(){
-			jQuery("#geocomplete").geocomplete("resetMarker");
-			jQuery("#reset").hide();
-			return false;
-		});
-		*/
+		jQuery("#geocode" ).on("click", chkGeocode );
 
-		jQuery("#find-left").click(function() {
-			jQuery("#geocomplete").val(jQuery("#jform_street").val() + ", " + jQuery("#jform_postalCode").val() + " " + jQuery("#jform_city").val());
-			jQuery("#geocomplete").trigger("geocode");
-		});
-
-		jQuery("#cp-latlong").click(function() {
-			document.getElementById("jform_latitude").value = document.getElementById("tmp_form_latitude").value;
-			document.getElementById("jform_longitude").value = document.getElementById("tmp_form_longitude").value;
-			test();
-		});
-
-		jQuery("#cp-address").click(function() {
-			document.getElementById("jform_street").value = document.getElementById("tmp_form_street").value;
-			document.getElementById("jform_postalCode").value = document.getElementById("tmp_form_postalCode").value;
-			document.getElementById("jform_city").value = document.getElementById("tmp_form_city").value;
-			document.getElementById("jform_state").value = document.getElementById("tmp_form_state").value;	
-			document.getElementById("jform_country").value = document.getElementById("tmp_form_country").value;
-		});
-
-		jQuery("#cp-venue").click(function() {
-			var venue = document.getElementById("tmp_form_venue").value;
-			if (venue) {
-				document.getElementById("jform_venue").value = venue;
-			}
-		});
-
-		jQuery("#cp-all").click(function() {
-			jQuery("#cp-address").click();
-			jQuery("#cp-latlong").click();
-			jQuery("#cp-venue").click();
-		});	
 
 		jQuery('#jform_map').on('keyup keypress blur change', function() {
 		    test();
@@ -189,6 +195,7 @@ $slidesOptions = array(
 		jQuery('#jform_longitude').on('keyup keypress blur change', function() {
 		    test();
 		});
+		
 	});
 </script>
 
@@ -336,14 +343,44 @@ $slidesOptions = array(
 <!-- Geodata -->
 	<?php echo JHtml::_('bootstrap.addSlide', 'venue-sliders-'.$this->item->id, JText::_('COM_JEM_FIELDSET_GEODATA'), 'venue-geodata'); ?>
 	
+	
 		<fieldset class="form-vertical" id="geodata">
 			<div class="control-group">
 				<div class="control-label"><?php echo $this->form->getLabel('map'); ?></div>
 				<div class="controls"><?php echo $this->form->getInput('map'); ?></div>
 			</div>
+			<div class="control-group">
+				<div class="control-label"><?php echo $this->form->getLabel('geocode'); ?></div>
+				<div class="controls"> <input type="checkbox" id="geocode" /></div>
+			</div>
 			
 			<div class="clr"></div>
 			<div id="mapdiv">
+			
+			<?php 
+			# Google-map code will be loaded when the checkbox for geocoding has been ticked
+			$language	= JFactory::getLanguage();
+			$document	= JFactory::getDocument();
+			
+			$api		= trim($this->settings2->get('global_googleapi'));
+			$clientid	= trim($this->settings2->get('global_googleclientid'));
+			$language	= strtolower($language->getTag());
+			
+			# do we have a client-ID?
+			if ($clientid) {
+				$document->addScript('http://maps.googleapis.com/maps/api/js?client='.$clientid.'&sensor=false&libraries=places&language='.$language);
+			} else {
+				# do we have an api-key?
+				if ($api) {
+					$document->addScript('https://maps.googleapis.com/maps/api/js?key='.$api.'&sensor=false&libraries=places&language='.$language);
+				} else {
+					$document->addScript('https://maps.googleapis.com/maps/api/js?sensor=false&libraries=places&language='.$language);
+				}
+			}
+			
+			JHtml::_('stylesheet', 'com_jem/geostyle.css', array(), true);
+			JHtml::_('script', 'com_jem/jquery.geocomplete.js', false, true);	
+			?>
 				<input id="geocomplete" type="text" size="55" placeholder="<?php echo JText::_( 'COM_JEM_VENUE_ADDRPLACEHOLDER' ); ?>" value="" />
 				<input id="find-left" class="btn" type="button" value="<?php echo JText::_('COM_JEM_VENUE_ADDR_FINDVENUEDATA');?>" />
 				<div class="clr"></div>

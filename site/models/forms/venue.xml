@@ -76,10 +76,14 @@
 			description="COM_JEM_STATE"
 		/>
 		<field name="map" type="checkbox"
-			class="inputbox"
-			size="40"
 			label="COM_JEM_ENABLE_MAP"
 			description="COM_JEM_ENABLE_MAP"
+			value="1"
+			default="0"
+		/>
+		<field name="geocode" type="checkbox"
+			label="COM_JEM_ENABLE_GEOCODE"
+			description="COM_JEM_ENABLE_GEOCODE"
 			value="1"
 			default="0"
 		/>

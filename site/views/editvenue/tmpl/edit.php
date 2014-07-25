@@ -72,12 +72,10 @@ $mapType = $this->mapType;
 					removerequired();
 				}
 			}
-			$('mapdiv').show();
 		}
 
 		if(map && map.checked == false) {
 			removerequired();
-			$('mapdiv').hide();
 		}
 	}
 
@@ -100,6 +98,12 @@ $mapType = $this->mapType;
 	}
 	
 	jQuery(function(){
+
+		var chkGeocode = function() {
+		var chk = jQuery( "#geocode:checked" ).length;
+		if (chk) {
+			jQuery("#mapdiv").show();
+		
 		jQuery("#geocomplete").geocomplete({
 			map: ".map_canvas",
 			<?php echo $location; ?>
@@ -130,14 +134,6 @@ $mapType = $this->mapType;
 			jQuery("#tmp_form_latitude").val(latLng.lat());
 			jQuery("#tmp_form_longitude").val(latLng.lng());
 		});
-
-		/* option to attach a reset function to the reset-link
-			jQuery("#reset").click(function(){
-			jQuery("#geocomplete").geocomplete("resetMarker");
-			jQuery("#reset").hide();
-			return false;
-		});
-		*/
 
 		jQuery("#find-left").click(function() {
 			jQuery("#geocomplete").val(jQuery("#jform_street").val() + ", " + jQuery("#jform_postalCode").val() + " " + jQuery("#jform_city").val());
@@ -170,6 +166,16 @@ $mapType = $this->mapType;
 			jQuery("#cp-latlong").click();
 			jQuery("#cp-venue").click();
 		});	
+
+		} else {
+			jQuery("#mapdiv").hide();
+
+			}
+	};
+	chkGeocode();
+
+	jQuery("#geocode" ).on("click", chkGeocode );
+
 
 		jQuery('#jform_map').on('keyup keypress blur change', function() {
 		    test();
@@ -304,8 +310,37 @@ $mapType = $this->mapType;
 				<div class="controls"><?php echo $this->form->getInput('map'); ?></div>
 			</div>
 			
+			<div class="control-group">
+				<div class="control-label"><?php echo $this->form->getLabel('geocode'); ?></div>
+				<div class="controls"> <input type="checkbox" id="geocode" /></div>
+			</div>
+			
 			<div class="clr"></div>
 			<div id="mapdiv">
+			<?php 
+			# Google-map code will be loaded when the checkbox for geocoding has been ticked
+			$language	= JFactory::getLanguage();
+			$document	= JFactory::getDocument();
+			
+			$api		= trim($this->settings2->get('global_googleapi'));
+			$clientid	= trim($this->settings2->get('global_googleclientid'));
+			$language	= strtolower($language->getTag());
+			
+			# do we have a client-ID?
+			if ($clientid) {
+				$document->addScript('http://maps.googleapis.com/maps/api/js?client='.$clientid.'&sensor=false&libraries=places&language='.$language);
+			} else {
+				# do we have an api-key?
+				if ($api) {
+					$document->addScript('https://maps.googleapis.com/maps/api/js?key='.$api.'&sensor=false&libraries=places&language='.$language);
+				} else {
+					$document->addScript('https://maps.googleapis.com/maps/api/js?sensor=false&libraries=places&language='.$language);
+				}
+			}
+			
+			JHtml::_('stylesheet', 'com_jem/geostyle.css', array(), true);
+			JHtml::_('script', 'com_jem/jquery.geocomplete.js', false, true);	
+			?>
 				<input id="geocomplete" type="text" size="55" placeholder="<?php echo JText::_('COM_JEM_VENUE_ADDRPLACEHOLDER'); ?>" value="" />
 				<input id="find-left" class="btn" type="button" value="<?php echo JText::_('COM_JEM_VENUE_ADDR_FINDVENUEDATA');?>" />
 				<div class="clr"></div>

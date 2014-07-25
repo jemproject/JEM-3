@@ -31,43 +31,27 @@ class JEMViewVenue extends JViewLegacy {
 			return false;
 		}
 
-		JHtml::_('behavior.framework');
-		
-
-		//initialise variables
-		$document	= JFactory::getDocument();
+		// initialise variables
+		$document		= JFactory::getDocument();
 		$this->settings	= JEMAdmin::config();
-		$task		= JRequest::getVar('task');
-		$this->task 		= $task;
+		$this->settings2	= JemHelper::globalattribs();
+		$task			= JRequest::getVar('task');
+		$this->task 	= $task;
 
-		// Load css
+		# load css
 		JHtml::_('stylesheet', 'com_jem/backend.css', array(), true);
-		JHtml::_('stylesheet', 'com_jem/geostyle.css', array(), true);
-
-		// Load Scripts
+		
+		# load js
+		JHtml::_('behavior.framework'); //mootools
 		JHtml::_('script', 'com_jem/attachments.js', false, true);
-		//$document->addScript('http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places');
-
-		$language = JFactory::getLanguage();
-		$language = $language->getTag();
-		$language = substr($language, 0,2);
+		$document->addScript('http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js');		
 		
-		$document->addScript('http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places&language='.$language);
-		
-		// Noconflict
-		$document->addCustomTag('<script type="text/javascript">jQuery.noConflict();</script>');
-
-		// JQuery scripts
-		$document->addScript('http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js');
-		JHtml::_('script', 'com_jem/jquery.geocomplete.js', false, true);
-
 		$access2 = JEMHelper::getAccesslevelOptions();
 		$this->access		= $access2;
 		
 		# retrieve mapType setting
 		$settings 		= JemHelper::globalattribs();
-		$mapType = $settings->get('mapType','0');
-		
+		$mapType		= $settings->get('mapType','0');
 		
 		switch($mapType) {
 			case '0':

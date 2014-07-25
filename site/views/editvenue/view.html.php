@@ -35,15 +35,16 @@ class JemViewEditvenue extends JViewLegacy
 		$pathway     = $app->getPathway();
 		$url         = JURI::root();
 		
-		$language = JFactory::getLanguage();
-		$language = $language->getTag();
-		$language = substr($language, 0,2);
+		$language 	= JFactory::getLanguage();
+		$language 	= $language->getTag();
+		$language 	= substr($language, 0,2);
 		
 
 		// Get model data.
-		$this->state 	= $this->get('State');
-		$this->item 	= $this->get('Item');
-		$this->params = $this->state->get('params');
+		$this->state 		= $this->get('State');
+		$this->item 		= $this->get('Item');
+		$this->params 		= $this->state->get('params');
+		$this->settings2	= JemHelper::globalattribs();
 
 		// Create a shortcut for $item and params.
 		$item = $this->item;
@@ -147,8 +148,6 @@ class JemViewEditvenue extends JViewLegacy
 			return false;
 		}
 
-		JHtml::_('behavior.framework');
-
 		$access2 		= JemHelper::getAccesslevelOptions();
 		$this->access	= $access2;
 
@@ -159,20 +158,22 @@ class JemViewEditvenue extends JViewLegacy
 		JemHelper::loadCustomTag();
 		
 		// Load script
+		JHtml::_('behavior.framework'); //mootools
 		JHtml::_('script', 'com_jem/attachments.js', false, true);
-		$document->addScript('http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places&language='.$language);
+		$document->addScript('http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js');
+		//$document->addScript('http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places&language='.$language);
 
 		// Noconflict
-		$document->addCustomTag( '<script type="text/javascript">jQuery.noConflict();</script>' );
+		//$document->addCustomTag( '<script type="text/javascript">jQuery.noConflict();</script>' );
 
 		// JQuery scripts
-		$document->addScript('http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js');
-		JHtml::_('script', 'com_jem/jquery.geocomplete.js', false, true);
+		//$document->addScript('http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js');
+		//JHtml::_('script', 'com_jem/jquery.geocomplete.js', false, true);
 		JHtml::_('behavior.tabstate');
 		
 		# retrieve mapType setting
 		$settings 		= JemHelper::globalattribs();
-		$mapType = $settings->get('mapType','0');
+		$mapType		= $settings->get('mapType','0');
 		
 		switch($mapType) {
 			case '0':
