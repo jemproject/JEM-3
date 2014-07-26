@@ -130,7 +130,7 @@ class JEMModelSource extends JModelForm
 				$item->filename = $file;
 				$item->custom	= true;
 			}
-			$item->source = JFile::read($filePath);
+			$item->source = file_get_contents($filePath);
 		}
 
 		if (empty($item->source)) {
