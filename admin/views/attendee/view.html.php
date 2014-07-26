@@ -18,9 +18,10 @@ class JEMViewAttendee extends JViewLegacy {
 	{
 		// initialise variables
 		$document	= JFactory::getDocument();
+		$jinput 	= JFactory::getApplication()->input;
 
 		// get vars
-		$event_id = JRequest::getInt('id');
+		$event_id = $jinput->getInt('id');
 
 		// Load css
 		JHtml::_('stylesheet', 'com_jem/backend.css', array(), true);

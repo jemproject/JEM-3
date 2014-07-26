@@ -27,6 +27,7 @@ class JemViewVenue extends JEMView {
 	function display($tpl = null) {
 		if ($this->getLayout() == 'calendar') {
 			$app = JFactory::getApplication();
+			$jinput = JFactory::getApplication()->input;
 
 			// initialize variables
 			$document 		= JFactory::getDocument();
@@ -92,7 +93,7 @@ class JemViewVenue extends JEMView {
 			$document->setMetaData('title', $pagetitle);
 
 			// init calendar
-			$itemid = JRequest::getInt('Itemid');
+			$itemid = $jinput->getInt('Itemid');
 			$venueID = $params->get('id');
 
 			$partItemid = ($itemid > 0) ? '&Itemid='.$itemid : '';
@@ -115,6 +116,7 @@ class JemViewVenue extends JEMView {
 
 			// initialize variables
 			$app 			= JFactory::getApplication();
+			$jinput 		= $app->input;
 			$document 		= JFactory::getDocument();
 			$menu 			= $app->getMenu();
 			$menuitem		= $menu->getActive();
@@ -126,10 +128,10 @@ class JemViewVenue extends JEMView {
 			$uri 			= JFactory::getURI();
 			$task 			= JRequest::getWord('task');
 			$user			= JFactory::getUser();
-			$itemid 		= JRequest::getInt('id', 0) . ':' . JRequest::getInt('Itemid', 0);
+			$itemid 		= $jinput('id', 0) . ':' . $jinput('Itemid', 0);
 			$print			= JRequest::getBool('print');
 
-			$this->state		= $this->get('State');
+			$this->state	= $this->get('State');
 
 			// Load css
 			JemHelper::loadCss('jem');

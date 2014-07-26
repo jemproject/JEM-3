@@ -28,9 +28,10 @@ class JemModelEvent extends JModelItem
 	protected function populateState()
 	{
 		$app = JFactory::getApplication('site');
+		$jinput = JFactory::getApplication()->input;
 
 		// Load state from the request.
-		$pk = JRequest::getInt('id');
+		$pk = $jinput->getInt('id');
 		$this->setState('event.id', $pk);
 
 		$offset = JRequest::getUInt('limitstart');
@@ -282,7 +283,8 @@ class JemModelEvent extends JModelItem
 	 */
 	public function hit($pk = 0)
 	{
-		$hitcount = JRequest::getInt('hitcount', 1);
+		$jinput = JFactory::getApplication()->input;
+		$hitcount = $jinput->getInt('hitcount', 1);
 
 		if ($hitcount) {
 			// Initialise variables.

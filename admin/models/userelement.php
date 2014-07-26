@@ -126,10 +126,11 @@ class JemModelUserelement extends JModelLegacy
 	function getPagination()
 	{
 		$app 				= JFactory::getApplication();
+		$jinput 			= JFactory::getApplication()->input;
 		$jemsettings 		= JemHelper::config();
 		
 		$limit 				= $app->getUserStateFromRequest('com_jem.userelement.limit', 'limit', $jemsettings->display_num, 'int');
-		$limitstart 		= JRequest::getInt('limitstart');
+		$limitstart 		= $jinput->getInt('limitstart');
 		
 		$query = $this->buildQuery();
 		$total = $this->_getListCount($query);

@@ -64,7 +64,8 @@ class JemModelCategoryelement extends JModelLegacy
 	{
 		$app	= JFactory::getApplication();
 		$db		= JFactory::getDBO();
-		$itemid = JRequest::getInt('id', 0) . ':' . JRequest::getInt('Itemid', 0);
+		$jinput = JFactory::getApplication()->input;
+		$itemid = $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
 
 		static $items;
 

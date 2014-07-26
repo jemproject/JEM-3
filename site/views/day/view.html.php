@@ -27,6 +27,7 @@ class JemViewDay extends JEMView
 	{
 		// Initialize variables
 		$app 			= JFactory::getApplication();
+		$jinput 		= JFactory::getApplication()->input;
 		$document 		= JFactory::getDocument();
 		$jemsettings 	= JemHelper::config();
 		$settings 		= JemHelper::globalattribs();
@@ -61,7 +62,7 @@ class JemViewDay extends JEMView
 		JHtml::_('script', 'com_jem/dropdown.js', false, true);
 
 		// get variables
-		$itemid 			= JRequest::getInt('id', 0) . ':' . JRequest::getInt('Itemid', 0);
+		$itemid 			= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
 		$filter_order		= $app->getUserStateFromRequest('com_jem.day.'.$itemid.'.filter_order', 'filter_order', 	'a.dates', 'cmd');
 		$filter_order_Dir	= $app->getUserStateFromRequest('com_jem.day.'.$itemid.'.filter_order_Dir', 'filter_order_Dir',	'', 'word');
 		$filter_type		= $app->getUserStateFromRequest('com_jem.day.'.$itemid.'.filter_type', 'filter_type', '', 'int');

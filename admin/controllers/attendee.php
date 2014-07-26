@@ -48,12 +48,14 @@ class JemControllerAttendee extends JControllerLegacy
 	{
 		// Check for request forgeries.
 		JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+		
+		$jinput = JFactory::getApplication()->input;
 
 		$venue = JTable::getInstance('Register', 'JEMTable');
 		$venue->bind(JRequest::get('post'));
 		$venue->checkin();
 
-		$this->setRedirect('index.php?option=com_jem&view=attendees&id='.JRequest::getInt('event'));
+		$this->setRedirect('index.php?option=com_jem&view=attendees&id='.$jinput->getInt('event'));
 	}
 
 

@@ -24,12 +24,13 @@ class JEMModelEditevent extends JEMModelEvent
 	protected function populateState()
 	{
 		$app = JFactory::getApplication();
+		$jinput = JFactory::getApplication()->input;
 
 		// Load state from the request.
-		$pk = JRequest::getInt('a_id');
+		$pk = $jinput->getInt('a_id');
 		$this->setState('event.id', $pk);
 
-		$this->setState('event.catid', JRequest::getInt('catid'));
+		$this->setState('event.catid', $jinput->getInt('catid'));
 
 		$return = JFactory::getApplication()->input->get('return', null, 'base64');
 		$this->setState('return_page', urldecode(base64_decode($return)));
@@ -337,8 +338,9 @@ class JEMModelEditevent extends JEMModelEvent
 
 		$jemsettings 		= JemHelper::config();
 		$app 				= JFactory::getApplication();
+		$jinput 			= JFactory::getApplication()->input;
 		$limit 				= $app->getUserStateFromRequest('com_jem.selectvenue.limit', 'limit', $jemsettings->display_num, 'int');
-		$limitstart 		= JRequest::getInt('limitstart');
+		$limitstart 		= $jinput->getInt('limitstart');
 
 		$query = $this->buildQueryVenues();
 		$total = $this->_getListCount($query);
@@ -376,8 +378,9 @@ class JEMModelEditevent extends JEMModelEvent
 
 		$jemsettings 		= JemHelper::config();
 		$app 				= JFactory::getApplication();
+		$jinput = JFactory::getApplication()->input;
 		$limit 				= $app->getUserStateFromRequest('com_jem.selectcontact.limit', 'limit', $jemsettings->display_num, 'int');
-		$limitstart 		= JRequest::getInt('limitstart');
+		$limitstart 		= $jinput->getInt('limitstart');
 
 		$query = $this->buildQueryContacts();
 		$total = $this->_getListCount($query);

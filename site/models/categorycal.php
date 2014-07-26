@@ -100,7 +100,8 @@ class JEMModelCategoryCal extends JModelLegacy
 		$this->_data		= null;
 
 		$app 			= JFactory::getApplication();
-		$item 			= JRequest::getInt('Itemid');
+		$jinput = JFactory::getApplication()->input;
+		$item 			= $jinput->getInt('Itemid');
 		$app->setUserState('com_jem.categorycal.catid'.$item, $this->_id);
 	}
 

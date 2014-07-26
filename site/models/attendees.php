@@ -63,10 +63,11 @@ class JEMModelAttendees extends JModelLegacy
 		parent::__construct();
 
 		$app =  JFactory::getApplication();
+		$jinput = JFactory::getApplication()->input;
 		$jemsettings =  JEMHelper::config();
 
-		$id = JRequest::getInt('id');
-		$this->setId((int)$id);
+		$id = $jinput->getInt('id');
+		$this->setId($id);
 
 		$limit		= $app->getUserStateFromRequest( 'com_jem.attendees.limit', 'limit', $jemsettings->display_num, 'int');
 		$limitstart = $app->getUserStateFromRequest( 'com_jem.attendees.limitstart', 'limitstart', 0, 'int' );

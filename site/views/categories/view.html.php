@@ -21,6 +21,7 @@ class JemViewCategories extends JEMView
 	function display($tpl=null)
 	{
 		$app = JFactory::getApplication();
+		$jinput = JFactory::getApplication()->input;
 
 		$document 		= JFactory::getDocument();
 		$jemsettings 	= JemHelper::config();
@@ -29,7 +30,7 @@ class JemViewCategories extends JEMView
 		$print			= JRequest::getBool('print');
 		$task			= JRequest::getWord('task');
 		$model 			= $this->getModel();
-		$id 			= JRequest::getInt('id', 1);
+		$id 			= $jinput->getInt('id', 1);
 
 		$rows 		= $this->get('Data');
 		$pagination = $this->get('Pagination');

@@ -28,13 +28,14 @@ class JEMController extends JControllerLegacy
 	function display($cachable = false, $urlparams = false)
 	{
 		$document	= JFactory::getDocument();
-		$user = JFactory::getUser();
+		$user		= JFactory::getUser();
+		$jinput 	= JFactory::getApplication()->input;
 
 		// Set the default view name and format from the Request.
-		$id				= JRequest::getInt('a_id');
-		$viewName 		= JFactory::getApplication()->input->getCmd('view', 'eventslist');
+		$id				= $jinput->getInt('a_id');
+		$viewName 		= $jinput->getCmd('view', 'eventslist');
 		$viewFormat 	= $document->getType();
-		$layoutName 	= JFactory::getApplication()->input->getCmd('layout', 'edit');
+		$layoutName 	= $jinput->getCmd('layout', 'edit');
 
 
 		// Check for edit form.
@@ -103,7 +104,8 @@ class JEMController extends JControllerLegacy
 	 */
 	function getfile()
 	{
-		$id = JRequest::getInt('file');
+		$jinput = JFactory::getApplication()->input;
+		$id 	= $jinput->getInt('file');
 
 		$path = JEMAttachment::getAttachmentPath($id);
 

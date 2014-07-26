@@ -17,13 +17,14 @@ class JemViewEventelement extends JViewLegacy {
 	public function display($tpl = null)
 	{
 		$app = JFactory::getApplication();
+		$jinput = JFactory::getApplication()->input;
 
 		// initialise variables
 		$user 			= JFactory::getUser();
 		$db				= JFactory::getDBO();
 		$jemsettings	= JEMAdmin::config();
 		$document		= JFactory::getDocument();
-		$itemid 		= JRequest::getInt('id', 0) . ':' . JRequest::getInt('Itemid', 0);
+		$itemid 		= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
 
 		// get var
 		$filter_order		= $app->getUserStateFromRequest('com_jem.eventelement.filter_order', 'filter_order', 'a.dates', 'cmd');

@@ -32,6 +32,7 @@ class JemViewCategory extends JEMView
 	{
 		if($this->getLayout() == 'calendar') {
 			$app = JFactory::getApplication();
+			$jinput = JFactory::getApplication()->input;
 
 			//initialize variables
 			$document 		= JFactory::getDocument();
@@ -101,7 +102,7 @@ class JemViewCategory extends JEMView
 			$document->setMetaData('title', $pagetitle);
 
 			//init calendar
-			$itemid = JRequest::getInt('Itemid');
+			$itemid = $jinput->getInt('Itemid');
 			$partItemid = ($itemid > 0) ? '&Itemid='.$itemid : '';
 			$partCatid = ($catid > 0) ? '&id=' . $catid : '';
 			$cal = new JEMCalendar($year, $month, 0, $app->getCfg('offset'));
@@ -120,6 +121,7 @@ class JemViewCategory extends JEMView
 
 			//initialize variables
 			$app 			= JFactory::getApplication();
+			$jinput 		= JFactory::getApplication()->input;
 			$document 		= JFactory::getDocument();
 			$jemsettings 	= JemHelper::config();
 			$settings 		= JemHelper::globalattribs();
@@ -171,7 +173,7 @@ class JemViewCategory extends JEMView
 			                                && $menuitem->query['id']     == $category->id);
 
 			// get variables
-			$itemid				= JRequest::getInt('id', 0) . ':' . JRequest::getInt('Itemid', 0);
+			$itemid				= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
 
 
 			$filter_order		= $app->getUserStateFromRequest('com_jem.category.'.$itemid.'.filter_order', 'filter_order', 	'a.dates', 'cmd');

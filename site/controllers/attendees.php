@@ -37,9 +37,11 @@ class JEMControllerAttendees extends JControllerLegacy
 	 */
 	function attendeeremove()
 	{
-		$cid = JFactory::getApplication()->input->post->get('cid', array(0), 'array');
-		$id  = JRequest::getInt('id');
-		$fid = JRequest::getInt('Itemid');
+		$jinput = JFactory::getApplication()->input;
+		
+		$cid = $jinput->post->get('cid', array(0), 'array');
+		$id  = $jinput->getInt('id');
+		$fid = $jinput->getInt('Itemid');
 		$total = count($cid);
 
 		$model = $this->getModel('attendees');
@@ -65,8 +67,10 @@ class JEMControllerAttendees extends JControllerLegacy
 	 */
 	function attendeetoggle()
 	{
-		$id = JRequest::getInt('id');
-		$fid = JRequest::getInt('Itemid');
+		$jinput = JFactory::getApplication()->input;
+		
+		$id = $jinput->getInt('id');
+		$fid = $jinput->getInt('Itemid');
 
 		$model = $this->getModel('attendee');
 		$model->setId($id);

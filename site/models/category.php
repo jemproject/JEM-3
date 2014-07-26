@@ -32,14 +32,15 @@ class JemModelCategory extends JemModelEventslist
 	public function __construct()
 	{
 		$app			= JFactory::getApplication();
+		$jinput = JFactory::getApplication()->input;
 		$jemsettings	= JEMHelper::config();
-		$itemid			= JRequest::getInt('id', 0) . ':' . JRequest::getInt('Itemid', 0);
+		$itemid			= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
 
 		// Get the parameters of the active menu item
 		$params 	= $app->getParams();
 
-		if (JRequest::getInt('id')) {
-			$id = JRequest::getInt('id');
+		if ($jinput->getInt('id')) {
+			$id = $jinput->getInt('id');
 		} else {
 			$id = $params->get('id', 1);
 		}
@@ -96,9 +97,9 @@ class JemModelCategory extends JemModelEventslist
 		$app			= JFactory::getApplication('site');
 		$jemsettings	= JemHelper::config();
 		$jinput         = JFactory::getApplication()->input;
-		$task           = $jinput->get('task','','cmd');
-		$itemid			= JRequest::getInt('id', 0) . ':' . JRequest::getInt('Itemid', 0);
-		$pk				= JRequest::getInt('id');
+		$task           = $jinput->getCmd('task');
+		$itemid			= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
+		$pk				= $jinput->getInt('id');
 
 		$this->setState('category.id', $pk);
 

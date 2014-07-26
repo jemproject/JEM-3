@@ -19,9 +19,10 @@ class JemViewCategoryelement extends JViewLegacy {
 		$document	= JFactory::getDocument();
 		$db			= JFactory::getDBO();
 		$app 		= JFactory::getApplication();
-		$itemid 	= JRequest::getInt('id', 0) . ':' . JRequest::getInt('Itemid', 0);
+		$jinput 	= JFactory::getApplication()->input;
+		
+		$itemid 	= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
 
-	
 		$filter_order		= $app->getUserStateFromRequest('com_jem.categoryelement.filter_order', 'filter_order', 'c.ordering', 'cmd');
 		$filter_order_Dir	= $app->getUserStateFromRequest('com_jem.categoryelement.filter_order_Dir',	'filter_order_Dir',	'', 'word');
 		$filter_state 		= $app->getUserStateFromRequest('com_jem.categoryelement.'.$itemid.'.filter_state', 'filter_state', '', 'string');

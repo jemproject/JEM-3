@@ -187,9 +187,10 @@ class JemModelEventelement extends JModelLegacy
 	protected function _buildContentWhere()
 	{
 		$app			= JFactory::getApplication();
+		$jinput 		= JFactory::getApplication()->input;
 		$user 			= JFactory::getUser();
 		$levels			= $user->getAuthorisedViewLevels();
-		$itemid 		= JRequest::getInt('id', 0) . ':' . JRequest::getInt('Itemid', 0);
+		$itemid 		= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
 
 		$published 		= $app->getUserStateFromRequest('com_jem.eventelement.filter_state', 'filter_state', '', 'string');
 		$filter_type	= $app->getUserStateFromRequest('com_jem.eventelement.filter_type', 'filter_type', '', 'int');

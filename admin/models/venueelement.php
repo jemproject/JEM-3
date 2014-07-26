@@ -51,11 +51,13 @@ class JemModelVenueelement extends JModelLegacy
 		parent::__construct();
 
 		$app			= JFactory::getApplication();
+		$jinput 		= JFactory::getApplication()->input;
+		
 		$jemsettings	= JemHelper::config();
-		$itemid 		= JRequest::getInt('id', 0) . ':' . JRequest::getInt('Itemid', 0);
+		$itemid 		= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
 		
 		$limit 			= $app->getUserStateFromRequest('com_jem.venueelement.limit', 'limit', $jemsettings->display_num, 'int');
-		$limitstart 	= JRequest::getInt('limitstart');
+		$limitstart 	= $jinput->getInt('limitstart');
 		
 		$this->setState('limit', $limit);
 		$this->setState('limitstart', $limitstart);
@@ -80,8 +82,9 @@ class JemModelVenueelement extends JModelLegacy
 	function buildQuery() {
 		
 		$app 				= JFactory::getApplication();
+		$jinput 			= JFactory::getApplication()->input;
 		$jemsettings 		= JemHelper::config();
-		$itemid 			= JRequest::getInt('id', 0) . ':' . JRequest::getInt('Itemid', 0);
+		$itemid 			= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
 
 		$filter_order		= $app->getUserStateFromRequest('com_jem.venueelement.'.$itemid.'.filter_order', 'filter_order', 'l.ordering', 'cmd' );
 		$filter_order_Dir	= $app->getUserStateFromRequest('com_jem.venueelement.'.$itemid.'.filter_order_Dir', 'filter_order_Dir', '', 'word' );

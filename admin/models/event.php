@@ -408,7 +408,7 @@ class JemModelEvent extends JModelAdmin
 		else
 			$backend = false;
 
-		$cats 						= $jinput->get('cid', array(), 'post', 'array');
+		$cats 						= $jinput->post->get('cid', array(), 'array');
 		$metakeywords 				= $jinput->get('meta_keywords', '', '');
 		$metadescription 			= $jinput->get('meta_description', '', '');
 		$author_ip 					= $jinput->get('author_ip', '', '');
@@ -439,7 +439,7 @@ class JemModelEvent extends JModelAdmin
 			##############
 			## HOLIDAYS ##
 			##############
-			$holidays 			= $jinput->get('activated', array(), 'post', 'array');
+			$holidays 			= $jinput->post->get('activated', array(), 'array');
 			$countryholiday		= $jinput->get('recurrence_country_holidays','','int');
 		
 		

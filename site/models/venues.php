@@ -26,15 +26,15 @@ class JemModelVenues extends JemModelEventslist
 		$app 			= JFactory::getApplication();
 		$settings		= JemHelper::globalattribs();
 		$jinput			= JFactory::getApplication()->input;
-		$itemid 		= JRequest::getInt('id', 0) . ':' . JRequest::getInt('Itemid', 0);
+		$itemid 		= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
 		$params 		= $app->getParams();
 		$task           = $jinput->get('task','','cmd');
 
 		// List state information
-		$limitstart = JRequest::getInt('limitstart');
+		$limitstart = $jinput->getInt('limitstart');
 		$this->setState('list.start', $limitstart);
 
-		$limit		= JRequest::getInt('limit', $params->get('display_venues_num'));
+		$limit		= $jinput->getInt('limit', $params->get('display_venues_num'));
 		$this->setState('list.limit', $limit);
 
 		# params

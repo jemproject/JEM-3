@@ -17,11 +17,12 @@ class JemViewVenueelement extends JViewLegacy {
 	public function display($tpl = null)
 	{
 		$app = JFactory::getApplication();
+		$jinput = JFactory::getApplication()->input;
 
 		// initialise variables
 		$db			= JFactory::getDBO();
 		$document	= JFactory::getDocument();
-		$itemid 	= JRequest::getInt('id', 0) . ':' . JRequest::getInt('Itemid', 0);
+		$itemid 	= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
 
 		// get vars
 		$filter_order		= $app->getUserStateFromRequest('com_jem.venueelement.'.$itemid.'.filter_order', 'filter_order', 'l.ordering', 'cmd');

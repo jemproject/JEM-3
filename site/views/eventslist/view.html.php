@@ -27,6 +27,7 @@ class JemViewEventslist extends JEMView
 		// initialize variables
 		$document 		= JFactory::getDocument();
 		$app 			= JFactory::getApplication();
+		$jinput 		= $app->input;
 		$jemsettings	= JemHelper::config();
 		$settings 		= JemHelper::globalattribs();
 		$menu			= $app->getMenu();
@@ -36,7 +37,7 @@ class JemViewEventslist extends JEMView
 		$pathway 		= $app->getPathWay();
 		$db 			= JFactory::getDBO();
 		$user			= JFactory::getUser();
-		$itemid 		= JRequest::getInt('id', 0) . ':' . JRequest::getInt('Itemid', 0);
+		$itemid 		= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
 		$print			= JRequest::getBool('print');
 		$admin			= JEMUser::superuser();
 

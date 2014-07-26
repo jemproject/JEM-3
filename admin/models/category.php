@@ -81,12 +81,13 @@ class JEMModelCategory extends JModelAdmin
 	protected function populateState()
 	{
 		$app = JFactory::getApplication('administrator');
+		$jinput = JFactory::getApplication()->input;
 		
-		$parentId = JRequest::getInt('parent_id');
+		$parentId = $jinput->getInt('parent_id');
 		$this->setState('category.parent_id', $parentId);
 		
 		// Load the User state.
-		$pk = (int) JRequest::getInt('id');
+		$pk = $jinput->getInt('id');
 		$this->setState($this->getName() . '.id', $pk);
 		
 		// Load the parameters.

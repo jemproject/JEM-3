@@ -33,7 +33,7 @@ class JemModelWeekcal extends JemModelEventslist
 		$app 			= JFactory::getApplication();
 		$jemsettings	= JemHelper::config();
 		$jinput			= JFactory::getApplication()->input;
-		$itemid 		= JRequest::getInt('id', 0) . ':' . JRequest::getInt('Itemid', 0);
+		$itemid 		= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
 		$params 		= $app->getParams();
 		$task           = $jinput->get('task','','cmd');
 		$top_category 	= $params->get('top_category', 0);

@@ -60,7 +60,7 @@ class JemModelEventslist extends JModelList
 		$jemsettings		= JemHelper::config();
 		$jinput             = JFactory::getApplication()->input;
 		$task               = $jinput->get('task','','cmd');
-		$itemid				= JRequest::getInt('id', 0) . ':' . JRequest::getInt('Itemid', 0);
+		$itemid				= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
 
 		
 		# List state information
@@ -211,7 +211,7 @@ class JemModelEventslist extends JModelList
 		$app 			= JFactory::getApplication();
 		$jinput 		= JFactory::getApplication()->input;
 		$task 			= $jinput->get('task','','cmd');
-		$itemid 		= JRequest::getInt('id', 0) . ':' . JRequest::getInt('Itemid', 0);
+		$itemid 		= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
 
 		$params 		= $app->getParams();
 		$settings 		= JemHelper::globalattribs();

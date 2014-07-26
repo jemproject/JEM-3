@@ -42,7 +42,8 @@ class JEMControllerEditvenue extends JControllerForm
 	{
 		// Initialise variables.
 		$user		= JFactory::getUser();
-		//$categoryId	= JArrayHelper::getValue($data, 'catid', JRequest::getInt('catid'), 'int');
+		$jinput 	= JFactory::getApplication()->input;
+		//$categoryId	= JArrayHelper::getValue($data, 'catid', $jinput->getInt('catid'), 'int');
 		$allow		= null;
 
 		//if ($categoryId) {

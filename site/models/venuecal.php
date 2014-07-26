@@ -64,7 +64,7 @@ class JemModelVenueCal extends JemModelEventslist
 		$app 			= JFactory::getApplication();
 		$jemsettings	= JemHelper::config();
 		$jinput			= JFactory::getApplication()->input;
-		$itemid 		= JRequest::getInt('id', 0) . ':' . JRequest::getInt('Itemid', 0);
+		$itemid 		= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
 		$params 		= $app->getParams();
 		$task           = $jinput->get('task','','cmd');
 		$startdayonly 	= $params->get('show_only_start', false);
@@ -110,7 +110,7 @@ class JemModelVenueCal extends JemModelEventslist
 		$this->setState('filter.filter_locid',$this->_id);
 
 
-		$item = JRequest::getInt('Itemid');
+		$item = $jinput->getInt('Itemid');
 		$app->setUserState('com_jem.venuecal.locid'.$item, $this->_id);
 
 		# groupby

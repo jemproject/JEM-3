@@ -40,9 +40,11 @@ class JEMControllerEditevent extends JControllerForm
 	 */
 	protected function allowAdd($data = array())
 	{
+		$jinput = JFactory::getApplication()->input;
+		
 		// Initialise variables.
 		$user		= JFactory::getUser();
-		$categoryId	= JArrayHelper::getValue($data, 'catid', JRequest::getInt('catid'), 'int');
+		$categoryId	= JArrayHelper::getValue($data, 'catid', $jinput->getInt('catid'), 'int');
 		$allow		= null;
 
 		if ($categoryId) {
@@ -187,6 +189,7 @@ class JEMControllerEditevent extends JControllerForm
 		$tmpl		= JFactory::getApplication()->input->getCmd('tmpl');
 		$layout		= JFactory::getApplication()->input->getCmd('layout', 'edit');
 		$append		= '';
+		$jinput 	= JFactory::getApplication()->input;
 
 		// Setup redirect info.
 		if ($tmpl) {
@@ -199,9 +202,9 @@ class JEMControllerEditevent extends JControllerForm
 			$append .= '&'.$urlVar.'='.$recordId;
 		}
 
-		$itemId	= JRequest::getInt('Itemid');
+		$itemId	= $jinput->getInt('Itemid');
 		$return	= $this->getReturnPage();
-		$catId = JRequest::getInt('catid', null, 'get');
+		$catId = $jinput->getInt('catid', null, 'get');
 
 		if ($itemId) {
 			$append .= '&Itemid='.$itemId;
@@ -536,11 +539,11 @@ class JEMControllerEditevent extends JControllerForm
 	 */
 	function userregister()
 	{
-
 		// Check for request forgeries
 		JSession::checkToken() or jexit('Invalid Token');
 
-		$id 	= JRequest::getInt('rdid', 0, 'post');
+		$jinput = JFactory::getApplication()->input;
+		$id 	= $jinput->post->getInt('rdid', 0);
 
 		// Get the model
 		$model = $this->getModel('Event', 'JEMModel');
@@ -574,8 +577,9 @@ class JEMControllerEditevent extends JControllerForm
 	{
 		// Check for request forgeries
 		JSession::checkToken() or jexit('Invalid Token');
-
-		$id = JRequest::getInt('rdid', 0, 'post');
+		
+		$jinput = JFactory::getApplication()->input;
+		$id		= $jinput->post->getInt('rdid', 0);
 
 		// Get/Create the model
 		$model = $this->getModel('Event', 'JEMModel');
@@ -609,8 +613,9 @@ class JEMControllerEditevent extends JControllerForm
 		//$key		= $table->getKeyName();
 		//$urlVar		= $key;
 
-		$recordId	= JRequest::getInt($urlVar);
-		$recurrence_group = JRequest::getInt('recurrence_group');
+		$jinput = JFactory::getApplication()->input;
+		$recordId	= $jinput->getInt($urlVar);
+		$recurrence_group = $jinput->getInt('recurrence_group');
 
 
 		# Retrieve id of current event from recurrence_table

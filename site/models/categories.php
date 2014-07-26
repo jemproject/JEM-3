@@ -83,12 +83,13 @@ class JEMModelCategories extends JModelLegacy
 		parent::__construct();
 
 		$app = JFactory::getApplication();
+		$jinput = JFactory::getApplication()->input;
 
 		// Get the parameters of the active menu item
 		$params = $app->getParams('com_jem');
 
-		if (JRequest::getInt('id')) {
-			$id = JRequest::getInt('id');
+		if ($jinput->getInt('id')) {
+			$id = $jinput->getInt('id');
 		} else {
 			$id = $params->get('id', 1);
 		}
@@ -100,8 +101,8 @@ class JEMModelCategories extends JModelLegacy
 		$this->_showemptysubcats = (bool)$params->get('showemptychilds', 1);
 
 		//get the number of events from database
-		$limit 		= JRequest::getInt('limit', $params->get('cat_num'));
-		$limitstart = JRequest::getInt('limitstart');
+		$limit 		= $jinput->getInt('limit', $params->get('cat_num'));
+		$limitstart = $jinput->getInt('limitstart');
 
 		$this->setState('limit', $limit);
 		$this->setState('limitstart', $limitstart);

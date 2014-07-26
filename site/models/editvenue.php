@@ -29,9 +29,10 @@ class JemModelEditvenue extends JemModelVenue
 	protected function populateState()
 	{
 		$app = JFactory::getApplication();
+		$jinput = JFactory::getApplication()->input;
 
 		// Load state from the request.
-		$pk = JRequest::getInt('a_id');
+		$pk = $jinput->getInt('a_id');
 		$this->setState('venue.id', $pk);
 
 		$return = JFactory::getApplication()->input->get('return', null, 'base64');

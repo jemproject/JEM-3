@@ -45,9 +45,10 @@ class JEMControllerEvent extends JControllerForm
 		$table		= $model->getTable();
 		$key		= $table->getKeyName();
 		$urlVar		= $key;
+		$jinput 	= JFactory::getApplication()->input;
 	
-		$recordId	= JRequest::getInt($urlVar);
-		$recurrence_group = JRequest::getInt('recurrence_group');
+		$recordId	= $jinput->getInt($urlVar);
+		$recurrence_group = $jinput->getInt('recurrence_group');
 	
 	
 		# Retrieve id of current event from recurrence_table
