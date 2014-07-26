@@ -57,6 +57,8 @@ function addattach()
 	if (emptyRows.length < 1) {
 		var row = rows[rows.length-1].clone();
 		row.getElement('.attach-field').addEvent('change', addattach).value = '';
+		row.getElement('.attach-name').value = '';
+		row.getElement('.attach-desc').value = '';
 		row.getElement('.clear-attach-field').addEvent('click', clearattach).value = '';
 		row.inject(tbody);
 	}
