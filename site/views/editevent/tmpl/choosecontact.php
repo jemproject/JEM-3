@@ -8,7 +8,7 @@
  */
 defined('_JEXEC') or die;
 
-$function = JRequest::getCmd('function', 'jSelectContact');
+$function = JFactory::getApplication()->input->get('function', 'jSelectContact');
 ?>
 
 <script type="text/javascript">

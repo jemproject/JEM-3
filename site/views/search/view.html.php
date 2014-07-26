@@ -203,7 +203,7 @@ class JemViewSearch extends JEMView
 		$db = JFactory::getDBO();
 		$task = JRequest::getWord('task');
 
-		$filter_order		= JRequest::getCmd('filter_order', 'a.dates');
+		$filter_order		= JFactory::getApplication()->input->get('filter_order', 'a.dates');
 		$filter_order_DirDefault = 'ASC';
 		// Reverse default order for dates in archive mode
 		if($task == 'archive' && $filter_order == 'a.dates') {

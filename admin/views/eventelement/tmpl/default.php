@@ -10,7 +10,7 @@ defined('_JEXEC') or die;
 
 JHtml::_('bootstrap.tooltip');
 JHtml::_('behavior.modal','a.flyermodal');
-$function = JRequest::getCmd('function', 'jSelectEvent');
+$function = JFactory::getApplication()->input->get('function', 'jSelectEvent');
 ?>
 
 <form action="index.php?option=com_jem&amp;view=eventelement&amp;tmpl=component" method="post" name="adminForm" id="adminForm">

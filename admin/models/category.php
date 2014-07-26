@@ -347,7 +347,7 @@ class JEMModelCategory extends JModelAdmin
 		if (parent::publish($pks, $value)) {
 			// Initialise variables.
 			$dispatcher = JDispatcher::getInstance();
-			$extension = JRequest::getCmd('extension');
+			$extension = JFactory::getApplication()->input->get('extension');
 			
 			// Include the content plugins for the change of category state
 			// event.
@@ -708,7 +708,7 @@ class JEMModelCategory extends JModelAdmin
 	 */
 	protected function cleanCache($group = null, $client_id = 0)
 	{
-		$extension = JRequest::getCmd('extension');
+		$extension = JFactory::getApplication()->input->get('extension');
 		switch ($extension)
 		{
 			case 'com_content':

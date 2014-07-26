@@ -8,7 +8,7 @@
  */
 defined('_JEXEC') or die;
 
-$function = JRequest::getCmd('function', 'jSelectCategory');
+$function = JFactory::getApplication()->input->get('function', 'jSelectCategory');
 JHtml::_('bootstrap.tooltip');
 JHtml::_('behavior.framework', true);
 ?>

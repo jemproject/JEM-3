@@ -41,7 +41,7 @@ class JemModelEditvenue extends JemModelVenue
 		$params = $app->getParams();
 		$this->setState('params', $params);
 
-		$this->setState('layout', JRequest::getCmd('layout'));
+		$this->setState('layout', JFactory::getApplication()->input->get('layout'));
 	}
 
 	/**

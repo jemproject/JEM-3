@@ -42,7 +42,7 @@ class JemControllerCategories extends JControllerAdmin
 	{
 		JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 
-		$extension = JRequest::getCmd('com_jem');
+		$extension = JFactory::getApplication()->input->get('com_jem');
 		$this->setRedirect(JRoute::_('index.php?option=com_jem&view=categories', false));
 
 		// Initialise variables.

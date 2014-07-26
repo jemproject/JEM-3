@@ -32,9 +32,9 @@ class JEMController extends JControllerLegacy
 
 		// Set the default view name and format from the Request.
 		$id				= JRequest::getInt('a_id');
-		$viewName 		= JRequest::getCmd('view', 'eventslist');
+		$viewName 		= JFactory::getApplication()->input->get('view', 'eventslist');
 		$viewFormat 	= $document->getType();
-		$layoutName 	= JRequest::getCmd('layout', 'edit');
+		$layoutName 	= JFactory::getApplication()->input->get('layout', 'edit');
 
 
 		// Check for edit form.

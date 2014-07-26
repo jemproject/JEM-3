@@ -59,7 +59,7 @@ class JEMModelSearch extends JModelLegacy
 		$this->setState('limitstart', $limitstart);
 
 		// Get the filter request variables
-		$filter_order = JRequest::getCmd('filter_order', 'a.dates');
+		$filter_order = JFactory::getApplication()->input->get('filter_order', 'a.dates');
 		$this->setState('filter_order', $filter_order);
 
 		$filter_order_DirDefault = 'ASC';
@@ -69,7 +69,7 @@ class JEMModelSearch extends JModelLegacy
 			$filter_order_DirDefault = 'DESC';
 		}
 
-		$this->setState('filter_order_Dir', JRequest::getCmd('filter_order_Dir', $filter_order_DirDefault));
+		$this->setState('filter_order_Dir', JFactory::getApplication()->input->get('filter_order_Dir', $filter_order_DirDefault));
 	}
 
 	/**

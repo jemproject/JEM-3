@@ -32,7 +32,7 @@ class JemControllerHousekeeping extends JControllerLegacy
 	 */
 	function delete()
 	{
-		$task = JRequest::getCmd('task');
+		$task = JFactory::getApplication()->input->get('task');
 		$model = $this->getModel('housekeeping');
 
 		if ($task == 'cleaneventimg') {
@@ -54,7 +54,7 @@ class JemControllerHousekeeping extends JControllerLegacy
 	 * Remove obsolete images
 	 */
 	function rmObsImages() {
-		$task = JRequest::getCmd('task');
+		$task = JFactory::getApplication()->input->get('task');
 		$model = $this->getModel('housekeeping');
 		
 		$total = $model->rmObsImages();

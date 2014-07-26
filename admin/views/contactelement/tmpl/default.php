@@ -10,7 +10,7 @@ defined('_JEXEC') or die;
 
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.modal');
-$function = JRequest::getCmd('function', 'jSelectContact');
+$function = JFactory::getApplication()->input->get('function', 'jSelectContact');
 ?>
 
 <form action="index.php?option=com_jem&amp;view=contactelement&amp;tmpl=component" method="post" name="adminForm" id="adminForm">
