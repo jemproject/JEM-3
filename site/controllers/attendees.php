@@ -37,7 +37,7 @@ class JEMControllerAttendees extends JControllerLegacy
 	 */
 	function attendeeremove()
 	{
-		$cid = JRequest::getVar('cid', array(0), 'post', 'array');
+		$cid = JFactory::getApplication()->input->get('cid', array(0), 'array');
 		$id  = JRequest::getInt('id');
 		$fid = JRequest::getInt('Itemid');
 		$total = count($cid);

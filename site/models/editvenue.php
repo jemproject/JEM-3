@@ -34,7 +34,7 @@ class JemModelEditvenue extends JemModelVenue
 		$pk = JRequest::getInt('a_id');
 		$this->setState('venue.id', $pk);
 
-		$return = JRequest::getVar('return', null, 'default', 'base64');
+		$return = JFactory::getApplication()->input->get('return', null, 'base64');
 		$this->setState('return_page', urldecode(base64_decode($return)));
 
 		// Load the parameters.

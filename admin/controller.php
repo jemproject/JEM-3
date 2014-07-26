@@ -58,7 +58,7 @@ class JEMController extends JControllerLegacy
 	 */
 	function ajaxattachremove()
 	{
-		$id = JRequest::getVar('id', 0, 'request', 'int');
+		$id = JFactory::getApplication()->input->get('id', 0, 'int');
 
 		$res = JEMAttachment::remove($id);
 		if (!$res) {

@@ -227,7 +227,7 @@ class JEMControllerEditevent extends JControllerForm
 	 */
 	protected function getReturnPage()
 	{
-		$return = JRequest::getVar('return', null, 'default', 'base64');
+		$return = JFactory::getApplication()->input->get('return', null, 'base64');
 
 		if (empty($return) || !JUri::isInternal(urldecode(base64_decode($return)))) {
 			return JURI::base();
@@ -600,7 +600,7 @@ class JEMControllerEditevent extends JControllerForm
 	 * remove from set
 	 */
 	function removefromset($key = null, $urlVar = 'a_id'){
-		//$data  = JRequest::getVar('jform', array(), 'post', 'array');
+		//$data  = JFactory::getApplication()->input->get('jform', array(), 'array');
 		//$checkin = property_exists($table, 'checked_out');
 		//$context = "$this->option.edit.$this->context";
 		//$task = $this->getTask();

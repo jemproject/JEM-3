@@ -58,7 +58,7 @@ class JemModelVenues extends JemModelEventslist
 	{
 		$user 	= JFactory::getUser();
 		$levels = $user->getAuthorisedViewLevels();
-		$task 	= JRequest::getVar('task', '', '', 'string');
+		$task 	= JFactory::getApplication()->input->get('task', '', 'string');
 
 		// Query
 		$db 	= JFactory::getDBO();
@@ -142,7 +142,7 @@ class JemModelVenues extends JemModelEventslist
 				}
 
 				//create target link
-				$task 	= JRequest::getVar('task', '', '', 'string');
+				$task 	= JFactory::getApplication()->input->get('task', '', 'string');
 
 				$item->linkEventsArchived = JRoute::_(JEMHelperRoute::getVenueRoute($item->venueslug.'&task=archive'));
 				$item->linkEventsPublished = JRoute::_(JEMHelperRoute::getVenueRoute($item->venueslug));

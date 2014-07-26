@@ -37,7 +37,7 @@ class JemModelAttendee extends JModelLegacy
 	{
 		parent::__construct();
 
-		$array = JRequest::getVar('cid', 0, '', 'array');
+		$array = JFactory::getApplication()->input->get('cid', 0, 'array');
 		$this->setId((int)$array[0]);
 	}
 

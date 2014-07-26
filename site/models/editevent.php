@@ -31,7 +31,7 @@ class JEMModelEditevent extends JEMModelEvent
 
 		$this->setState('event.catid', JRequest::getInt('catid'));
 
-		$return = JRequest::getVar('return', null, 'default', 'base64');
+		$return = JFactory::getApplication()->input->get('return', null, 'base64');
 		$this->setState('return_page', urldecode(base64_decode($return)));
 
 		// Load the parameters.

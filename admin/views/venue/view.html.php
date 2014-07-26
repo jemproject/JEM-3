@@ -35,7 +35,7 @@ class JEMViewVenue extends JViewLegacy {
 		$document		= JFactory::getDocument();
 		$this->settings	= JEMAdmin::config();
 		$this->settings2	= JemHelper::globalattribs();
-		$task			= JRequest::getVar('task');
+		$task			= JFactory::getApplication()->input->get('task');
 		$this->task 	= $task;
 
 		# load css

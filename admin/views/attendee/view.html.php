@@ -50,7 +50,7 @@ class JEMViewAttendee extends JViewLegacy {
 	protected function addToolbar()
 	{
 		// get vars
-		$cid = JRequest::getVar('cid');
+		$cid = JFactory::getApplication()->input->get('cid');
 
 		if ($cid) {
 			JToolBarHelper::title(JText::_('COM_JEM_EDIT_ATTENDEE'), 'users');

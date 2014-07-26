@@ -53,7 +53,7 @@ class JEMControllerCssmanager extends JControllerAdmin
 	 */
 	public function linenumber()
 	{
-		$task 	= JRequest::getVar('task');
+		$task 	= JFactory::getApplication()->input->get('task');
 		$model = $this->getModel();
 		
 		switch ($task)

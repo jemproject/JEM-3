@@ -227,7 +227,7 @@ class JEMControllerEditvenue extends JControllerForm
 	 */
 	protected function getReturnPage()
 	{
-		$return = JRequest::getVar('return', null, 'default', 'base64');
+		$return = JFactory::getApplication()->input->get('return', null, 'base64');
 
 		if (empty($return) || !JUri::isInternal(urldecode(base64_decode($return)))) {
 			return JURI::base();

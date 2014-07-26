@@ -249,7 +249,7 @@ class JEMModelCategory extends JModelAdmin
 		}
 		
 		// Alter the title for save as copy
-		if (JRequest::getVar('task') == 'save2copy') {
+		if (JFactory::getApplication()->input->get('task') == 'save2copy') {
 			list ($title, $alias) = $this->generateNewTitle($data['parent_id'], $data['alias'], $data['title']);
 			$data['title'] = $title;
 			$data['alias'] = $alias;

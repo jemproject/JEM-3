@@ -63,8 +63,8 @@ class JemViewCalendar extends JViewLegacy
 		
 		
 
-		$year 	= (int)JRequest::getVar('yearID', strftime("%Y"));
-		$month 	= (int)JRequest::getVar('monthID', strftime("%m"));
+		$year 	= JFactory::getApplication()->input->get('yearID', strftime("%Y"),'int');
+		$month 	= JFactory::getApplication()->input->get('monthID', strftime("%m"),'int');
 
 		//get data from model and set the month
 		$model = $this->getModel();

@@ -53,7 +53,7 @@ class JEMModelSearch extends JModelLegacy
 
 		//get the number of events from database
 		$limit		= $app->getUserStateFromRequest('com_jem.search.limit', 'limit', $jemsettings->display_num, 'int');
-		$limitstart	= JRequest::getVar('limitstart', 0, '', 'int');
+		$limitstart	= JFactory::getApplication()->input->get('limitstart', 0, 'int');
 
 		$this->setState('limit', $limit);
 		$this->setState('limitstart', $limitstart);
