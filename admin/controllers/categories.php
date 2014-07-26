@@ -69,7 +69,7 @@ class JemControllerCategories extends JControllerAdmin
  	 */
  	function remove()
  	{
- 		$cid= JFactory::getApplication()->input->get('cid', array(), 'array');
+ 		$cid= JFactory::getApplication()->input->post->get('cid', array(), 'array');
 
  		if (!is_array($cid) || count($cid) < 1) {
  			JError::raiseWarning(500, JText::_('COM_JEM_SELECT_ITEM_TO_DELETE'));

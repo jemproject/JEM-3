@@ -68,8 +68,8 @@ class JemViewCategory extends JEMView
 			$document->addStyleDeclaration($style);
 
 			// Retrieve date variables
-			$year	= JFactory::getApplication()->input->get('yearID', strftime("%Y"),'int');
-			$month	= JFactory::getApplication()->input->get('monthID', strftime("%m"),'int');
+			$year	= JFactory::getApplication()->input->request->get('yearID', strftime("%Y"),'int');
+			$month	= JFactory::getApplication()->input->request->get('monthID', strftime("%m"),'int');
 
 			if (JFactory::getApplication()->input->get('id')) {
 				$catid = JFactory::getApplication()->input->get('id');

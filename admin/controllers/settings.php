@@ -83,7 +83,7 @@ class JEMControllerSettings extends JControllerLegacy
 		
 		// Initialise variables.
 		$app = JFactory::getApplication();
-		$data = JFactory::getApplication()->input->get('jform', array(), 'array');
+		$data = JFactory::getApplication()->input->post->get('jform', array(), 'array');
 		
 		$task = $this->getTask();
 		$model = $this->getModel();

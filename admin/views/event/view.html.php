@@ -36,7 +36,7 @@ class JemViewEvent extends JViewLegacy {
 		$document		= JFactory::getDocument();
 		$user 			= JFactory::getUser();
 		$this->settings	= JemAdmin::config();
-		$task			= JRequest::getVar('task');
+		$task			= JFactory::getApplication()->input->get('task');
 		$this->task 	= $task;
 		$url 			= JURI::root();
 		
@@ -63,6 +63,7 @@ class JemViewEvent extends JViewLegacy {
 		
 		//JHtml::_('bootstrap.framework');
 		JHtml::_('jquery.framework');
+		JHtml::_('script', 'com_jem/slider-state.js', false, true);
 
 		$access2 			= JemHelper::getAccesslevelOptions();
 		$this->access		= $access2;

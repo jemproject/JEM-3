@@ -37,7 +37,7 @@ class JEMControllerEvent extends JControllerForm
 	 * remove from set
 	 */
 	function removefromset(){
-		//$data  = JFactory::getApplication()->input->get('jform', array(), 'array');
+		//$data  = JFactory::getApplication()->input->post->get('jform', array(), 'array');
 		//$checkin = property_exists($table, 'checked_out');
 		//$context = "$this->option.edit.$this->context";
 		//$task = $this->getTask();

@@ -197,7 +197,7 @@ class JEMTableEvents extends JTable
 		// get image (frontend) - allow "removal on save" (Hoffi, 2014-06-07)
 		if (!$backend) {
 			if (($jemsettings->imageenabled == 2 || $jemsettings->imageenabled == 1)) {
-				$file = JFactory::getApplication()->input->get('userfile', '', 'array');
+				$file = JFactory::getApplication()->input->files->get('userfile', '', 'array');
 				$removeimage = JFactory::getApplication()->input->get('removeimage', '', 'int');
 
 				if (!empty($file['name'])) {

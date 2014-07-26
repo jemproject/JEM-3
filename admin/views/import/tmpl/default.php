@@ -197,8 +197,8 @@ As we don't have it we can import the EL-data, so we'll check for a version.
 	
 	<fieldset>
 		<label for="file"><?php echo JText::_('COM_JEM_IMPORT_SELECTCSV').':'; ?></label>
-		<input type="file" id="event-file-upload" accept="text/*" name="Fileevents" data-icon="true" data-buttonName="btn-primary" data-buttonBefore="true" data-size="sm" data-iconName="icon-edit"/>
-		<input class="btn" type="submit" id="event-file-upload-submit" value="<?php echo JText::_('COM_JEM_IMPORT_START'); ?>" onclick="document.getElementById('task1').value='import.csveventimport';return true;"/>
+		<input type="file" id="event-file-upload" accept="text/*" name="Fileevents" />
+		<input class="btn" type="submit" id="event-file-upload-submit" value="<?php echo JText::_('COM_JEM_IMPORT_START'); ?>" onclick="document.getElementById('task4').value='import.csveventimport';return true;"/>
 	</fieldset>
 	
 	<span id="upload-clear"></span><br /><br/>
@@ -227,6 +227,7 @@ As we don't have it we can import the EL-data, so we'll check for a version.
 	<label for="replace_catevents"><?php echo JText::_('COM_JEM_IMPORT_REPLACEIFEXISTS').':'; ?></label>
 	<?php echo JHtml::_('select.booleanlist', 'replace_catevents', 'class="inputbox"', 0); ?>
 	</fieldset>
+	
 	
 </div><div class="span6">
 
@@ -269,6 +270,13 @@ As we don't have it we can import the EL-data, so we'll check for a version.
 	</fieldset>
 	</div></div>
 
+	
+	<input type="hidden" name="option" value="com_jem" />
+	<input type="hidden" name="view" value="import" />
+	<input type="hidden" name="controller" value="import" />
+	<input type="hidden" name="task" id="task4" value="" />
+	
+	
 	<?php echo JHtml::_('bootstrap.endTab'); ?>	
 	
 	
@@ -404,8 +412,5 @@ As we don't have it we can import the JEM-data, so we'll check for a version.
 	<?php echo JHtml::_('bootstrap.endTabSet');?>
 	
 
-	<input type="hidden" name="option" value="com_jem" />
-	<input type="hidden" name="view" value="import" />
-	<input type="hidden" name="controller" value="import" />
-	<input type="hidden" name="task" id="task1" value="" />
+	
 </form>

@@ -48,8 +48,8 @@ if (empty($LocaleOverride)) {
 }
 
 //get switch trigger
-$req_month 	= JFactory::getApplication()->input->get('el_mcal_month', '', 'int');
-$req_year 	= JFactory::getApplication()->input->get('el_mcal_year', '', 'int');
+$req_month 	= JFactory::getApplication()->input->request->get('el_mcal_month', '', 'int');
+$req_year 	= JFactory::getApplication()->input->request->get('el_mcal_year', '', 'int');
 
 if ($Remember == 1) { // Remember which month / year is selected. Don't jump back to tday on page change
 	if ($req_month == 0) {
