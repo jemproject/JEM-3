@@ -38,7 +38,7 @@ class JEMModelEditevent extends JEMModelEvent
 		$params = $app->getParams();
 		$this->setState('params', $params);
 
-		$this->setState('layout', JFactory::getApplication()->input->get('layout'));
+		$this->setState('layout', JFactory::getApplication()->input->getCmd('layout'));
 
 		parent::populateState('a.dates', 'ASC');
 	}

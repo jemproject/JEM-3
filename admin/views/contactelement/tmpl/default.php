@@ -8,9 +8,9 @@
  */
 defined('_JEXEC') or die;
 
-JHtml::_('behavior.tooltip');
-JHtml::_('behavior.modal');
-$function = JFactory::getApplication()->input->get('function', 'jSelectContact');
+JHtml::_('bootstrap.tooltip');
+JHtml::_('behavior.modal','a.flyermodal');
+$function = JFactory::getApplication()->input->getCmd('function', 'jSelectContact');
 ?>
 
 <form action="index.php?option=com_jem&amp;view=contactelement&amp;tmpl=component" method="post" name="adminForm" id="adminForm">

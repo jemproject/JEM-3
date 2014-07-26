@@ -8,7 +8,7 @@
  */
 defined('_JEXEC') or die;
 
-$function = JFactory::getApplication()->input->get('function', 'jSelectUser');
+$function = JFactory::getApplication()->input->getCmd('function', 'jSelectUser');
 JHtml::_('bootstrap.tooltip');
 ?>
 

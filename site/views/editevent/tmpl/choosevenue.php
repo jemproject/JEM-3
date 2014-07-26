@@ -8,7 +8,7 @@
  */
 defined('_JEXEC') or die;
 
-$function = JFactory::getApplication()->input->get('function', 'jSelectVenue');
+$function = JFactory::getApplication()->input->getCmd('function', 'jSelectVenue');
 ?>
 
 <script type="text/javascript">

@@ -184,8 +184,8 @@ class JEMControllerEditevent extends JControllerForm
 	protected function getRedirectToItemAppend($recordId = null, $urlVar = 'a_id')
 	{
 		// Need to override the parent method completely.
-		$tmpl		= JFactory::getApplication()->input->get('tmpl');
-		$layout		= JFactory::getApplication()->input->get('layout', 'edit');
+		$tmpl		= JFactory::getApplication()->input->getCmd('tmpl');
+		$layout		= JFactory::getApplication()->input->getCmd('layout', 'edit');
 		$append		= '';
 
 		// Setup redirect info.

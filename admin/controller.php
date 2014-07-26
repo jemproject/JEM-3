@@ -37,7 +37,7 @@ class JEMController extends JControllerLegacy
 		// Load the submenu.
 		// if no view found then refert to main
 
-		JEMHelperBackend::addSubmenu(JFactory::getApplication()->input->get('view', 'main'));
+		JEMHelperBackend::addSubmenu(JFactory::getApplication()->input->getCmd('view', 'main'));
 
 		parent::display();
 		return $this;
