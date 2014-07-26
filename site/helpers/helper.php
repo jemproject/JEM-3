@@ -1172,8 +1172,8 @@ class JemHelper {
 		$query->from($db->quoteName('#__jem_dates'));
 		$query->where(array('enabled = 1','holiday <> 1','date >= '.$db->Quote($date_first_calculated_occurrence),'date <= '.$db->Quote($date_last_calculated_occurrence)));
 		$db->setQuery($query);
-		$dateTable = $db->loadResultArray();
-
+		$dateTable = $db->loadColumn();
+		
 		if ($dateTable) {
 			$excluded_dates = $dateTable;
 		} else {
