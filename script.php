@@ -297,7 +297,7 @@ class com_jemInstallerScript
 				->set('params = '.$db->quote($paramsString))
 				->where(array("type = 'component'", "element = 'com_jem'"));
 			$db->setQuery($query);
-			$db->query();
+			$db->execute();
 		}
 	}
 
@@ -326,7 +326,7 @@ class com_jemInstallerScript
 			$query->update('#__jem_settings')
 			->set('globalattribs = '.$db->quote($paramsString));
 			$db->setQuery($query);
-			$db->query();
+			$db->execute();
 		}
 	}
 
@@ -377,7 +377,7 @@ class com_jemInstallerScript
 			->values(implode(',', array($extensionId, $db->quote($versionId))));
 
 		$db->setQuery($query);
-		$db->query();
+		$db->execute();
 	}
 
 	/**
