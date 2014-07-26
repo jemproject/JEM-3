@@ -221,7 +221,7 @@ As we don't have it we can import the EL-data, so we'll check for a version.
 
 	<label for="file"><?php echo JText::_('COM_JEM_IMPORT_SELECTCSV').':'; ?></label>
 	<input type="file" id="catevents-file-upload" accept="text/*" name="Filecatevents" />
-	<input class="btn" type="submit" id="catevents-file-upload-submit" value="<?php echo JText::_('COM_JEM_IMPORT_START'); ?>" onclick="document.getElementById('task1').value='import.csvcateventsimport';return true;"/>
+	<input class="btn" type="submit" id="catevents-file-upload-submit" value="<?php echo JText::_('COM_JEM_IMPORT_START'); ?>" onclick="document.getElementById('task4').value='import.csvcateventsimport';return true;"/>
 	<span id="upload-clear"></span><br /><br/>
 
 	<label for="replace_catevents"><?php echo JText::_('COM_JEM_IMPORT_REPLACEIFEXISTS').':'; ?></label>
@@ -243,7 +243,7 @@ As we don't have it we can import the EL-data, so we'll check for a version.
 
 	<label for="file"><?php echo JText::_('COM_JEM_IMPORT_SELECTCSV').':'; ?></label>
 	<input type="file" id="venue-file-upload" accept="text/*" name="Filevenues" />
-	<input class="btn" type="submit" id="venue-file-upload-submit" value="<?php echo JText::_('COM_JEM_IMPORT_START'); ?>" onclick="document.getElementById('task1').value='import.csvvenuesimport';return true;"/>
+	<input class="btn" type="submit" id="venue-file-upload-submit" value="<?php echo JText::_('COM_JEM_IMPORT_START'); ?>" onclick="document.getElementById('task4').value='import.csvvenuesimport';return true;"/>
 	<span id="upload-clear"></span><br /><br/>
 
 	<label for="replace_venues"><?php echo JText::_('COM_JEM_IMPORT_REPLACEIFEXISTS').':'; ?></label>
@@ -262,7 +262,7 @@ As we don't have it we can import the EL-data, so we'll check for a version.
 
 	<label for="file"><?php echo JText::_('COM_JEM_IMPORT_SELECTCSV').':'; ?></label>
 	<input type="file" id="cat-file-upload" accept="text/*" name="Filecategories" />
-	<input class="btn" type="submit" id="cat-file-upload-submit" value="<?php echo JText::_('COM_JEM_IMPORT_START'); ?>" onclick="document.getElementById('task1').value='import.csvcategoriesimport';return true;"/>
+	<input class="btn" type="submit" id="cat-file-upload-submit" value="<?php echo JText::_('COM_JEM_IMPORT_START'); ?>" onclick="document.getElementById('task4').value='import.csvcategoriesimport';return true;"/>
 	<span id="upload-clear"></span><br /><br/>
 
 	<label for="replace_categories"><?php echo JText::_('COM_JEM_IMPORT_REPLACEIFEXISTS').':'; ?></label>
