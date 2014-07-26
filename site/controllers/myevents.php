@@ -32,7 +32,7 @@ class JEMControllerMyevents extends JControllerLegacy
 	function publish()
 	{
 		// Check for request forgeries
-		JRequest::checkToken() or jexit('Invalid Token');
+		JSession::checkToken() or jexit('Invalid Token');
 
 		$app = JFactory::getApplication();
 		$input = $app->input;
@@ -64,7 +64,7 @@ class JEMControllerMyevents extends JControllerLegacy
 	function unpublish()
 	{
 		// Check for request forgeries
-		JRequest::checkToken() or jexit('Invalid Token');
+		JSession::checkToken() or jexit('Invalid Token');
 
 		$app = JFactory::getApplication();
 		$input = $app->input;
@@ -99,7 +99,7 @@ class JEMControllerMyevents extends JControllerLegacy
 	function trash()
 	{
 		// Check for request forgeries
-		JRequest::checkToken() or jexit('Invalid Token');
+		JSession::checkToken() or jexit('Invalid Token');
 
 		$app = JFactory::getApplication();
 		$input = $app->input;

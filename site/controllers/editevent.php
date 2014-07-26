@@ -538,7 +538,7 @@ class JEMControllerEditevent extends JControllerForm
 	{
 
 		// Check for request forgeries
-		JRequest::checkToken() or jexit('Invalid Token');
+		JSession::checkToken() or jexit('Invalid Token');
 
 		$id 	= JRequest::getInt('rdid', 0, 'post');
 
@@ -573,7 +573,7 @@ class JEMControllerEditevent extends JControllerForm
 	function delreguser()
 	{
 		// Check for request forgeries
-		JRequest::checkToken() or jexit('Invalid Token');
+		JSession::checkToken() or jexit('Invalid Token');
 
 		$id = JRequest::getInt('rdid', 0, 'post');
 

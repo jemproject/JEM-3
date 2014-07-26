@@ -43,7 +43,7 @@ class JEMControllerGroups extends JControllerAdmin
 	function remove()
 	{
 		// Check for request forgeries
-		JRequest::checkToken() or jexit( 'Invalid Token' );
+		JSession::checkToken() or jexit( 'Invalid Token' );
 
 		$jinput = JFactory::getApplication()->input;
 		$cid = $jinput->get('cid',  0, 'array');
