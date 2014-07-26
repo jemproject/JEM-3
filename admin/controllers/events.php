@@ -36,9 +36,6 @@ class JemControllerEvents extends JControllerAdmin
 
 	/**
 	 * Method to toggle the featured setting of a list of events.
-	 *
-	 * @return	void
-	 * @since	1.6
 	 */
 	function featured()
 	{
@@ -47,7 +44,7 @@ class JemControllerEvents extends JControllerAdmin
 
 		// Initialise variables.
 		$user	= JFactory::getUser();
-		$ids	= JRequest::getVar('cid', array(), '', 'array');
+		$ids	= JFactory::getApplication()->input->get('cid', array(), 'array');
 		$values	= array('featured' => 1, 'unfeatured' => 0);
 		$task	= $this->getTask();
 		$value	= JArrayHelper::getValue($values, $task, 0, 'int');

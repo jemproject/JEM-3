@@ -96,7 +96,7 @@ class JEMControllerSource extends JControllerLegacy
 		// Initialise variables.
 		$app		= JFactory::getApplication();
 		$model		= $this->getModel();
-		$recordId	= JRequest::getVar('id');
+		$recordId	= JFactory::getApplication()->input->get('id');
 		$context	= 'com_jem.edit.source';
 
 
@@ -147,7 +147,7 @@ class JEMControllerSource extends JControllerLegacy
 
 		// Initialise variables.
 		$app		= JFactory::getApplication();
-		$data		= JRequest::getVar('jform', array(), 'post', 'array');
+		$data		= JFactory::getApplication()->input->get('jform', array(), 'array');
 		$context	= 'com_jem.edit.source';
 		$task		= $this->getTask();
 		$model		= $this->getModel();

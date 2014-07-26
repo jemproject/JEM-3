@@ -45,7 +45,7 @@ class JEMControllerImport extends JControllerLegacy {
 	}
 
 	private function CsvImport($type, $dbname) {
-		$replace = JRequest::getVar('replace_'.$type, 0, 'post', 'int');
+		$replace = JFactory::getApplication()->input->get('replace_'.$type, 0, 'int');
 		
 		
 		# in here we're retrieving the $dbname
@@ -58,7 +58,7 @@ class JEMControllerImport extends JControllerLegacy {
 		}
 
 		$msg = '';
-		$file = JRequest::getVar('File'.$type, NULL, 'files', 'array');
+		$file = JFactory::getApplication()->input->get('File'.$type, NULL, 'array');
 
 		if ($file['name'] == false)
 		{

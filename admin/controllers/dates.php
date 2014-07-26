@@ -60,7 +60,7 @@ class JEMControllerDates extends JControllerAdmin
 	
 		// Initialise variables.
 		$user	= JFactory::getUser();
-		$ids	= JRequest::getVar('cid', array(), '', 'array');
+		$ids	= JFactory::getApplication()->input->get('cid', array(), 'array');
 		$values	= array('setstatusdate' => 1, 'disabledate' => 0);
 		$task	= $this->getTask();
 		$value	= JArrayHelper::getValue($values, $task, 0, 'int');

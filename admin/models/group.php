@@ -147,7 +147,7 @@ class JemModelGroup extends JModelAdmin
 			JError::raiseError(500, $table->getError());
 		}
 
-		$members = JRequest::getVar('maintainers',  '', 'post', 'array');
+		$members = JFactory::getApplication()->input->get('maintainers',  '', 'array');
 
 		// Updating group references
 		$query = $db->getQuery(true);
