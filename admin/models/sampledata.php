@@ -74,7 +74,7 @@ class JemModelSampledata extends JModelLegacy
 			$query = trim($query);
 			if ($query != '' && $query{0} != '#') {
 				$this->_db->setQuery($query);
-				$this->_db->query();
+				$this->_db->execute();
 			}
 		}
 
@@ -293,14 +293,14 @@ class JemModelSampledata extends JModelLegacy
 		$query->set('created_by = '.$db->quote((int)$result));
 		$query->where(array('created_by = 62'));
 		$db->setQuery($query);
-		$db->query();
+		$db->execute();
 		
 		$query = $db->getQuery(true);
 		$query->update('#__jem_venues');
 		$query->set('created_by = '.$db->quote((int)$result));
 		$query->where(array('created_by = 62'));
 		$db->setQuery($query);
-		$db->query();
+		$db->execute();
 		
 		return true;
 	}

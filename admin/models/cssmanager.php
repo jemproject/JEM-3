@@ -190,7 +190,7 @@ class JemModelCssmanager extends JModelLegacy
 		->where(array("type = 'plugin'", "element = 'codemirror'"));
 
 		$db->setQuery($query);
-		$db->query();
+		$db->execute();
 	}
 }
 ?>

@@ -42,7 +42,7 @@ class JemModelEvent extends JModelAdmin
 				$query->where('itemid = '.$record->id);
 
 				$db->setQuery($query);
-				$db->query();
+				$db->execute();
 
 				return $user->authorise('core.delete', 'com_jem.category.'.(int) $record->catid);
 			} else {
@@ -130,7 +130,7 @@ class JemModelEvent extends JModelAdmin
 				$query->where('itemid = '.$record->id);
 
 				$db->setQuery($query);
-				$db->query();
+				$db->execute();
 
 				return $user->authorise('core.delete', 'com_jem');
 			}
@@ -543,7 +543,7 @@ class JemModelEvent extends JModelAdmin
 			$query->delete($db->quoteName('#__jem_cats_event_relations'));
 			$query->where('itemid = ' . $pk);
 			$db->setQuery($query);
-			$db->query();
+			$db->execute();
 
 			foreach ($cats as $cat){
 				$db 	= $this->getDbo();
@@ -562,7 +562,7 @@ class JemModelEvent extends JModelAdmin
 
 				// Reset the query using our newly populated query object.
 				$db->setQuery($query);
-				$db->query();
+				$db->execute();
 			}
 
 			
@@ -670,7 +670,7 @@ class JemModelEvent extends JModelAdmin
 					' SET featured = '.(int) $value.
 					' WHERE id IN ('.implode(',', $pks).')'
 			);
-			if (!$db->query()) {
+			if (!$db->execute()) {
 				throw new Exception($db->getErrorMsg());
 			}
 

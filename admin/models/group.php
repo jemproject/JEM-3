@@ -155,7 +155,7 @@ class JemModelGroup extends JModelAdmin
 		$query->where('group_id = '.$table->id);
 
 		$db->setQuery($query);
-		$db->query();
+		$db->execute();
 
 		foreach($members as $member)
 		{
@@ -171,7 +171,7 @@ class JemModelGroup extends JModelAdmin
 				->values(implode(',', $values));
 
 			$db->setQuery($query);
-			$db->query();
+			$db->execute();
 		}
 	}
 

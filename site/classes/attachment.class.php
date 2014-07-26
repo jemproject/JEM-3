@@ -221,9 +221,9 @@ abstract class JemAttachment {
 		$query->delete($db->quoteName('#__jem_attachments'));
 		$query->where('id = '.$db->Quote($id));
 		$db->setQuery($query);
-		$db->query();
+		$db->execute();
 
-		$res = $db->query();
+		$res = $db->execute();
 		if (!$res) {
 			return false;
 		}

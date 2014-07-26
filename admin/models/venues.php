@@ -240,7 +240,7 @@ class JemModelVenues extends JModelList
 			$query->where(array('id IN ('.$cids.')'));
 			$db->setQuery($query);
 			
-			if(!$db->query()) {
+			if(!$db->execute()) {
 				$this->setError($db->getErrorMsg());
 				return false;
 			}

@@ -245,7 +245,7 @@ class JemModelAttendees extends JModelLegacy
 
 			$db->setQuery($query);
 
-			if (!$db->query()) {
+			if (!$db->execute()) {
 				JError::raiseError( 4711, $db->getErrorMsg() );
 			}
 		}

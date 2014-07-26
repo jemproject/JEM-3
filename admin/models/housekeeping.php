@@ -117,12 +117,12 @@ class JemModelHousekeeping extends JModelLegacy
 		$db->setQuery('DELETE cat FROM #__jem_cats_event_relations as cat'
 				.' LEFT OUTER JOIN #__jem_events as e ON cat.itemid = e.id'
 				.' WHERE e.id IS NULL');
-		$db->query();
+		$db->execute();
 
 		$db->setQuery('DELETE cat FROM #__jem_cats_event_relations as cat'
 				.' LEFT OUTER JOIN #__jem_categories as c ON cat.catid = c.id'
 				.' WHERE c.id IS NULL');
-		$db->query();
+		$db->execute();
 
 		return true;
 	}
@@ -150,7 +150,7 @@ class JemModelHousekeeping extends JModelLegacy
 		foreach ($tables as $table) {
 			$db->setQuery("TRUNCATE #__jem_".$table);
 
-			if(!$db->query()) {
+			if(!$db->execute()) {
 				return false;
 			}
 		}
@@ -174,7 +174,7 @@ class JemModelHousekeeping extends JModelLegacy
 		$query->select(array('*'));
 		$query->from('#__jem_cats_event_relations');
 		$db->setQuery($query);
-		$db->query();
+		$db->execute();
 
 		$total = $db->loadObjectList();
 
@@ -316,7 +316,7 @@ class JemModelHousekeeping extends JModelLegacy
 		$query->select($field);
 		$query->from('#__jem_'.$table);
 		$db->setQuery($query);
-		$db->query();
+		$db->execute();
 		
 		# output array
 		$array = $db->loadColumn(0);

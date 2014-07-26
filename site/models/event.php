@@ -291,7 +291,7 @@ class JemModelEvent extends JModelItem
 
 			$db->setQuery('UPDATE #__jem_events' . ' SET hits = hits + 1' . ' WHERE id = ' . (int) $pk);
 
-			if (!$db->query()) {
+			if (!$db->execute()) {
 				$this->setError($db->getErrorMsg());
 				return false;
 			}
@@ -599,7 +599,7 @@ class JemModelEvent extends JModelItem
 		$query = 'DELETE FROM #__jem_register WHERE event = ' . $event . ' AND uid= ' . $userid;
 		$this->_db->SetQuery($query);
 
-		if (!$this->_db->query()) {
+		if (!$this->_db->execute()) {
 			JError::raiseError(500, $this->_db->getErrorMsg());
 		}
 

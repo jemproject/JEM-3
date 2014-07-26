@@ -427,7 +427,7 @@ class JEMModelImport extends JModelLegacy {
 				$query->where('NOT catid IN ('.implode(',',array_keys($cats)).')');
 			}
 			$db->setQuery($query);
-			$db->query();
+			$db->execute();
 
 			if (count($cats)) {
 				$values = array();
@@ -452,7 +452,7 @@ class JEMModelImport extends JModelLegacy {
 						$query_upd->set($db->quoteName('ordering') . '=' . $db->quote($order));
 						$query_upd->where($db->quoteName('id') . '=' . $db->quote($id));
 						$db->setQuery($query_upd);
-						if ($db->query()) {
+						if ($db->execute()) {
 							$result['updated']++;
 						}
 					} else {
@@ -468,7 +468,7 @@ class JEMModelImport extends JModelLegacy {
 					$query->columns($db->quoteName($columns));
 					$query->values($values);
 					$db->setQuery($query);
-					if ($db->query()) {
+					if ($db->execute()) {
 						$result['added'] += count($values);
 					}
 				}

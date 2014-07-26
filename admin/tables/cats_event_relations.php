@@ -91,7 +91,7 @@ class JEMTableCats_event_relations extends JTable
 			$values[] = $this->_db->quote($v);
 		}
 		$this->_db->setQuery(sprintf($fmtsql, implode(",", $fields), implode(",", $values)));
-		if (!$this->_db->query()) {
+		if (!$this->_db->execute()) {
 			return false;
 		}
 		$id = $this->_db->insertid();

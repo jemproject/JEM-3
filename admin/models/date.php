@@ -197,7 +197,7 @@ class JEMModelDate extends JModelAdmin
 					' SET enabled = '.(int) $value.
 					' WHERE id IN ('.implode(',', $pks).')'
 			);
-			if (!$db->query()) {
+			if (!$db->execute()) {
 				throw new Exception($db->getErrorMsg());
 			}
 	

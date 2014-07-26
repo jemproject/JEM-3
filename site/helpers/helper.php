@@ -125,7 +125,7 @@ class JemHelper {
 						.' DATE_SUB(NOW(), INTERVAL '.$jemsettings->minus.' DAY) > (IF (enddates IS NOT NULL, enddates, dates))'
 						.' AND published = 1';
 				$db->SetQuery($query);
-				$db->Query();
+				$db->execute();
 			}
 
 			# Set state archived of outdated events
@@ -134,13 +134,13 @@ class JemHelper {
 						.' DATE_SUB(NOW(), INTERVAL '.$jemsettings->minus.' DAY) > (IF (enddates IS NOT NULL, enddates, dates)) '
 						.' AND published = 1';
 				$db->SetQuery($query);
-				$db->Query();
+				$db->execute();
 			}
 
 			# Set timestamp of last cleanup
 			$query = 'UPDATE #__jem_settings SET lastupdate = '.time().' WHERE id = 1';
 			$db->SetQuery($query);
-			$db->Query();
+			$db->execute();
 		}
 	}
 
@@ -309,7 +309,7 @@ class JemHelper {
 			$bumping = array_slice($waiting, 0, $event_places->maxplaces - $registered);
 			$query = ' UPDATE #__jem_register SET waiting = 0 WHERE id IN ('.implode(',', $bumping).')';
 			$db->setQuery($query);
-			if (!$db->query()) {
+			if (!$db->execute()) {
 				$this->setError(JText::_('COM_JEM_FAILED_BUMPING_USERS_FROM_WAITING_TO_CONFIRMED_LIST'));
 				Jerror::raisewarning(0, JText::_('COM_JEM_FAILED_BUMPING_USERS_FROM_WAITING_TO_CONFIRMED_LIST').': '.$db->getErrorMsg());
 			} else {
@@ -1478,7 +1478,7 @@ class JemHelper {
 
 					// Reset the query using our newly populated query object.
 					$db->setQuery($query);
-					$db->query();
+					$db->execute();
 					}
 				}
 			}
