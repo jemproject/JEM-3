@@ -21,9 +21,6 @@ class JemViewWeekcal extends JViewLegacy
 	{
 		$app = JFactory::getApplication();
 
-		// Load tooltips behavior
-		JHtml::_('behavior.tooltip');
-
 		//initialize variables
 		$menu 		= $app->getMenu();
 		$menuitem 	= $menu->getActive();

@@ -8,6 +8,9 @@
  */
 defined('_JEXEC') or die;
 
+JHtml::_('bootstrap.tooltip');
+JHtml::_('behavior.modal', 'a.flyermodal');
+
 $function = JFactory::getApplication()->input->getCmd('function', 'jSelectContact');
 ?>
 

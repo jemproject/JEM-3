@@ -16,6 +16,9 @@
 
 defined('_JEXEC') or die;
 
+// include tooltip
+JHtml::_('bootstrap.tooltip');
+
 
 //Month Names
 $uxtime_first_of_month = gmmktime(0, 0, 0, $prev_month, 1, $offset_year);

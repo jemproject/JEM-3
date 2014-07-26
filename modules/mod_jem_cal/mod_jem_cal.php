@@ -21,9 +21,6 @@ require_once(JPATH_SITE.'/components/com_jem/helpers/route.php');
 require_once(JPATH_SITE.'/components/com_jem/helpers/helper.php');
 
 
-// include mootools tooltip
-JHtml::_('behavior.tooltip');
-
 // Parameters
 $app = JFactory::getApplication();
 $day_name_length	= $params->get('day_name_length', '2');
