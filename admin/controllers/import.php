@@ -267,7 +267,7 @@ class JEMControllerImport extends JControllerLegacy {
 						$data = $model->transformEventlistData("eventlist_cats_event_relations", $data);
 					
 						# EL-data is transformed, now we'll store it in the jem-table
-						$model->storeJemData($tables->imptables[$table], $data);
+						$model->storeTableData($tables->imptables[$table], $data);
 						
 					} else {
 						// This helps to prevent special cases in the following code
@@ -304,7 +304,7 @@ class JEMControllerImport extends JControllerLegacy {
 						$data = $model->transformEventlistData("eventlist_cats_event_relations", $data);
 						
 						# EL-data is transformed, now we'll store it in the jem-table
-						$model->storeJemData("eventlist_cats_event_relations", $data);
+						$model->storeTableData("eventlist_cats_event_relations", $data);
 				
 					}
 					
@@ -315,7 +315,7 @@ class JEMControllerImport extends JControllerLegacy {
 					$data = $model->transformEventlistData("eventlist_categories", $data);
 					
 					# EL-data is transformed, now we'll store it in the jem-table
-					$model->storeJemData("eventlist_categories", $data);
+					$model->storeTableData("eventlist_categories", $data);
 					
 				} else {
 						# get data of the Eventlist-table
@@ -325,7 +325,7 @@ class JEMControllerImport extends JControllerLegacy {
 						$data = $model->transformEventlistData($tables->imptables[$table], $data);
 				
 						# EL-data is transformed, now we'll store it in the jem-tables 
-						$model->storeJemData($tables->imptables[$table], $data);
+						$model->storeTableData($tables->imptables[$table], $data);
 						
 						
 					}
@@ -465,7 +465,7 @@ class JEMControllerImport extends JControllerLegacy {
 					$data = $model->transformJemTableData($tables->imptables[$table], $data);
 	
 					# EL-data is transformed, now we'll store it in the jem-tables
-					$model->storeJemTableData($tables->imptables[$table], $data);
+					$model->storeTableData($tables->imptables[$table], $data);
 			}
 	
 			// Proceed with next bunch of data

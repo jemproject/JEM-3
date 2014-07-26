@@ -1286,14 +1286,15 @@ class JEMModelImport extends JModelLegacy {
 	 * @param string $tablename  The name of the table
 	 * @param array $data  The data to save
 	 */
-	public function storeJemTableData($tablename, &$data) {
+	public function storeTableData($tablename, &$data) {
 		$replace = true;
-		//if($tablename == "jem_groupmembers" || $tablename == "jem_cats_event_relations") {
-		//	$replace = false;
-		//}
-	
+		
 		if (strpos($tablename, 'jem_') !== false) {
 			$tablename = str_replace('jem_', '', $tablename);
+		}
+		
+		if (strpos($tablename, 'eventlist') !== false) {
+			$tablename = str_replace('eventlist_', '', $tablename);
 		}
 			
 		$ignore = array ();
@@ -1343,70 +1344,6 @@ class JEMModelImport extends JModelLegacy {
 			}
 		}
 	}
-	
-
-	/**
-	 * Saves the data to the database
-	 * @param string $tablename  The name of the table
-	 * @param array $data  The data to save
-	 */
-	public function storeJemData($tablename, &$data) {	
-		$replace = true;
-		if($tablename == "eventlist_groupmembers" || $tablename == "eventlist_cats_event_relations") {
-			$replace = false;
-		}
-		
-		if (strpos($tablename, 'eventlist') !== false) {
-			$tablename = str_replace('eventlist_', '', $tablename);
-		}
-			
-		$ignore = array ();
-//		if (!$replace) {
-//			$ignore[] = 'id';
-// 		}
-		$rec = array ('added' => 0, 'updated' => 0, 'error' => 0);
-
-		foreach($data as $row) {
-			if (is_object($row)) {
-				$row = get_object_vars($row);
-			} 
-			
-			$object = JTable::getInstance($tablename, 'JEMTable');
-			$object->bind($row, $ignore);
-
-			// Make sure the data is valid
-			if (!$object->check()) {
-				$this->setError($object->getError());
-				echo JText::_('COM_JEM_IMPORT_ERROR_CHECK').$object->getError()."\n";
-				continue ;
-			}
-
-			// Store it in the db
-			if ($replace) {
-				// We want to keep id from database so first we try to insert into database. if it fails,
-				// it means the record already exists, we can use store().
-				if (!$object->insertIgnore()) {
-					if (!$object->store()) {
-						echo JText::_('COM_JEM_IMPORT_ERROR_STORE').$this->_db->getErrorMsg()."\n";
-						$rec['error']++;
-						continue ;
-					} else {
-						$rec['updated']++;
-					}
-				} else {
-					$rec['added']++;
-				}
-			} else {
-				if (!$object->store()) {
-					echo JText::_('COM_JEM_IMPORT_ERROR_STORE').$this->_db->getErrorMsg()."\n";
-					$rec['error']++;
-					continue ;
-				} else {
-					$rec['added']++;
-				}
-			}
-		}
-	}
 
 	/**
 	 * Returns true if the tables already contain JEM data
@@ -1425,7 +1362,7 @@ class JEMModelImport extends JModelLegacy {
 	}
 
 	/**
-	 * Copies the Eventlist images to JEM folder
+	 * Copies the EL-images to JEM folder
 	 */
 	public function copyImages() {
 		jimport('joomla.filesystem.file');
@@ -1509,7 +1446,6 @@ class JEMModelImport extends JModelLegacy {
 			}
 		}
 		
-		
 		# retrieve all files from attachment folder
 		$path = JPATH_SITE.'/com_jem/attachments/';
 		$path2 = JPATH_SITE.'/media/com_jem/attachments/';
@@ -1532,8 +1468,6 @@ class JEMModelImport extends JModelLegacy {
 				
 			}
 		}
-		
 	}
-	
 }
 ?>
