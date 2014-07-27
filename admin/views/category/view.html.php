@@ -42,7 +42,7 @@ class JemViewCategory extends JViewLegacy
 		JHtml::_('stylesheet', 'com_jem/colorpicker.css', array(), true);
 
 		// Load Script
-		$document->addScript(JURI::root().'media/com_jem/js/colorpicker.js');
+		$document->addScript(JUri::root().'media/com_jem/js/colorpicker.js');
 
 		// build grouplist
 		// @todo: make a form-field for this one

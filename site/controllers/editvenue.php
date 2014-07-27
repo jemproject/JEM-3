@@ -233,7 +233,7 @@ class JEMControllerEditvenue extends JControllerForm
 		$return = JFactory::getApplication()->input->get('return', null, 'base64');
 
 		if (empty($return) || !JUri::isInternal(urldecode(base64_decode($return)))) {
-			return JURI::base();
+			return JUri::base();
 		}
 		else {
 			return urldecode(base64_decode($return));

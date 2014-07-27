@@ -422,7 +422,7 @@ class JEMOutput {
 			JHtml::_('bootstrap.tooltip');
 			require_once JPATH_SITE . '/components/com_mailto/helpers/mailto.php';
 
-			$uri = JURI::getInstance();
+			$uri = JUri::getInstance();
 			$base = $uri->toString(array('scheme', 'host', 'port'));
 			$template = JFactory::getApplication()->getTemplate();
 			$link = $base.JRoute::_('index.php?option=com_jem&view='.$view.'&id='.$slug, false);
@@ -863,22 +863,22 @@ class JEMOutput {
 			# the thumb-file exists
 			if ($settings->lightbox == 0) {
 				# thumb in page
-				$attributes = $id_attr.' class="flyerimage" onclick="window.open(\''.JURI::base().'/'.$image['original'].'\',\'Popup\',\'width='.$image['width'].',height='.$image['height'].',location=no,menubar=no,scrollbars=no,status=no,toolbar=no,resizable=no\')"';
-				$icon = '<img '.$attributes.' src="'.JURI::base().'/'.$image['thumb'].'" width="'.$image['thumbwidth'].'" height="'.$image['thumbheight'].'" alt="'.$info.'" title="'.JText::_('COM_JEM_CLICK_TO_ENLARGE').'" />';
+				$attributes = $id_attr.' class="flyerimage" onclick="window.open(\''.JUri::base().'/'.$image['original'].'\',\'Popup\',\'width='.$image['width'].',height='.$image['height'].',location=no,menubar=no,scrollbars=no,status=no,toolbar=no,resizable=no\')"';
+				$icon = '<img '.$attributes.' src="'.JUri::base().'/'.$image['thumb'].'" width="'.$image['thumbwidth'].'" height="'.$image['thumbheight'].'" alt="'.$info.'" title="'.JText::_('COM_JEM_CLICK_TO_ENLARGE').'" />';
 				$output = '<div class="flyerimage">'.$icon.'</div>';
 
 			} else {
 				# thumb in popup
 				JHtml::_('behavior.modal', 'a.flyermodal');
-				$url = JURI::base().$image['original'];
+				$url = JUri::base().$image['original'];
 				$attributes = $id_attr.' class="flyermodal flyerimage" title="'.$info.'"';
 			}
-			$icon = '<img src="'.JURI::base().$thumbx.'" alt="'.$info.'" title="'.JText::_('COM_JEM_CLICK_TO_ENLARGE').'" />';
+			$icon = '<img src="'.JUri::base().$thumbx.'" alt="'.$info.'" title="'.JText::_('COM_JEM_CLICK_TO_ENLARGE').'" />';
 			$output = '<div class="flyerimage"><a href="'.$url.'" '.$attributes.'>'.$icon.'</a></div>';
 		} else {
 			# we don't have a thumb so we're using the image sizes from the backend
 			# @todo apply check for valid file
-			$output = '<div class="flyerimage"><img '.$id_attr.' class="notmodal" src="'.JURI::base().$image['original'].'" width="'.$image['width'].'" height="'.$image['height'].'" alt="'.$info.'" /></div>';
+			$output = '<div class="flyerimage"><img '.$id_attr.' class="notmodal" src="'.JUri::base().$image['original'].'" width="'.$image['width'].'" height="'.$image['height'].'" alt="'.$info.'" /></div>';
 		}
 
 		return $output;

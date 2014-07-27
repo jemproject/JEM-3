@@ -22,7 +22,7 @@ defined('_JEXEC') or die;
 	{
 		$user 		= JFactory::getUser();
 		$document	= JFactory::getDocument();
-		$url 		= JURI::root();
+		$url 		= JUri::root();
 		$settings 	= JEMHelper::globalattribs();
 
 		// Initialise variables.

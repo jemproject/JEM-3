@@ -39,7 +39,7 @@ class JemViewEditevent extends JViewLegacy
 		$menu = $app->getMenu();
 		$menuitem = $menu->getActive();
 		$pathway = $app->getPathway();
-		$url = JURI::root();
+		$url = JUri::root();
 		
 		$settings 	= JemHelper::globalattribs();
 		$this->settings = $settings;

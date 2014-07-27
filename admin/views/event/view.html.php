@@ -38,7 +38,7 @@ class JemViewEvent extends JViewLegacy {
 		$this->settings	= JemAdmin::config();
 		$task			= JFactory::getApplication()->input->get('task');
 		$this->task 	= $task;
-		$url 			= JURI::root();
+		$url 			= JUri::root();
 		
 		$categories 	= JemCategories::getCategoriesTree(1);
 		$selectedcats 	= $this->get('Catsselected');

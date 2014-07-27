@@ -25,7 +25,7 @@ defined('_JEXEC') or die;
 		$settings 	= JEMHelper::globalattribs();
 
 		$jemsettings = JEMAdmin::config();
-		$url 		= JURI::root();
+		$url 		= JUri::root();
 
 		// Initialise variables.
 		$this->items			= $this->get('Items');

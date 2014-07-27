@@ -146,19 +146,19 @@ abstract class modJEMwideHelper
 			$lists[$i]->catname			= implode(", ", JemOutput::getCategoryList($row->categories, $params->get('linkcategory', 1)));
 
 			if ($dimage == null) {
-				$lists[$i]->eventimage		= JURI::base(true).'/media/system/images/blank.png';
-				$lists[$i]->eventimageorig	= JURI::base(true).'/media/system/images/blank.png';
+				$lists[$i]->eventimage		= JUri::base(true).'/media/system/images/blank.png';
+				$lists[$i]->eventimageorig	= JUri::base(true).'/media/system/images/blank.png';
 			} else {
-				$lists[$i]->eventimage		= JURI::base(true).'/'.$dimage['thumb'];
-				$lists[$i]->eventimageorig	= JURI::base(true).'/'.$dimage['original'];
+				$lists[$i]->eventimage		= JUri::base(true).'/'.$dimage['thumb'];
+				$lists[$i]->eventimageorig	= JUri::base(true).'/'.$dimage['original'];
 			}
 
 			if ($limage == null) {
-				$lists[$i]->venueimage		= JURI::base(true).'/media/system/images/blank.png';
-				$lists[$i]->venueimageorig	= JURI::base(true).'/media/system/images/blank.png';
+				$lists[$i]->venueimage		= JUri::base(true).'/media/system/images/blank.png';
+				$lists[$i]->venueimageorig	= JUri::base(true).'/media/system/images/blank.png';
 			} else {
-				$lists[$i]->venueimage		= JURI::base(true).'/'.$limage['thumb'];
-				$lists[$i]->venueimageorig	= JURI::base(true).'/'.$limage['original'];
+				$lists[$i]->venueimage		= JUri::base(true).'/'.$limage['thumb'];
+				$lists[$i]->venueimageorig	= JUri::base(true).'/'.$limage['original'];
 			}
 			$lists[$i]->eventdescription= strip_tags($row->fulltext);
 			$lists[$i]->venuedescription= strip_tags($row->locdescription);

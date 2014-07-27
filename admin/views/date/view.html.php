@@ -38,7 +38,7 @@ class JEMViewDate extends JViewLegacy {
 		$this->settings	= JEMAdmin::config();
 		$task			= JFactory::getApplication()->input->get('task');
 		$this->task 	= $task;
-		$url 			= JURI::root();
+		$url 			= JUri::root();
 
 		
 		// Load css

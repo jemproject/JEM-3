@@ -106,7 +106,7 @@ class JEMViewImport extends JViewLegacy {
 	
 	function WarningIcon()
 	{
-		$url = JURI::root();
+		$url = JUri::root();
 		$tip = JHtml::_('image', 'system/tooltip.png', null, NULL, true);
 	
 		return $tip;

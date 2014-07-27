@@ -56,7 +56,7 @@ class JEMViewSettings extends JViewLegacy {
 		}
 
 		// Load Script
-		$document->addScript(JURI::root().'media/com_jem/js/colorpicker.js');
+		$document->addScript(JUri::root().'media/com_jem/js/colorpicker.js');
 
 		JHtml::_('behavior.framework');
 		
@@ -100,7 +100,6 @@ class JEMViewSettings extends JViewLegacy {
 
 	function WarningIcon()
 	{
-		$url = JURI::root();
 		$tip = JHtml::_('image', 'system/tooltip.png', null, NULL, true);
 
 		return $tip;

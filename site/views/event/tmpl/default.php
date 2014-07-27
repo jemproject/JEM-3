@@ -205,7 +205,7 @@ $mapType = $this->mapType;
 		<?php //Optional link to let them register to see the whole event. ?>
 		<?php if ($params->get('event_show_readmore') && $this->item->fulltext != null) {
 		$link1 = JRoute::_('index.php?option=com_users&view=login');
-		$link = new JURI($link1);?>
+		$link = new JUri($link1);?>
 		<p class="readmore">
 		<a href="<?php echo $link; ?>">
 		<?php

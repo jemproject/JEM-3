@@ -42,7 +42,7 @@ switch($params->get('color')) {
 		$color = "red";
 		break;
 }
-$document->addStyleSheet(JURI::base(true).'/modules/mod_jem_teaser/tmpl/mod_jem_teaser.css');
-$document->addStyleSheet(JURI::base(true).'/modules/mod_jem_teaser/tmpl/'.$color.'.css');
+$document->addStyleSheet(JUri::base(true).'/modules/mod_jem_teaser/tmpl/mod_jem_teaser.css');
+$document->addStyleSheet(JUri::base(true).'/modules/mod_jem_teaser/tmpl/'.$color.'.css');
 
 require(JModuleHelper::getLayoutPath('mod_jem_teaser'));

@@ -32,9 +32,9 @@ $pn = array($prev_month=>$prev_link, $next_month=>$next_link);
 
 $document = JFactory::getDocument();
 if ($Default_Stylesheet == 1) {
-	$document->addStyleSheet(JURI::base() . 'modules/mod_jem_cal/mod_jem_cal.css');
+	$document->addStyleSheet(JUri::base() . 'modules/mod_jem_cal/mod_jem_cal.css');
 } else {
-	$document->addStyleSheet(JURI::base() . $User_stylesheet);
+	$document->addStyleSheet(JUri::base() . $User_stylesheet);
 }
 
 //Output

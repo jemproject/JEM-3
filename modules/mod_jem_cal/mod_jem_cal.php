@@ -59,7 +59,7 @@ if ($Remember == 1) { // Remember which month / year is selected. Don't jump bac
 }
 
 //Requested URL
-$uri = JURI::getInstance();
+$uri = JUri::getInstance();
 $myurl = $uri->toString(array('query'));
 
 //08/09/09 - Added Fix for sh404sef

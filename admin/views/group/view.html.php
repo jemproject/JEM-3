@@ -35,7 +35,7 @@ class JEMViewGroup extends JViewLegacy {
 		$this->settings	= JEMAdmin::config();
 		$task		= JFactory::getApplication()->input->get('task');
 		$this->task = $task;
-		$url 		= JURI::root();
+		$url 		= JUri::root();
 
 		// Load css
 		JHtml::_('stylesheet', 'com_jem/backend.css', array(), true);
