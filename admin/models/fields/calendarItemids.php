@@ -86,8 +86,8 @@ class JFormFieldCalendarItemids extends JFormFieldList
 		//$options2 = array_merge($options,$options2);
 		//array_unshift($options2, JHtml::_('select.option', '0', JText::_('COM_JEM_SELECT_HOLIDAY')));
 				
-		//$html[] = JHTML::_('select.genericlist', $countryoptions, 'countryactivated', null, 'value', 'text', $currentValue);
-		$html[] = JHTML::_('select.genericlist', $options, 'calendarids[]', 'class="inputbox" size="6" multiple="true"', 'value', 'text', $currentValue);
+		//$html[] = JHtml::_('select.genericlist', $countryoptions, 'countryactivated', null, 'value', 'text', $currentValue);
+		$html[] = JHtml::_('select.genericlist', $options, 'calendarids[]', 'class="inputbox" size="6" multiple="true"', 'value', 'text', $currentValue);
 		
 		return implode("\n", $html);		
 	}

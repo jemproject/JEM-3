@@ -165,7 +165,7 @@ class JFormFieldCatOptions extends JFormFieldList
 		$db->setQuery($query);
 	
 		//	$this->_category = array();
-		//	$this->_category[] = JHTML::_('select.option', '0', JText::_( 'COM_JEM_SELECT_CATEGORY' ) );
+		//	$this->_category[] = JHtml::_('select.option', '0', JText::_( 'COM_JEM_SELECT_CATEGORY' ) );
 		//	$this->_categories = array_merge( $this->_category, $this->_db->loadObjectList() );
 	
 		$mitems = $db->loadObjectList();

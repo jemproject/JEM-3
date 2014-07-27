@@ -757,7 +757,7 @@ class JemHelper {
 		$countryoptions = array();
 		$countryoptions = array_merge(JEMHelperCountries::getCountryOptions(),$countryoptions);
 		array_unshift($countryoptions, JHtml::_('select.option', '0', JText::_('COM_JEM_SELECT_COUNTRY')));
-		$countryoutput = JHTML::_('select.genericlist', $countryoptions, 'countryactivated', null, 'value', 'text', $currentValue);
+		$countryoutput = JHtml::_('select.genericlist', $countryoptions, 'countryactivated', null, 'value', 'text', $currentValue);
 
 		# Retrieve Holidays
 		$db = JFactory::getDBO();
@@ -781,8 +781,8 @@ class JemHelper {
 		//array_unshift($options2, JHtml::_('select.option', '0', JText::_('COM_JEM_SELECT_HOLIDAY')));
 
 
-		//$html[] = JHTML::_('select.genericlist', $countryoptions, 'countryactivated', null, 'value', 'text', $currentValue);
-		$html[] = JHTML::_('select.genericlist', $options, 'activated[]', 'class="inputbox" size="6" multiple="true"', 'value', 'text', $currentValue);
+		//$html[] = JHtml::_('select.genericlist', $countryoptions, 'countryactivated', null, 'value', 'text', $currentValue);
+		$html[] = JHtml::_('select.genericlist', $options, 'activated[]', 'class="inputbox" size="6" multiple="true"', 'value', 'text', $currentValue);
 
 		return implode("\n", $html);
 	}
