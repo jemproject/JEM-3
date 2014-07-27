@@ -17,7 +17,8 @@ class JemViewAttendees extends JViewLegacy {
 
 	public function display($tpl = null)
 	{
-		$app = JFactory::getApplication();
+		$app 	= JFactory::getApplication();
+		$jinput = $app->input;
 
 		if($this->getLayout() == 'print') {
 			$this->_displayprint($tpl);
@@ -33,7 +34,7 @@ class JemViewAttendees extends JViewLegacy {
 		$menuitem	= $menu->getActive();
 		$user		= JFactory::getUser();
 		$uri 		= JFactory::getURI();
-		$print		= JRequest::getBool('print');
+		$print		= $jinput->getBool('print');
 
 		# redirect if not logged in
 		if (!$user->get('id')) {

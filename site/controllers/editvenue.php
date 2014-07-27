@@ -184,6 +184,8 @@ class JEMControllerEditvenue extends JControllerForm
 	 */
 	protected function getRedirectToItemAppend($recordId = null, $urlVar = 'a_id')
 	{
+		$jinput = JFactory::getApplication()->input;
+		
 		// Need to override the parent method completely.
 		$tmpl		= JFactory::getApplication()->input->getCmd('tmpl');
 		$layout		= JFactory::getApplication()->input->getCmd('layout', 'edit');
@@ -200,9 +202,9 @@ class JEMControllerEditvenue extends JControllerForm
 			$append .= '&'.$urlVar.'='.$recordId;
 		}
 
-		$itemId	= JRequest::getInt('Itemid');
+		$itemId	= $jinput->getInt('Itemid');
 		$return	= $this->getReturnPage();
-		//$catId = JRequest::getInt('catid', null, 'get');
+		//$catId = $jinput->getInt('catid', null);
 
 		if ($itemId) {
 			$append .= '&Itemid='.$itemId;

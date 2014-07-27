@@ -132,7 +132,7 @@ class JemModelGroup extends JModelAdmin
 		$db = JFactory::getDbo();
 
 		// Bind the form fields to the table
-// 		if (!$table->bind(JRequest::get('post'))) {
+// 		if (!$table->bind($jinput->getArray($_POST))) {
 // 			return JError::raiseWarning(500, $table->getError());
 // 		}
 

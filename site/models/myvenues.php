@@ -49,7 +49,8 @@ class JEMModelMyvenues extends JModelLegacy
 	 */
 	function & getVenues()
 	{
-		$pop = JRequest::getBool('pop');
+		$jinput = JFactory::getApplication()->input;
+		$pop 	= $jinput->getBool('pop');
 
 		// Lets load the content if it doesn't already exist
 		if ( empty($this->_venues)) {

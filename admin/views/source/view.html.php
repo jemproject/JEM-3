@@ -46,7 +46,8 @@ class JEMViewSource extends JViewLegacy
 	 */
 	protected function addToolbar()
 	{
-		JRequest::setVar('hidemainmenu', true);
+		$jinput = JFactory::getApplication()->input;
+		$jinput->set('hidemainmenu', true);
 
 		$user		= JFactory::getUser();
 		$canDo		= JEMHelperBackend::getActions(0);

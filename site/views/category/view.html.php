@@ -42,7 +42,7 @@ class JemViewCategory extends JEMView
 			$params 		= $app->getParams();
 			$uri 			= JFactory::getURI();
 			$pathway 		= $app->getPathWay();
-			$print			= JRequest::getBool('print');
+			$print			= $jinput->getBool('print');
 
 			// Load css
 			JemHelper::loadCss('jem');
@@ -127,7 +127,7 @@ class JemViewCategory extends JEMView
 			$settings 		= JemHelper::globalattribs();
 			$db  			= JFactory::getDBO();
 			$user			= JFactory::getUser();
-			$print			= JRequest::getBool('print');
+			$print			= $jinput->getBool('print');
 
 			//get menu information
 			$params 		= $app->getParams();
@@ -181,7 +181,7 @@ class JemViewCategory extends JEMView
 			$filter_type		= $app->getUserStateFromRequest('com_jem.category.'.$itemid.'.filter_filtertype', 'filter_type', '', 'int');
 			$search 			= $app->getUserStateFromRequest('com_jem.category.'.$itemid.'.filter_search', 'filter_search', '', 'string');
 			$search 			= $db->escape(trim(JString::strtolower($search)));
-			$task 				= JRequest::getWord('task');
+			$task 				= $jinput->getWord('task');
 
 			// table ordering
 			$lists['order_Dir'] = $filter_order_Dir;

@@ -46,9 +46,10 @@ class JEMView extends JViewLegacy {
 	 */
 	protected function prepareDocumentDISABLED() {
 		$app 		= JFactory::getApplication();
+		$jinput 	= $app->input;
 		$menus		= $app->getMenu();
 		$menu 		= $menus->getActive();
-		$print		= JRequest::getBool('print');
+		$print		= $jinput->getBool('print');
 
 		if ($print) {
 			JemHelper::loadCss('print');

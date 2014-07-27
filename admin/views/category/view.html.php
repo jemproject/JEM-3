@@ -28,8 +28,8 @@ class JemViewCategory extends JViewLegacy
 		$this->state	= $this->get('State');
 		$this->canDo	= JEMHelperBackend::getActions($this->state->get('category.component'));
 
-
 		$document	= JFactory::getDocument();
+		$jinput 	= JFactory::getApplication()->input;
 
 		// Check for errors.
 		if (count($errors = $this->get('Errors'))) {
@@ -55,9 +55,9 @@ class JemViewCategory extends JViewLegacy
 		$Lists['groups']	= JHtml::_('select.genericlist', $grouplist, 'groupid', array('size'=>'1','class'=>'inputbox'), 'value', 'text', $this->item->groupid);
 		$this->Lists 		= $Lists;
 
-
 		parent::display($tpl);
-		JRequest::setVar('hidemainmenu', true);
+		$jinput->set('hidemainmenu', true);
+		
 		$this->addToolbar();
 	}
 

@@ -19,11 +19,12 @@ class JemViewEventslist extends JViewLegacy
 	 */
 	function display($cachable = false, $urlparams = false)
 	{
-		$app = JFactory::getApplication();
-		$doc = JFactory::getDocument();
+		$app 	= JFactory::getApplication();
+		$jinput = $app->input;
+		$doc 	= JFactory::getDocument();
 
 		// Get some data from the model
-		JRequest::setVar('limit', $app->getCfg('feed_limit'));
+		$jinput->set('limit', $app->getCfg('feed_limit'));
 		$rows = $this->get('Items');
 
 		foreach ($rows as $row) {

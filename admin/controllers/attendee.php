@@ -52,7 +52,7 @@ class JemControllerAttendee extends JControllerLegacy
 		$jinput = JFactory::getApplication()->input;
 
 		$venue = JTable::getInstance('Register', 'JEMTable');
-		$venue->bind(JRequest::get('post'));
+		$venue->bind($jinput->getArray($_POST));
 		$venue->checkin();
 
 		$this->setRedirect('index.php?option=com_jem&view=attendees&id='.$jinput->getInt('event'));

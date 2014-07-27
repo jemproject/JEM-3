@@ -69,7 +69,8 @@ class JEMModelMyevents extends JModelLegacy
 	 */
 	function & getEvents()
 	{
-		$pop = JRequest::getBool('pop');
+		$jinput = JFactory::getApplication()->input;
+		$pop = $jinput->getBool('pop');
 
 		// Lets load the content if it doesn't already exist
 		if ( empty($this->_events)) {
@@ -231,7 +232,8 @@ class JEMModelMyevents extends JModelLegacy
 	protected function _buildWhere()
 	{
 		$app 		= JFactory::getApplication();
-		$task 		= JRequest::getWord('task');
+		$jinput 	= $app->input;
+		$task 		= $jinput->getWord('task');
 		$params 	= $app->getParams();
 		$settings 	= JEMHelper::globalattribs();
 		$user 		= JFactory::getUser();

@@ -117,6 +117,7 @@ class JEMModelCategories extends JModelLegacy
 	function &getData()
 	{
 		$app = JFactory::getApplication();
+		$jinput = $app->input;
 		$params = $app->getParams();
 
 		// Lets load the content if it doesn't already exist
@@ -157,7 +158,7 @@ class JEMModelCategories extends JModelLegacy
 
 				//create target link
 				// TODO: Move to view?
-				$task = JRequest::getWord('task');
+				$task = $jinput->getWord('task');
 				if ($task == 'archive') {
 					$category->linktext   = JText::_('COM_JEM_SHOW_ARCHIVE');
 					$category->linktarget = JRoute::_(JEMHelperRoute::getCategoryRoute($category->slug.'&task=archive'));
@@ -228,12 +229,13 @@ class JEMModelCategories extends JModelLegacy
 	protected function _buildDataQuery($id)
 	{
 		$user = JFactory::getUser();
+		$jinput = JFactory::getApplication()->input;
 		// Support Joomla access levels instead of single group id
 		$levels = $user->getAuthorisedViewLevels();
 
 		$id = (int)$id;
 
-		$task = JRequest::getWord('task');
+		$task = $jinput->getWord('task');
 
 		// First thing we need to do is to select only the requested events
 		if ($task == 'archive') {
@@ -316,7 +318,7 @@ class JEMModelCategories extends JModelLegacy
 		}
 
 		$user = JFactory::getUser();
-		// Support Joomla access levels instead of single group id
+		$jinput = JFactory::getApplication()->input;
 		$levels = $user->getAuthorisedViewLevels();
 
 		$ordering = 'c.ordering ASC';
@@ -332,7 +334,7 @@ class JEMModelCategories extends JModelLegacy
 
 		// check archive task and ensure that only categories get selected
 		// if they contain a published/archived event
-		$task = JRequest::getWord('task');
+		$task = $jinput->getWord('task');
 		if($task == 'archive') {
 			$where_sub .= ' AND i.published = 2';
 		} else {
@@ -378,8 +380,8 @@ class JEMModelCategories extends JModelLegacy
 	 */
 	protected function _buildQueryTotal()
 	{
-		$user = JFactory::getUser();
-		// Support Joomla access levels instead of single group id
+		$user 	= JFactory::getUser();
+		$jinput = JFactory::getApplication()->input;
 		$levels = $user->getAuthorisedViewLevels();
 
 		$query = 'SELECT DISTINCT c.id'
@@ -396,7 +398,7 @@ class JEMModelCategories extends JModelLegacy
 			;
 
 		if (!$this->_showemptycats) {
-			$task = JRequest::getWord('task');
+			$task = $jinput->getWord('task');
 			if($task == 'archive') {
 				$query .= ' AND e.published = 2';
 			} else {

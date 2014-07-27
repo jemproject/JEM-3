@@ -19,7 +19,8 @@ class JemViewMyattendances extends JViewLegacy
 	 */
 	function display($tpl = null)
 	{
-		$app = JFactory::getApplication();
+		$app 	= JFactory::getApplication();
+		$jinput = $app->input;
 
 		//initialize variables
 		$document 		= JFactory::getDocument();
@@ -66,7 +67,7 @@ class JemViewMyattendances extends JViewLegacy
 		$search 			= $app->getUserStateFromRequest('com_jem.myattendances.filter_search', 'filter_search', '', 'string');
 		$search 			= $db->escape(trim(JString::strtolower($search)));
 
-		$task 				= JRequest::getWord('task');
+		$task 				= $app->getWord('task');
 
 		//search filter
 		$filters = array();

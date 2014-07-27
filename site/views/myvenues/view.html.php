@@ -19,7 +19,8 @@ class JemViewMyvenues extends JViewLegacy
 	 */
 	function display($tpl = null)
 	{
-		$app = JFactory::getApplication();
+		$app 	= JFactory::getApplication();
+		$jinput = JFactory::getApplication()->input;
 
 		//initialize variables
 		$document 		= JFactory::getDocument();
@@ -64,7 +65,7 @@ class JemViewMyvenues extends JViewLegacy
 		$search 			= $app->getUserStateFromRequest('com_jem.myvenues.filter_search', 'filter_search', '', 'string');
 		$search 			= $db->escape(trim(JString::strtolower($search)));
 
-		$task 		= JRequest::getWord('task');
+		$task 		= $jinput->getWord('task');
 
 		//search filter
 		$filters = array();

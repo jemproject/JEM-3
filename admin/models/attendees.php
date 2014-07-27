@@ -57,7 +57,8 @@ class JemModelAttendees extends JModelLegacy
 	{
 		parent::__construct();
 
-		$app =  JFactory::getApplication();;
+		$app 	= JFactory::getApplication();
+		$jinput = $app->input;
 
 		$limit		= $app->getUserStateFromRequest( 'com_jem.attendees.limit', 'limit', $app->getCfg('list_limit'), 'int');
 		$limitstart = $app->getUserStateFromRequest( 'com_jem.attendees.limitstart', 'limitstart', 0, 'int' );
@@ -66,7 +67,7 @@ class JemModelAttendees extends JModelLegacy
 		$this->setState('limitstart', $limitstart);
 
 		# set unlimited if export or print action || task=export or task=print
-		$this->setState('unlimited', JRequest::getString('task'));
+		$this->setState('unlimited', $jinput->getString('task'));
 
 		$jinput = JFactory::getApplication()->input;
 		$id		= $jinput->get('id','','int');

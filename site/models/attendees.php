@@ -76,7 +76,7 @@ class JEMModelAttendees extends JModelLegacy
 		$this->setState('limitstart', $limitstart);
 
 		//set unlimited if export or print action | task=export or task=print
-		$this->setState('unlimited', JRequest::getString('task'));
+		$this->setState('unlimited', $jinput->getString('task'));
 
 
 	}

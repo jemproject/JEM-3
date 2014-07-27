@@ -19,13 +19,14 @@ class JemViewVenues extends JViewLegacy
 	 */
 	function display($tpl = null)
 	{
-		$app = JFactory::getApplication();
+		$app 	= JFactory::getApplication();
+		$jinput = $app->input;
 
 		$document		= JFactory::getDocument();
 		$jemsettings	= JemHelper::config();
 		$settings 		= JemHelper::globalattribs();
 		$user			= JFactory::getUser();
-		$print			= JRequest::getBool('print');
+		$print			= $jinput->getBool('print');
 
 		//get menu information
 		$menu		= $app->getMenu();

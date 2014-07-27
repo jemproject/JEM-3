@@ -131,12 +131,10 @@ class JEMModelCategoryCal extends JModelLegacy
 	 */
 	function &getData()
 	{
-		$jinput = JFactory::getApplication()->input;
-		$layout = $jinput->get('layout', null, 'word');
-
-		//$pop = JRequest::getBool('pop');
-		$app = JFactory::getApplication();
+		$app 	= JFactory::getApplication();
+		$jinput = $app->input;
 		$params = $app->getParams();
+		$layout = $jinput->getWord('layout', null);
 
 		$items = $this->_data;
 
@@ -332,7 +330,8 @@ class JEMModelCategoryCal extends JModelLegacy
 	protected function _buildCategoryWhere()
 	{
 		$app			= JFactory::getApplication();
-		$task			= JRequest::getWord('task');
+		$jinput 		= $app->input;
+		$task			= $jinput->getWord('task');
 		$params			= $app->getParams();
 		$jemsettings	= JemHelper::config();
 		$user			= JFactory::getUser();
@@ -410,7 +409,7 @@ class JEMModelCategoryCal extends JModelLegacy
 	protected function _buildChildsQuery()
 	{
 		$user = JFactory::getUser();
-		// Support Joomla access levels instead of single group id
+		$jinput = JFactory::getApplication()->input;
 		$levels = $user->getAuthorisedViewLevels();
 
 		$ordering = 'c.ordering ASC';
@@ -422,7 +421,7 @@ class JEMModelCategoryCal extends JModelLegacy
 
 		//TODO: Make option for categories without events to be invisible in list
 		//check archive task and ensure that only categories get selected if they contain a published/archived event
-		$task 	= JRequest::getWord('task');
+		$task 	= $jinput->getWord('task');
 		if($task == 'archive') {
 			$where .= ' AND i.published = 2';
 		} else {

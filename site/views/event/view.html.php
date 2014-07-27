@@ -41,10 +41,11 @@ class JemViewEvent extends JEMView
 		$menu 				= $app->getMenu();
 		$menuitem			= $menu->getActive();
 		$pathway 			= $app->getPathway();
+		$jinput 			= $app->input;
 
 		$this->params		= $app->getParams('com_jem');
 		$this->item			= $this->get('Item');
-		$this->print		= JRequest::getBool('print');
+		$this->print		= $jinput->getBool('print');
 		$this->state		= $this->get('State');
 		$this->user			= $user;
 		$this->jemsettings	= $jemsettings;

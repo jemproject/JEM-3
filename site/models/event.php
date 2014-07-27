@@ -28,13 +28,13 @@ class JemModelEvent extends JModelItem
 	protected function populateState()
 	{
 		$app = JFactory::getApplication('site');
-		$jinput = JFactory::getApplication()->input;
+		$jinput = $app->input;
 
 		// Load state from the request.
 		$pk = $jinput->getInt('id');
 		$this->setState('event.id', $pk);
 
-		$offset = JRequest::getUInt('limitstart');
+		$offset = $jinput->getUInt('limitstart');
 		$this->setState('list.offset', $offset);
 
 		// Load the parameters.

@@ -20,11 +20,12 @@ class JemViewSearch extends JEMView
 	 */
 	function display($tpl = null)
 	{
-		$app = JFactory::getApplication();
+		$app 	= JFactory::getApplication();
+		$jinput = $app->input;
 
 		//initialize variables
 		$document		= JFactory::getDocument();
-		$jemsettings		= JemHelper::config();
+		$jemsettings	= JemHelper::config();
 		$settings 		= JemHelper::globalattribs();
 		$menu			= $app->getMenu();
 		$menuitem		= $menu->getActive();
@@ -54,7 +55,7 @@ class JemViewSearch extends JEMView
 		$filter_date_from	= $app->getUserStateFromRequest('com_jem.search.filter_date_from', 'filter_date_from', '', 'string');
 		$filter_date_to		= $app->getUserStateFromRequest('com_jem.search.filter_date_to', 'filter_date_to', '', 'string');
 		$filter_category 	= $app->getUserStateFromRequest('com_jem.search.filter_category', 'filter_category', 0, 'int');
-		$task			= JRequest::getWord('task');
+		$task				= $jinput->getWord('task');
 
 		//get data from model
 		$rows = $this->get('Data');
@@ -116,10 +117,10 @@ class JemViewSearch extends JEMView
 		$lists	= $this->_buildSortLists();
 
 		if ($lists['filter']) {
-			//$uri->setVar('filter', JRequest::getString('filter'));
+			//$uri->setVar('filter', $jinput->getString('filter'));
 			//$filter		= $app->getUserStateFromRequest('com_jem.jem.filter', 'filter', '', 'string');
 			$uri->setVar('filter', $lists['filter']);
-			$uri->setVar('filter_type', JRequest::getString('filter_type'));
+			$uri->setVar('filter_type', $jinput->getString('filter_type'));
 		} else {
 			$uri->delVar('filter');
 			$uri->delVar('filter_type');
@@ -199,9 +200,10 @@ class JemViewSearch extends JEMView
 	 */
 	protected function _buildSortLists()
 	{
-		$app = JFactory::getApplication();
-		$db = JFactory::getDBO();
-		$task = JRequest::getWord('task');
+		$app 	= JFactory::getApplication();
+		$jinput = $app->input;
+		$db 	= JFactory::getDBO();
+		$task 	= $jinput->getWord('task');
 
 		$filter_order		= JFactory::getApplication()->input->getCmd('filter_order', 'a.dates');
 		$filter_order_DirDefault = 'ASC';
@@ -209,13 +211,13 @@ class JemViewSearch extends JEMView
 		if($task == 'archive' && $filter_order == 'a.dates') {
 			$filter_order_DirDefault = 'DESC';
 		}
-		$filter_order_Dir	= JRequest::getWord('filter_order_Dir', $filter_order_DirDefault);
+		$filter_order_Dir	= $jinput->getWord('filter_order_Dir', $filter_order_DirDefault);
 
 		$filter 			= $app->getUserStateFromRequest('com_jem.search.filter_search', 'filter_search', '', 'string');
 		$filter 			= $db->escape(trim(JString::strtolower($filter)));
 
-		//$filter				= $this->escape(JRequest::getString('filter'));
-		$filter_type		= JRequest::getString('filter_type');
+		//$filter				= $this->escape($jinput->getString('filter'));
+		$filter_type		= $jinput->getString('filter_type');
 
 		$sortselects = array();
 		$sortselects[] 	= JHtml::_('select.option', '0', '&mdash; '.JText::_('COM_JEM_GLOBAL_SELECT_FILTER').' &mdash;');

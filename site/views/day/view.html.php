@@ -37,10 +37,10 @@ class JemViewDay extends JEMView
 		$params 		= $app->getParams();
 		$db 			= JFactory::getDBO();
 		$uri 			= JFactory::getURI();
-		$task 			= JRequest::getWord('task');
+		$task 			= $jinput->getWord('task');
 		$pathway 		= $app->getPathWay();
 		$jinput 		= $app->input;
-		$print			= JRequest::getBool('print');
+		$print			= $jinput->getBool('print');
 
 		// Decide which parameters should take priority
 		$useMenuItemParams = ($menuitem && $menuitem->query['option'] == 'com_jem'

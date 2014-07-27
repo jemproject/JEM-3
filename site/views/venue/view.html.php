@@ -38,7 +38,7 @@ class JemViewVenue extends JEMView {
 			$uri 			= JFactory::getURI();
 			$pathway 		= $app->getPathWay();
 			$jinput 		= $app->input;
-			$print			= JRequest::getBool('print');
+			$print			= $jinput->getBool('print');
 
 			# load css
 			JemHelper::loadCss('jem');
@@ -126,10 +126,10 @@ class JemViewVenue extends JEMView {
 			$params 		= $app->getParams('com_jem');
 			$pathway 		= $app->getPathWay ();
 			$uri 			= JFactory::getURI();
-			$task 			= JRequest::getWord('task');
+			$task 			= $jinput->getWord('task');
 			$user			= JFactory::getUser();
 			$itemid 		= $jinput('id', 0) . ':' . $jinput('Itemid', 0);
-			$print			= JRequest::getBool('print');
+			$print			= $jinput->getBool('print');
 
 			$this->state	= $this->get('State');
 

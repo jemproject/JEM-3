@@ -51,7 +51,8 @@ class JEMModelMyattendances extends JModelLegacy
 	 */
 	function & getAttending()
 	{
-		$pop = JRequest::getBool('pop');
+		$jinput = JFactory::getApplication()->input;
+		$pop = $jinput->getBool('pop');
 
 		// Lets load the content if it doesn't already exist
 		if (empty($this->_attending)) {
@@ -184,13 +185,13 @@ class JEMModelMyattendances extends JModelLegacy
 	 */
 	protected function _buildAttendingWhere()
 	{
-		$app = JFactory::getApplication();
-
-		$user = JFactory::getUser();
+		$app 	= JFactory::getApplication();
+		$jinput = $app->input;
+		$user 	= JFactory::getUser();
 
 		// Get the paramaters of the active menu item
 		$params = $app->getParams();
-		$task = JRequest::getWord('task');
+		$task = $jinput->getWord('task');
 
 		$settings = JEMHelper::globalattribs();
 

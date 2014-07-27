@@ -16,8 +16,8 @@ abstract class JemAttachment {
 	/**
 	 * upload files for the specified object
 	 *
-	 * @param array data from JRequest 'files'
-	 * @param string object identification (should be event<eventid>, category<categoryid>, etc...)
+	 * @param $post_files	array data from JInput 'files' + form fields
+	 * @param $object		object identification (should be event<eventid>, etc...)
 	 */
 	static function postUpload($post_files, $object) {
 		jimport('joomla.filesystem.file');

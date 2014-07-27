@@ -38,7 +38,7 @@ class JemViewEventslist extends JEMView
 		$db 			= JFactory::getDBO();
 		$user			= JFactory::getUser();
 		$itemid 		= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
-		$print			= JRequest::getBool('print');
+		$print			= $jinput->getBool('print');
 		$admin			= JEMUser::superuser();
 
 		// Load css
