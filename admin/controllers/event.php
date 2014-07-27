@@ -8,12 +8,11 @@
  */
 defined('_JEXEC') or die;
 
-jimport('joomla.application.component.controllerform');
 
 /**
  * Controller: Event
  */
-class JEMControllerEvent extends JControllerForm
+class JemControllerEvent extends JControllerForm
 {
 	/**
 	 * @var    string  The prefix to use with controller messages.
@@ -37,10 +36,6 @@ class JEMControllerEvent extends JControllerForm
 	 * remove from set
 	 */
 	function removefromset(){
-		//$data  = JFactory::getApplication()->input->post->get('jform', array(), 'array');
-		//$checkin = property_exists($table, 'checked_out');
-		//$context = "$this->option.edit.$this->context";
-		//$task = $this->getTask();
 		$model		= $this->getModel();
 		$table		= $model->getTable();
 		$key		= $table->getKeyName();
@@ -82,5 +77,4 @@ class JEMControllerEvent extends JControllerForm
 		# redirect back
 		$this->setRedirect(JRoute::_('index.php?option=' . $this->option . '&view=' . $this->view_item. $this->getRedirectToItemAppend($recordId, $urlVar), false));
 	}
-	
 }

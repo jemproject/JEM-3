@@ -8,7 +8,7 @@
  */
 defined('_JEXEC') or die;
 
-jimport('joomla.application.component.model');
+
 
 /**
  * Model: Contactelement
@@ -36,13 +36,7 @@ class JemModelContactelement extends JModelLegacy
 	 */
 	var $_pagination = null;
 
-	/**
-	 * Categorie id
-	 *
-	 * @var int
-	 */
-	var $_id = null;
-
+	
 	/**
 	 * Constructor
 	 *
@@ -84,8 +78,8 @@ class JemModelContactelement extends JModelLegacy
 		$app 				= JFactory::getApplication();
 		$jemsettings 		= JemHelper::config();
 	
-		$filter_order		= $app->getUserStateFromRequest( 'com_jem.contactelement.filter_order','filter_order','con.ordering','cmd');
-		$filter_order_Dir	= $app->getUserStateFromRequest( 'com_jem.contactelement.filter_order_Dir','filter_order_Dir','','word' );
+		$filter_order		= $app->getUserStateFromRequest('com_jem.contactelement.filter_order','filter_order','con.ordering','cmd');
+		$filter_order_Dir	= $app->getUserStateFromRequest('com_jem.contactelement.filter_order_Dir','filter_order_Dir','','word');
 		
 		$filter_order		= JFilterInput::getinstance()->clean($filter_order, 'cmd');
 		$filter_order_Dir	= JFilterInput::getinstance()->clean($filter_order_Dir, 'word');
@@ -97,6 +91,7 @@ class JemModelContactelement extends JModelLegacy
 		// start query
 		$db 	= JFactory::getDBO();
 		$query = $db->getQuery(true);
+		
 		$query->select(array('con.*'));
 		$query->from('#__contact_details as con');
 		
@@ -149,12 +144,10 @@ class JemModelContactelement extends JModelLegacy
 	{
 		$app 				= JFactory::getApplication();
 		$jemsettings 		= JemHelper::config();
-		
 		$limit 				= $this->getState('limit');
 		$limitstart 		= $this->getState('limitstart');
-		
-		$query = $this->buildQuery();
-		$total = $this->_getListCount($query);
+		$query 				= $this->buildQuery();
+		$total 				= $this->_getListCount($query);
 		
 		// Create the pagination object
 		jimport('joomla.html.pagination');
@@ -162,7 +155,5 @@ class JemModelContactelement extends JModelLegacy
 		
 		return $pagination;
 	}
-
-	
 }
 ?>

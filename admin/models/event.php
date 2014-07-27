@@ -408,7 +408,7 @@ class JemModelEvent extends JModelAdmin
 		else
 			$backend = false;
 
-		$cats 						= $jinput->post->get('cid', array(), 'array');
+		$cats 						= $data['cats'];
 		$metakeywords 				= $jinput->get('meta_keywords', '', '');
 		$metadescription 			= $jinput->get('meta_description', '', '');
 		$author_ip 					= $jinput->get('author_ip', '', '');
@@ -416,9 +416,6 @@ class JemModelEvent extends JModelAdmin
 		$data['meta_keywords'] 		= $metakeywords;
 		$data['meta_description']	= $metadescription;
 		$data['author_ip']			= $author_ip;
-		
-		
-		
 		
 		
 		## Recurrence - check option ##
@@ -439,8 +436,17 @@ class JemModelEvent extends JModelAdmin
 			##############
 			## HOLIDAYS ##
 			##############
-			$holidays 			= $jinput->post->get('activated', array(), 'array');
-			$countryholiday		= $jinput->get('recurrence_country_holidays','','int');
+			
+			if (isset($data['activated'])) {
+				if ($data['activated'] == null) {
+					$holidays =	array();
+				} else {
+					$holidays =	$data['activated'];
+				}
+			} else {
+				$holidays = array();
+			}
+			$countryholiday		= $jinput->getInt('recurrence_country_holidays','');
 		
 		
 			################
@@ -448,8 +454,8 @@ class JemModelEvent extends JModelAdmin
 			################
 		
 			# @todo:alter
-			$recurrencenumber 	= $jinput->get('recurrence_interval', '', 'int');
-			$recurrencebyday 	= $jinput->get('recurrence_byday', '', 'string');
+			$recurrencenumber 	= $jinput->getInt('recurrence_interval', '');
+			$recurrencebyday 	= $jinput->getString('recurrence_byday', '');
 		
 
 			# check for dates that should be skipped from generating events
@@ -483,7 +489,7 @@ class JemModelEvent extends JModelAdmin
 			} else {
 				# in here we know that there is a date and that we do have a recurrence-type
 				# so we can store the recurrence-info
-				$data['recurrence_interval']		= $recurrencenumber;
+				$data['recurrence_interval']	= $recurrencenumber;
 				$data['recurrence_byday']		= $recurrencebyday;
 			}
 
@@ -506,23 +512,23 @@ class JemModelEvent extends JModelAdmin
 			}
 			
 			
-			$checkAttachName = $jinput->post->get('attach-name');
+			$checkAttachName = $jinput->post->get('attach-name','','array');
 			
 			if ($checkAttachName) {
 				# attachments, new ones first
 				$attachments 				= array();
 				$attachments 				= $fileFilter->get('attach', array(), 'array');
-				$attachments['customname']	= $jinput->post->get('attach-name', array(), 'array');
-				$attachments['description'] = $jinput->post->get('attach-desc', array(), 'array');
-				$attachments['access'] 		= $jinput->post->get('attach-access', array(), 'array');
+				$attachments['customname']	= $jinput->post->get('attach-name', array(),'array');
+				$attachments['description'] = $jinput->post->get('attach-desc', array(),'array');
+				$attachments['access'] 		= $jinput->post->get('attach-access', array(),'array');
 				JEMAttachment::postUpload($attachments, 'event' . $pk);
 				
 				# and update old ones
 				$old				= array();
-				$old['id'] 			= $jinput->post->get('attached-id', array(), 'array');
-				$old['name'] 		= $jinput->post->get('attached-name', array(), 'array');
-				$old['description'] = $jinput->post->get('attached-desc', array(), 'array');
-				$old['access'] 		= $jinput->post->get('attached-access', array(), 'array');
+				$old['id'] 			= $jinput->post->get('attached-id', array(),'array');
+				$old['name'] 		= $jinput->post->get('attached-name', array(),'array');
+				$old['description'] = $jinput->post->get('attached-desc', array(),'array');
+				$old['access'] 		= $jinput->post->get('attached-access', array(),'array');
 				
 				foreach ($old['id'] as $k => $id){
 					$attach 				= array();

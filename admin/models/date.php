@@ -8,12 +8,11 @@
  */
 defined('_JEXEC') or die;
 
-jimport('joomla.application.component.modeladmin');
 
 /**
  * Model: Date
  */
-class JEMModelDate extends JModelAdmin
+class JemModelDate extends JModelAdmin
 {
 	/**
 	 * Method to test whether a record can be deleted.

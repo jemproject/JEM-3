@@ -8,7 +8,7 @@
  */
 defined('_JEXEC') or die;
 
-jimport('joomla.application.component.model');
+
 
 /**
  * Model: Userelement
@@ -126,7 +126,7 @@ class JemModelUserelement extends JModelLegacy
 	function getPagination()
 	{
 		$app 				= JFactory::getApplication();
-		$jinput 			= JFactory::getApplication()->input;
+		$jinput 			= $app->input;
 		$jemsettings 		= JemHelper::config();
 		
 		$limit 				= $app->getUserStateFromRequest('com_jem.userelement.limit', 'limit', $jemsettings->display_num, 'int');

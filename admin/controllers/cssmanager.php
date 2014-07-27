@@ -8,14 +8,13 @@
  */
 defined('_JEXEC') or die();
 
-jimport('joomla.application.component.controlleradmin');
 
 /**
  * Controller: CSS_manager
  */
 class JEMControllerCssmanager extends JControllerAdmin
 {
-
+	
 	/**
 	 * Constructor
 	 */
@@ -41,7 +40,7 @@ class JEMControllerCssmanager extends JControllerAdmin
 	}
 
 	/**
-	 *
+	 * Cancel
 	 */
 	public function cancel()
 	{
@@ -49,12 +48,13 @@ class JEMControllerCssmanager extends JControllerAdmin
 	}
 	
 	/**
-	 *
+	 * Linenumber
 	 */
 	public function linenumber()
 	{
-		$task 	= JFactory::getApplication()->input->get('task');
-		$model = $this->getModel();
+		$jinput	= JFactory::getApplication()->input;	
+		$task 	= $jinput->get('task');
+		$model	= $this->getModel();
 		
 		switch ($task)
 		{
@@ -70,5 +70,4 @@ class JEMControllerCssmanager extends JControllerAdmin
 		$this->setRedirect('index.php?option=com_jem&view=cssmanager');
 		
 	}
-	
 }

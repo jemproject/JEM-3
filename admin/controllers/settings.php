@@ -9,6 +9,7 @@
  */
 defined('_JEXEC') or die();
 
+
 /**
  * Controller: Settings
  */
@@ -74,7 +75,6 @@ class JEMControllerSettings extends JControllerLegacy
 	 *
 	 * @param array	An array containing all global config data.
 	 * @return bool on success, false on failure.
-	 * @since 1.6
 	 */
 	public function save()
 	{
@@ -82,8 +82,9 @@ class JEMControllerSettings extends JControllerLegacy
 		JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 		
 		// Initialise variables.
-		$app = JFactory::getApplication();
-		$data = JFactory::getApplication()->input->post->get('jform', array(), 'array');
+		$app	= JFactory::getApplication();
+		$jinput = $app->input;
+		$data	= $jinput->post->get('jform', array(),'array');
 		
 		$task = $this->getTask();
 		$model = $this->getModel();

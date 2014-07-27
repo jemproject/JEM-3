@@ -28,7 +28,7 @@ class JemModelVenues extends JemModelEventslist
 		$jinput			= JFactory::getApplication()->input;
 		$itemid 		= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
 		$params 		= $app->getParams();
-		$task           = $jinput->get('task','','cmd');
+		$task           = $jinput->getCmd('task');
 
 		// List state information
 		$limitstart = $jinput->getInt('limitstart');
@@ -58,7 +58,8 @@ class JemModelVenues extends JemModelEventslist
 	{
 		$user 	= JFactory::getUser();
 		$levels = $user->getAuthorisedViewLevels();
-		$task 	= JFactory::getApplication()->input->get('task', '', 'string');
+		$jinput	= JFactory::getApplication()->input;
+		$task 	= $jinput->getString('task');
 
 		// Query
 		$db 	= JFactory::getDBO();
@@ -122,12 +123,6 @@ class JemModelVenues extends JemModelEventslist
 					$item->locdescription = $item->text;
 				}
 
-				//build the url
-				if(!empty($item->url) && strtolower(substr($item->url, 0, 7)) != "http://") {
-					$item->url = 'http://'.$item->url;
-				}
-
-
 				//prepare the url for output
 				// TODO: Should be part of view! Then use $this->escape()
 				if (strlen($item->url) > 35) {
@@ -142,7 +137,7 @@ class JemModelVenues extends JemModelEventslist
 				}
 
 				//create target link
-				$task 	= JFactory::getApplication()->input->get('task', '', 'string');
+				$task 	= JFactory::getApplication()->input->getString('task');
 
 				$item->linkEventsArchived = JRoute::_(JEMHelperRoute::getVenueRoute($item->venueslug.'&task=archive'));
 				$item->linkEventsPublished = JRoute::_(JEMHelperRoute::getVenueRoute($item->venueslug));

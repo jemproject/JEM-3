@@ -8,17 +8,14 @@
  */
 defined('_JEXEC') or die;
 
-jimport('joomla.application.component.controllerform');
 
 /**
  * Controller: Group
- *
-*/
-class JEMControllerGroup extends JControllerForm
+ */
+class JemControllerGroup extends JControllerForm
 {
 	/**
 	 * @var    string  The prefix to use with controller messages.
-	 *
 	 */
 	protected $text_prefix = 'COM_JEM_GROUP';
 

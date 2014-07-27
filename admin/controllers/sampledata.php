@@ -8,12 +8,11 @@
  */
 defined('_JEXEC') or die;
 
-jimport('joomla.application.component.controller');
 
 /**
  * Controller: Sampledata
  */
-class JEMControllerSampledata extends JControllerLegacy
+class JemControllerSampledata extends JControllerLegacy
 {
 	/**
 	 * Constructor

@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-jimport('joomla.application.component.modellist');
 
 /**
  * Model: Categories
@@ -239,18 +238,15 @@ class JemModelCategories extends JModelList
 	{
 		$db		= $this->getDbo();
 		$query	= $db->getQuery(true);
-
-		$query = 'SELECT COUNT(catid) as num'
-				.' FROM #__jem_cats_event_relations'
-				.' WHERE catid = '.(int)$id
-				.' GROUP BY catid'
-				;
-
+		
+		$query->select('COUNT(catid) as num');
+		$query->from('#__jem_cats_event_relations');
+		$query->where('catid = '.(int)$id);
+		$query->group('catid');
+		
 		$db->setQuery($query);
 		$result = $db->loadResult('catid');
 
 		return $result;
 	}
-
-
 }

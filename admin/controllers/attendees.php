@@ -8,12 +8,11 @@
  */
 defined('_JEXEC') or die;
 
-jimport('joomla.application.component.controller');
 
 /**
  * Controller: Attendees
  */
-class JEMControllerAttendees extends JControllerLegacy
+class JemControllerAttendees extends JControllerLegacy
 {
 	/**
 	 * Constructor
@@ -42,8 +41,8 @@ class JEMControllerAttendees extends JControllerLegacy
 		JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 
 		$jinput = JFactory::getApplication()->input;
-		$cid = $jinput->get('cid',  0, 'array');
-		$id = $jinput->get('id','','int');
+		$cid 	= $jinput->get('cid',array(),'array');
+		$id 	= $jinput->getInt('id');
 
 		$total 	= count($cid);
 
@@ -120,7 +119,7 @@ class JEMControllerAttendees extends JControllerLegacy
 	function toggle()
 	{
 		$jinput = JFactory::getApplication()->input;
-		$id = $jinput->get('id','','int');
+		$id 	= $jinput->getInt('id');
 
 		$model = $this->getModel('attendee');
 		$model->setId($id);
@@ -133,8 +132,8 @@ class JEMControllerAttendees extends JControllerLegacy
 		if ($res)
 		{
 			JPluginHelper::importPlugin('jem');
-		$dispatcher = JDispatcher::getInstance();
-		$res = $dispatcher->trigger('onUserOnOffWaitinglist', array($id));
+			$dispatcher = JDispatcher::getInstance();
+			$res = $dispatcher->trigger('onUserOnOffWaitinglist', array($id));
 
 			if ($attendee->waiting)
 			{

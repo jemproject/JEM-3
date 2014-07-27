@@ -8,7 +8,7 @@
  */
 defined('_JEXEC') or die;
 
-jimport('joomla.application.component.model');
+
 
 /**
  * Model: Eventelement
@@ -140,65 +140,37 @@ class JemModelEventelement extends JModelLegacy
 	 */
 	protected function _buildQuery()
 	{
-		// Get the WHERE and ORDER BY clauses for the query
-		$where		= $this->_buildContentWhere();
-		$orderby	= $this->_buildContentOrderBy();
-
-		$query = 'SELECT a.*, loc.venue, loc.city,c.catname'
-					. ' FROM #__jem_events AS a'
-					. ' LEFT JOIN #__jem_venues AS loc ON loc.id = a.locid'
-					. ' LEFT JOIN #__jem_cats_event_relations AS rel ON rel.itemid = a.id'
-					. ' LEFT JOIN #__jem_categories AS c ON c.id = rel.catid'
-					. $where
-					. ' GROUP BY a.id'
-					. $orderby
-					;
-
-		return $query;
-	}
-
-	/**
-	 * Build the order clause
-	 *
-	 * @access private
-	 * @return string
-	 */
-	protected function _buildContentOrderBy()
-	{
 		$app =  JFactory::getApplication();
-
-		$filter_order		= $app->getUserStateFromRequest( 'com_jem.eventelement.filter_order', 'filter_order', 'a.dates', 'cmd' );
-		$filter_order_Dir	= $app->getUserStateFromRequest( 'com_jem.eventelement.filter_order_Dir', 'filter_order_Dir', '', 'word' );
-
-		$filter_order		= JFilterInput::getInstance()->clean($filter_order, 'cmd');
-		$filter_order_Dir	= JFilterInput::getInstance()->clean($filter_order_Dir, 'word');
-
-		$orderby 	= ' ORDER BY '.$filter_order.' '.$filter_order_Dir.', a.dates';
-
-		return $orderby;
-	}
-
-	/**
-	 * Build the where clause
-	 *
-	 * @access private
-	 * @return string
-	 */
-	protected function _buildContentWhere()
-	{
-		$app			= JFactory::getApplication();
-		$jinput 		= JFactory::getApplication()->input;
+		$jinput 		= $app->input;
+		$jemsettings 	= JemHelper::config();
+		$itemid 		= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
+		$db 			= JFactory::getDBO();
 		$user 			= JFactory::getUser();
 		$levels			= $user->getAuthorisedViewLevels();
-		$itemid 		= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
-
-		$published 		= $app->getUserStateFromRequest('com_jem.eventelement.filter_state', 'filter_state', '', 'string');
-		$filter_type	= $app->getUserStateFromRequest('com_jem.eventelement.filter_type', 'filter_type', '', 'int');
-		$search 		= $app->getUserStateFromRequest('com_jem.eventelement.filter_search', 'filter_search', '', 'string');
-		$search 		= $this->_db->escape(trim(JString::strtolower($search)));
 		
+		$filter_order		= $app->getUserStateFromRequest('com_jem.eventelement.'.$itemid.'.filter_order', 'filter_order', 'a.dates', 'cmd' );
+		$filter_order_Dir	= $app->getUserStateFromRequest('com_jem.eventelement.'.$itemid.'.filter_order_Dir', 'filter_order_Dir', '', 'word' );
+		
+		$filter_order		= JFilterInput::getinstance()->clean($filter_order, 'cmd');
+		$filter_order_Dir	= JFilterInput::getinstance()->clean($filter_order_Dir, 'word');
+		
+		$published 			= $app->getUserStateFromRequest('com_jem.eventelement.'.$itemid.'.filter_state', 'filter_state', '', 'string');
+		$filter_type 		= $app->getUserStateFromRequest('com_jem.eventelement.'.$itemid.'.filter_type', 'filter_type', '', 'int' );
+		$search 			= $app->getUserStateFromRequest('com_jem.eventelement.'.$itemid.'.filter_search', 'filter_search', '', 'string' );
+		$search 			= $db->escape(trim(JString::strtolower($search)));
+		
+		// Query
+		$query = $db->getQuery(true);
+		$query->select(array('a.*','loc.venue','loc.city','c.catname'));
+		$query->from('#__jem_events as a');
+		
+		$query->join('LEFT', '#__jem_venues AS loc ON loc.id = a.locid');
+		$query->join('LEFT', '#__jem_cats_event_relations AS rel ON rel.itemid = a.id');
+		$query->join('LEFT', '#__jem_categories AS c ON c.id = rel.catid');
+		
+		// where
 		$where = array();
-			
+		
 		// Filter by published state
 		if (is_numeric($published)) {
 			$where[] = 'a.published = '.(int) $published;
@@ -208,9 +180,11 @@ class JemModelEventelement extends JModelLegacy
 		
 		$where[] = ' c.published = 1';
 		$where[] = ' c.access IN (' . implode(',', $levels) . ')';
-			
-		switch($filter_type) {
-			case 1:
+		
+		/* something to search for? (we like to search for "0" too) */
+		if ($search || ($search === "0")) {
+			switch ($filter_type) {
+				case 1:
 				$where[] = ' LOWER(a.title) LIKE \'%'.$search.'%\' ';
 				break;
 			case 2:
@@ -222,25 +196,34 @@ class JemModelEventelement extends JModelLegacy
 			case 4:
 				$where[] = ' LOWER(c.catname) LIKE \'%'.$search.'%\' ';
 				break;
+			}
 		}
 		
-		$where 		= ( count( $where ) ? ' WHERE ' . implode( ' AND ', $where ) : '' );
+		$query->where($where);
+	
+		$query->group('a.id');
+					
+		$orderby 	= array($filter_order.' '.$filter_order_Dir,'a.dates ASC');
+		$query->order($orderby);
 
-		return $where;
+		return $query;
 	}
+
 
 
 	function getCategories($id)
 	{
-		$query = 'SELECT DISTINCT c.id, c.catname, c.checked_out AS cchecked_out'
-				. ' FROM #__jem_categories AS c'
-				. ' LEFT JOIN #__jem_cats_event_relations AS rel ON rel.catid = c.id'
-				. ' WHERE rel.itemid = '.(int)$id
-				;
+		$db = JFactory::getDBO();
+		$query = $db->getQuery(true);
+		
+		$query->select(array('c.id','c.catname','c.checked_out AS cchecked_out'));
+		$query->from('#__jem_categories AS c');
+		$query->join('LEFT', '#__jem_cats_event_relations AS rel ON rel.catid = c.id');
+		$query->where('rel.itemid = '.(int)$id);
+		
+		$db->setQuery( $query );
 
-		$this->_db->setQuery( $query );
-
-		$this->_cats = $this->_db->loadObjectList();
+		$this->_cats = $db->loadObjectList();
 
 		$count = count($this->_cats);
 		for($i = 0; $i < $count; $i++)

@@ -8,10 +8,11 @@
  */
 defined('_JEXEC') or die;
 
+
 /**
  * Controller: Source
  */
-class JEMControllerSource extends JControllerLegacy
+class JemControllerSource extends JControllerLegacy
 {
 	/**
 	 * Constructor.
@@ -95,8 +96,9 @@ class JEMControllerSource extends JControllerLegacy
 	{
 		// Initialise variables.
 		$app		= JFactory::getApplication();
+		$jinput		= $app->input;
 		$model		= $this->getModel();
-		$recordId	= JFactory::getApplication()->input->get('id');
+		$recordId	= $jinput->get('id');
 		$context	= 'com_jem.edit.source';
 
 
@@ -147,7 +149,8 @@ class JEMControllerSource extends JControllerLegacy
 
 		// Initialise variables.
 		$app		= JFactory::getApplication();
-		$data		= JFactory::getApplication()->input->get('jform', array(), 'array');
+		$jinput		= $app->input;
+		$data		= $jinput->get('jform', array(),'array');
 		$context	= 'com_jem.edit.source';
 		$task		= $this->getTask();
 		$model		= $this->getModel();

@@ -8,16 +8,14 @@
  */
 defined('_JEXEC') or die;
 
-jimport('joomla.application.component.controlleradmin');
+
 
 /**
  * Controller: Categories
  */
 class JemControllerCategories extends JControllerAdmin
 {
-
 	protected $text_prefix = 'COM_JEM_CATEGORIES';
-
 
 	/**
 	 * Proxy for getModel
@@ -69,7 +67,8 @@ class JemControllerCategories extends JControllerAdmin
  	 */
  	function remove()
  	{
- 		$cid= JFactory::getApplication()->input->post->get('cid', array(), 'array');
+ 		$jinput	= JFactory::getApplication()->input;
+ 		$cid	= $jinput->post->get('cid', array(),'array');
 
  		if (!is_array($cid) || count($cid) < 1) {
  			JError::raiseWarning(500, JText::_('COM_JEM_SELECT_ITEM_TO_DELETE'));

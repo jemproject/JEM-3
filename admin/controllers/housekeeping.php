@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-jimport('joomla.application.component.controller');
 
 /**
  * Controller: Housekeeping
@@ -28,7 +27,6 @@ class JemControllerHousekeeping extends JControllerLegacy
 	 *
 	 * @access public
 	 * @return void
-	 *
 	 */
 	function delete()
 	{
@@ -54,8 +52,9 @@ class JemControllerHousekeeping extends JControllerLegacy
 	 * Remove obsolete images
 	 */
 	function rmObsImages() {
-		$task = JFactory::getApplication()->input->getCmd('task');
-		$model = $this->getModel('housekeeping');
+		$jinput	= JFactory::getApplication()->input;
+		$task 	= $jinput->getCmd('task');
+		$model 	= $this->getModel('housekeeping');
 		
 		$total = $model->rmObsImages();
 		$link = 'index.php?option=com_jem&view=housekeeping';

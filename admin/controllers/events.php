@@ -8,7 +8,6 @@
  */
 defined( '_JEXEC' ) or die;
 
-jimport('joomla.application.component.controlleradmin');
 
 /**
  * Controller: Events
@@ -17,7 +16,6 @@ class JemControllerEvents extends JControllerAdmin
 {
 	/**
 	 * @var		string	The prefix to use with controller messages.
-	 *
 	 */
 	protected $text_prefix = 'COM_JEM_EVENTS';
 
@@ -44,7 +42,8 @@ class JemControllerEvents extends JControllerAdmin
 
 		// Initialise variables.
 		$user	= JFactory::getUser();
-		$ids	= JFactory::getApplication()->input->get('cid', array(), 'array');
+		$jinput	= JFactory::getApplication()->input;
+		$ids	= $jinput->get('cid', array(),'array');
 		$values	= array('featured' => 1, 'unfeatured' => 0);
 		$task	= $this->getTask();
 		$value	= JArrayHelper::getValue($values, $task, 0, 'int');
@@ -77,14 +76,11 @@ class JemControllerEvents extends JControllerAdmin
 
 	/**
 	 * Proxy for getModel.
-	 *
 	 */
 	public function getModel($name = 'Event', $prefix = 'JEMModel', $config = array('ignore_request' => true))
 	{
 		$model = parent::getModel($name, $prefix, $config);
 		return $model;
 	}
-
-
 }
 ?>

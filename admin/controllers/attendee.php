@@ -75,17 +75,16 @@ class JemControllerAttendee extends JControllerLegacy
 		$jinput = JFactory::getApplication()->input;
 
 		// retrieving task "apply"
-		$task = $jinput->get('task','','cmd');
-// 		$task	= $this->getTask();
+		$task	= $this->getTask();
 
 		// Retrieving $post
 		$post = $jinput->getArray($_POST);
 
 		// Retrieving email-setting
-		$sendemail = $jinput->get('sendemail','0','int');
+		$sendemail = $jinput->getInt('sendemail','0');
 
 		// Retrieving event-id
-		$eventid = $jinput->get('event','','int');
+		$eventid = $jinput->getInt('event');
 
 		$model = $this->getModel('attendee');
 

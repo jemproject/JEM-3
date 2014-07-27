@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-jimport('joomla.application.component.controller');
 
 // helper callback function to convert all elements of an array
 function jem_convert_ansi2utf8(&$value, $key) {
@@ -18,11 +17,10 @@ function jem_convert_ansi2utf8(&$value, $key) {
 /**
  * Controller: Import
  */
-class JEMControllerImport extends JControllerLegacy {
+class JemControllerImport extends JControllerLegacy {
+	
 	/**
 	 * Constructor
-	 *
-	 *
 	 */
 	public function __construct() {
 		parent::__construct();
@@ -46,7 +44,6 @@ class JEMControllerImport extends JControllerLegacy {
 
 	private function CsvImport($type, $dbname) {
 		$replace = JFactory::getApplication()->input->post->get('replace_'.$type, 0, 'int');
-		
 		
 		# in here we're retrieving the $dbname
 		$object = JTable::getInstance($dbname, 'JEMTable');
@@ -211,18 +208,18 @@ class JEMControllerImport extends JControllerLegacy {
 		# some variables
 		$size 				= 500;
 		$jinput				= JFactory::getApplication()->input;
-		$step				= $jinput->get('step', 0, 'INT');
-		$current			= $jinput->get->get('current', 0, 'INT');
-		$total 				= $jinput->get->get('total', 0, 'INT');
-		$table 				= $jinput->get->get('table', 0, 'INT');
-		$prefix 			= $jinput->get('prefix', '#__', 'CMD');
-		$copyImages 		= $jinput->get('copyImages', 0, 'INT');
-		$copyAttachments	= $jinput->get('copyAttachments', 0, 'INT');
+		$step				= $jinput->getInt('step', 0);
+		$current			= $jinput->get->getInt('current', 0);
+		$total 				= $jinput->get->getInt('total', 0);
+		$table 				= $jinput->get->getInt('table', 0);
+		$prefix 			= $jinput->getCmd('prefix', '#__');
+		$copyImages 		= $jinput->getInt('copyImages', 0);
+		$copyAttachments	= $jinput->getInt('copyAttachments', 0);
 		$link 				= 'index.php?option=com_jem&view=import';
 		$msg 				= JText::_('COM_JEM_IMPORT_EL_IMPORT_WORK_IN_PROGRESS')." ";
 		
 		# check for a token
-		if($jinput->get('startToken', 0, 'INT')) {
+		if($jinput->getInt('startToken', 0)) {
 			# Are the JEM tables empty at start? If no, stop import
 			if($model->getExistingJemData()) {
 				$this->setRedirect($link);
@@ -413,16 +410,16 @@ class JEMControllerImport extends JControllerLegacy {
 		# some variables
 		$size 				= 500;
 		$jinput				= JFactory::getApplication()->input;
-		$step				= $jinput->get('jem_step', 0, 'INT');
-		$current			= $jinput->get->get('jem_current', 0, 'INT');
-		$total 				= $jinput->get->get('jem_total', 0, 'INT');
-		$table 				= $jinput->get->get('jem_table', 0, 'INT');
-		$prefix 			= $jinput->get('jem_prefix', '#__', 'CMD');
+		$step				= $jinput->getInt('jem_step', 0);
+		$current			= $jinput->get->getInt('jem_current', 0);
+		$total 				= $jinput->get->getInt('jem_total', 0);
+		$table 				= $jinput->get->getInt('jem_table', 0);
+		$prefix 			= $jinput->getCmd('jem_prefix', '#__');
 		$link 				= 'index.php?option=com_jem&view=import';
 		$msg 				= JText::_('COM_JEM_IMPORT_JEM_IMPORT_WORK_IN_PROGRESS')." ";
 	
 		# check for a token
-		if($jinput->get('jem_startToken', 0, 'INT')) {
+		if($jinput->getInt('jem_startToken', 0)) {
 			# Are the JEM tables empty at start? If no, stop import
 			if($model->getExistingJemData()) {
 				$this->setRedirect($link);

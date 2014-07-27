@@ -8,17 +8,12 @@
  */
 defined( '_JEXEC' ) or die;
 
-jimport('joomla.application.component.controlleradmin');
 
 /**
  * Controller: Dates
  */
-class JEMControllerDates extends JControllerAdmin
+class JemControllerDates extends JControllerAdmin
 {
-	/**
-	 * @var		string	The prefix to use with controller messages.
-	 *
-	 */
 	protected $text_prefix = 'COM_JEM_DATES';
 
 	/**
@@ -60,7 +55,8 @@ class JEMControllerDates extends JControllerAdmin
 	
 		// Initialise variables.
 		$user	= JFactory::getUser();
-		$ids	= JFactory::getApplication()->input->get('cid', array(), 'array');
+		$jinput	= JFactory::getApplication()->input;
+		$ids	= $jinput->get('cid', array(),'array');
 		$values	= array('setstatusdate' => 1, 'disabledate' => 0);
 		$task	= $this->getTask();
 		$value	= JArrayHelper::getValue($values, $task, 0, 'int');

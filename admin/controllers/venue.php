@@ -8,12 +8,11 @@
  */
 defined('_JEXEC') or die;
 
-jimport('joomla.application.component.controllerform');
 
 /**
  * Controller: Venue
  */
-class JEMControllerVenue extends JControllerForm
+class JemControllerVenue extends JControllerForm
 {
 	/**
 	 * @var    string  The prefix to use with controller messages.

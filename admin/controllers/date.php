@@ -8,19 +8,13 @@
  */
 defined('_JEXEC') or die;
 
-jimport('joomla.application.component.controllerform');
 
 /**
  * Controller: Date
  */
-class JEMControllerDate extends JControllerForm
+class JemControllerDate extends JControllerForm
 {
-	/**
-	 * @var    string  The prefix to use with controller messages.
-	 *
-	 */
 	protected $text_prefix = 'COM_JEM_DATE';
-
 
 	/**
 	 * Constructor.
@@ -33,8 +27,4 @@ class JEMControllerDate extends JControllerForm
 	{
 		parent::__construct($config);
 	}
-
-	
-	
-	
 }

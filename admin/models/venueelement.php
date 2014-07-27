@@ -8,7 +8,7 @@
  */
 defined('_JEXEC') or die;
 
-jimport('joomla.application.component.model');
+
 
 /**
  * Model: Venueelement
@@ -51,7 +51,7 @@ class JemModelVenueelement extends JModelLegacy
 		parent::__construct();
 
 		$app			= JFactory::getApplication();
-		$jinput 		= JFactory::getApplication()->input;
+		$jinput 		= $app->input;
 		
 		$jemsettings	= JemHelper::config();
 		$itemid 		= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
@@ -82,7 +82,8 @@ class JemModelVenueelement extends JModelLegacy
 	function buildQuery() {
 		
 		$app 				= JFactory::getApplication();
-		$jinput 			= JFactory::getApplication()->input;
+		$jinput 			= $app->input;
+		$db 				= JFactory::getDBO();
 		$jemsettings 		= JemHelper::config();
 		$itemid 			= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
 
@@ -94,10 +95,9 @@ class JemModelVenueelement extends JModelLegacy
 		
 		$filter_type 		= $app->getUserStateFromRequest('com_jem.venueelement.'.$itemid.'.filter_type', 'filter_type', '', 'int' );
 		$search 			= $app->getUserStateFromRequest('com_jem.venueelement.'.$itemid.'.filter_search', 'filter_search', '', 'string' );
-		$search 			= $this->_db->escape(trim(JString::strtolower($search)));
+		$search 			= $db->escape(trim(JString::strtolower($search)));
 		
 		// Query
-		$db 	= JFactory::getDBO();
 		$query = $db->getQuery(true);
 		$query->select(array('l.id','l.state','l.city','l.country','l.published','l.venue','l.ordering'));
 		$query->from('#__jem_venues as l');

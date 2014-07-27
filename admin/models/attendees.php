@@ -7,7 +7,7 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 defined('_JEXEC') or die;
-jimport('joomla.application.component.model');
+
 
 /**
  * Model: Attendees
@@ -69,12 +69,8 @@ class JemModelAttendees extends JModelLegacy
 		# set unlimited if export or print action || task=export or task=print
 		$this->setState('unlimited', $jinput->getString('task'));
 
-		$jinput = JFactory::getApplication()->input;
-		$id		= $jinput->get('id','','int');
-
+		$id		= $jinput->getInt('id');
 		$this->setId($id);
-
-
 	}
 
 	/**
@@ -161,24 +157,21 @@ class JemModelAttendees extends JModelLegacy
 		$app	= JFactory::getApplication();
 		$db		= JFactory::getDbo();
 
-
-		$filter = $app->getUserStateFromRequest( 'com_jem.attendees.filter', 'filter', '', 'int' );
-		$search = $app->getUserStateFromRequest( 'com_jem.attendees.filter_search', 'filter_search', '', 'string' );
-		$search = $db->Quote('%'.$db->escape($search, true).'%');
-		$filter_waiting	= $app->getUserStateFromRequest( 'com_jem.attendees.waiting',	'filter_waiting',	0, 'int' );
+		$filter				= $app->getUserStateFromRequest( 'com_jem.attendees.filter', 'filter', '', 'int' );
+		$search 			= $app->getUserStateFromRequest( 'com_jem.attendees.filter_search', 'filter_search', '', 'string' );
+		$search 			= $db->Quote('%'.$db->escape($search, true).'%');
+		$filter_waiting		= $app->getUserStateFromRequest( 'com_jem.attendees.waiting',	'filter_waiting',	0, 'int' );
 		$filter_order		= $app->getUserStateFromRequest( 'com_jem.attendees.filter_order', 		'filter_order', 	'u.username', 'cmd' );
 		$filter_order_Dir	= $app->getUserStateFromRequest( 'com_jem.attendees.filter_order_Dir',	'filter_order_Dir',	'', 'word' );
 		$filter_order		= JFilterInput::getinstance()->clean($filter_order, 'cmd');
 		$filter_order_Dir	= JFilterInput::getinstance()->clean($filter_order_Dir, 'word');
 
-
 		$query = $db->getQuery(true);
-
+		
 		$query->select(array('r.*','u.username','u.name','u.email'));
 		$query->from('#__jem_register AS r');
 		$query->join('LEFT', '#__jem_events AS a ON (r.event = a.id)');
 		$query->join('LEFT', '#__users AS u ON (u.id = r.uid)');
-
 		$query->where('r.event = '.$this->_id);
 
 		if ($filter_waiting) {

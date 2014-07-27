@@ -8,12 +8,11 @@
  */
 defined( '_JEXEC' ) or die;
 
-jimport('joomla.application.component.controlleradmin');
 
 /**
  * Controller: Venues
  */
-class JEMControllerVenues extends JControllerAdmin
+class JemControllerVenues extends JControllerAdmin
 {
 	/**
 	 * @var		string	The prefix to use with controller messages.
@@ -43,8 +42,7 @@ class JEMControllerVenues extends JControllerAdmin
 	function remove()
 	{
 		$jinput = JFactory::getApplication()->input;
-		$cid = $jinput->get('cid',  0, 'array');
-		//$cid = JFactory::getApplication()->input->post->get( 'cid', array(), 'array' );
+		$cid 	= $jinput->get('cid',  array(),'array');
 
 		if (!is_array( $cid ) || count( $cid ) < 1) {
 			JError::raiseError(500, JText::_( 'COM_JEM_SELECT_AN_ITEM_TO_DELETE' ) );

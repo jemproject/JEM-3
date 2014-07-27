@@ -8,16 +8,14 @@
  */
 defined('_JEXEC') or die;
 
-jimport('joomla.application.component.controller');
 
 /**
  * Controller: Updatecheck
  */
-class JEMControllerUpdatecheck extends JControllerLegacy
+class JemControllerUpdatecheck extends JControllerLegacy
 {
 	/**
 	 * Constructor
-	 *
 	 */
 	public function __construct()
 	{

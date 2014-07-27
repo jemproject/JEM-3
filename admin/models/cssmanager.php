@@ -15,7 +15,6 @@ jimport('joomla.filesystem.file');
 class JemModelCssmanager extends JModelLegacy
 {
 
-
 	/**
 	 * Internal method to get file properties.
 	 *

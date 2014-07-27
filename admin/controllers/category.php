@@ -8,18 +8,12 @@
  */
 defined('_JEXEC') or die;
 
-jimport('joomla.application.component.controllerform');
 
 /**
  * Controller: Category
  */
 class JemControllerCategory extends JControllerForm
 {
-	/**
-	 * The extension for which the categories apply.
-	 *
-	 * @var    string
-	 */
 	protected $text_prefix = 'COM_JEM_CATEGORY';
 
 	/**

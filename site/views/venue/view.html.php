@@ -26,8 +26,8 @@ class JemViewVenue extends JEMView {
 	 */
 	function display($tpl = null) {
 		if ($this->getLayout() == 'calendar') {
-			$app = JFactory::getApplication();
-			$jinput = JFactory::getApplication()->input;
+			$app 	= JFactory::getApplication();
+			$jinput = $app->input;
 
 			// initialize variables
 			$document 		= JFactory::getDocument();
@@ -128,7 +128,7 @@ class JemViewVenue extends JEMView {
 			$uri 			= JFactory::getURI();
 			$task 			= $jinput->getWord('task');
 			$user			= JFactory::getUser();
-			$itemid 		= $jinput('id', 0) . ':' . $jinput('Itemid', 0);
+			$itemid 		= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
 			$print			= $jinput->getBool('print');
 
 			$this->state	= $this->get('State');
@@ -271,12 +271,6 @@ class JemViewVenue extends JEMView {
 						0
 				));
 				$venuedescription = $venue->text;
-			}
-
-			// build the url
-			// TODO: What's about "https://"?
-			if (!empty($venue->url) && strtolower (substr($venue->url, 0, 7)) != "http://") {
-				$venue->url = 'http://' . $venue->url;
 			}
 
 			// prepare the url for output

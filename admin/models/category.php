@@ -8,16 +8,14 @@
  */
 defined('_JEXEC') or die();
 
-jimport('joomla.application.component.modeladmin');
 
 /**
  * Model: Category
  */
-class JEMModelCategory extends JModelAdmin
+class JemModelCategory extends JModelAdmin
 {
 
 	/**
-	 *
 	 * @var string The prefix to use with controller messages.
 	 */
 	protected $text_prefix = 'COM_JEM_CATEGORIES';

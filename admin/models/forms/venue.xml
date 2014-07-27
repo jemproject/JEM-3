@@ -23,11 +23,13 @@
 			label="COM_JEM_ALIAS"
 			description="COM_JEM_ALIAS"
 		/>
-		<field name="url" type="text"
+		<field name="url" type="url"
 			class="inputbox"
 			size="40"
 			label="COM_JEM_WEBSITE"
 			description="COM_JEM_WEBSITE_DESC"
+			validate="url"
+			scheme="http,https"
 		/>
 		<field name="street" type="text"
 			id="street"

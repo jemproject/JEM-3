@@ -8,23 +8,20 @@
  */
 defined( '_JEXEC' ) or die;
 
-jimport('joomla.application.component.controlleradmin');
 
 /**
  * Controller: Groups
  */
-class JEMControllerGroups extends JControllerAdmin
+class JemControllerGroups extends JControllerAdmin
 {
 	/**
 	 * @var		string	The prefix to use with controller messages.
-	 *
 	 */
 	protected $text_prefix = 'COM_JEM_GROUPS';
 
 
 	/**
 	 * Proxy for getModel.
-	 *
 	 */
 	public function getModel($name = 'Group', $prefix = 'JEMModel', $config = array('ignore_request' => true))
 	{
@@ -46,7 +43,7 @@ class JEMControllerGroups extends JControllerAdmin
 		JSession::checkToken() or jexit( 'Invalid Token' );
 
 		$jinput = JFactory::getApplication()->input;
-		$cid = $jinput->get('cid',  0, 'array');
+		$cid 	= $jinput->get('cid',  array(),'array');
 
 		$total = count( $cid );
 

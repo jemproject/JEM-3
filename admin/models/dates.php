@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-jimport('joomla.application.component.modellist');
 
  /**
   * Model: Dates
@@ -111,6 +110,4 @@ class JemModelDates extends JModelList
 
 		return $items;
 	}
-
-	
 }

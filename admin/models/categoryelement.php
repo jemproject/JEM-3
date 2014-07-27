@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die();
 
-jimport('joomla.application.component.model');
 
 /**
  * Model: Categoryelement
@@ -23,35 +22,23 @@ class JemModelCategoryelement extends JModelLegacy
 	var $_pagination = null;
 
 	/**
-	 * Category id
-	 *
-	 * @var int
-	 */
-	var $_id = null;
-
-	/**
 	 * Constructor
 	 */
 	public function __construct()
 	{
 		parent::__construct();
 
-		$jinput = JFactory::getApplication()->input;
-		$array = $jinput->get('cid', 0, 'array');
-
-		$this->setId((int) $array[0]);
-	}
-
-	/**
-	 * Method to set the category identifier
-	 *
-	 * @access public
-	 * @param int Category identifier
-	 */
-	function setId($id)
-	{
-		// Set id
-		$this->_id = $id;
+		$app			= JFactory::getApplication();
+		$jinput 		= $app->input;
+		
+		$jemsettings	= JemHelper::config();
+		$itemid 		= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
+		
+		$limit 			= $app->getUserStateFromRequest('com_jem.categoryelement.limit', 'limit', $jemsettings->display_num, 'int');
+		$limitstart 	= $jinput->getInt('limitstart');
+		
+		$this->setState('limit', $limit);
+		$this->setState('limitstart', $limitstart);	
 	}
 
 	/**
@@ -64,7 +51,7 @@ class JemModelCategoryelement extends JModelLegacy
 	{
 		$app	= JFactory::getApplication();
 		$db		= JFactory::getDBO();
-		$jinput = JFactory::getApplication()->input;
+		$jinput = $app->input;
 		$itemid = $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
 
 		static $items;
@@ -73,8 +60,6 @@ class JemModelCategoryelement extends JModelLegacy
 			return $items;
 		}
 
-		$limit				= $app->getUserStateFromRequest('com_jem.limit', 'limit', $app->getCfg('list_limit'), 'int');
-		$limitstart 		= $app->getUserStateFromRequest('com_jem.limitstart', 'limitstart', 0, 'int');
 		$filter_order		= $app->getUserStateFromRequest('com_jem.categoryelement.filter_order', 'filter_order', 'c.lft', 'cmd');
 		$filter_order_Dir	= $app->getUserStateFromRequest('com_jem.categoryelement.filter_order_Dir', 'filter_order_Dir', '', 'word');
 		$filter_state		= $app->getUserStateFromRequest('com_jem.categoryelement.'.$itemid.'.filter_state', 'filter_state', '', 'string');
@@ -84,35 +69,22 @@ class JemModelCategoryelement extends JModelLegacy
 		$filter_order		= JFilterInput::getinstance()->clean($filter_order, 'cmd');
 		$filter_order_Dir	= JFilterInput::getinstance()->clean($filter_order_Dir, 'word');
 
-		$orderby = ' ORDER BY ' . $filter_order . ' ' . $filter_order_Dir;
-
 		$state = array(1);
 
+		$query = $db->getQuery(true);
+		$query->select(array('c.*','u.name AS editor','g.title AS groupname','gr.name AS catgroup'));
+		$query->from('#__jem_categories AS c');
+		$query->join('LEFT', '#__viewlevels AS g ON g.id = c.access');
+		$query->join('LEFT', '#__users AS u ON u.id = c.checked_out');
+		$query->join('LEFT', '#__jem_groups AS gr ON gr.id = c.groupid');
+		
 		if (is_numeric($filter_state)) {
-				$where = ' WHERE c.published = '.(int) $filter_state;
+			$query->where('c.published = '.(int) $filter_state);
 		} else {
-			$where = ' WHERE c.published IN (' . implode(',', $state) . ')';
-			//$where .= ' AND c.alias NOT LIKE "root"';
+			$query->where('c.published IN (' . implode(',', $state) . ')');
 		}
-
-		$where2 = ' AND c.published IN (' . implode(',', $state) . ')';
-		//$where2 .= ' AND c.alias NOT LIKE "root"';
-
-		// select the records
-		// note, since this is a tree we have to do the limits code-side
-		if ($search) {
-			$query = 'SELECT c.id FROM #__jem_categories AS c' . ' WHERE LOWER(c.catname) LIKE ' . $db->Quote('%' . $this->_db->escape($search, true) . '%', false) . $where2;
-			$db->setQuery($query);
-			$search_rows = $db->loadColumn();
-		}
-
-		$query = 'SELECT c.*, u.name AS editor, g.title AS groupname, gr.name AS catgroup'
-				. ' FROM #__jem_categories AS c' . ' LEFT JOIN #__viewlevels AS g ON g.id = c.access'
-				. ' LEFT JOIN #__users AS u ON u.id = c.checked_out'
-				. ' LEFT JOIN #__jem_groups AS gr ON gr.id = c.groupid'
-				. $where
-				// . ' ORDER BY c.parent_id, c.ordering';
-				. $orderby;
+		
+		$query->order($filter_order . ' ' . $filter_order_Dir);
 
 		$db->setQuery($query);
 		$mitems = $db->loadObjectList();
@@ -143,8 +115,21 @@ class JemModelCategoryelement extends JModelLegacy
 		}
 
 		// get list of the items
-		$list = JEMCategories::treerecurse($parentid, '', array(), $children, 9999, 0, 0);
+		$list = JemCategories::treerecurse($parentid, '', array(), $children, 9999, 0, 0);
 
+	
+		// note, since this is a tree we have to do the limits code-side
+		if ($search) {
+			$query = $db->getQuery(true);
+			$query->select('c.id');
+			$query->from('#__jem_categories AS c');
+			$query->where(array('LOWER(c.catname) LIKE ' . $db->Quote('%' . $this->_db->escape($search, true) . '%', false),'c.published IN (' . implode(',', $state) . ')'));
+			
+			$db->setQuery($query);
+			$search_rows = $db->loadColumn();
+		}
+		
+		
 		// eventually only pick out the searched items.
 		if ($search) {
 			$list1 = array();
@@ -163,7 +148,7 @@ class JemModelCategoryelement extends JModelLegacy
 		$total = count($list);
 
 		jimport('joomla.html.pagination');
-		$this->_pagination = new JPagination($total, $limitstart, $limit);
+		$this->_pagination = new JPagination($total, $this->getState('limitstart'), $this->getState('limit'));
 
 		// slice out elements based on limits
 		$list = array_slice($list, $this->_pagination->limitstart, $this->_pagination->limit);

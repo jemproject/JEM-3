@@ -32,7 +32,7 @@ class JemModelAttendee extends JModelLegacy
 		parent::__construct();
 
 		$jinput = JFactory::getApplication()->input;
-		$array = $jinput->get('cid',  0, 'array');
+		$array	= $jinput->get('cid',  array(),'array');
 
 		$this->setId((int)$array[0]);
 	}
@@ -78,7 +78,6 @@ class JemModelAttendee extends JModelLegacy
 		// Lets load the content if it doesn't already exist
 		if (empty($this->_data))
 		{
-
 			$db = JFactory::getDbo();
 
 			$query = $db->getQuery(true);
@@ -87,9 +86,8 @@ class JemModelAttendee extends JModelLegacy
 			$query->join('LEFT', '#__users AS u ON (u.id = r.uid)');
 			$query->where(array('r.id= '.$db->quote($this->_id)));
 
-
-			$this->_db->setQuery($query);
-			$this->_data = $this->_db->loadObject();
+			$db->setQuery($query);
+			$this->_data = $db->loadObject();
 
 			return (boolean) $this->_data;
 		}
