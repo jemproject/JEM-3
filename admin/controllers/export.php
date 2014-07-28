@@ -10,15 +10,44 @@
  */
 defined('_JEXEC') or die;
 
-jimport('joomla.application.component.controlleradmin');
 
 /**
  * Controller: Export
  */
-class JEMControllerExport extends JControllerAdmin {
-	/**
+class JemControllerExport extends JControllerAdmin {
+	
+	
+	public function __construct()
+	{
+		parent::__construct();
+	
+		// Register Extra task
+		$this->registerTask('table_attachments', 'export_table');
+		$this->registerTask('table_categories', 'export_table');
+		$this->registerTask('table_cats_event_relations', 'export_table');
+		$this->registerTask('table_events', 'export_table');
+		$this->registerTask('table_groups', 'export_table');
+		$this->registerTask('table_recurrence_master', 'export_table');
+		$this->registerTask('table_recurrence', 'export_table');
+		$this->registerTask('table_register', 'export_table');
+		$this->registerTask('table_settings', 'export_table');
+		$this->registerTask('table_venues', 'export_table');
+		
+		$this->registerTask('table_sql_attachments', 'export_table_sql');
+		$this->registerTask('table_sql_categories', 'export_table_sql');
+		$this->registerTask('table_sql_cats_event_relations', 'export_table_sql');
+		$this->registerTask('table_sql_events', 'export_table_sql');
+		$this->registerTask('table_sql_groups', 'export_table_sql');
+		$this->registerTask('table_sql_recurrence_master', 'export_table_sql');
+		$this->registerTask('table_sql_recurrence', 'export_table_sql');
+		$this->registerTask('table_sql_register', 'export_table_sql');
+		$this->registerTask('table_sql_settings', 'export_table_sql');
+		$this->registerTask('table_sql_venues', 'export_table_sql');
+	}
+	
+	
+   /**
 	* Proxy for getModel.
-	*
 	*/
 	public function getModel($name = 'Export', $prefix = 'JEMModel', $config=array()) {
 		$model = parent::getModel($name, $prefix, array('ignore_request' => true));
@@ -30,22 +59,32 @@ class JEMControllerExport extends JControllerAdmin {
 		$this->getModel()->getCsv();
 		jexit();
 	}
-
-	public function exportcats() {
-		$this->sendHeaders("categories.csv", "text/csv");
-		$this->getModel()->getCsvcats();
-		jexit();
-	}
-
-	public function exportvenues() {
-		$this->sendHeaders("venues.csv", "text/csv");
-		$this->getModel()->getCsvvenues();
+	
+	public function exportsql() {
+		$this->sendHeaders("events.sql", "application/octet-stream");
+		$this->getModel()->getSQL();
 		jexit();
 	}
 
 	public function exportcatevents() {
 		$this->sendHeaders("catevents.csv", "text/csv");
 		$this->getModel()->getCsvcatsevents();
+		jexit();
+	}
+	
+	public function export_table() {
+		$task = $this->getTask();
+		$table = str_replace('table_' ,"",$task);
+		$this->sendHeaders($table.".csv", "text/csv");
+		$this->getModel()->getTableData($table);
+		jexit();
+	}
+	
+	public function export_table_sql() {
+		$task = $this->getTask();
+		$table = str_replace('table_sql_' ,"",$task);
+		$this->sendHeaders($table.".sql", "application/octet-stream");
+		$this->getModel()->getTableDataSQL($table);
 		jexit();
 	}
 

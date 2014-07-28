@@ -11,6 +11,15 @@
 defined('_JEXEC') or die();
 jimport('joomla.application.component.modellist');
 
+
+function add_apostroph($str) {
+	return sprintf("`%s`", $str);
+}
+
+function add_quotes($str) {
+	return sprintf("'%s'", $str);
+}
+
 /**
  * Model: Export
  */
@@ -36,35 +45,6 @@ class JemModelExport extends JModelList
 	}
 
 	/**
-	 * Method to auto-populate the model state.
-	 *
-	 * Note. Calling getState in this method will result in recursion.
-	 */
-	protected function populateState($ordering = null, $direction = null)
-	{
-		// Initialise variables.
-		$app = JApplication::getInstance('administrator');
-
-		// Load the filter state.
-		$filter_form_type = $app->getUserStateFromRequest($this->context . '.filter.form_type', 'filter_form_type');
-		$this->setState('filter.form_type', $filter_form_type);
-
-		$filter_start_date = $app->getUserStateFromRequest($this->context . '.filter.start_date', 'filter_start_date');
-		$this->setState('filter.start_date', $filter_start_date);
-
-		$filter_end_date = $app->getUserStateFromRequest($this->context . '.filter.end_date', 'filter_end_date');
-		$this->setState('filter.end_date', $filter_end_date);
-
-		// Load the parameters.
-		$params = JComponentHelper::getParams('com_jem');
-		$this->setState('params', $params);
-
-		// List state information.
-		parent::populateState('a.first_name', 'asc');
-	}
-
-
-	/**
 	 * Build an SQL query to load the Events data.
 	 *
 	 * @return JDatabaseQuery
@@ -74,8 +54,8 @@ class JemModelExport extends JModelList
 
 		// Retrieve variables
 		$jinput = JFactory::getApplication()->input;
-		$startdate = $jinput->get('dates', '', 'string');
-		$enddate = $jinput->get('enddates', '', 'string');
+		$startDate = $jinput->get('dates', '', 'string');
+		$endDate = $jinput->get('enddates', '', 'string');
 		$cats = $jinput->get('cid', array(), 'post', 'array');
 
 		// Create a new query object.
@@ -88,12 +68,18 @@ class JemModelExport extends JModelList
 		$query->join('LEFT', '#__jem_cats_event_relations AS rel ON rel.itemid = a.id');
 		$query->join('LEFT', '#__jem_categories AS c ON c.id = rel.catid');
 
-		// check if startdate + enddate are set.
-		if (! empty($startdate) && ! empty($enddate)) {
-			$query->where('DATEDIFF(IF (a.enddates IS NOT NULL, a.enddates, a.dates), "' . $startdate . '") >= 0');
-			$query->where('DATEDIFF(a.dates, "' . $enddate . '") <= 0');
+		if (!empty($startDate) && !empty($endDate)) {
+			$query->where('DATEDIFF(IF (a.enddates IS NOT NULL, a.enddates, a.dates), "' . $startDate . '") >= 0');
+			$query->where('DATEDIFF(a.dates, "' . $endDate . '") <= 0');
+		} else {
+			if (!empty($startDate)) {
+				$query->where('(a.dates IS NULL OR a.dates >= '.$db->Quote($startDate).')');
+			}
+			if (!empty($endDate)) {
+				$query->where('(a.enddates IS NULL OR a.enddates <= '.$db->Quote($endDate).')');
+			}
 		}
-
+		
 		// check if specific category's have been selected
 		if (! empty($cats)) {
 			$query->where('  (c.id=' . implode(' OR c.id=', $cats) . ')');
@@ -101,18 +87,162 @@ class JemModelExport extends JModelList
 
 		// Group the query
 		$query->group('a.id');
-
+		
 		return $query;
 	}
+	
+	
+	/**
+	 * Returns a SQL file with Events data
+	 * @return boolean
+	 */
+	public function getSQL()
+	{	
+		$jinput = JFactory::getApplication()->input;
+		$includecategories = $jinput->getInt('categorycolumn', 0);
+		
+		# start output
+		$csv	= fopen('php://output', 'w');
+		$db		= $this->getDbo();
+	
+		############
+		## EVENTS ##
+		############
+		
+		$eventColumns = array();
+		$eventColumns = array_keys($db->getTableColumns('#__jem_events'));
+		
+		$query = $this->getListQuery();
+		$events = $this->_getList($query);
+		
+		$result = $events;
+			
+		$eventColumns =  implode(',', array_map('add_apostroph', $eventColumns));
+			
+		$return = '';
+		$text = '';
+		$text2 = '';
+		$text .= "INSERT INTO `".$db->getPrefix()."jem_events` (".$eventColumns.") VALUES";
+		$text .= "\r\n";
+			
+		fwrite($csv,$text);
+			
+		foreach ($events as $event) {
+			$values = get_object_vars($event);
+			$values = implode(',',array_map('add_quotes',$values));
+				
+			$return.= '('.$values.')';	
+			$return.=",";
+			$return.= "\r\n";
+		}
 
+	
+		$return = substr_replace($return ,"",-3);
+		
+		fwrite($csv,$return);
+			
+		$text2.= ";\n";
+		fwrite($csv,$text2);
+		
+		
+		
+		################
+		## CATEGORIES ##
+		################
+		
+		$categoryColumns = array();
+		$categoryColumns = array_keys($db->getTableColumns('#__jem_categories'));
+		$categoryColumns =  implode(',', array_map('add_apostroph', $categoryColumns));
+			
+		$returnCat = '';
+		$bak = '';
+		$text3 = '';
+		$text4 = '';
+		$text3 .= "\r\n\n";
+		$text3 .= "INSERT INTO `".$db->getPrefix()."jem_categories` (".$categoryColumns.") VALUES";
+		$text3 .= "\r\n";
+		
+		
+		fwrite($csv,$text3);
+			
+		$catid_array = array();
+		
+		foreach ($events as $event) {
+			# get the category id's
+			$catids = $this->getCatEvent($event->id);
+			
+			# as the catid can have multiple values we're exploding it
+			$catids = explode(',',$catids);
+			
+			# now we have the category id's and we can retreive the data that belongs to it
+			foreach ($catids as $catid) {	
+				$catid_array[] = $catid;
+			}
+			
+			# get catEvent data
+			$catEvents	= $this->getCatEventData($event->id);
+			
+			# we can have multiple results
+			foreach ($catEvents as $catEvent) {
+				$catEvent = implode(',',array_map('add_quotes',$catEvent));
+			
+				$bak.= '('.$catEvent.')';
+				$bak.=",";
+				$bak.= "\r\n";
+			}
+			
+		}
+		
+		$catid_array = array_unique($catid_array);
+		
+		foreach($catid_array AS $catid_row) {
+			$catValue = $this->getCategoryData($catid_row);
+			$catValue = implode(',',array_map('add_quotes',$catValue));
+		
+			$returnCat.= '('.$catValue.')';
+			$returnCat.=",";
+			$returnCat.= "\r\n";
+		}
+		
+		$returnCat = substr_replace($returnCat ,"",-3);
+		fwrite($csv,$returnCat);
+			
+		$text4.= ";\n";
+		fwrite($csv,$text4);
+		
+		
+		##############
+		## CATEVENT ##
+		##############
+		
+		$catEventColumns = array();
+		$catEventColumns = array_keys($db->getTableColumns('#__jem_cats_event_relations'));
+		$catEventColumns =  implode(',', array_map('add_apostroph', $catEventColumns));
+
+		$text6 = '';
+		$text6 .= "\r\n\n";
+		$text6 .= "INSERT INTO `".$db->getPrefix()."jem_cats_event_relations` (".$catEventColumns.") VALUES";
+		$text6 .= "\r\n";
+		
+		fwrite($csv,$text6);
+		
+		$bak = substr_replace($bak ,"",-3);
+		fwrite($csv,$bak);
+			
+		$text7	= ";\n";
+		fwrite($csv,$text7);
+					
+		# return output
+		return fclose($csv);
+	}
+	
+	
 	/**
 	 * Returns a CSV file with Events data
 	 * @return boolean
 	 */
 	public function getCsv()
 	{
-		$this->populateState();
-
 		$jinput = JFactory::getApplication()->input;
 		$includecategories = $jinput->get('categorycolumn', 0, 'int');
 
@@ -150,138 +280,6 @@ class JemModelExport extends JModelList
 		return fclose($csv);
 	}
 
-
-	/**
-	 * Build an SQL query to load the Categories data.
-	 *
-	 * @return JDatabaseQuery
-	 */
-	protected function getListQuerycats()
-	{
-		// Create a new query object.
-		$db = $this->getDbo();
-		$query = $db->getQuery(true);
-
-		// Select the required fields from the table.
-		$query->select('a.*');
-		$query->from('#__jem_categories AS a');
-
-		return $query;
-	}
-
-	/**
-	 * Returns a CSV file with Categories data
-	 * @return boolean
-	 */
-	public function getCsvcats()
-	{
-		$this->populateState();
-
-		$csv = fopen('php://output', 'w');
-		fputs($csv, $bom =( chr(0xEF) . chr(0xBB) . chr(0xBF) ));
-
-		$db = $this->getDbo();
-		$header = array();
-		$header = array_keys($db->getTableColumns('#__jem_categories'));
-		fputcsv($csv, $header, ';');
-
-		$items = $db->setQuery($this->getListQuerycats())
-			->loadObjectList();
-
-		foreach ($items as $lines) {
-			fputcsv($csv, (array) $lines, ';', '"');
-		}
-
-		return fclose($csv);
-	}
-
-
-	/**
-	 * Build an SQL query to load the Venues data.
-	 *
-	 * @return JDatabaseQuery
-	 */
-	protected function getListQueryvenues()
-	{
-		// Create a new query object.
-		$db = $this->getDbo();
-		$query = $db->getQuery(true);
-
-		// Select the required fields from the table.
-		$query->select('a.*');
-		$query->from('#__jem_venues AS a');
-
-		return $query;
-	}
-
-	/**
-	 * Returns a CSV file with Venues data
-	 * @return boolean
-	 */
-	public function getCsvvenues()
-	{
-		$this->populateState();
-
-		$csv = fopen('php://output', 'w');
-		fputs($csv, $bom =( chr(0xEF) . chr(0xBB) . chr(0xBF) ));
-		$db = $this->getDbo();
-		$header = array();
-		$header = array_keys($db->getTableColumns('#__jem_venues'));
-		fputcsv($csv, $header, ';');
-
-		$items = $db->setQuery($this->getListQueryvenues())
-			->loadObjectList();
-
-		foreach ($items as $lines) {
-			fputcsv($csv, (array) $lines, ';', '"');
-		}
-
-		return fclose($csv);
-	}
-
-
-	/**
-	 * Build an SQL query to load the Cats/Events data.
-	 *
-	 * @return JDatabaseQuery
-	 */
-	protected function getListQuerycatsevents()
-	{
-		// Create a new query object.
-		$db = $this->getDbo();
-		$query = $db->getQuery(true);
-
-		// Select the required fields from the table.
-		$query->select('a.*');
-		$query->from('#__jem_cats_event_relations AS a');
-
-		return $query;
-	}
-
-	/**
-	 * Returns a CSV file with Cats/Events data
-	 * @return boolean
-	 */
-	public function getCsvcatsevents()
-	{
-		$this->populateState();
-
-		$csv = fopen('php://output', 'w');
-		fputs($csv, $bom =( chr(0xEF) . chr(0xBB) . chr(0xBF) ));
-		$db = $this->getDbo();
-		$header = array();
-		$header = array_keys($db->getTableColumns('#__jem_cats_event_relations'));
-		fputcsv($csv, $header, ';');
-
-		$items = $db->setQuery($this->getListQuerycatsevents())
-			->loadObjectList();
-
-		foreach ($items as $lines) {
-			fputcsv($csv, (array) $lines, ';', '"');
-		}
-
-		return fclose($csv);
-	}
 
 	/**
 	 * logic to get the categories
@@ -367,4 +365,149 @@ class JemModelExport extends JModelList
 
 		return $catids;
 	}
+	
+	
+	/**
+	 * Retrieve categoryData
+	 */
+	function getCategoryData($catid)
+	{
+		//$app 			= JFactory::getApplication();
+		//$settings 		= JemHelper::globalattribs();
+	
+		// Query
+		$db 	= JFactory::getDBO();
+		$query = $db->getQuery(true);
+		
+		$query->select(array('*'));
+		$query->from('#__jem_categories');
+		$query->where('id ='.$catid);
+		$db->setQuery($query);
+		$result = $db->loadRow();
+		
+		return $result;
+	}
+	
+	
+	/**
+	 * Retrieve categoryData
+	 */
+	function getCatEventData($eventid)
+	{
+		$db 	= JFactory::getDBO();
+		$query = $db->getQuery(true);
+		$query->select('*');
+		$query->from('#__jem_cats_event_relations');
+		$query->where('itemid =' . $db->quote($eventid));
+		$db->setQuery($query);
+		$result = $db->loadRowList();
+		
+		return $result;
+	}
+	
+	/**
+	 * Returns a CSV file with Table data
+	 * @return boolean
+	 */
+	public function getTableData($table)
+	{
+		$csv = fopen('php://output', 'w');
+		fputs($csv, $bom =( chr(0xEF) . chr(0xBB) . chr(0xBF) ));
+		$db 	= JFactory::getDBO();
+		$header = array();
+		$header = array_keys($db->getTableColumns('#__jem_'.$table));
+		fputcsv($csv, $header, ';');
+	
+		$items = $db->setQuery($this->getListQueryTableData($table))->loadObjectList();
+	
+		foreach ($items as $lines) {
+			fputcsv($csv, (array) $lines, ';', '"');
+		}
+	
+		return fclose($csv);
+	}
+	
+	/**
+	 * Build an SQL query to load the Table data.
+	 *
+	 * @return JDatabaseQuery
+	 */
+	protected function getListQueryTableData($table)
+	{
+		// Create a new query object.
+		$db = $this->getDbo();
+		$query = $db->getQuery(true);
+	
+		// Select the required fields from the table.
+		$query->select('*');
+		$query->from('#__jem_'.$table);
+	
+		return $query;
+	}
+	
+	
+	/**
+	 * Returns a SQL file with data
+	 * @return boolean
+	 */
+	public function getTableDataSQL($table)
+	{
+		# start output
+		$sql	= fopen('php://output', 'w');
+		
+		$db		= $this->getDbo();
+	
+		# retrieve columns
+		$columns = array();
+		$columns = array_keys($db->getTableColumns('#__jem_'.$table));	
+		$columns =  implode(',', array_map('add_apostroph', $columns));
+						
+		$data = '';
+		$start = "INSERT INTO `".$db->getPrefix()."jem_".$table."` (".$columns.") VALUES";
+		$start .= "\r\n";
+			
+		fwrite($sql,$start);
+		
+		$query = $this->getListQueryTableDataSQL($table);
+		$rows = $this->_getList($query);
+		
+		foreach ($rows as $row) {
+			$values = get_object_vars($row);
+			$values = implode(',',array_map('add_quotes',$values));
+	
+			$data.= '('.$values.')';
+			$data.=",";
+			$data.= "\r\n";
+		}
+	
+		$data = substr_replace($data ,"",-3);
+	
+		fwrite($sql,$data);
+					
+		$end = ";\n";
+		fwrite($sql,$end);
+
+		# return output
+		return fclose($sql);
+	}
+	
+	
+	/**
+	 * Build an SQL query to load the Table data.
+	 *
+	 * @return JDatabaseQuery
+	 */
+	protected function getListQueryTableDataSQL($table)
+	{
+		# Create a new query object.
+		$db = $this->getDbo();
+		$query = $db->getQuery(true);
+	
+		# retrieve data
+		$query->select('*');
+		$query->from('#__jem_'.$table);
+		
+		return $query;
+	}
+	
 }
