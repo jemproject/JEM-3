@@ -54,13 +54,13 @@ class JEMModelSearch extends JModelLegacy
 
 		//get the number of events from database
 		$limit		= $app->getUserStateFromRequest('com_jem.search.limit', 'limit', $jemsettings->display_num, 'int');
-		$limitstart	= $input->getInt('limitstart', 0);
+		$limitstart	= $jinput->getInt('limitstart', 0);
 
 		$this->setState('limit', $limit);
 		$this->setState('limitstart', $limitstart);
 
 		// Get the filter request variables
-		$filter_order = $input->getCmd('filter_order', 'a.dates');
+		$filter_order = $jinput->getCmd('filter_order', 'a.dates');
 		$this->setState('filter_order', $filter_order);
 
 		$filter_order_DirDefault = 'ASC';
@@ -70,7 +70,7 @@ class JEMModelSearch extends JModelLegacy
 			$filter_order_DirDefault = 'DESC';
 		}
 
-		$this->setState('filter_order_Dir', $input->getCmd('filter_order_Dir', $filter_order_DirDefault));
+		$this->setState('filter_order_Dir', $jinput->getCmd('filter_order_Dir', $filter_order_DirDefault));
 	}
 
 	/**
