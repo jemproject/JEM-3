@@ -55,7 +55,6 @@
 .eventcalq td.mod_jemcalq_caltodaylink a:link,
 .eventcalq td.mod_jemcalq_caltodaylink a:visited{
 	text-decoration: none;
-	width: 19px;
 	height: 18px;
 	font-weight: bold;
 	display: block;
@@ -66,7 +65,6 @@
 /* Today Event day cell hover */
 .eventcalq td.mod_jemcalq_caltodaylink a:hover {
 	text-decoration: none;
-	width: 19px;
 	height: 18px;
 	font-weight: bold;
 	display: block;
