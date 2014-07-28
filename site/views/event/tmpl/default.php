@@ -76,7 +76,7 @@ $mapType = $this->mapType;
 	
 	<?php if ($this->img_position == 0) { ?>
 		<?php if ($this->dimage) { ?>
-		<div class="image">
+		<div class="image imagetop">
 			<?php echo JemOutput::flyer($this->item, $this->dimage, 'event'); ?>
 		</div>
 		<?php } ?>
@@ -185,7 +185,7 @@ $mapType = $this->mapType;
 		<?php if ($this->img_position == 1) { ?>
 		</div><div class="span5">
 			<?php if ($this->dimage) { ?>
-			<div class="image">
+			<div class="image imageright">
 				<?php echo JemOutput::flyer($this->item, $this->dimage, 'event'); ?>
 			</div>
 			<?php } ?>
@@ -289,7 +289,7 @@ $mapType = $this->mapType;
 <!-- image -->
 		<?php if ($this->img_position == 0) { ?>	
 			<?php if ($this->limage) { ?>
-			<div class="image">
+			<div class="image imagetop">
 				<?php echo JemOutput::flyer($this->item, $this->limage, 'venue'); ?>
 			</div>
 			<?php } ?>
@@ -398,7 +398,7 @@ $mapType = $this->mapType;
 	</div><div class="span5">
 <!-- image -->
 	<?php if ($this->limage) { ?>
-		<div class="image">
+		<div class="image imageright">
 		<?php echo JemOutput::flyer($this->item, $this->limage, 'venue'); ?>
 	</div>
 	<?php } ?>
