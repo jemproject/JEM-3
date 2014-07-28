@@ -67,7 +67,7 @@ class JemViewMyattendances extends JViewLegacy
 		$search 			= $app->getUserStateFromRequest('com_jem.myattendances.filter_search', 'filter_search', '', 'string');
 		$search 			= $db->escape(trim(JString::strtolower($search)));
 
-		$task 				= $app->getWord('task');
+		$task 				= $jinput->getWord('task');
 
 		//search filter
 		$filters = array();
