@@ -21,10 +21,6 @@ function initialize() {
 			,disableDefaultUI: false
 		};
 	
-	//function changeMapType(mapTypeId) {
-	//      mapCanvas.setMapTypeId(google.maps.MapTypeId[mapTypeId]);
-	//    }
-	
 	var map = new google.maps.Map(document.getElementById('map-canvas'), myMapOptions);
 	
 	// check for zero
@@ -129,7 +125,7 @@ function initialize() {
 				    	});
 
 				    	var ib = new InfoBox(myOptions);
-				    	ib.open(map, marker);
+				    	//ib.open(map, marker);
 		    	  } else {
 		    		  error();
 		    	  }
