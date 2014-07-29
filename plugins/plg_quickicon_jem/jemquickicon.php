@@ -12,13 +12,14 @@ defined('_JEXEC') or die;
 
 
 /**
- * Quickicon-Plugin
+ * JEM Quickicon-Plugin
  */
 class plgQuickiconJEMquickicon extends JPlugin
 {
 	public function __construct(& $subject, $config)
 	{
 		parent::__construct($subject, $config);
+		$this->loadLanguage();
 	}
 
 	public function onGetIcons($context)
@@ -31,14 +32,14 @@ class plgQuickiconJEMquickicon extends JPlugin
 		JHtml::_('jquery.framework');
 		
 		$text = $this->params->get('displayedtext');
-		if(empty($text)) $text = JText::_('JEM-Events');
+		if(empty($text)) $text = JText::_('COM_JEM_EVENTS');
 
 		return array(array(
 			'link' => 'index.php?option=com_jem',
 			'image' => 'calendar',
 			'icon' => JURI::base().'../media/com_jem/images/icon-48-home.png',
 			'text' => $text,
-			'id' => 'plg_quickicon_jemquickicon'
+			'id' => 'plg_jem_quickicon'
 		));
 	}
 }
