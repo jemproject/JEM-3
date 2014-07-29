@@ -36,7 +36,7 @@ JHtml::_('bootstrap.tooltip');
 				<div class="span6">
 	
 	<fieldset class="form-horizontal">
-			<legend><?php echo JText::_('COM_JEM_EXPORT_SELECTION_LEGEND');?></legend>
+			<legend><?php echo JText::_('COM_JEM_EXPORT_LEGEND_SELECTION');?></legend>
 			
 		<div class="control-group">
 			<div class="control-label"><label class="hasTooltip" title="<?php echo JText::_('COM_JEM_EXPORT_ADD_CATEGORYCOLUMN'); ?>::<?php echo JText::_('COM_JEM_EXPORT_ADD_CATEGORYCOLUMN'); ?>">
@@ -85,7 +85,7 @@ JHtml::_('bootstrap.tooltip');
 	</div><div class="span6">
 	
 		<fieldset class="form-horizontal">
-			<legend><?php echo JText::_('COM_JEM_EXPORT_TABLES_LEGEND');?></legend>
+			<legend><?php echo JText::_('COM_JEM_EXPORT_LEGEND_TABLES');?></legend>
 
 		<div class="control-group">
 			<div class="control-label"><label><?php echo JText::_('COM_JEM_EXPORT_TABLE_ATTACHMENTS'); ?></label></div>
