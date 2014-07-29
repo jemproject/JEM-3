@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 3.0.0
+ * @version 3.0.1
  * @package JEM
  * @copyright (C) 2013-2014 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -10,11 +10,10 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * JEM Quickicon-Plugin
  */
-class plgQuickiconJEMquickicon extends JPlugin
+class plgQuickiconJemquickicon extends JPlugin
 {
 	public function __construct(& $subject, $config)
 	{
@@ -24,6 +23,7 @@ class plgQuickiconJEMquickicon extends JPlugin
 
 	public function onGetIcons($context)
 	{
+		
 		if ($context != $this->params->get('context', 'mod_quickicon') || !JFactory::getUser()->authorise('core.manage', 'com_installer'))
 		{
 			return;
@@ -32,7 +32,7 @@ class plgQuickiconJEMquickicon extends JPlugin
 		JHtml::_('jquery.framework');
 		
 		$text = $this->params->get('displayedtext');
-		if(empty($text)) $text = JText::_('COM_JEM_EVENTS');
+		if(empty($text)) $text = JText::_('PLG_QUICKICON_JEMQUICKICON_MAIN');
 
 		return array(array(
 			'link' => 'index.php?option=com_jem',
