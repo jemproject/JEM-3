@@ -12,7 +12,6 @@
 
 	<files>
 		<filename plugin="jem">jem.php</filename>
-
 		<folder>language</folder>
 	</files>
 
