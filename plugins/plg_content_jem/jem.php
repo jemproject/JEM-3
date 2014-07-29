@@ -2,22 +2,35 @@
 /**
  * @version 3.0.1
  * @package JEM
+ * @subpackage JEM Content Plugin
  * @copyright (C) 2013-2014 joomlaeventmanager.net
+ * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 defined('_JEXEC') or die;
 
-// Required? Normally events are triggered from somewhere within com_jem so helper is already loaded.
-//require_once(JPATH_SITE.'/components/com_jem/helpers/helper.php');
 
 /**
  * JEM Content Plugin
  */
 class plgContentJem extends JPlugin
 {
+	
 	/**
-	 * Dissolve recurrence sets where deleted event is referred to as first.
+	 * Constructor
 	 *
+	 * @param object $subject The object to observe
+	 * @param array  $config  An array that holds the plugin configuration
+	 *
+	 */
+	public function __construct(& $subject, $config)
+	{
+		parent::__construct($subject, $config);
+		$this->loadLanguage();
+	}
+	
+	
+	/**
 	 * @param	string	The context for the content passed to the plugin.
 	 * @param	object	The data relating to the content that was deleted.
 	 */
@@ -27,9 +40,6 @@ class plgContentJem extends JPlugin
 		if (($context != 'com_jem.event') || empty($data->id)) {
 			return;
 		}
-
-		// event maybe first of recurrence set -> dissolve complete set
-		JemHelper::dissolve_recurrence($data->id);
 
 		return;
 	}
