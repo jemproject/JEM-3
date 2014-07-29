@@ -46,7 +46,7 @@ class plgJEMMailer extends JPlugin {
 	{
 		parent::__construct($subject, $config);
 		$this->loadLanguage();
-
+		
 		$app = JFactory::getApplication();
 		$jemsettings = JemHelper::globalattribs();
 
