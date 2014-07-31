@@ -36,6 +36,7 @@ function initialize() {
 	/* if we've it then we can use the coordinates to center the map  
 	 */
 	if (lat && long) {
+		
 		var marker = new google.maps.Marker({
 		      position: myLatlng,
 		      map: map,
@@ -79,12 +80,12 @@ function initialize() {
 				
 		geocoder = new google.maps.Geocoder();
 		var address = street+","+postalCode+","+city;
-		
+	
 		geocoder.geocode( { 'address': address}, function(results, status) {
 		      if (status == google.maps.GeocoderStatus.OK) {
 		    	  // Geocoding-status is ok, but we want to retrieve an exact address
 		    	  
-		    	  if (results[0].geometry.location_type == google.maps.GeocoderLocationType.ROOFTOP){
+		    	  if (results[0].geometry.location_type){
 		    		 // we're searching for an exact/valid-address
 		    		  
 		    		  	//In this case it creates a marker, but you can get the lat and lng from the location.LatLng
@@ -127,6 +128,8 @@ function initialize() {
 				    	var ib = new InfoBox(myOptions);
 				    	//ib.open(map, marker);
 		    	  } else {
+		    		  alert(status);
+		    		  alert('foo6');
 		    		  error();
 		    	  }
 		      } else {
