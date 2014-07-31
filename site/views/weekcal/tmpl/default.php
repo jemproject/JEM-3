@@ -190,7 +190,7 @@ JHtml::_('bootstrap.tooltip');
 
 		//generate the output
 		//$content .= $colorpic;
-		$content .= JemHelper::caltooltip($catname.$eventname.$timehtml.$venue, $eventdate, $row->title, $detaillink, 'editlinktip hasTip', $timetp, $color);
+		$content .= JemHelper::caltooltip($catname.$eventname.$timehtml.$venue, $eventdate, $row->title, $detaillink, 'hasTooltip', $timetp, $color);
 		$content .= $contentend;
 
 		$this->cal->setEventContent($year, $month, $day, $content);
