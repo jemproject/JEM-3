@@ -12,14 +12,14 @@ defined('_JEXEC') or die;
 /**
  * Controller
  */
-class JEMController extends JControllerLegacy
+class JemController extends JControllerLegacy
 {
 	/**
 	 * Constructor
 	 */
-	public function __construct()
+	public function __construct($config = array())
 	{
-		parent::__construct();
+		parent::__construct($config);
 	}
 
 	/**
@@ -37,13 +37,11 @@ class JEMController extends JControllerLegacy
 		$viewFormat 	= $document->getType();
 		$layoutName 	= $jinput->getCmd('layout', 'edit');
 
-
 		// Check for edit form.
 		if ($viewName == 'editevent' && !$this->checkEditId('com_jem.edit.editevent', $id)) {
 			// Somehow the person just went to the form - we don't allow that.
 			return JError::raiseError(403, JText::sprintf('JLIB_APPLICATION_ERROR_UNHELD_ID', $id));
 		}
-
 
 		if ($view = $this->getView($viewName, $viewFormat)) {
 			// Do any specific processing by view.
@@ -137,7 +135,8 @@ class JEMController extends JControllerLegacy
 	 */
 	function ajaxattachremove()
 	{
-		$id	 = JFactory::getApplication()->input->request->get('id', 0, 'int');
+		$jinput	= JFactory::getApplication()->input;
+		$id	 	= $jinput->request->getInt('id', 0);
 
 		$res = JEMAttachment::remove($id);
 		if (!$res) {
