@@ -94,7 +94,7 @@ class JemViewCalendar extends JViewLegacy
 		$cal->enableMonthNav('index.php?view=calendar');
 		$cal->setFirstWeekDay($params->get('firstweekday', 1));
 		$cal->enableDayLinks(false);
-		$cal->enableDatePicker();
+		//$cal->enableDatePicker();
 
 		$this->rows        = $rows;
 		$this->params      = $params;
