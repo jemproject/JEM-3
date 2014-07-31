@@ -730,13 +730,13 @@ class JEMModelImport extends JModelLegacy {
 			// Eventlist not found in extension table
 			if(is_null($result)) {
 				$secondCheck = true;
+			} else {
+				$par = $result->manifest_cache;
+				$params = new JRegistry;
+				$params->loadString($par);
+					
+				$version = $params->get('version', null);
 			}
-			
-			$par = $result->manifest_cache;
-			$params = new JRegistry;
-			$params->loadString($par);
-			
-			$version = $params->get('version', null);
 		}
 		
 	
