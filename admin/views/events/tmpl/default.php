@@ -14,7 +14,6 @@ JHtml::_('bootstrap.tooltip');
 JHtml::_('behavior.multiselect');
 JHtml::_('formbehavior.chosen', 'select');
 
-
 $user		= JFactory::getUser();
 $userId		= $user->get('id');
 $listOrder	= $this->escape($this->state->get('list.ordering'));
@@ -213,7 +212,7 @@ $(document).ready(function() {
 				<td class="center">
 					<?php
 					if ($row->registra == 1) {
-						$linkreg 	= 'index.php?option=com_jem&amp;view=attendees&amp;id='.$row->id;
+						$linkreg 	= 'index.php?option=com_jem&amp;view=attendees&amp;eid='.$row->id;
 						$count = $row->regCount;
 						if ($row->maxplaces)
 						{
