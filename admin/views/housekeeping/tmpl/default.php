@@ -49,7 +49,6 @@ defined('_JEXEC') or die;
 		</td>
 		<td width="40%" valign="middle">
 			<?php echo JText::_('COM_JEM_HOUSEKEEPING_CLEANUP_CATSEVENT_RELS_DESC'); ?><br/>
-			<?php echo JText::sprintf('COM_JEM_HOUSEKEEPING_TOTAL_CATSEVENT_RELS', $this->totalcats) ?>
 		</td>
 
 		<!-- TRUNCATE ALL DATA -->

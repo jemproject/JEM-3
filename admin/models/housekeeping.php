@@ -8,7 +8,7 @@
  */
 defined('_JEXEC') or die;
 
-jimport('joomla.application.component.model');
+
 jimport('joomla.filesystem.folder');
 jimport('joomla.filesystem.file');
 
@@ -147,9 +147,9 @@ class JemModelHousekeeping extends JModelLegacy
 
 		$db = JFactory::getDbo();
 
-		foreach ($tables as $table) {
-			$db->setQuery("TRUNCATE #__jem_".$table);
-
+		foreach ($tables as $table) {			
+			$db->truncateTable("#__jem_".$table);
+			
 			if(!$db->execute()) {
 				return false;
 			}
@@ -159,26 +159,6 @@ class JemModelHousekeeping extends JModelLegacy
 		$categoryTable->addRoot();
 
 		return true;
-	}
-
-	/**
-	 * Method to count the cat_relations table
-	 *
-	 * @access	public
-	 * @return int
-	 */
-	public function getCountcats()
-	{
-		$db = JFactory::getDbo();
-		$query = $db->getQuery(true);
-		$query->select(array('*'));
-		$query->from('#__jem_cats_event_relations');
-		$db->setQuery($query);
-		$db->execute();
-
-		$total = $db->loadObjectList();
-
-		return count($total);
 	}
 
 

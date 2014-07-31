@@ -18,8 +18,6 @@ class JemViewHousekeeping extends JViewLegacy {
 
 		$app = JFactory::getApplication();
 
-		$this->totalcats = $this->get('Countcats');
-
 		//only admins have access to this view
 		if (!JFactory::getUser()->authorise('core.manage')) {
 			JError::raiseWarning('SOME_ERROR_CODE', JText::_('COM_JEM_ALERTNOTAUTH'));
