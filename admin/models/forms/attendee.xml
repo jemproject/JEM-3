@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset name="details"
+		addfieldpath="/administrator/components/com_jem/models/fields"
+	>
+		<field name="id" type="text"
+			default="0"
+			label="JGLOBAL_FIELD_ID_LABEL"
+			description ="JGLOBAL_FIELD_ID_DESC"
+			class="readonly"
+			readonly="true"
+		/>
+		
+		<field name="uid" type="user"
+			class="inputbox"
+			size="40"
+			label="COM_JEM_USER"
+			description="COM_JEM_USER"
+			required="true"
+		/>
+		
+	</fieldset>
+</form>
