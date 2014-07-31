@@ -12,19 +12,15 @@ defined('_JEXEC') or die;
 /**
  * Controller: Attendee
  */
-class JemControllerAttendee extends JControllerLegacy
+class JemControllerAttendee extends JControllerForm
 {
 	/**
 	 * Constructor
 	 *
 	 */
-	public function __construct()
+	public function __construct($config = array())
 	{
-		parent::__construct();
-
-		// Register Extra task
-		$this->registerTask('add', 		'edit');
-		$this->registerTask('apply', 	'save');
+		parent::__construct($config);
 	}
 
 
@@ -38,83 +34,73 @@ class JemControllerAttendee extends JControllerLegacy
 
 
 	/**
-	 * logic for cancel an action
-	 *
-	 * @access public
-	 * @return void
-	 *
+	 * Gets the URL arguments to append to a list redirect.
+	 * @return  string  The arguments to append to the redirect URL.
 	 */
-	function cancel()
+	protected function getRedirectToListAppend()
 	{
-		// Check for request forgeries.
-		JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
-		
-		$jinput = JFactory::getApplication()->input;
+		$jinput 	= JFactory::getApplication()->input;
 
-		$venue = JTable::getInstance('Register', 'JEMTable');
-		$venue->bind($jinput->getArray($_POST));
-		$venue->checkin();
-
-		$this->setRedirect('index.php?option=com_jem&view=attendees&id='.$jinput->getInt('event'));
-	}
-
-
-	/**
-	 * saves the attendee in the database
-	 *
-	 * @access public
-	 * @return void
-	 *
-	 */
-	function save()
-	{
-		// Check for request forgeries.
-		JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
-
-		// Defining JInput
-		$jinput = JFactory::getApplication()->input;
-
-		// retrieving task "apply"
-		$task	= $this->getTask();
-
-		// Retrieving $post
-		$post = $jinput->getArray($_POST);
-
-		// Retrieving email-setting
-		$sendemail = $jinput->getInt('sendemail','0');
-
-		// Retrieving event-id
-		$eventid = $jinput->getInt('event');
-
-		$model = $this->getModel('attendee');
-
-		if ($row = $model->store($post)) {
-			if ($sendemail == 1) {
-				JPluginHelper::importPlugin('jem');
-				$dispatcher = JDispatcher::getInstance();
-				$dispatcher->trigger('onEventUserRegistered', array($row->id));
-			}
-
-			switch ($task)
-			{
-				case 'apply':
-					$link = 'index.php?option=com_jem&view=attendee&hidemainmenu=1&cid[]='.$row->id.'&event='.$row->event;
-					break;
-
-				default:
-					$link = 'index.php?option=com_jem&view=attendees&id='.$row->event;
-					break;
-			}
-			$msg = JText::_('COM_JEM_ATTENDEE_SAVED');
-
-			$cache = JFactory::getCache('com_jem');
-			$cache->clean();
-		} else {
-			$msg 	= '';
-			$link 	= 'index.php?option=com_jem&view=attendees&id='.$eventid;
+		$tmpl		= $jinput->get('tmpl');
+		$eventid	= $jinput->getInt('eid');
+		$append = '';
+	
+		// Setup redirect info.
+		if ($tmpl)
+		{
+			$append .= '&tmpl=' . $tmpl;
 		}
-		$this->setRedirect($link, $msg);
+	
+		if ($eventid) {
+			$append .= '&eid='.$eventid;
+		} 
+		
+		return $append;
 	}
+	
+	
+	/**
+	 * Gets the URL arguments to append to an item redirect.
+	 *
+	 * @param   integer  $recordId  The primary key id for the item.
+	 * @param   string   $urlVar    The name of the URL variable for the id.
+	 *
+	 * @return  string  The arguments to append to the redirect URL.
+	 */
+	protected function getRedirectToItemAppend($recordId = null, $urlVar = 'id')
+	{
+		$jinput 	= JFactory::getApplication()->input;
+		
+		$tmpl   = $jinput->get('tmpl');
+		$id		= $jinput->get('id');
+		$layout = $jinput->getString('layout', 'edit');
+		$eventid = $jinput->get('eid');
+		$append = '';
+		
+		// Setup redirect info.
+		if ($tmpl)
+		{
+			$append .= '&tmpl=' . $tmpl;
+		}
+	
+		if ($layout)
+		{
+			$append .= '&layout=' . $layout;
+		}
+	
+		if ($recordId && $eventid)
+		{
+			$append .= '&' . $urlVar . '=' . $recordId.'&e' . $urlVar . '=' . $eventid;
+		}
+		
+		if (is_null($recordId))
+		{
+			$append .= '&e' . $urlVar . '=' . $id;
+		}
+		
+		return $append;
+	}
+	
 
-}
+} // end class
 ?>

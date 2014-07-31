@@ -13,6 +13,11 @@ defined('_JEXEC') or die;
  * View: Attendees
  */
 class JemViewAttendees extends JViewLegacy {
+	
+	protected $items;
+	protected $pagination;
+	protected $state;
+	
 	public function display($tpl = null)
 	{
 		$app = JFactory::getApplication();
@@ -22,21 +27,18 @@ class JemViewAttendees extends JViewLegacy {
 			return;
 		}
 
-		$db					= JFactory::getDBO();
-		$filter_order		= $app->getUserStateFromRequest('com_jem.attendees.filter_order', 'filter_order', 'u.username', 'cmd');
-		$filter_order_Dir	= $app->getUserStateFromRequest('com_jem.attendees.filter_order_Dir',	'filter_order_Dir',	'', 'word');
-		$filter_waiting		= $app->getUserStateFromRequest('com_jem.attendees.waiting',	'filter_waiting',	0, 'int');
-		$filter 			= $app->getUserStateFromRequest('com_jem.attendees.filter', 'filter', '', 'int');
-		$search 			= $app->getUserStateFromRequest('com_jem.attendees.filter_search', 'filter_search', '', 'string');
-		$search 			= $db->escape(trim(JString::strtolower($search)));
-
 		// Load css
 		JHtml::_('stylesheet', 'com_jem/backend.css', array(), true);
 
 		// Get data from the model
-		$rows 		= $this->get('Data');
-		$pagination = $this->get('Pagination');
-		$event 		= $this->get('Event');
+		$this->items			= $this->get('Items');
+		$this->pagination		= $this->get('Pagination');
+		$this->state			= $this->get('State');
+		$this->filterForm		= $this->get('FilterForm');
+		$this->activeFilters	= $this->get('ActiveFilters');
+		$event 					= $this->get('Event');
+		$jinput 				= JFactory::getApplication()->input;
+		$eventid 				= $jinput->getInt('eid');
 
  		if (JEMHelper::isValidDate($event->dates)) {
 			$event->dates = JEMOutput::formatdate($event->dates);
@@ -44,32 +46,9 @@ class JemViewAttendees extends JViewLegacy {
 			$event->dates = JText::_('COM_JEM_OPEN_DATE');
 		}
 
-		// build filter selectlist
-		$filters = array();
-		$filters[] = JHtml::_('select.option', '1', JText::_('COM_JEM_NAME'));
-		$filters[] = JHtml::_('select.option', '2', JText::_('COM_JEM_USERNAME'));
-		$lists['filter'] = JHtml::_('select.genericlist', $filters, 'filter', array('size'=>'1','class'=>'inputbox'), 'value', 'text', $filter);
-
-		// search filter
-		$lists['search'] = $search;
-
-		// waiting list status
-		$options = array(
-				JHtml::_('select.option', 0, JText::_('COM_JEM_ATT_FILTER_ALL')),
-				JHtml::_('select.option', 1, JText::_('COM_JEM_ATT_FILTER_ATTENDING')),
-				JHtml::_('select.option', 2, JText::_('COM_JEM_ATT_FILTER_WAITING'))
-		) ;
-		$lists['waiting'] = JHtml::_('select.genericlist', $options, 'filter_waiting', array('onChange'=>'this.form.submit();'), 'value', 'text', $filter_waiting);
-
-		// table ordering
-		$lists['order_Dir'] = $filter_order_Dir;
-		$lists['order']		= $filter_order;
-
 		// assign to template
-		$this->lists 		= $lists;
-		$this->rows 		= $rows;
-		$this->pagination 	= $pagination;
 		$this->event 		= $event;
+		$this->eventid		= $eventid;
 
 		// add toolbar
 		$this->addToolbar();
@@ -89,8 +68,8 @@ class JemViewAttendees extends JViewLegacy {
 		// Load css
 		JHtml::_('stylesheet', 'com_jem/backend.css', array(), true);
 
-		$rows = $this->get('Data');
-		$event = $this->get('Event');
+		$this->items			= $this->get('Items');
+		$event 					= $this->get('Event');
 
 		if (JEMHelper::isValidDate($event->dates)) {
 			$event->dates = JEMOutput::formatdate($event->dates);
@@ -99,7 +78,6 @@ class JemViewAttendees extends JViewLegacy {
 		}
 
 		// assign data to template
-		$this->rows = $rows;
 		$this->event = $event;
 
 		parent::display($tpl);
@@ -111,10 +89,15 @@ class JemViewAttendees extends JViewLegacy {
 	 */
 	protected function addToolbar()
 	{
+		/* retrieving the allowed actions for the user */
+		$canDo = JEMHelperBackend::getActions(0);
+		
 		JToolBarHelper::title(JText::_('COM_JEM_REGISTERED_USERS'), 'users');
 
-		JToolBarHelper::addNew('attendees.add');
-		JToolBarHelper::editList('attendees.edit');
+		/* create */
+		if (($canDo->get('core.create'))) {
+			JToolBarHelper::addNew('attendee.add');
+		}
 		JToolBarHelper::spacer();
 		JToolBarHelper::deleteList('COM_JEM_CONFIRM_DELETE', 'attendees.remove', 'COM_JEM_ATTENDEES_DELETE');
 		JToolBarHelper::spacer();

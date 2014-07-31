@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 	<table style="width:100%" class="adminlist">
 		<tr>
 			<td class="sectionname" width="100%"><font style="color: #C24733; font-size : 18px; font-weight: bold;"><?php echo JText::_('COM_JEM_REGISTERED_USER'); ?></font></td>
-			<td><div class="button2-left"><div class="blank"><a href="#" onclick="window.print();return false;"><?php echo JText::_('COM_JEM_PRINT'); ?></a></div></div></td>
+			<td><div class="btn"><div class="blank"><a href="javascript:void(0)" onclick="window.print();return false;"><?php echo JText::_('COM_JEM_PRINT'); ?></a></div></div></td>
 		</tr>
 	</table>
 	<br />
@@ -39,8 +39,8 @@ defined('_JEXEC') or die;
 		<tbody>
 			<?php
 			$k = 0;
-			for($i=0, $n=count( $this->rows ); $i < $n; $i++) {
-				$row = $this->rows[$i];
+			for($i=0, $n=count( $this->items ); $i < $n; $i++) {
+				$row = $this->items[$i];
 			?>
 			<tr class="<?php echo "row$k"; ?>">
 				<td><?php echo $row->name; ?></td>

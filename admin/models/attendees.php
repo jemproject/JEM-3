@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 /**
  * Model: Attendees
  */
-class JemModelAttendees extends JModelLegacy
+class JemModelAttendees extends JModelList
 {
 	/**
 	 * Events data array
@@ -47,31 +47,134 @@ class JemModelAttendees extends JModelLegacy
 	 *
 	 * @var int
 	 */
-	var $_id = null;
+	var $_eid = null;
 
 	/**
 	 * Constructor
 	 *
 	 */
-	public function __construct()
+	/**
+	 * Constructor.
+	 */
+	public function __construct($config = array())
 	{
-		parent::__construct();
-
+		if (empty($config['filter_fields'])) {
+			$config['filter_fields'] = array(
+					'u.username', 'u.name',
+					'name','username',
+					'r.uregdate','r.uid',
+					'r.waiting',
+					'waiting','filtertype',
+			);
+		}
+		
 		$app 	= JFactory::getApplication();
 		$jinput = $app->input;
-
-		$limit		= $app->getUserStateFromRequest( 'com_jem.attendees.limit', 'limit', $app->getCfg('list_limit'), 'int');
-		$limitstart = $app->getUserStateFromRequest( 'com_jem.attendees.limitstart', 'limitstart', 0, 'int' );
-
-		$this->setState('limit', $limit);
-		$this->setState('limitstart', $limitstart);
-
-		# set unlimited if export or print action || task=export or task=print
-		$this->setState('unlimited', $jinput->getString('task'));
-
-		$id		= $jinput->getInt('id');
-		$this->setId($id);
+		
+		# retrieve event-id
+		$eid		= $jinput->getInt('eid');
+		$this->setId($eid);
+	
+		parent::__construct($config);
 	}
+	
+	
+	/**
+	 * Method to auto-populate the model state.
+	 *
+	 * Note. Calling getState in this method will result in recursion.
+	 */
+	protected function populateState($ordering = null, $direction = null)
+	{
+		$app 			= JFactory::getApplication();
+		$jemsettings	= JemHelper::config();
+		
+		# List state information
+		$limitstart = $app->getUserStateFromRequest($this->context.'.limitstart', 'limitstart', 0, 'int');
+		$this->setState('list.start', $limitstart);
+		
+		$limit		= $app->getUserStateFromRequest($this->context.'.limit', 'limit', $jemsettings->display_num, 'int');
+		$this->setState('list.limit', $limit);
+		
+		$search = $this->getUserStateFromRequest($this->context.'.filter.search', 'filter.search');
+		$this->setState('filter.search', $search);
+		
+		$waiting = $this->getUserStateFromRequest($this->context.'.filter.waiting', 'filter.waiting', '');
+		$this->setState('filter.waiting', $waiting);
+		
+		$filterfield = $this->getUserStateFromRequest($this->context.'.filter.filtertype', 'filter.filtertype', '', 'int');
+		$this->setState('filter.filtertype', $filterfield);
+		
+		# it's needed to set the parent option
+		parent::populateState('a.dates', 'asc');
+	}
+	
+	
+	/**
+	 * Build an SQL query to load the list data.
+	 *
+	 * @return	JDatabaseQuery
+	 *
+	 */
+	protected function getListQuery()
+	{
+		// Create a new query object.
+		$db		= $this->getDbo();
+		$query	= $db->getQuery(true);
+		$app 	= JFactory::getApplication();
+		$jinput = $app->input;
+		$layout = $jinput->getWord('layout');
+		$eid	= $jinput->getInt('eid');
+		
+		
+		$query->select(array('r.*','u.username','u.name','u.email'));
+		$query->from('#__jem_register AS r');
+		$query->join('LEFT', '#__jem_events AS a ON (r.event = a.id)');
+		$query->join('LEFT', '#__users AS u ON (u.id = r.uid)');
+		$query->where('r.event = '.$this->_eid);
+		
+		$filter_waiting = $this->getState('filter.waiting');
+		if (!empty($filter_waiting)) {
+			$query->where('(a.waitinglist = 0 OR r.waiting = '.$db->quote($filter_waiting-1).')');
+		}
+		
+		// Filter by search in title
+		$filter = $this->getState('filter.filtertype');
+		$search = $this->getState('filter.search');
+		
+		if (!empty($search)) {
+			if (stripos($search, 'id:') === 0) {
+				$query->where('a.id = '.(int) substr($search, 3));
+			} else {
+				$search = $db->Quote('%'.$db->escape($search, true).'%');
+		
+				if($search) {
+					switch($filter) {
+						case 1:
+							/* search name */
+							$query->where('u.name LIKE '.$search);
+							break;
+						case 2:
+							/* search username */
+							$query->where('u.username LIKE '.$search);
+							break;
+						default:
+							$query->where('u.name LIKE '.$search);
+					}
+				}
+			}
+		}
+		
+		# ordering
+		$orderCol	= $this->state->get('list.ordering','u.username');
+		$orderDirn	= $this->state->get('list.direction','asc');
+		
+		$query->order($db->escape($orderCol.' '.$orderDirn));
+				
+		return $query;
+		
+	}
+	
 
 	/**
 	 * Method to set the category identifier
@@ -79,122 +182,10 @@ class JemModelAttendees extends JModelLegacy
 	 * @access	public
 	 * @param	int Category identifier
 	 */
-	function setId($id)
+	function setId($eid)
 	{
 		// Set id and wipe data
-		$this->_id	    = $id;
-		$this->_data 	= null;
-	}
-
-	/**
-	 * Method to get categories item data
-	 *
-	 * @access public
-	 * @return array
-	 */
-	function getData()
-	{
-		// Lets load the content if it doesn't already exist
-		if (empty($this->_data))
-		{
-			$query = $this->_buildQuery();
-
-			if ($this->getState('unlimited') == '') {
-				$this->_data = $this->_getList($query, $this->getState('limitstart'), $this->getState('limit'));
-			} else {
-				$this->_data = $this->_getList($query);
-			}
-		}
-
-		return $this->_data;
-	}
-
-	/**
-	 * Method to get the total nr of the attendees
-	 *
-	 * @access public
-	 * @return integer
-	 */
-	function getTotal()
-	{
-		// Lets load the content if it doesn't already exist
-		if (empty($this->_total))
-		{
-			$query = $this->_buildQuery();
-			$this->_total = $this->_getListCount($query);
-		}
-
-		return $this->_total;
-	}
-
-	/**
-	 * Method to get a pagination object for the events
-	 *
-	 * @access public
-	 * @return integer
-	 */
-	function getPagination()
-	{
-		// Lets load the content if it doesn't already exist
-		if (empty($this->_pagination))
-		{
-			jimport('joomla.html.pagination');
-			$this->_pagination = new JPagination( $this->getTotal(), $this->getState('limitstart'), $this->getState('limit') );
-		}
-
-		return $this->_pagination;
-	}
-
-	/**
-	 * Method to build the query for the attendees
-	 *
-	 * @access private
-	 * @return integer
-	 *
-	 */
-	protected function _buildQuery()
-	{
-		$app	= JFactory::getApplication();
-		$db		= JFactory::getDbo();
-
-		$filter				= $app->getUserStateFromRequest( 'com_jem.attendees.filter', 'filter', '', 'int' );
-		$search 			= $app->getUserStateFromRequest( 'com_jem.attendees.filter_search', 'filter_search', '', 'string' );
-		$search 			= $db->Quote('%'.$db->escape($search, true).'%');
-		$filter_waiting		= $app->getUserStateFromRequest( 'com_jem.attendees.waiting',	'filter_waiting',	0, 'int' );
-		$filter_order		= $app->getUserStateFromRequest( 'com_jem.attendees.filter_order', 		'filter_order', 	'u.username', 'cmd' );
-		$filter_order_Dir	= $app->getUserStateFromRequest( 'com_jem.attendees.filter_order_Dir',	'filter_order_Dir',	'', 'word' );
-		$filter_order		= JFilterInput::getinstance()->clean($filter_order, 'cmd');
-		$filter_order_Dir	= JFilterInput::getinstance()->clean($filter_order_Dir, 'word');
-
-		$query = $db->getQuery(true);
-		
-		$query->select(array('r.*','u.username','u.name','u.email'));
-		$query->from('#__jem_register AS r');
-		$query->join('LEFT', '#__jem_events AS a ON (r.event = a.id)');
-		$query->join('LEFT', '#__users AS u ON (u.id = r.uid)');
-		$query->where('r.event = '.$this->_id);
-
-		if ($filter_waiting) {
-			$query->where('(a.waitinglist = 0 OR r.waiting = '.$db->quote($filter_waiting-1).')');
-		}
-
-		# search name
-		if ($search && $filter == 1) {
-			$query->where('u.name LIKE '.$search);
-		}
-
-		# search username
-		if ($search && $filter == 2) {
-			$query->where('u.username LIKE '.$search);
-		}
-
-		# Add the list ordering clause.
-		$orderCol	= $filter_order;
-		$orderDirn	= $filter_order_Dir;
-
-		$query->order($db->escape($orderCol.' '.$orderDirn));
-
-		return $query;
+		$this->_eid	    = $eid;
 	}
 
 
@@ -212,7 +203,7 @@ class JemModelAttendees extends JModelLegacy
 		$query = $db->getQuery(true);
 		$query->select(array('id','title','dates','maxplaces','waitinglist'));
 		$query->from('#__jem_events');
-		$query->where('id = '.$this->_id);
+		$query->where('id = '.$this->_eid);
 		$db->setQuery( $query );
 		$_event = $db->loadObject();
 

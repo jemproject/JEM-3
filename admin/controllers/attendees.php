@@ -16,16 +16,14 @@ class JemControllerAttendees extends JControllerLegacy
 {
 	/**
 	 * Constructor
-	 *
-	 *
 	 */
 	public function __construct()
 	{
 		parent::__construct();
 
 		// Register Extra task
-		$this->registerTask('add', 		'edit');
-		$this->registerTask('apply', 		'save');
+		$this->registerTask('add', 	'edit');
+		$this->registerTask('apply', 'save');
 	}
 
 	/**
@@ -40,13 +38,13 @@ class JemControllerAttendees extends JControllerLegacy
 		// Check for request forgeries.
 		JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 
-		$jinput = JFactory::getApplication()->input;
-		$cid 	= $jinput->get('cid',array(),'array');
-		$id 	= $jinput->getInt('id');
+		$jinput 	= JFactory::getApplication()->input;
+		$cid 		= $jinput->get('cid',array(),'array');
+		$eventid 	= $jinput->getInt('eid');
 
-		$total 	= count($cid);
+		$total 		= count($cid);
 
-		$model = $this->getModel('attendees');
+		$model 		= $this->getModel('attendees');
 
 		if (!is_array($cid) || count($cid) < 1) {
 			JError::raiseError(500, JText::_('COM_JEM_SELECT_ITEM_TO_DELETE'));
@@ -61,7 +59,7 @@ class JemControllerAttendees extends JControllerLegacy
 
 		$msg = $total.' '.JText::_('COM_JEM_REGISTERED_USERS_DELETED');
 
-		$this->setRedirect('index.php?option=com_jem&view=attendees&id='.$id, $msg);
+		$this->setRedirect('index.php?option=com_jem&view=attendees&eid='.$eventid, $msg);
 	}
 
 	function export()
@@ -69,10 +67,9 @@ class JemControllerAttendees extends JControllerLegacy
 		$app = JFactory::getApplication();
 
 		$model = $this->getModel('attendees');
-
-		$datas = $model->getData();
-
-		header('Content-Type: text/x-csv');
+		$datas = $model->getItems();
+		
+		header('Content-Type: text/csv');
 		header('Expires: ' . gmdate('D, d M Y H:i:s') . ' GMT');
 		header('Content-Disposition: attachment; filename=attendees.csv');
 		header('Pragma: no-cache');
@@ -118,14 +115,15 @@ class JemControllerAttendees extends JControllerLegacy
 
 	function toggle()
 	{
-		$jinput = JFactory::getApplication()->input;
-		$id 	= $jinput->getInt('id');
-
-		$model = $this->getModel('attendee');
-		$model->setId($id);
-
-		$attendee = $model->getData();
-		$res = $model->toggle();
+		$jinput 	= JFactory::getApplication()->input;	
+		$cid 		= $jinput->get('cid',array(),'array');
+		$eventid 	= $jinput->get('eid');
+	
+		$model 		= $this->getModel('attendee');
+		$res =		 $model->toggle($cid[0]);
+		
+		$register_data = $model->getItem($cid[0]);
+		
 
 		$type = 'message';
 
@@ -135,7 +133,7 @@ class JemControllerAttendees extends JControllerLegacy
 			$dispatcher = JDispatcher::getInstance();
 			$res = $dispatcher->trigger('onUserOnOffWaitinglist', array($id));
 
-			if ($attendee->waiting)
+			if ($register_data->waiting)
 			{
 				$msg = JText::_('COM_JEM_ADDED_TO_ATTENDING');
 			}
@@ -149,7 +147,7 @@ class JemControllerAttendees extends JControllerLegacy
 			$msg = JText::_('COM_JEM_WAITINGLIST_TOGGLE_ERROR').': '.$model->getError();
 			$type = 'error';
 		}
-		$this->setRedirect('index.php?option=com_jem&view=attendees&id='.$attendee->event, $msg, $type);
+		$this->setRedirect('index.php?option=com_jem&view=attendees&eid='.$eventid, $msg, $type);
 		$this->redirect();
 	}
 
@@ -183,6 +181,15 @@ class JemControllerAttendees extends JControllerLegacy
 		*/
 
 		parent::display();
+	}
+	
+	/**
+	 * Proxy for getModel.
+	 */
+	public function getModel($name = 'Attendee', $prefix = 'JEMModel', $config = array('ignore_request' => true))
+	{
+		$model = parent::getModel($name, $prefix, $config);
+		return $model;
 	}
 }
 ?>

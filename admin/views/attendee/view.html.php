@@ -13,30 +13,33 @@ defined('_JEXEC') or die;
  * View: Attendee
  */
 class JEMViewAttendee extends JViewLegacy {
+	
+	protected $form;
+	protected $item;
 
 	public function display($tpl = null)
 	{
 		// initialise variables
 		$document	= JFactory::getDocument();
 		$jinput 	= JFactory::getApplication()->input;
-
+		
 		// get vars
-		$event_id = $jinput->getInt('id');
+		$eventid = $jinput->getInt('eid');
 
 		// Load css
 		JHtml::_('stylesheet', 'com_jem/backend.css', array(), true);
 
 		// Get data from the model
-		$row		= $this->get('Data');
+		$this->item	 = $this->get('Item');
+		$this->form	 = $this->get('Form');
 
 		// build selectlists
 		$lists = array();
-		$lists['users'] = JHtml::_('list.users', 'uid', $row->uid, false, NULL, 'name', 0);
+		$lists['users'] = JHtml::_('list.users', 'uid', $this->item->uid, false, NULL, 'name', 0);
 
 		// assign data to template
 		$this->lists 	= $lists;
-		$this->row		= $row;
-		$this->event 	= $event_id;
+		$this->eventid 	= $eventid;
 
 		// add toolbar
 		$this->addToolbar();
@@ -50,19 +53,13 @@ class JEMViewAttendee extends JViewLegacy {
 	 */
 	protected function addToolbar()
 	{
-		// get vars
-		$cid = JFactory::getApplication()->input->get('cid');
-
-		if ($cid) {
-			JToolBarHelper::title(JText::_('COM_JEM_EDIT_ATTENDEE'), 'users');
-		} else {
-			JToolBarHelper::title(JText::_('COM_JEM_ADD_ATTENDEE'), 'users');
-		}
-
+		$isNew		= ($this->item->id == 0);
+		JToolBarHelper::title($isNew ? JText::_('COM_JEM_ADD_ATTENDEE') : JText::_('COM_JEM_EDIT_ATTENDEE'), 'attendeeedit');
+		
 		JToolBarHelper::apply('attendee.apply');
 		JToolBarHelper::save('attendee.save');
 
-		if (!$cid) {
+		if (empty($this->item->id))  {
 			JToolBarHelper::cancel('attendee.cancel');
 		} else {
 			JToolBarHelper::cancel('attendee.cancel', 'JTOOLBAR_CLOSE');
