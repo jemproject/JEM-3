@@ -167,7 +167,13 @@ JHtml::_('bootstrap.tooltip');
 					<input class="btn" type="submit" id="sqlexport" value="<?php echo JText::_('COM_JEM_EXPORT_SQLFILE'); ?>" onclick="document.getElementsByName('task')[0].value='export.table_sql_venues';return true;"></input>
 				</div>
 		</div>
-		
+		<div class="control-group">
+			<div class="control-label"><label><?php echo JText::_('COM_JEM_EXPORT_TABLE_DUMP'); ?></label></div>
+			<div class="controls">
+				<div class="input-append">
+					<input class="btn" type="submit" id="sqlexport" value="<?php echo JText::_('COM_JEM_EXPORT_SQLFILE'); ?>" onclick="document.getElementsByName('task')[0].value='export.tabledump';return true;"></input>
+				</div>
+		</div>
 		
 		</fieldset>
 		</div>

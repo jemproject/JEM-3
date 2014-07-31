@@ -372,9 +372,6 @@ class JemModelExport extends JModelList
 	 */
 	function getCategoryData($catid)
 	{
-		//$app 			= JFactory::getApplication();
-		//$settings 		= JemHelper::globalattribs();
-	
 		// Query
 		$db 	= JFactory::getDBO();
 		$query = $db->getQuery(true);
@@ -454,38 +451,81 @@ class JemModelExport extends JModelList
 	{
 		# start output
 		$sql	= fopen('php://output', 'w');
-		
 		$db		= $this->getDbo();
-	
-		# retrieve columns
-		$columns = array();
-		$columns = array_keys($db->getTableColumns('#__jem_'.$table));	
-		$columns =  implode(',', array_map('add_apostroph', $columns));
+		
+		
+		if (is_array($table)) {
+			$tables	= $table;
+			foreach ($tables as $table) {
+				
+				$query = $this->getListQueryTableDataSQL($table);
+				$rows = $this->_getList($query);
+		
+				$result	= count($rows);
+				if ($result == 0) {
+					continue;
+				}
+				
+				# retrieve columns
+				$columns = array();
+				$columns = array_keys($db->getTableColumns('#__jem_'.$table));	
+				$columns =  implode(',', array_map('add_apostroph', $columns));
 						
-		$data = '';
-		$start = "INSERT INTO `".$db->getPrefix()."jem_".$table."` (".$columns.") VALUES";
-		$start .= "\r\n";
+				$data = '';
+				$start = "INSERT INTO `".$db->getPrefix()."jem_".$table."` (".$columns.") VALUES";
+				$start .= "\r\n";
 			
-		fwrite($sql,$start);
+				fwrite($sql,$start);
 		
-		$query = $this->getListQueryTableDataSQL($table);
-		$rows = $this->_getList($query);
 		
-		foreach ($rows as $row) {
-			$values = get_object_vars($row);
-			$values = implode(',',array_map('add_quotes',$values));
+				foreach ($rows as $row) {
+					$values = get_object_vars($row);
+					$values = implode(',',array_map('add_quotes',$values));
 	
-			$data.= '('.$values.')';
-			$data.=",";
-			$data.= "\r\n";
-		}
+					$data.= '('.$values.')';
+					$data.=",";
+					$data.= "\r\n";
+				}
 	
-		$data = substr_replace($data ,"",-3);
+				$data = substr_replace($data ,"",-3);
 	
-		fwrite($sql,$data);
+				fwrite($sql,$data);
 					
-		$end = ";\n";
-		fwrite($sql,$end);
+				$end = ";\n\n\n";
+				fwrite($sql,$end);
+			}
+		
+		} else {
+			# retrieve columns
+			$columns = array();
+			$columns = array_keys($db->getTableColumns('#__jem_'.$table));
+			$columns =  implode(',', array_map('add_apostroph', $columns));
+			
+			$data = '';
+			$start = "INSERT INTO `".$db->getPrefix()."jem_".$table."` (".$columns.") VALUES";
+			$start .= "\r\n";
+				
+			fwrite($sql,$start);
+			
+			$query = $this->getListQueryTableDataSQL($table);
+			$rows = $this->_getList($query);
+			
+			foreach ($rows as $row) {
+				$values = get_object_vars($row);
+				$values = implode(',',array_map('add_quotes',$values));
+			
+				$data.= '('.$values.')';
+				$data.=",";
+				$data.= "\r\n";
+			}
+			
+			$data = substr_replace($data ,"",-3);
+			
+			fwrite($sql,$data);
+				
+			$end = ";\n";
+			fwrite($sql,$end);
+		}
 
 		# return output
 		return fclose($sql);

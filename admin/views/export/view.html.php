@@ -16,11 +16,6 @@ class JEMViewExport extends JViewLegacy {
 
 	public function display($tpl = null) {
 		
-		# if no permission return false
-		if (!JFactory::getUser()->authorise('core.manage')) {
-			return false;
-		}
-		
 		// Load pane behavior
 		jimport('joomla.html.pane');
 

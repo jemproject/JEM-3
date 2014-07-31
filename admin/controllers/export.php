@@ -20,29 +20,21 @@ class JemControllerExport extends JControllerAdmin {
 	public function __construct()
 	{
 		parent::__construct();
-	
-		// Register Extra task
-		$this->registerTask('table_attachments', 'export_table');
-		$this->registerTask('table_categories', 'export_table');
-		$this->registerTask('table_cats_event_relations', 'export_table');
-		$this->registerTask('table_events', 'export_table');
-		$this->registerTask('table_groups', 'export_table');
-		$this->registerTask('table_recurrence_master', 'export_table');
-		$this->registerTask('table_recurrence', 'export_table');
-		$this->registerTask('table_register', 'export_table');
-		$this->registerTask('table_settings', 'export_table');
-		$this->registerTask('table_venues', 'export_table');
 		
-		$this->registerTask('table_sql_attachments', 'export_table_sql');
-		$this->registerTask('table_sql_categories', 'export_table_sql');
-		$this->registerTask('table_sql_cats_event_relations', 'export_table_sql');
-		$this->registerTask('table_sql_events', 'export_table_sql');
-		$this->registerTask('table_sql_groups', 'export_table_sql');
-		$this->registerTask('table_sql_recurrence_master', 'export_table_sql');
-		$this->registerTask('table_sql_recurrence', 'export_table_sql');
-		$this->registerTask('table_sql_register', 'export_table_sql');
-		$this->registerTask('table_sql_settings', 'export_table_sql');
-		$this->registerTask('table_sql_venues', 'export_table_sql');
+		
+		$jinput 	= JFactory::getApplication()->input;
+		$task 		= $jinput->getCmd('task');
+		
+		if (strpos($task,'table_') !== false) {
+			
+			if (strpos($task,'table_sql') !== false) {
+				
+				$this->registerTask($task,'export_table_sql');
+			} else {
+				$this->registerTask($task,'export_table');
+			}
+		
+		}
 	}
 	
 	
@@ -55,27 +47,21 @@ class JemControllerExport extends JControllerAdmin {
 	}
 
 	public function export() {
-		$this->sendHeaders("events.csv", "text/csv");
+		$this->sendHeaders("events_".date('Ymd') .'_' . date('Hi').".csv", "text/csv");
 		$this->getModel()->getCsv();
 		jexit();
 	}
 	
 	public function exportsql() {
-		$this->sendHeaders("events.sql", "application/octet-stream");
+		$this->sendHeaders("events_".date('Ymd') .'_' . date('Hi').".sql", "text/plain");
 		$this->getModel()->getSQL();
 		jexit();
 	}
 
-	public function exportcatevents() {
-		$this->sendHeaders("catevents.csv", "text/csv");
-		$this->getModel()->getCsvcatsevents();
-		jexit();
-	}
-	
 	public function export_table() {
 		$task = $this->getTask();
 		$table = str_replace('table_' ,"",$task);
-		$this->sendHeaders($table.".csv", "text/csv");
+		$this->sendHeaders($table.'_'.date('Ymd') .'_' . date('Hi').".csv", "text/csv");
 		$this->getModel()->getTableData($table);
 		jexit();
 	}
@@ -83,18 +69,41 @@ class JemControllerExport extends JControllerAdmin {
 	public function export_table_sql() {
 		$task = $this->getTask();
 		$table = str_replace('table_sql_' ,"",$task);
-		$this->sendHeaders($table.".sql", "application/octet-stream");
+				
+		$this->sendHeaders($table.'_'.date('Ymd') .'_' . date('Hi').".sql", "text/plain");
 		$this->getModel()->getTableDataSQL($table);
 		jexit();
 	}
+	
+	public function tabledump() {
+		
+		$tables = array(
+				"attachments",
+				"categories",
+				"cats_event_relations",
+				"dates",
+				"events",
+				"groupmembers",
+				"groups",
+				"recurrence",
+				"recurrence_master",
+				"register",
+				"venues");
+		
+		# add headers
+		$this->sendHeaders('tabledump_'.date('Ymd') .'_' . date('Hi').".sql", "text/plain");
+		
+		$this->getModel()->getTableDataSQL($tables,true);
+		
+		# end
+		jexit();
+	}
 
-	private function sendHeaders($filename = 'export.csv', $contentType = 'text/plain') {
-		// TODO: Use UTF-8
-		// We have to fix the model->getCsv* methods too!
-		// header("Content-type: text/csv; charset=UTF-8");
-		header("Content-type: text/csv;");
+	private function sendHeaders($filename = 'export.csv', $contentType = 'text/csv') {
+		header("Content-type: ".$contentType);
 		header("Content-Disposition: attachment; filename=" . $filename);
 		header("Pragma: no-cache");
 		header("Expires: 0");
+		echo "\xEF\xBB\xBF";
 	}
 }
