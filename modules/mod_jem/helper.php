@@ -59,6 +59,14 @@ abstract class modJEMHelper
 			$model->setState('filter.orderby',array('a.dates DESC','a.times DESC'));
 			$cal_from = "";
 		}
+		
+		# currently running events only
+		elseif ($params->get('type') == 2) {
+			$model->setState('filter.published',1);
+			$model->setState('filter.orderby',array('a.dates ASC','a.times ASC'));
+		
+			$cal_from = " (a.dates = CURDATE() OR (a.enddates >= CURDATE() AND a.dates <= CURDATE()))";
+		}
 			
 		$model->setState('filter.calendar_from',$cal_from);
 		$model->setState('filter.groupby','a.id');
