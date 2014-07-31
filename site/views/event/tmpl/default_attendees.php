@@ -14,6 +14,9 @@ $user				= JFactory::getUser();
 $userId				= $user->get('id');
 ?>
 
+<?php
+if (!($this->formhandler == 2) || !($this->formhandler == 1)) { ?>
+
 <div class="row-fluid">
 <div class="span12">
 <div class="span7">
@@ -21,7 +24,8 @@ $userId				= $user->get('id');
 
 <div class="dl">
 	<dl class="">
-		<?php if ($this->item->maxplaces > 0 ) {?>
+		<?php 
+		if ($this->item->maxplaces > 0 ) {?>
 			<dt class=""><?php echo JText::_('COM_JEM_MAX_PLACES').':';?></dt>
 			<dd class=""><?php echo $this->item->maxplaces; ?></dd>
 			<dt class=""><?php echo JText::_('COM_JEM_BOOKED_PLACES').':';?></dt>
@@ -29,7 +33,14 @@ $userId				= $user->get('id');
 		<?php } ?>
 		<?php if ($this->item->maxplaces > 0): ?>
 			<dt class=""><?php echo JText::_('COM_JEM_AVAILABLE_PLACES').':';?></dt>
-			<dd><?php echo ($this->item->maxplaces-$this->item->booked); ?></dd>
+			<dd>
+			<?php 
+			$places = $this->item->maxplaces-$this->item->booked;
+			if ($places < 0) {
+				$places = 0;
+			}
+			echo $places;
+			?></dd>
 		<?php
 			endif;
 		?>
@@ -37,6 +48,11 @@ $userId				= $user->get('id');
 		<?php if ($this->item->waiters > 0){ ?>
 		<dt class=""><?php echo JText::_('COM_JEM_EVENT_WAITERS').':';?></dt>
 		<dd class=""><?php echo $this->item->waiters; ?></dd>
+		<?php } ?>
+		
+		<?php if ($this->registers > 0){ ?>
+		<dt class=""><?php echo JText::_('COM_JEM_REGISTERED_USERS').':';?></dt>
+		<dd class=""><?php echo count($this->registers); ?></dd>
 		<?php } ?>
 		
 	</dl>
@@ -49,7 +65,7 @@ $userId				= $user->get('id');
 
 </div><!-- end span 12 -->
 </div><!-- end span row-fluid -->
-
+<?php } ?>
 
 <!-- Attending users -->
 
@@ -58,10 +74,12 @@ $userId				= $user->get('id');
 if ($this->registers && $userId) :
 ?>
 
+
+
 <div class="row-fluid">
 <div class="span12 userbox">
 
-
+<!-- output names -->
 	<span class="register label label-info"><?php echo JText::_('COM_JEM_REGISTERED_USERS'); ?></span>
 	<ul class="user ">
 	
@@ -117,6 +135,7 @@ endforeach;
 ?>
 
 	</ul>
+	
 </div></div>
 <?php endif; ?>
 
@@ -137,13 +156,12 @@ switch ($this->formhandler) {
 	case 2:
 		
 		$html = array();
-		$html[] = '<p></p><div class="center"><p>';
+		$html[] = '<div class="center">';
 		$html[] = '<span class="label label-warning">'.JText::_('COM_JEM_LOGIN_FOR_REGISTER').'</span>';
-		$html[] = '</p></div>';
+		$html[] = '</div>';
 		
-		//echo implode("\n", $html);
+		echo implode("\n", $html);
 		
-		echo '';
 		
 	break;
 

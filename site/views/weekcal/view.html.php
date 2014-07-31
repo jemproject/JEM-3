@@ -57,6 +57,7 @@ class JemViewWeekcal extends JViewLegacy
 
 		$this->document->addStyleDeclaration($style);
 
+		JHtml::_('behavior.framework','1.4.0.1');
 		// add javascript (using full path - see issue #590)
 		JHtml::_('script', 'media/com_jem/js/calendar.js');
 

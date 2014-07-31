@@ -49,7 +49,7 @@ defined('_JEXEC') or die;
 
 		<div class="floattext">
 			<?php if ($this->jemsettings->discatheader) { ?>
-				<div class="image">
+				<div class="image imagetop">
 					<?php // flyer
 						if (empty($row->image)) {
 							$jemsettings = JemHelper::config();

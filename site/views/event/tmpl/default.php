@@ -24,21 +24,7 @@ $mapType = $this->mapType;
 
 <div id="jem" class="event_id<?php echo $this->item->did; ?> jem_event<?php echo $this->pageclass_sfx;?>"
 	itemscope="itemscope" itemtype="http://schema.org/Event">
- <div class="row-fluid">
-<div class="span12 topbox">	
-	
-	<div class="span10">
-	<?php if ($this->params->get('show_page_heading', 1)) : ?>
-	<div class="page-header">
-		<h1>
-			<?php echo $this->escape($this->params->get('page_heading')); ?>
-		</h1>
-	</div>
-	<?php endif; ?>
-	</div>
-	
-	<div class="span2">
-<!-- Buttons -->
+<div class="topbox">	
 	<div class="btn-group pull-right hidden-phone">
 		<?php 
 			if ($this->print) { 
@@ -56,10 +42,18 @@ $mapType = $this->mapType;
 		</ul>
 		<?php }} ?>
 	</div></div>
-</div></div>
 		
 	<div class="clearfix"> </div>
 <div class="info_container">
+	<?php if ($this->params->get('show_page_heading', 1)) : ?>
+	<div class="page-header">
+		<h1>
+			<?php echo $this->escape($this->params->get('page_heading')); ?>
+		</h1>
+	</div>
+	<?php endif; ?>
+
+
 <!--------------------- 
 		EVENT-TAB
 ----------------------->	
@@ -374,6 +368,19 @@ $mapType = $this->mapType;
 					<?php echo JemOutput::mapicon($this->item,'event',$params); ?>
 				<?php endif; ?>
 			</dl></div>
+		<?php endif; ?>
+	
+	
+	<?php if ($this->img_position == 1) { ?>
+	</div><div class="span5">
+<!-- image -->
+	<?php if ($this->limage) { ?>
+		<div class="image imageright">
+		<?php echo JemOutput::flyer($this->item, $this->limage, 'venue'); ?>
+	</div>
+	<?php } ?>
+	</div></div></div>
+	<?php } ?>	
 			<?php if ($params->get('event_show_mapserv')== 2) : ?>
 				<?php echo JemOutput::mapicon($this->item,'event',$params); ?>
 			<?php endif; ?>
@@ -391,20 +398,6 @@ $mapType = $this->mapType;
 			<input type="hidden" id="mapType" value="<?php echo $this->mapType;?>">
 				<?php echo JemOutput::mapicon($this->item,'event',$params); ?>
 			<?php endif; ?>
-		<?php endif; ?>
-	
-	
-	<?php if ($this->img_position == 1) { ?>
-	</div><div class="span5">
-<!-- image -->
-	<?php if ($this->limage) { ?>
-		<div class="image imageright">
-		<?php echo JemOutput::flyer($this->item, $this->limage, 'venue'); ?>
-	</div>
-	<?php } ?>
-	</div></div></div>
-	<?php } ?>	
-			
 <!-- DESCRIPTION -->
 
 		<?php if ($params->get('event_show_locdescription','1') && $this->item->locdescription != ''

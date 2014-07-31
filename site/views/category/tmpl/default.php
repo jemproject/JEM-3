@@ -13,13 +13,13 @@ JHtml::_('behavior.modal','a.flyermodal');
 ?>
 <div id="jem" class="jem_category<?php echo $this->pageclass_sfx;?>">
 <div class="topbox">
-	<div class="btn-group pull-right">
-	<?php 
-	if ($this->print) { 
-		echo JemOutput::printbutton($this->print_link, $this->params);
-	} else {
-		if ($this->settings->get('show_dropwdownbutton',1)) {
-	?>
+	<div class="btn-group pull-right hidden-phone">
+		<?php 
+			if ($this->print) { 
+				echo JemOutput::printbutton($this->print_link, $this->params);
+			} else {
+				if ($this->settings->get('show_dropwdownbutton',1)) {
+		?>
 			<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"> <span class="icon-cog"></span> <span class="caret"></span> </a>
 			<ul class="dropdown-menu">
 				<li><?php echo JemOutput::submitbutton($this->dellink, $this->params);?></li>
@@ -36,33 +36,19 @@ JHtml::_('behavior.modal','a.flyermodal');
 <div class="info_container">	
 	
 	<?php if ($this->params->get('show_page_heading', 1)) : ?>
-	<h1>
+	<div class="page-header">
+		<h1>
 		<?php echo $this->escape($this->params->get('page_heading')); ?>
-	</h1>
+		</h1>
+	</div>
 	<?php endif; ?>
 	
-	<h2 class="jem">
-			<?php echo JText::_('COM_JEM_DETAILS'); ?>
-	</h2>
 	
-	<div class="row-fluid">
-	<div class="span12">
-	<div class="span7">	
-	
-	<div class="dl">
-	
-	<dl class="details">
-	<dt class="category_title"><?php echo JText::_('COM_JEM_TITLE').':'; ?></dt>
-	<dd class="category_title"><?php echo $this->category->catname; ?></dd>
-	</dl>
-	
-	</div>
-	
-	
-	</div>
-	<div class="span5">
 	<?php if ($this->jemsettings->discatheader) : ?>
-		<div class="image">
+	<h2 class="jem">
+			<?php echo '&nbsp'; ?>
+	</h2>
+		<div class="image imagetop">
 		<?php
 		// flyer
 		if (empty($this->category->image)) {
@@ -78,7 +64,7 @@ JHtml::_('behavior.modal','a.flyermodal');
 		?>
 		</div>
 		<?php endif; ?>
-	</div></div></div>
+
 	
 		<h2 class="description"><?php echo JText::_('COM_JEM_EVENT_DESCRIPTION'); ?></h2>
 		<p><?php echo $this->description; ?></p>

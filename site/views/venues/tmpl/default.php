@@ -50,7 +50,7 @@ defined('_JEXEC') or die;
 			<a href="<?php echo $row->linkEventsPublished; ?>" itemprop="url"><span itemprop="name"><?php echo $this->escape($row->venue); ?></span></a>
 		</h2>
 		
-		<div class="image"><?php echo JemOutput::flyer( $row, $row->limage, 'venue' ); ?></div>
+		<div class="image imagetop"><?php echo JemOutput::flyer( $row, $row->limage, 'venue' ); ?></div>
 
 		<div class="dl">
 		

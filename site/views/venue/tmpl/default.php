@@ -12,10 +12,10 @@ $mapType = $this->mapType;
 
 <div id="jem" class="jem_venue<?php echo $this->pageclass_sfx;?>" itemscope="itemscope" itemtype="http://schema.org/Place">
 <div class="topbox">	
-<div class="btn-group pull-left">
-<?php echo JEMOutput::statuslabel($this->venue->published); ?>
-</div>
-	<div class="btn-group pull-right">
+	<div class="btn-group pull-left">
+		<?php echo JEMOutput::statuslabel($this->venue->published); ?>
+	</div>
+	<div class="btn-group pull-right hidden-phone">
 	<?php 
 	if ($this->print) { 
 		echo JemOutput::printbutton($this->print_link, $this->params);
@@ -38,9 +38,11 @@ $mapType = $this->mapType;
 <div class="info_container">	
 	
 	<?php if ($this->params->get('show_page_heading', 1)) : ?>
+	<div class="page-header">
 		<h1>
 			<span itemprop="name"><?php echo $this->escape($this->params->get('page_heading')); ?></span>
 		</h1>
+	</div>
 	<?php endif; ?>
 	
 <!--Venue-->
@@ -128,29 +130,7 @@ $mapType = $this->mapType;
 				echo JemOutput::mapicon($this->venue,null,$this->settings);
 			}
 			?>
-		</dl>
-		<?php
-		if ($this->settings->get('global_show_mapserv')== 2) {
-			echo JemOutput::mapicon($this->venue,null,$this->settings);
-		}
-		?>
-	<?php endif; ?>
-	
-	<?php if ($this->settings->get('global_show_mapserv')== 3) : ?>			
-			<input type="hidden" id="latitude" value="<?php echo $this->venue->latitude;?>">
-			<input type="hidden" id="longitude" value="<?php echo $this->venue->longitude;?>">
-			
-			<input type="hidden" id="venue" value="<?php echo $this->venue->venue;?>">
-			<input type="hidden" id="street" value="<?php echo $this->venue->street;?>">
-			<input type="hidden" id="city" value="<?php echo $this->venue->city;?>">
-			<input type="hidden" id="state" value="<?php echo $this->venue->state;?>">
-			<input type="hidden" id="postalCode" value="<?php echo $this->venue->postalCode;?>">
-			<input type="hidden" id="mapType" value="<?php echo $this->mapType;?>">
-		<?php echo JemOutput::mapicon($this->venue,null,$this->settings); ?>			
-	<?php endif; ?>
-	 	   
-	</div>
-	
+		</dl></div>
 	</div>
 	
 	<div class="span5">
@@ -163,7 +143,24 @@ $mapType = $this->mapType;
 	 	  
 	</div>	
 	</div> <!-- row-fluid -->
-	
+	<?php
+		if ($this->settings->get('global_show_mapserv')== 2) {
+			echo JemOutput::mapicon($this->venue,null,$this->settings);
+		}
+		?>
+	<?php endif; ?>
+	<?php if ($this->settings->get('global_show_mapserv')== 3) : ?>			
+			<input type="hidden" id="latitude" value="<?php echo $this->venue->latitude;?>">
+			<input type="hidden" id="longitude" value="<?php echo $this->venue->longitude;?>">
+			
+			<input type="hidden" id="venue" value="<?php echo $this->venue->venue;?>">
+			<input type="hidden" id="street" value="<?php echo $this->venue->street;?>">
+			<input type="hidden" id="city" value="<?php echo $this->venue->city;?>">
+			<input type="hidden" id="state" value="<?php echo $this->venue->state;?>">
+			<input type="hidden" id="postalCode" value="<?php echo $this->venue->postalCode;?>">
+			<input type="hidden" id="mapType" value="<?php echo $this->mapType;?>">
+		<?php echo JemOutput::mapicon($this->venue,null,$this->settings); ?>			
+	<?php endif; ?>
 	
 
 	<?php if ($this->settings->get('global_show_locdescription',1) && $this->venuedescription != '' &&
