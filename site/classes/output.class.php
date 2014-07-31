@@ -247,11 +247,7 @@ class JEMOutput {
 						return '<span class="hasTooltip" title="'.htmlspecialchars($tooltip, ENT_COMPAT, 'UTF-8').'">'.$button.'</span>';
 					}
 
-					if ($settings->get('global_show_icons',1)) {
-						$text = JHtml::_('image', 'com_jem/calendar_edit.png', JText::_('COM_JEM_EDIT_EVENT'), NULL, true);
-					} else {
-						$text = JText::_('COM_JEM_EDIT_EVENT');
-					}
+					$text = JHtml::_('image', 'com_jem/calendar_edit.png', JText::_('COM_JEM_EDIT_EVENT'), NULL, true);
 					$id = $item->did;
 					$desc = JText::_('COM_JEM_EDIT_EVENT_DESC');
 					$title = JText::_('COM_JEM_EDIT_EVENT');
@@ -267,11 +263,7 @@ class JEMOutput {
 						return '<span class="hasTooltip" title="'.htmlspecialchars($tooltip, ENT_COMPAT, 'UTF-8').'">'.$button.'</span>';
 					}
 
-					if ($settings->get('global_show_icons',1)) {
-						$text = JHtml::_('image', 'com_jem/calendar_edit.png', JText::_('COM_JEM_EDIT_VENUE'), NULL, true);
-					} else {
-						$text = JText::_('COM_JEM_EDIT_VENUE');
-					}
+					$text = JHtml::_('image', 'com_jem/calendar_edit.png', JText::_('COM_JEM_EDIT_VENUE'), NULL, true);
 					$id = $item->locid;
 					$desc = JText::_('COM_JEM_EDIT_VENUE_DESC');
 					$title = JText::_('COM_JEM_EDIT_VENUE');
@@ -287,11 +279,7 @@ class JEMOutput {
 						return '<span class="hasTooltip" title="'.htmlspecialchars($tooltip, ENT_COMPAT, 'UTF-8').'">'.$button.'</span>';
 					}
 
-					if ($settings->get('global_show_icons',1)) {
-						$text = JHtml::_('image', 'com_jem/calendar_edit.png', JText::_('COM_JEM_EDIT_VENUE'), NULL, true);
-					} else {
-						$text = JText::_('COM_JEM_EDIT_VENUE');
-					}
+					$text = JHtml::_('image', 'com_jem/calendar_edit.png', JText::_('COM_JEM_EDIT_VENUE'), NULL, true);
 					$id = $item->id;
 					$desc = JText::_('COM_JEM_EDIT_VENUE_DESC');
 					$title = JText::_('COM_JEM_EDIT_VENUE');
@@ -314,11 +302,7 @@ class JEMOutput {
 						return '<span class="hasTooltip" title="'.htmlspecialchars($tooltip, ENT_COMPAT, 'UTF-8').'">'.$button.'</span>';
 					}
 
-					if ($settings->get('global_show_icons',1)) {
-						$text = JHtml::_('image', 'com_jem/calendar_edit.png', JText::_('COM_JEM_EDIT_EVENT'), NULL, true);
-					} else {
-						$text = JText::_('COM_JEM_EDIT_EVENT');
-					}
+					$text = JHtml::_('image', 'com_jem/calendar_edit.png', JText::_('COM_JEM_EDIT_EVENT'), NULL, true);
 					$id = $item->id;
 					$desc = JText::_('COM_JEM_EDIT_EVENT_DESC');
 					$title = JText::_('COM_JEM_EDIT_EVENT');
