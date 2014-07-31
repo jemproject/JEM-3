@@ -33,6 +33,7 @@
 				>
 					<option value="0">MOD_JEM_UPCOMING_EVENTS</option>
 					<option value="1">MOD_JEM_ARCHIVED_EVENTS</option>
+					<option value="2">MOD_JEM_CURRENT_EVENTS</option>
 				</field>
 				<field name="showtitloc" type="list"
 					default="1"
