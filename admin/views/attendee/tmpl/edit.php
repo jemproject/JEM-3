@@ -25,10 +25,13 @@ Joomla.submitbutton = function(task)
 
 <form action="<?php echo JRoute::_('index.php?option=com_jem&layout=edit&id='.(int) $this->item->id); ?>" method="post" name="adminForm" id="adminForm" class="form-validate">
 	<fieldset class="form-horizontal"><legend><?php echo JText::_('COM_JEM_DETAILS'); ?></legend>
-	
 		<div class="control-group">
 			<div class="control-label"><?php echo $this->form->getLabel('uid');?></div>
 			<div class="controls"><?php echo $this->form->getInput('uid'); ?></div>
+		</div>
+		<div class="control-group">
+			<div class="control-label"><?php echo $this->form->getLabel('sendmail');?></div>
+			<div class="controls"><?php echo $this->form->getInput('sendmail'); ?></div>
 		</div>
 	</fieldset>
 

@@ -19,5 +19,12 @@
 			required="true"
 		/>
 		
+		<field name="sendmail" type="checkbox"
+			label="COM_JEM_SEND_REGISTRATION_NOTIFICATION_EMAIL"
+			description="COM_JEM_SEND_REGISTRATION_NOTIFICATION_EMAIL"
+			value="1"
+			default="0"
+		/>
+		
 	</fieldset>
 </form>
