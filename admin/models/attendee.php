@@ -142,7 +142,6 @@ class JemModelAttendee extends JModelAdmin
 		$id				= $data['id'];
 		$data['uregdate'] = gmdate('Y-m-d H:i:s');
 		
-		
 		# new attendee
 		if ($id == 0) {
 			
@@ -196,13 +195,22 @@ class JemModelAttendee extends JModelAdmin
 	
 			// At this point we do have an id.
 			$pk = $this->getState($this->getName() . '.id');
-	
+				
+			
+			if (!isset($data['sendmail'])) {
+				$data['sendmail'] = 0;
+			}
+			
+			if ($data['sendmail'] == 1) {
+				JPluginHelper::importPlugin('jem');
+				$dispatcher = JEventDispatcher::getInstance();
+				$dispatcher->trigger('onEventUserRegistered', array($pk));
+			}
 			
 			return true;
 		}
 	
 		return false;
 	}
-	
 }
 ?>

@@ -316,7 +316,7 @@ class JemHelper {
 				foreach ($bumping AS $register_id)
 				{
 					JPluginHelper::importPlugin('jem');
-					$dispatcher = JDispatcher::getInstance();
+					$dispatcher = JEventDispatcher::getInstance();
 					$res = $dispatcher->trigger('onUserOnOffWaitinglist', array($register_id));
 				}
 			}

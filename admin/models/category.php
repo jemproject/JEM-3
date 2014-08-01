@@ -225,7 +225,7 @@ class JemModelCategory extends JModelAdmin
 	public function save($data)
 	{
 		// Initialise variables;
-		$dispatcher = JDispatcher::getInstance();
+		$dispatcher = JEventDispatcher::getInstance();
 		$table = $this->getTable();
 		$jinput = JFactory::getApplication()->input;
 		
@@ -345,7 +345,7 @@ class JemModelCategory extends JModelAdmin
 	{
 		if (parent::publish($pks, $value)) {
 			// Initialise variables.
-			$dispatcher = JDispatcher::getInstance();
+			$dispatcher = JEventDispatcher::getInstance();
 			$extension = JFactory::getApplication()->input->getCmd('extension');
 			
 			// Include the content plugins for the change of category state

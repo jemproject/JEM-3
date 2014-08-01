@@ -151,7 +151,7 @@ class JEMModelSource extends JModelForm
 	{
 		jimport('joomla.filesystem.file');
 
-		$dispatcher = JDispatcher::getInstance();
+		$dispatcher = JEventDispatcher::getInstance();
 		$fileName	= $this->getState('filename');
 		$custom		= stripos($fileName, 'custom#:');
 

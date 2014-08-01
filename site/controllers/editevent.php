@@ -255,7 +255,7 @@ class JEMControllerEditevent extends JControllerForm
 
 		if (JPluginHelper::importPlugin('jem','mailer')) {
 			JPluginHelper::importPlugin('jem','mailer');
-			$dispatcher = JDispatcher::getInstance();
+			$dispatcher = JEventDispatcher::getInstance();
 			$dispatcher->trigger('onEventEdited', array($id, $isNew));
 		} else {
 			JError::raiseNotice(100,JText::_('COM_JEM_GLOBAL_MAILERPLUGIN_DISABLED'));
@@ -559,7 +559,7 @@ class JEMControllerEditevent extends JControllerForm
 		}
 
 		JPluginHelper::importPlugin('jem');
-		$dispatcher = JDispatcher::getInstance();
+		$dispatcher = JEventDispatcher::getInstance();
 		$dispatcher->trigger('onEventUserRegistered', array($register_id));
 
 		$cache = JFactory::getCache('com_jem');
@@ -590,7 +590,7 @@ class JEMControllerEditevent extends JControllerForm
 		JEMHelper::updateWaitingList($id);
 
 		JPluginHelper::importPlugin('jem');
-		$dispatcher = JDispatcher::getInstance();
+		$dispatcher = JEventDispatcher::getInstance();
 		$dispatcher->trigger('onEventUserUnregistered', array($id));
 
 		$cache = JFactory::getCache('com_jem');

@@ -254,7 +254,7 @@ class JEMControllerEditvenue extends JControllerForm
 
 		if (JPluginHelper::importPlugin('jem','mailer')) {
 			JPluginHelper::importPlugin('jem');
-			$dispatcher = JDispatcher::getInstance();
+			$dispatcher = JEventDispatcher::getInstance();
 			$dispatcher->trigger('onVenueEdited', array($id, $isNew));
 		} else {
 			JError::raiseNotice(100,JText::_('COM_JEM_GLOBAL_MAILERPLUGIN_DISABLED'));

@@ -118,21 +118,21 @@ class JemControllerAttendees extends JControllerLegacy
 		$jinput 	= JFactory::getApplication()->input;	
 		$cid 		= $jinput->get('cid',array(),'array');
 		$eventid 	= $jinput->get('eid');
+		
 	
 		$model 		= $this->getModel('attendee');
 		$res =		 $model->toggle($cid[0]);
 		
 		$register_data = $model->getItem($cid[0]);
 		
-
 		$type = 'message';
 
 		if ($res)
 		{
 			JPluginHelper::importPlugin('jem');
-			$dispatcher = JDispatcher::getInstance();
-			$res = $dispatcher->trigger('onUserOnOffWaitinglist', array($id));
-
+			$dispatcher = JEventDispatcher::getInstance();
+			$res = $dispatcher->trigger('onUserOnOffWaitinglist', array($cid[0]));
+			
 			if ($register_data->waiting)
 			{
 				$msg = JText::_('COM_JEM_ADDED_TO_ATTENDING');
