@@ -82,6 +82,8 @@ class JemViewEvent extends JViewLegacy {
 	{
 		$jinput = JFactory::getApplication()->input;
 		$jinput->set('hidemainmenu', true);
+		
+		$recurrence = $this->item->recurrence_groupcheck;
 
 		$user		= JFactory::getUser();
 		$isNew		= ($this->item->id == 0);
@@ -95,12 +97,15 @@ class JemViewEvent extends JViewLegacy {
 			JToolBarHelper::apply('event.apply');
 			JToolBarHelper::save('event.save');
 		}
-		if (!$checkedOut && $canDo->get('core.create')) {
-			JToolBarHelper::save2new('event.save2new');
-		}
-		// If an existing item, can save to a copy.
-		if (!$isNew && $canDo->get('core.create')) {
-			JToolBarHelper::save2copy('event.save2copy');
+		
+		if (!$recurrence) {
+			if (!$checkedOut && $canDo->get('core.create')) {
+				JToolBarHelper::save2new('event.save2new');
+			}
+			// If an existing item, can save to a copy.
+			if (!$isNew && $canDo->get('core.create')) {
+				JToolBarHelper::save2copy('event.save2copy');
+			}
 		}
 
 		if (empty($this->item->id))  {
