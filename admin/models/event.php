@@ -14,146 +14,197 @@ defined('_JEXEC') or die;
  */
 class JemModelEvent extends JModelAdmin
 {
+	
 	/**
-	 * Method to test whether a record can be deleted.
+	 * Method to delete one or more records. (override)
 	 *
-	 * @param	object	A record object.
-	 * @return	boolean	True if allowed to delete the record. Defaults to the permission set in the component.
+	 * @param   array  &$pks  An array of record primary keys.
 	 *
+	 * @return  boolean  True if successful, false if an error occurs.
 	 */
-	protected function canDelete($record)
+	public function delete(&$pks)
 	{
-		if (!empty($record->id)) {
-			if ($record->published != -2){
-				return ;
-			}
-			
-			# at this point the record has a status of -2 and can be removed
-			# but as we're dealing with recurrences we've to do a bit extra
-
-			# load variable
-			$user = JFactory::getUser();
-
-			if (!empty($record->catid)){
-				$db = JFactory::getDbo();
-
-				$query = $db->getQuery(true);
-				$query->delete($db->quoteName('#__jem_cats_event_relations'));
-				$query->where('itemid = '.$record->id);
-
-				$db->setQuery($query);
-				$db->execute();
-
-				return $user->authorise('core.delete', 'com_jem.category.'.(int) $record->catid);
-			} else {
-				# as we don't have a catid in the event-table we're in this part.
-				
-				###############################################
-				## check if the event is part of a groupset  ##
-				###############################################
-				if ($record->recurrence_group) {
-					# this event is part of a recurrence-group.
+		$dispatcher = JEventDispatcher::getInstance();
+		$pks = (array) $pks;
+		$table = $this->getTable();
+	
+		// Include the content plugins for the on delete events.
+		JPluginHelper::importPlugin('content');
+	
+		// Iterate the items to delete each one.
+		foreach ($pks as $i => $pk)
+		{
+			if ($table->load($pk))
+			{
+				if ($this->canDelete($table))
+				{
 					
-					# Retrieve id of current event from recurrence_table
-					# as we're dealing with recurrence we'll check the recurrence_table
-					#
-					# we're checking:
-					# - if groupid = groupid_ref
-					# - if ItemId  = $record->id
-					#
-					# @todo: check
-					
-					$db = JFactory::getDbo();
-					$query = $db->getQuery(true);
-					$query->select('id');
-					$query->from($db->quoteName('#__jem_recurrence'));
-					$query->where(array('groupid = groupid_ref ', 'itemid= '.$record->id));
-					$db->setQuery($query);
-					$recurrenceid = $db->loadResult();
-												
-					# we know it's part of a set, now check if there is 1 or more occurences of that group
-					#
-					# we're checking:
-					# - if groupid = groupid_ref
-					# - if GroupId = $record->recurrence_group
-					
-					if ($recurrenceid) {
+					#####################################################
+					## check if the event is part of a recurrence-set  ##
+					#####################################################
+					if ($table->recurrence_group) {
+							
+						# this event is part of a recurrence-set.
+							
+						# Retrieve id of current event from recurrence_table
+						# as we're dealing with recurrence we'll check the recurrence_table
+						#
+						# we're checking:
+						# - if groupid = groupid_ref
+						# - if ItemId  = $record->id
+							
 						$db = JFactory::getDbo();
 						$query = $db->getQuery(true);
-						$query->select('COUNT(id)');
+						$query->select('id');
 						$query->from($db->quoteName('#__jem_recurrence'));
-						$query->where(array('groupid = groupid_ref ', 'groupid= '.$record->recurrence_group));
+						$query->where(array('groupid = groupid_ref ', 'itemid= '.$table->id));
 						$db->setQuery($query);
-						$recurrenceid_count = $db->loadResult();
-				
-						# if count is 1 the row in the recurrence_table can be deleted completely
-						if ($recurrenceid_count == 1) {
-							$recurrence_table	= JTable::getInstance('Recurrence', 'JEMTable');
-							$recurrence_table->delete($recurrenceid);
-						}
-						
-						
-						# If the count is more then 1 we will add an Exdate value in the recurrence_table for this Itemid
-						# The exdate is combined: startdate + enddate
+						$recurrenceid = $db->loadResult();
+					
+						# we know it's part of a set, 
+						# now check if there is 1 or more occurences of that group
+						#
+						# we're checking:
+						# - if groupid = groupid_ref
+						# - if GroupId = $record->recurrence_group
 							
-						if ($recurrenceid_count > 1) {
-							# combine startdate + starttime
-							if (empty($record->times)){
-								$record->times = '00:00:00';
+						if ($recurrenceid) {
+
+							$db = JFactory::getDbo();
+							$query = $db->getQuery(true);
+							$query->select('COUNT(id)');
+							$query->from($db->quoteName('#__jem_recurrence'));
+							$query->where(array('groupid = groupid_ref ', 'groupid= '.$table->recurrence_group));
+							$db->setQuery($query);
+							$recurrenceid_count = $db->loadResult();
+							
+							# if count is 1 the row in the recurrence_table can be deleted completely
+							# and we can also remove the other references linked to the recurrence-set
+							if ($recurrenceid_count == 1) {
+								
+			
+								# retrieve all id's from recurrence-table that are linked to the recurrence-set
+								$db = JFactory::getDbo();
+								$query = $db->getQuery(true);
+								$query->select('id');
+								$query->from($db->quoteName('#__jem_recurrence'));
+								$query->where(array('groupid='.$table->recurrence_group));
+								$db->setQuery($query);
+								$recurrenceid = $db->loadColumn();
+							
+								$recurrence_table	= JTable::getInstance('Recurrence', 'JEMTable');
+							
+								# now loop the results and remove the references from the table
+								foreach ($recurrenceid AS $row) {
+									$recurrence_table->delete($row);
+								}
+							
+								# furtermore we can remove the data from the master table
+								$db = JFactory::getDbo();
+								$query = $db->getQuery(true);
+								$query->select('id');
+								$query->from($db->quoteName('#__jem_recurrence_master'));
+								$query->where(array('groupid = '.$table->recurrence_group));
+								$db->setQuery($query);
+								$masterid = $db->loadResult();
+													
+								$recurrence_master	= JTable::getInstance('Recurrence_master', 'JEMTable');
+								$recurrence_master->delete($masterid);			
 							}
 							
-							$startDateTime	= $record->dates.' '.$record->times;
-							$datetime		= new JDate($startDateTime);
-						
-							# define Exdate variable
-							$exdate = $datetime->format('Ymd\THis\Z');
-						
-							# We did calculate an exdate and will insert it in the recurrence-table
-							$recurrence_table	= JTable::getInstance('Recurrence', 'JEMTable');
-							$recurrence_table->load($recurrenceid);
-							$recurrence_table->exdate = $exdate;
-							$recurrence_table->deleted = '1';
-							$recurrence_table->groupid_ref = '';
-							$recurrence_table->store();
+							# If the count is more then 1 we will add an Exdate value in the recurrence_table for this Itemid
+							# The exdate is combined: startdate + enddate
+							
+							if ($recurrenceid_count > 1) {
+								# combine startdate + starttime
+								if (empty($table->times)){
+									$table->times = '00:00:00';
+								}
+							
+								$startDateTime	= $table->dates.' '.$table->times;
+								$datetime		= new JDate($startDateTime);
+					
+								# define Exdate variable
+								$exdate = $datetime->format('Ymd\THis\Z');
+					
+								# We did calculate an exdate and will insert it in the recurrence-table
+								$recurrence_table	= JTable::getInstance('Recurrence', 'JEMTable');
+								$recurrence_table->load($recurrenceid);
+								$recurrence_table->exdate = $exdate;
+								$recurrence_table->deleted = '1';
+								$recurrence_table->groupid_ref = '';
+								$recurrence_table->store();
+							}
 						}
+					} // close recurrence-check
+					
+
+					
+					# actual deleting of the event.
+					#
+					# first the removal of the item-id from the catevent-table
+					# and then the removal from the events-table
+					$db = JFactory::getDbo();
+					$query = $db->getQuery(true);
+					$query->delete($db->quoteName('#__jem_cats_event_relations'));
+					$query->where('itemid = '.$table->id);
+					
+					$db->setQuery($query);
+					$db->execute();
+					
+					$context = $this->option . '.' . $this->name;
+	
+					// Trigger the onContentBeforeDelete event.
+					$result = $dispatcher->trigger($this->event_before_delete, array($context, $table));
+	
+					if (in_array(false, $result, true))
+					{
+						$this->setError($table->getError());
+						return false;
 					}
-				} // close recurrence-check
-				
-				
-				# actual deleting of the event.
-				#
-				# first the removal of the item-id from the catevent-table
-				# and then the removal from the events-table
-				$db = JFactory::getDbo();
-				$query = $db->getQuery(true);
-				$query->delete($db->quoteName('#__jem_cats_event_relations'));
-				$query->where('itemid = '.$record->id);
-
-				$db->setQuery($query);
-				$db->execute();
-
-				return $user->authorise('core.delete', 'com_jem');
+	
+					if (!$table->delete($pk))
+					{
+						$this->setError($table->getError());
+						return false;
+					}
+	
+					// Trigger the onContentAfterDelete event.
+					$dispatcher->trigger($this->event_after_delete, array($context, $table));
+	
+				}
+				else
+				{
+	
+					// Prune items that you can't change.
+					unset($pks[$i]);
+					$error = $this->getError();
+					if ($error)
+					{
+						JLog::add($error, JLog::WARNING, 'jerror');
+						return false;
+					}
+					else
+					{
+						JLog::add(JText::_('JLIB_APPLICATION_ERROR_DELETE_NOT_PERMITTED'), JLog::WARNING, 'jerror');
+						return false;
+					}
+				}
+	
+			}
+			else
+			{
+				$this->setError($table->getError());
+				return false;
 			}
 		}
+	
+		// Clear the component's cache
+		$this->cleanCache();
+	
+		return true;
 	}
 
-	/**
-	 * Method to test whether a record can be deleted.
-	 *
-	 * @param	object	A record object.
-	 * @return	boolean	True if allowed to change the state of the record. Defaults to the permission set in the component.
-	 *
-	 */
-	protected function canEditState($record)
-	{
-		$user = JFactory::getUser();
-
-		if (!empty($record->catid)){
-			return $user->authorise('core.edit.state', 'com_jem.category.'.(int) $record->catid);
-		} else {
-			return $user->authorise('core.edit.state', 'com_jem');
-		}
-	}
 
 	/**
 	 * Returns a reference to the a Table object, always creating it.
@@ -169,39 +220,7 @@ class JemModelEvent extends JModelAdmin
 		return JTable::getInstance($type, $prefix, $config);
 	}
 
-	/**
-	 * Method to get the record form.
-	 *
-	 * @param	array	$data		Data for the form.
-	 * @param	boolean	$loadData	True if the form is to load its own data (default case), false if not.
-	 * @return	mixed	A JForm object on success, false on failure
-	 *
-	 */
-	public function getForm($data = array(), $loadData = true)
-	{
-		// Get the form.
-		$form = $this->loadForm('com_jem.event', 'event', array('control' => 'jform', 'load_data' => $loadData));
-		if (empty($form)) {
-			return false;
-		}
-		
-		if ($this->getState('event.id')) {
-			$pk = $this->getState('event.id');
-			$items = $this->getItem($pk);
-		
-			if ($items->recurrence_group) {
-				# the event is part of a recurrence_group
-				#
-				# we can disable the dates if needed
-				/* $form->setFieldAttribute('dates', 'disabled', 'true'); */
-				/* $form->setFieldAttribute('enddates', 'disabled', 'true'); */
-			}
-		}
-		
-		
-		return $form;
-	}
-
+	
 	/**
 	 * Method to get a single record.
 	 *
@@ -322,6 +341,41 @@ class JemModelEvent extends JModelAdmin
 		return $item;
 	}
 
+	
+	
+	/**
+	 * Method to get the record form.
+	 *
+	 * @param	array	$data		Data for the form.
+	 * @param	boolean	$loadData	True if the form is to load its own data (default case), false if not.
+	 * @return	mixed	A JForm object on success, false on failure
+	 *
+	 */
+	public function getForm($data = array(), $loadData = true)
+	{
+		// Get the form.
+		$form = $this->loadForm('com_jem.event', 'event', array('control' => 'jform', 'load_data' => $loadData));
+		if (empty($form)) {
+			return false;
+		}
+	
+		if ($this->getState('event.id')) {
+			$pk = $this->getState('event.id');
+			$items = $this->getItem($pk);
+	
+			if ($items->recurrence_group) {
+				# the event is part of a recurrence_group
+				#
+				# we can disable the dates if needed
+				/* $form->setFieldAttribute('dates', 'disabled', 'true'); */
+				/* $form->setFieldAttribute('enddates', 'disabled', 'true'); */
+			}
+		}
+	
+	
+		return $form;
+	}
+	
 	/**
 	 * Method to get the data that should be injected in the form.
 	 *
