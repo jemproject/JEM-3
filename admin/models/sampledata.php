@@ -8,9 +8,7 @@
  */
 defined('_JEXEC') or die();
 
-jimport('joomla.application.component.model');
 
-// TODO: Improve error handling
 
 /**
  * Model: Sampledata

@@ -9,7 +9,6 @@
  * Based on: https://gist.github.com/dongilbert/4195504
  */
 defined('_JEXEC') or die();
-jimport('joomla.application.component.modellist');
 
 
 function add_apostroph($str) {
