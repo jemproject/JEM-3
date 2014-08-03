@@ -53,6 +53,9 @@ $mapType = $this->mapType;
 			<?php echo JemOutput::editbutton($this->venue, $this->params, NULL, $this->allowedtoeditvenue, 'venue'); ?>
 	</h2>
 	
+	<?php if ($this->limage) { ?>
+		<div class="image imagetop"><?php echo JemOutput::flyer($this->venue, $this->limage, 'venue'); ?></div>
+	<?php } ?>
 
 	<div class="row-fluid">
 	<div class="span12">
@@ -134,10 +137,7 @@ $mapType = $this->mapType;
 	</div>
 	
 	<div class="span5">
-		<?php if ($this->limage) { ?>
-	<div class="image"><?php echo JemOutput::flyer($this->venue, $this->limage, 'venue'); ?></div>
-	
-	<?php } ?>
+		
 	</div> 	   
 	 	   
 	 	  
