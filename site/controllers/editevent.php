@@ -55,8 +55,9 @@ class JEMControllerEditevent extends JControllerForm
 		$jemsettings	= JEMHelper::config();
 		$maintainer		= JEMUser::ismaintainer('add');
 		$genaccess		= JEMUser::validate_user($jemsettings->evdelrec, $jemsettings->delivereventsyes);
-
-		if ($maintainer || $genaccess) {
+		$valguest		= JEMUser::validate_guest();
+		
+		if ($maintainer || $genaccess || $valguest) {
 			return true;
 		}
 
@@ -360,13 +361,13 @@ class JEMControllerEditevent extends JControllerForm
 
 		// Test whether the data is valid.
 		$validData = $model->validate($form, $data);
-
+				
 		// Check for validation errors.
 		if ($validData === false)
 		{
 			// Get the validation messages.
 			$errors = $model->getErrors();
-
+			
 			// Push up to three validation messages out to the user.
 			for ($i = 0, $n = count($errors); $i < $n && $i < 3; $i++)
 			{

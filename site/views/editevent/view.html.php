@@ -79,7 +79,8 @@ class JemViewEditevent extends JViewLegacy
 				$dellink = false;
 			}
 
-			$authorised = $user->authorise('core.create','com_jem') || (count($user->getAuthorisedCategories('com_jem', 'core.create')) || $dellink);
+			$valguest = JEMUser::validate_guest();
+			$authorised = $user->authorise('core.create','com_jem') || (count($user->getAuthorisedCategories('com_jem', 'core.create')) || $valguest || $dellink);
 		} else {
 			// Check if user can edit
 			$maintainer5 = JemUser::ismaintainer('edit',$this->item->id);

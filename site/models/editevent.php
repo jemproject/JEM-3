@@ -188,7 +188,11 @@ class JEMModelEditevent extends JEMModelEvent
 				$value->catid = $catId;
 			}
 			else {
-				$value->params->set('access-change', $user->authorise('core.edit.state', 'com_jem'));
+				
+				$access_change = $user->authorise('core.edit.state', 'com_jem');
+				
+				$value->params->set('access-change', $access_change);
+				
 			}
 		}
 
@@ -215,7 +219,6 @@ class JEMModelEditevent extends JEMModelEvent
 		} else {
 			$value->admin = false;
 		}
-
 
 		return $value;
 	}
