@@ -57,6 +57,30 @@
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
+			<field name="hideopendates" type="radio"
+				default="1"
+				label="COM_JEM_GLOBAL_FIELD_HIDE_OPENDATES"
+				description="COM_JEM_GLOBAL_FIELD_HIDE_OPENDATES_DESC"
+				class="btn-group btn-group-yesno"
+			>
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field name="sortDirection" type="text"
+				default="ASC"
+				label="COM_JEM_GLOBAL_FIELD_SORT_DIRECTION"
+				description="COM_JEM_GLOBAL_FIELD_SORT_DIRECTION_DESC"
+			/>
+			<field name="sortDirectionArchive" type="text"
+				default="DESC"
+				label="COM_JEM_GLOBAL_FIELD_SORT_DIRECTION_ARCHIVE"
+				description="COM_JEM_GLOBAL_FIELD_SORT_DIRECTION_ARCHIVE_DESC"
+			/>
+			<field name="sortColumn" type="text"
+				default="a.dates"
+				label="COM_JEM_GLOBAL_FIELD_SORT_COLUMN"
+				description="COM_JEM_GLOBAL_FIELD_SORT_COLUMN_DESC"
+			/>
 		</fieldset>
 	</fields>
 </metadata>

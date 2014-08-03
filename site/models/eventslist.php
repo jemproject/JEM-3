@@ -92,19 +92,43 @@ class JemModelEventslist extends JModelList
 
 		$user = JFactory::getUser();
 
-		if ($params->get('showopendates') == 1) {
-			$this->setState('filter.opendate',1);
+		if ($params->get('hideopendates','0') == 1) {
+			$this->setState('filter.hideopendates',1);
 		}
 
+		
 		###########
 		## ORDER ##
 		###########
 
-		$filter_order		= $app->getUserStateFromRequest('com_jem.eventslist.'.$itemid.'.filter_order', 'filter_order', 'a.dates', 'cmd');
-		$filter_order_DirDefault = 'ASC';
+		# retrieve default sortDirection + sortColumn
+		$sortDir		= strtoupper($params->get('sortDirection'));
+		$sortDirArchive	= strtoupper($params->get('sortDirectionArchive'));
+		$sortCol		= $params->get('sortColumn');
+		
+		$direction	= array('DESC', 'ASC');
+		
+		if (!in_array($sortCol, $this->filter_fields))
+		{
+			$sortCol = 'a.dates';
+		}
+		
+		if (!in_array($sortDir, $direction))
+		{
+			$sortDir = 'ASC';
+		}
+		
+		if (!in_array($sortDirArchive, $direction))
+		{
+			$sortDirArchive = 'DESC';
+		}
+		
+			
+		$filter_order		= $app->getUserStateFromRequest('com_jem.eventslist.'.$itemid.'.filter_order', 'filter_order', $sortCol, 'cmd');
+		$filter_order_DirDefault = $sortDir;
 		// Reverse default order for dates in archive mode
 		if($task == 'archive' && $filter_order == 'a.dates') {
-			$filter_order_DirDefault = 'DESC';
+			$filter_order_DirDefault = $sortDirArchive;
 		}
 		$filter_order_Dir	= $app->getUserStateFromRequest('com_jem.eventslist.'.$itemid.'.filter_order_Dir', 'filter_order_Dir', $filter_order_DirDefault, 'word');
 		$filter_order		= JFilterInput::getInstance()->clean($filter_order, 'cmd');
@@ -115,6 +139,7 @@ class JemModelEventslist extends JModelList
 		} else {
 			$orderby = $filter_order . ' ' . $filter_order_Dir;
 		}
+		
 
 		$this->setState('filter.orderby',$orderby);
 		
@@ -181,7 +206,7 @@ class JemModelEventslist extends JModelList
 		// Compile the store id.
 		$id .= ':' . serialize($this->getState('filter.published'));
 		$id .= ':' . $this->getState('filter.access');
-		$id .= ':' . $this->getState('filter.opendate');
+		$id .= ':' . $this->getState('filter.hideopendates');
 		$id .= ':' . $this->getState('filter.featured');
 		$id .= ':' . serialize($this->getState('filter.event_id'));
 		$id .= ':' . $this->getState('filter.event_id.include');
@@ -340,8 +365,9 @@ class JemModelEventslist extends JModelList
 		#############################
 		## FILTER - CALENDAR_DATES ##
 		#############################
-		$cal_from	= $this->setState('filter.calendar_from');
-		$cal_to		= $this->setState('filter.calendar_to');
+		$cal_from	= $this->getState('filter.calendar_from');
+		$cal_to		= $this->getState('filter.calendar_to');
+		$hideopendates	= $this->getState('filter.hideopendates');
 
 		if ($cal_from) {
 			$query->where($cal_from);
@@ -349,6 +375,10 @@ class JemModelEventslist extends JModelList
 
 		if ($cal_to) {
 			$query->where($cal_to);
+		}
+				
+		if ($hideopendates) {
+			$query->where('a.dates IS NOT NULL');
 		}
 
 		#####################
@@ -396,8 +426,6 @@ class JemModelEventslist extends JModelList
 		if ($filter == 0) {
 			$filter = 1;
 		}
-		
-		
 		
 		$search = $this->getState('filter.filter_search');
 			
