@@ -77,7 +77,7 @@ class JEMUser {
     	}
 
 	}
-
+	
 	/**
 	 * Checks if the user has the privileges to use the wysiwyg editor
 	 *
@@ -199,4 +199,39 @@ class JEMUser {
 			return true;
 		}
 	}
+	
+	/**
+	 * validates guest rights
+	 */
+	static function validate_guest($option = false) {
+		
+		$user 		= JFactory::getUser();
+		$guest 		= $user->get('guest');
+		$settings 	= JemHelper::globalattribs();
+		
+		
+		if ($guest) {
+		
+			# check if he global setting has been set
+			$addevent	= $settings->get('guest_addevent',0);
+		
+			if (!$addevent) {
+				return false;
+			}
+		
+			# then check if we have 1 of the antispam measures enabled
+			# if not then the guest is not allowed to submit events
+		
+			$mathquiz	= $settings->get('guest_as_math',0);
+			$captcha	= $settings->get('guest_as_captcha',0);
+		
+			if (!$mathquiz && !$captcha) {
+				return false;
+			}
+			
+			return true;
+		
+		}
+	}
+	
 }
