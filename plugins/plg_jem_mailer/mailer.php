@@ -350,6 +350,11 @@ class plgJEMMailer extends JPlugin {
 
 		$user 	= JFactory::getUser();
 		$username = empty($this->_UseLoginName) ? $user->name : $user->username;
+		
+		if ($user->get('guest')) {
+			$username = 'guest';
+			$user->email = 'N/A';
+		}
 
 		// get data
 		$db 	= JFactory::getDBO();
@@ -404,6 +409,7 @@ class plgJEMMailer extends JPlugin {
 			break;
 		}
 
+		
 		#######################
 		## RECEIVERS - ADMIN ##
 		#######################
