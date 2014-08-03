@@ -2,6 +2,7 @@
 <form>
 	<fieldset name="details"
 		addfieldpath="administrator/components/com_jem/models/fields"
+		addrulepath="/administrator/components/com_jem/models/rule"
 	>
 		
 		<field name="articletext" type="editor" class="inputbox"
@@ -68,6 +69,29 @@
 			description="COM_JEM_EDITEVENT_FIELD_CATEGORIES_DESC"
 			required="true"
 		/>
+		
+		<field
+            name="captcha"
+            type="captcha"
+            label="COM_JEM_GLOBAL_FIELD_CAPTCHA_LABEL"
+            description="COM_JEM_GLOBAL_FIELD_CAPTCHA_DESC"
+            validate="captcha"
+
+        />
+        <field
+            name="mathquiz"
+            type="mathquiz"
+            label="COM_JEM_GLOBAL_FIELD_MATHQUIZ_LABEL"
+            description="COM_JEM_GLOBAL_FIELD_MATHQUIZ_DESC"
+        />
+        <field name="mathquiz_answer" type="text"
+			class="inputbox"
+			size="40"
+			label="COM_JEM_GLOBAL_FIELD_MATHQUIZ_ANSWER_LABEL"
+			description="COM_JEM_GLOBAL_FIELD_MATHQUIZ_ANSWER_LABEL_DESC"
+			validate="mathquiz"
+		/>
+		<field name="timeout" type="hidden" validate="timeout"></field> 
 	</fieldset>
 
 	<fieldset name="publish">

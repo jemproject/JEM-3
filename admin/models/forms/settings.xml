@@ -1132,6 +1132,51 @@
 			<option value="1">COM_JEM_SETTINGS_FIELD_IMAGE_POSITION_RGHTSD</option>
 		</field>
 		</fieldset>
+		
+		<fieldset name="usercontrolaceventguest"
+		label="COM_JEM_SETTINGS_FIELDSET_GUEST_AC_EVENTS"
+	>
+			<field name="guest_addevent" type="radio"
+				label="COM_JEM_SETTINGS_FIELD_GUEST_ADDEVENT"
+				description="COM_JEM_SETTINGS_FIELD_GUEST_ADDEVENT_DESC"
+				class="btn-group btn-group-yesno"
+				default="0"
+				>
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field name="guest_as_captcha" type="radio"
+				label="COM_JEM_SETTINGS_FIELD_GUEST_AS_CAPTCHA"
+				description="COM_JEM_SETTINGS_FIELD_GUEST_AS_CAPTCHA_DESC"
+				class="btn-group btn-group-yesno"
+				default="0"
+				>
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field name="guest_as_math" type="radio"
+				label="COM_JEM_SETTINGS_FIELD_GUEST_AS_MATH"
+				description="COM_JEM_SETTINGS_FIELD_GUEST_AS_MATH_DESC"
+				class="btn-group btn-group-yesno"
+				default="0"
+				>
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field name="guest_fldstatus" type="list"
+			label="JSTATUS"
+			description="JFIELD_PUBLISHED_DESC"
+			class="inputbox"
+			size="1"
+			default="1"
+		>
+			<option value="1">JPUBLISHED</option>
+			<option value="0">JUNPUBLISHED</option>
+			<option value="2">JARCHIVED</option>
+			<option value="-2">JTRASHED</option>
+		</field>
+		
+	</fieldset>
 	</fields>
 
 	<fields name="css">

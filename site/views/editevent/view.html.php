@@ -20,6 +20,7 @@ class JemViewEditevent extends JViewLegacy
 
 	public function display($tpl = null)
 	{
+	
 		if ($this->getLayout() == 'choosevenue') {
 			$this->_displaychoosevenue($tpl);
 			return;
@@ -32,8 +33,10 @@ class JemViewEditevent extends JViewLegacy
 
 		// Initialise variables.
 		$jemsettings = JEMHelper::config();
-		$app = JFactory::getApplication();
-		$user = JFactory::getUser();
+		$app 	= JFactory::getApplication();
+		$user 	= JFactory::getUser();
+		$valguest	= JEMUser::validate_guest();
+		
 		$document = JFactory::getDocument();
 		$model = $this->getModel();
 		$menu = $app->getMenu();
@@ -43,6 +46,7 @@ class JemViewEditevent extends JViewLegacy
 		
 		$settings 	= JemHelper::globalattribs();
 		$this->settings = $settings;
+		$this->valguest	= $valguest;
 
 		// Get model data.
 		$this->state = $this->get('State');
@@ -56,10 +60,12 @@ class JemViewEditevent extends JViewLegacy
 		$this->form = $this->get('Form');
 		$this->return_page = $this->get('ReturnPage');
 
-		// check for guest
-		if (!$user || $user->id == 0) {
-			$app->enqueueMessage(JText::_('JERROR_ALERTNOAUTHOR'), 'error');
-			return false;
+		if ($valguest == false){
+			// check for guest
+			if (!$user || $user->id == 0) {
+				$app->enqueueMessage(JText::_('JERROR_ALERTNOAUTHOR'), 'error');
+				return false;
+			}
 		}
 
 		if (empty($this->item->id)) {
@@ -179,6 +185,9 @@ class JemViewEditevent extends JViewLegacy
 		}
 		
 		JHtml::_('script', 'com_jem/seo.js', false, true);
+		if (JEMUser::validate_guest()) {
+			JHtml::_('script', 'com_jem/antispam.js', false, true);
+		}
 		JHtml::_('behavior.tabstate');
 
 		// Escape strings for HTML output

@@ -61,8 +61,6 @@ class JemViewCalendar extends JViewLegacy
 		// add javascript (using full path - see issue #590)
 		JHtml::_('script', 'media/com_jem/js/calendar.js');
 		
-		
-
 		$year 	= JFactory::getApplication()->input->request->get('yearID', strftime("%Y"),'int');
 		$month 	= JFactory::getApplication()->input->request->get('monthID', strftime("%m"),'int');
 
@@ -94,7 +92,7 @@ class JemViewCalendar extends JViewLegacy
 		$cal->enableMonthNav('index.php?view=calendar');
 		$cal->setFirstWeekDay($params->get('firstweekday', 1));
 		$cal->enableDayLinks(false);
-		//$cal->enableDatePicker();
+		$cal->enableDatePicker();
 
 		$this->rows        = $rows;
 		$this->params      = $params;

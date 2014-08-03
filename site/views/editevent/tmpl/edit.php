@@ -73,7 +73,7 @@ $settings	= json_decode($this->item->attribs);
 				<button type="button" class="btn btn-small btn-success" onclick="Joomla.submitbutton('editevent.apply')"><span class="icon-apply icon-white"></span><?php echo ' '.JText::_('JTOOLBAR_APPLY') ?></button>
 				<button type="button" class="btn btn-small" onclick="Joomla.submitbutton('editevent.save')"><span class="icon-save"></span><?php echo ' '.JText::_('JTOOLBAR_SAVE') ?></button>
 			<?php } else { ?>
-				<button type="button" class="btn btn-small btn-success" onclick="Joomla.submitbutton('editevent.save')"><span class="icon-save"></span><?php echo ' '.JText::_('JSAVE') ?></button>
+				<button type="button" class="btn btn-small btn-success" onclick="Joomla.submitbutton('editevent.save')"><span class="icon-apply icon-white"></span><?php echo ' '.JText::_('JSAVE') ?></button>
 			<?php } ?>
 			<button type="button" class="btn btn-small" onclick="Joomla.submitbutton('editevent.cancel')"><span class="icon-cancel icon-red"></span><?php echo ' '.JText::_('JCANCEL') ?></button>
 		</div>
@@ -125,67 +125,30 @@ $settings	= json_decode($this->item->attribs);
 
 			<fieldset class="form-horizontal">
 				<legend><span class="legendcolor"><?php echo JText::_('COM_JEM_EDITEVENT_DETAILS_LEGEND'); ?></span></legend>
-					
-					<div class="control-group">
-						<div class="control-label"><?php echo $this->form->getLabel('title'); ?></div>
-						<div class="controls"><?php echo $this->form->getInput('title'); ?></div>
-					</div>
-					
-					<?php if (is_null($this->item->id)):?>
-					<div class="control-group">
-						<div class="control-label"><?php echo $this->form->getLabel('alias'); ?></div>
-						<div class="controls"><?php echo $this->form->getInput('alias'); ?></div>
-					</div>
-					<?php endif; ?>
-					
-					<div class="control-group">
-						<div class="control-label"><?php echo $this->form->getLabel('dates'); ?></div>
-						<div class="controls"><?php echo $this->form->getInput('dates'); ?></div>
-					</div>
-					
-					<div class="control-group">
-						<div class="control-label"><?php echo $this->form->getLabel('enddates'); ?></div>
-						<div class="controls"><?php echo $this->form->getInput('enddates'); ?></div>
-					</div>
-					
-					<div class="control-group">
-						<div class="control-label"><?php echo $this->form->getLabel('times'); ?></div>
-						<div class="controls"><?php echo $this->form->getInput('times'); ?></div>
-					</div>
-					
-					<div class="control-group">
-						<div class="control-label"><?php echo $this->form->getLabel('endtimes'); ?></div>
-						<div class="controls"><?php echo $this->form->getInput('endtimes'); ?></div>
-					</div>
-					
-					<div class="control-group">
-						<div class="control-label"><?php echo $this->form->getLabel('cats'); ?></div>
-						<div class="controls"><?php echo $this->form->getInput('cats'); ?></div>
-					</div>
-					
-					<?php 
-					if ($this->settings->get('editevent_show_featured',1)) { ?>
-					<div class="control-group">
-						<div class="control-label"><?php echo $this->form->getLabel('featured'); ?></div>
-						<div class="controls"><?php echo $this->form->getInput('featured'); ?></div>
-					</div>
-					<?php } ?>
-					
-					<?php if ($this->settings->get('editevent_show_published',1)) { ?>
-					<div class="control-group">
-						<div class="control-label"><?php echo $this->form->getLabel('published'); ?></div>
-						<div class="controls"><?php echo $this->form->getInput('published'); ?></div>
-					</div>
-					<?php } ?>
-					
-					<div class="control-group">
-						<div class="control-label"><?php echo $this->form->getLabel('locid'); ?></div>
-						<div class="controls"><?php echo $this->form->getInput('locid'); ?></div>
-					</div>
-					<div class="control-group">	
-						<div class="control-label"><?php echo $this->form->getLabel('contactid'); ?></div>
-						<div class="controls"><?php echo $this->form->getInput('contactid'); ?></div>
-					</div>
+					<?php
+						echo $this->form->renderField('title');
+						if (is_null($this->item->id)):
+							echo $this->form->renderField('alias');
+					 	endif; 
+						echo $this->form->renderField('dates');
+						echo $this->form->renderField('enddates');
+						echo $this->form->renderField('times');
+						echo $this->form->renderField('endtimes');
+						echo $this->form->renderField('cats');
+						if ($this->settings->get('editevent_show_featured',1) && !($this->valguest)) { 
+							echo $this->form->renderField('featured');
+						}
+						if ($this->settings->get('editevent_show_published',1) && !($this->valguest)) { 
+							echo $this->form->renderField('published');
+						}
+						echo $this->form->renderField('locid');
+						if (!$this->valguest) { 
+							 echo $this->form->renderField('contactid'); 
+						} 
+						echo $this->form->renderField('captcha'); 
+						echo $this->form->renderField('mathquiz'); 
+						echo $this->form->renderField('mathquiz_answer'); 
+					?>
 			</fieldset>
 			
 			
@@ -253,7 +216,7 @@ $settings	= json_decode($this->item->attribs);
 			<?php echo JHtml::_('bootstrap.endTab'); ?>
 			
 			<?php 
-			if ($this->settings->get('editevent_show_attachmentstab',1)) {
+			if ($this->settings->get('editevent_show_attachmentstab',1) && !($this->valguest)) {
 				echo JHtml::_('bootstrap.addTab', 'myTab', 'attachments', JText::_('COM_JEM_EVENT_ATTACHMENTS_TAB', true));
 				echo $this->loadTemplate('attachments'); 
 				echo JHtml::_('bootstrap.endTab');
@@ -261,7 +224,7 @@ $settings	= json_decode($this->item->attribs);
 			?>
 		
 			<?php
-			if ($this->settings->get('editevent_show_othertab',1)) { 
+			if ($this->settings->get('editevent_show_othertab',1) && !($this->valguest)) { 
 				echo JHtml::_('bootstrap.addTab', 'myTab', 'other', JText::_('COM_JEM_EVENT_OTHER_TAB', true)); 
 				echo $this->loadTemplate('other'); 
 				echo JHtml::_('bootstrap.endTab');
@@ -282,6 +245,7 @@ $settings	= json_decode($this->item->attribs);
 			<?php if($this->params->get('enable_category', 0) == 1) :?>
 			<input type="hidden" name="jform[catid]" value="<?php echo $this->params->get('catid', 1);?>"/>
 			<?php endif;?>
+			<?php echo $this->form->renderField('timeout'); ?>
 			<?php echo JHtml::_('form.token'); ?>
 		</form>
 	</div>

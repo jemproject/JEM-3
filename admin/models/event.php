@@ -372,7 +372,28 @@ class JemModelEvent extends JModelAdmin
 			}
 		}
 	
-	
+		$settings = JemHelper::globalattribs();
+		$valguest = JEMUser::validate_guest();
+		
+		$asCaptcha	= $settings->get('guest_as_captcha','0');
+		$asMath		= $settings->get('guest_as_math','0');
+		
+		if (!$valguest) {
+			$form->removeField('captcha');
+			$form->removeField('mathquiz');
+			$form->removeField('mathquiz_answer');
+			$form->removeField('timeout');
+		} 
+		
+		if ($valguest && !$asMath) {
+			$form->removeField('mathquiz');
+			$form->removeField('mathquiz_answer');
+		}
+		
+		if ($valguest && !$asCaptcha) {
+			$form->removeField('captcha');
+		}
+		
 		return $form;
 	}
 	
@@ -521,6 +542,10 @@ class JemModelEvent extends JModelAdmin
 				}
 			} else {
 				$dateSet = false;
+			}
+			
+			if (!isset($data['recurrence_type'])) {
+				$data['recurrence_type'] = 0;
 			}
 		
 		

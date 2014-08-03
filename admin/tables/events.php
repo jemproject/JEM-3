@@ -165,6 +165,9 @@ class JEMTableEvents extends JTable
 		$jinput 		= JFactory::getApplication()->input;
 		$app 			= JFactory::getApplication();
 		$jemsettings 	= JEMHelper::config();
+		$settings 		= JemHelper::globalattribs();
+		$valguest		= JEMUser::validate_guest();
+		$guest_fldstatus = $settings->get('guest_fldstatus','0');
 
 		// Check if we're in the front or back
 		if ($app->isAdmin())
@@ -235,7 +238,12 @@ class JEMTableEvents extends JTable
 			$maintainer = JEMUser::ismaintainer('publish');
 			$autopubev = JEMUser::validate_user($jemsettings->evpubrec, $jemsettings->autopubl);
 			if (!($autopubev || $maintainer || $user->authorise('core.edit','com_jem'))) {
-				$this->published = 0 ;
+				if ($valguest) {
+					$this->published = $guest_fldstatus;
+				} else {
+					$this->published = 0;
+				}
+					
 			}
 		}
 
