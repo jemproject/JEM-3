@@ -461,15 +461,13 @@ class JemHelper {
 		$tooltip = (htmlspecialchars($tooltip));
 		$title = (htmlspecialchars($title));
 
-		if ($title) {
-			$title = $title . '::';
-		}
-
+		$titleTip = JHtml::tooltipText($title, $tooltip, 0);
+		
 		if ($href) {
 			$href = JRoute::_ ($href);
-			$tip = '<span class="'.$class.'" title="'.$title.$tooltip.'"><a href="'.$href.'">'.$time.$text.'</a></span>';
+			$tip = '<span class="'.$class.'" title="'.$titleTip.'"><a href="'.$href.'">'.$time.$text.'</a></span>';
 		} else {
-			$tip = '<span class="'.$class.'" title="'.$title.$tooltip.'">'.$text.'</span>';
+			$tip = '<span class="'.$class.'" title="'.$titleTip.'">'.$text.'</span>';
 		}
 		return $tip;
 	}
