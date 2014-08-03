@@ -1169,13 +1169,19 @@
 			class="inputbox"
 			size="1"
 			default="1"
-		>
+				>
 			<option value="1">JPUBLISHED</option>
 			<option value="0">JUNPUBLISHED</option>
 			<option value="2">JARCHIVED</option>
 			<option value="-2">JTRASHED</option>
-		</field>
-		
+			</field>
+			<field name="guest_category" type="modal_categories"
+				label="COM_JEM_CATEGORY"
+				description="COM_JEM_CATEGORY"
+				size="40"
+				required="false"
+				clear="true"
+			/>
 	</fieldset>
 	</fields>
 

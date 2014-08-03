@@ -68,6 +68,7 @@
 			labelclass=""
 			description="COM_JEM_EDITEVENT_FIELD_CATEGORIES_DESC"
 			required="true"
+			frontedit="true"
 		/>
 		
 		<field

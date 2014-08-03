@@ -35,6 +35,9 @@ class JFormFieldCatOptions extends JFormFieldList
 		$attr .= $this->multiple ? ' multiple' : '';
 		$attr .= $this->required ? ' required aria-required="true"' : '';
 		$attr .= $this->autofocus ? ' autofocus' : '';
+		
+		$frontedit = $this->element['frontedit'];
+		
 	
 		// To avoid user's confusion, readonly="true" should imply disabled="true".
 		if ((string) $this->readonly == '1' || (string) $this->readonly == 'true' || (string) $this->disabled == '1'|| (string) $this->disabled == 'true')
@@ -47,7 +50,7 @@ class JFormFieldCatOptions extends JFormFieldList
 	
 		// Get the field options.
 		$options = (array) $this->getOptions();
-	
+		
 		// Selected Categories
 		$currentid = JFactory::getApplication()->input->getInt('a_id');
 		$categories = self::getCategories($currentid);
@@ -70,7 +73,7 @@ class JFormFieldCatOptions extends JFormFieldList
 		{
 			$html[] = JHtml::_('select.genericlist', $options, $this->name, trim($attr), 'value', 'text', $selectedcats,$this->id);
 		}
-	
+		
 		return implode($html);
 	}
 	
@@ -78,8 +81,15 @@ class JFormFieldCatOptions extends JFormFieldList
 	protected function getOptions() {
 	
 		$db			= JFactory::getDbo();
-		$options	= JEMCategories::getCategoriesTree();
-	
+			
+		$frontedit = $this->element['frontedit'];
+		if ($frontedit) {
+			$options	= $this->getCategories();
+		} else {
+			$options	= JEMCategories::getCategoriesTree();
+		}
+		
+
 		try
 		{
 			$options = $db->loadObjectList();
@@ -102,18 +112,21 @@ class JFormFieldCatOptions extends JFormFieldList
 	 * @access public
 	 * @return void
 	 */
-	function getCategories($id)
+	function getCategories($id=false)
 	{
 		$user		= JFactory::getUser();
 		$jemsettings = JEMHelper::config();
 		$userid		= (int) $user->get('id');
 		$superuser	= JEMUser::superuser();
-	
-		// Support Joomla access levels instead of single group id
-		$levels = $user->getAuthorisedViewLevels();
+		$levels 	= $user->getAuthorisedViewLevels();
+		$settings 	= JemHelper::globalattribs();
+		$guestcat	= $settings->get('guest_category','0');
+		
+		
+		$valguest	= JEMUser::validate_guest();
+		if (!$valguest) {
+			$where = ' WHERE c.published = 1 AND c.access IN (' . implode(',', $levels) . ')';
 			
-		$where = ' WHERE c.published = 1 AND c.access IN (' . implode(',', $levels) . ')';
-	
 			//get the ids of the categories the user maintaines
 			$db		= JFactory::getDbo();
 			$query	= $db->getQuery(true);
@@ -121,55 +134,61 @@ class JFormFieldCatOptions extends JFormFieldList
 					. ' FROM #__jem_groupmembers AS g'
 					. ' WHERE g.member = '.$userid
 					;
-			$db->setQuery($query);
-			$catids = $db->loadColumn();
+					$db->setQuery($query);
+					$catids = $db->loadColumn();
+						
+						
+					$query = 'SELECT gr.id'
+							. ' FROM #__jem_groups AS gr'
+									. ' LEFT JOIN #__jem_groupmembers AS g ON g.group_id = gr.id'
+											. ' WHERE g.member = ' . (int) $user->get('id')
+											. ' AND ' .$db->quoteName('gr.addevent') . ' = 1 '
+													. ' AND g.member NOT LIKE 0';
+					$db->setQuery($query);
+					$groupnumber = $db->loadColumn();
+					$categories = implode(' OR c.groupid = ', $groupnumber);
 			
-			
-			$query = 'SELECT gr.id' 
-					. ' FROM #__jem_groups AS gr'
-					. ' LEFT JOIN #__jem_groupmembers AS g ON g.group_id = gr.id'
-					. ' WHERE g.member = ' . (int) $user->get('id')
-					. ' AND ' .$db->quoteName('gr.addevent') . ' = 1 '
-					. ' AND g.member NOT LIKE 0';
-			$db->setQuery($query);
-			$groupnumber = $db->loadColumn();	
-			$categories = implode(' OR c.groupid = ', $groupnumber);
-	
-			//build ids query
-			if ($categories) {
-				//check if user is allowed to submit events in general, if yes allow to submit into categories
-				//which aren't assigned to a group. Otherwise restrict submission into maintained categories only
-				if (JEMUser::validate_user($jemsettings->evdelrec, $jemsettings->delivereventsyes)) {
-					$where .= ' AND c.groupid = 0 OR c.groupid = '.$categories;
-				} else {
-					$where .= ' AND c.groupid = '.$categories;
+					//build ids query
+					if ($categories) {
+						//check if user is allowed to submit events in general, if yes allow to submit into categories
+						//which aren't assigned to a group. Otherwise restrict submission into maintained categories only
+						if (JEMUser::validate_user($jemsettings->evdelrec, $jemsettings->delivereventsyes)) {
+							$where .= ' AND c.groupid = 0 OR c.groupid = '.$categories;
+						} else {
+							$where .= ' AND c.groupid = '.$categories;
 						}
-				} else {
-					$where .= ' AND c.groupid = 0';
-				}
-	
-		//administrators or superadministrators have access to all categories, also maintained ones
-		if($superuser) {
-			$where = ' WHERE c.published = 1';
-		}
-	
+					} else {
+						$where .= ' AND c.groupid = 0';
+					}
+			
+					//administrators or superadministrators have access to all categories, also maintained ones
+					if($superuser) {
+						$where = ' WHERE c.published = 1';
+					}
+		} else {
+			# specified category
+			$where = ' WHERE c.id = '. $guestcat;
+		}	
+		
+		
 		//get the maintained categories and the categories whithout any group
 		//or just get all if somebody have edit rights
 		$db		= JFactory::getDbo();
 		$query	= $db->getQuery(true);
-		$query = 'SELECT c.*'
+		$query = 'SELECT c.*,c.id as value,catname as text'
 				. ' FROM #__jem_categories AS c'
 				. $where
 				. ' ORDER BY c.ordering'
 				;
 		$db->setQuery($query);
-	
+		
+
 		//	$this->_category = array();
 		//	$this->_category[] = JHtml::_('select.option', '0', JText::_( 'COM_JEM_SELECT_CATEGORY' ) );
 		//	$this->_categories = array_merge( $this->_category, $this->_db->loadObjectList() );
 	
 		$mitems = $db->loadObjectList();
-
+		
 		// Check for a database error.
 		if ($db->getErrorNum())
 		{
