@@ -388,10 +388,12 @@ class JemModelEvent extends JModelAdmin
 		if ($valguest && !$asMath) {
 			$form->removeField('mathquiz');
 			$form->removeField('mathquiz_answer');
+			$form->setFieldAttribute('articletext', 'buttons', 'false');
 		}
 		
 		if ($valguest && !$asCaptcha) {
 			$form->removeField('captcha');
+			$form->setFieldAttribute('articletext', 'buttons', 'false');
 		}
 		
 		return $form;
