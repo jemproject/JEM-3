@@ -238,6 +238,10 @@ class JemViewEvent extends JEMView
 			$document->addScriptDeclaration($js);
 		}
 		$this->formhandler			= $formhandler;
+		
+		
+		$this->showNameAttendee = $settings->get('event_show_name_attendee','1');
+		
 
 		// generate Metatags
 		$meta_keywords_content = "";

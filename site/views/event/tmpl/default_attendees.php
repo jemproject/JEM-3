@@ -15,7 +15,8 @@ $userId				= $user->get('id');
 ?>
 
 <?php
-if (!($this->formhandler == 2) || !($this->formhandler == 1)) { ?>
+if (!($this->formhandler == 2) && !($this->formhandler == 1)) { 
+?>
 
 <div class="row-fluid">
 <div class="span12">
@@ -50,7 +51,8 @@ if (!($this->formhandler == 2) || !($this->formhandler == 1)) { ?>
 		<dd class=""><?php echo $this->item->waiters; ?></dd>
 		<?php } ?>
 		
-		<?php if ($this->registers > 0){ ?>
+		<?php 
+		if (!(empty($this->registers))){ ?>
 		<dt class=""><?php echo JText::_('COM_JEM_REGISTERED_USERS').':';?></dt>
 		<dd class=""><?php echo count($this->registers); ?></dd>
 		<?php } ?>
@@ -71,7 +73,7 @@ if (!($this->formhandler == 2) || !($this->formhandler == 1)) { ?>
 
 <?php
 //only set style info if users already have registered and user is allowed to see it
-if ($this->registers && $userId) :
+if ($this->registers && $userId && $this->showNameAttendee) :
 ?>
 
 
