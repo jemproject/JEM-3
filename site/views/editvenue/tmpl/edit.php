@@ -233,63 +233,22 @@ $mapType = $this->mapType;
 
 			<fieldset class="form-horizontal">
 				<legend><?php echo JText::_('COM_JEM_EDITVENUE_DETAILS_LEGEND'); ?></legend>
-					
-					<div class="control-group">
-						<div class="control-label"><?php echo $this->form->getLabel('venue');?></div>
-						<div class="controls"><?php echo $this->form->getInput('venue'); ?></div>
-					</div>
-	
-						<?php if (is_null($this->item->id)):?>
-							<div class="control-group">
-								<div class="control-label"><?php echo $this->form->getLabel('alias'); ?></div>
-								<div class="controls"><?php echo $this->form->getInput('alias'); ?></div>
-							</div>
-						<?php endif; ?>
-						
-					<div class="control-group">
-						<div class="control-label"><?php echo $this->form->getLabel('street'); ?></div>
-						<div class="controls"><?php echo $this->form->getInput('street'); ?></div>
-					</div>
-						
-					<div class="control-group">
-						<div class="control-label"><?php echo $this->form->getLabel('postalCode'); ?></div>
-						<div class="controls"><?php echo $this->form->getInput('postalCode'); ?></div>
-					</div>
-					
-					<div class="control-group">
-						<div class="control-label"><?php echo $this->form->getLabel('city'); ?></div>
-						<div class="controls"><?php echo $this->form->getInput('city'); ?></div>
-					</div>
-					
-					<div class="control-group">	
-						<div class="control-label"><?php echo $this->form->getLabel('state'); ?></div>
-						<div class="controls"><?php echo $this->form->getInput('state'); ?></div>
-					</div>
-					
-					<div class="control-group">	
-						<div class="control-label"><?php echo $this->form->getLabel('country'); ?></div>
-						<div class="controls"><?php echo $this->form->getInput('country'); ?></div>
-					</div>
-					
-					<div class="control-group">
-						<div class="control-label"><?php echo $this->form->getLabel('latitude'); ?></div>
-						<div class="controls"><?php echo $this->form->getInput('latitude'); ?></div>
-					</div>
-					
-					<div class="control-group">
-						<div class="control-label"><?php echo $this->form->getLabel('longitude'); ?></div>
-						<div class="controls"><?php echo $this->form->getInput('longitude'); ?></div>
-					</div>
-					
-					<div class="control-group">	
-						<div class="control-label"><?php echo $this->form->getLabel('url'); ?></div>
-						<div class="controls"><?php echo $this->form->getInput('url'); ?></div>
-					</div>
-					
-					<div class="control-group">
-						<div class="control-label"><?php echo $this->form->getLabel('published'); ?></div>
-						<div class="controls"><?php echo $this->form->getInput('published'); ?></div>
-					</div>
+					<?php 
+					echo $this->form->renderField('venue'); 
+					if (is_null($this->item->id)) {
+						echo $this->form->renderField('alias');
+
+					 } 
+					 echo $this->form->renderField('street');
+					 echo $this->form->renderField('postalCode');
+					 echo $this->form->renderField('city');
+					 echo $this->form->renderField('state');
+					 echo $this->form->renderField('country');
+					 echo $this->form->renderField('latitude');
+					 echo $this->form->renderField('longitude');
+					 echo $this->form->renderField('url');
+					 echo $this->form->renderField('published');
+					 ?>
 			</fieldset>
 			
 			<fieldset class="form-vertical">
@@ -318,7 +277,7 @@ $mapType = $this->mapType;
 			<div class="clr"></div>
 			<div id="mapdiv">
 			<?php 
-			# Google-map code will be loaded when the checkbox for geocoding has been ticked
+			# Google-map code
 			$language	= JFactory::getLanguage();
 			$document	= JFactory::getDocument();
 			
