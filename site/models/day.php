@@ -188,7 +188,7 @@ class JemModelDay extends JemModelEventslist
 	{
 		$params  = $this->state->params;
 		$jinput  = JFactory::getApplication()->input;
-		$task    = $jinput->get('task','','cmd');
+		$task    = $jinput->getCmd('task');
 
 		$requestVenueId 	= $this->getState('filter.req_venid');
 
