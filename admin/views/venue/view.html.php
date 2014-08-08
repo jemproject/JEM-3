@@ -33,9 +33,11 @@ class JEMViewVenue extends JViewLegacy {
 
 		// initialise variables
 		$document		= JFactory::getDocument();
+		$app			= JFactory::getApplication();
+		$jinput			= $app->input;
 		$this->settings	= JEMAdmin::config();
 		$this->settings2	= JemHelper::globalattribs();
-		$task			= JFactory::getApplication()->input->get('task');
+		$task			= $jinput->getCmd('task');
 		$this->task 	= $task;
 
 		# load css
@@ -46,8 +48,7 @@ class JEMViewVenue extends JViewLegacy {
 		JHtml::_('script', 'com_jem/attachments.js', false, true);
 		$document->addScript('http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js');		
 		
-		$access2 = JEMHelper::getAccesslevelOptions();
-		$this->access		= $access2;
+		$this->access		= JEMHelper::getAccesslevelOptions();
 		
 		# retrieve mapType setting
 		$settings 		= JemHelper::globalattribs();
@@ -68,6 +69,9 @@ class JEMViewVenue extends JViewLegacy {
 				break;
 		}
 		$this->mapType = $type;
+		
+		JHtml::_('jquery.framework');
+		JHtml::_('script', 'com_jem/slider-state.js', false, true);
 		
 		$this->addToolbar();
 		parent::display($tpl);

@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 /**
  * View: Attendee
  */
-class JEMViewAttendee extends JViewLegacy {
+class JemViewAttendee extends JViewLegacy {
 	
 	protected $form;
 	protected $item;

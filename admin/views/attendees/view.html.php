@@ -37,7 +37,7 @@ class JemViewAttendees extends JViewLegacy {
 		$this->filterForm		= $this->get('FilterForm');
 		$this->activeFilters	= $this->get('ActiveFilters');
 		$event 					= $this->get('Event');
-		$jinput 				= JFactory::getApplication()->input;
+		$jinput 				= $app->input;
 		$eventid 				= $jinput->getInt('eid');
 
  		if (JEMHelper::isValidDate($event->dates)) {

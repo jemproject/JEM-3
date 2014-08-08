@@ -65,8 +65,7 @@ class JemViewEvent extends JViewLegacy {
 		JHtml::_('jquery.framework');
 		JHtml::_('script', 'com_jem/slider-state.js', false, true);
 
-		$access2 			= JemHelper::getAccesslevelOptions();
-		$this->access		= $access2;
+		$this->access		= JemHelper::getAccesslevelOptions();
 		$this->jemsettings	= $jemsettings;
 		$this->Lists 		= $Lists;
 
