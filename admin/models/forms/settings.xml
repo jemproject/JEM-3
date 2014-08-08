@@ -827,15 +827,6 @@
 				<option value="1">JYES</option>
 			</field>
 			<field
-				name="highlight"
-				type="list"
-				default="0"
-				label="COM_JEM_SETTINGS_FIELD_ENABLE_HIGHLIGHT"
-				description="COM_JEM_SETTINGS_FIELD_ENABLE_HIGHLIGHT_DESC">
-				<option value="0">JNO</option>
-				<option value="1">JYES</option>
-			</field>
-			<field
 				name="default_Itemid"
 				type="text"
 				label="COM_JEM_SETTINGS_FIELD_DEFAULTITEMID"
