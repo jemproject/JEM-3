@@ -37,7 +37,7 @@ class JemModelEvents extends JModelList
 					'published',
 					'access', 'a.access', 'access_level',
 					# by adding groupset the groupset filter will stay open and it can be used 
-					'groupset',
+					'groupset','a.recurrence_group',
 					'ordering',
 			);
 		}
