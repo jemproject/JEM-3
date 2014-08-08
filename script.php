@@ -389,7 +389,26 @@ class com_jemInstallerScript
 	 */
 	private function deleteObsoleteFiles()
 	{
-		$files = array();
+		$files = array(
+			# since 3.0.2
+			'/administrator/components/com_jem/tables/category.php',
+			'/administrator/components/com_jem/tables/date.php',
+			'/administrator/components/com_jem/tables/event.php',
+			'/administrator/components/com_jem/tables/group.php',
+			'/administrator/components/com_jem/tables/jem_attachments.php',
+			'/administrator/components/com_jem/tables/jem_categories.php',
+			'/administrator/components/com_jem/tables/jem_cats_event_relations.php',
+			'/administrator/components/com_jem/tables/jem_events.php',
+			'/administrator/components/com_jem/tables/jem_groupmembers.php',
+			'/administrator/components/com_jem/tables/jem_groups.php',
+			'/administrator/components/com_jem/tables/jem_register.php',
+			'/administrator/components/com_jem/tables/jem_settings.php',
+			'/administrator/components/com_jem/tables/jem_venues.php',
+			'/administrator/components/com_jem/tables/recurrencemaster.php',
+			'/administrator/components/com_jem/tables/venue.php',
+			'/administrator/components/com_jem/views/attendee/tmpl/default.php',
+			'/media/com_jem/js/highlighter.js'
+		);
 		$folders = array();
 
 		foreach ($files as $file) {
