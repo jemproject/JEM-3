@@ -142,29 +142,38 @@ class JEMModelGroups extends JModelList
 	 */
 	function delete($cid = array())
 	{
-		if (count($cid))
+		if (count($cid) > 0)
 		{
 			$cids = implode(',', $cid);
-
-			$query = 'DELETE FROM #__jem_groups'
-					. ' WHERE id IN ('. $cids .')'
-					;
-
-			$this->_db->setQuery($query);
-
-			if(!$this->_db->execute()) {
-				$this->setError($this->_db->getErrorMsg());
+			
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$query->delete('#__jem_groups');
+			$query->where(array('id IN ('. $cids .')'));
+			$db->setQuery($query);
+			
+			try
+			{
+				$db->execute();
+			}
+			catch (RuntimeException $e)
+			{
+				JError::raiseWarning(500, $e->getMessage());
 				return false;
 			}
-
-			$query = 'DELETE FROM #__jem_groupmembers'
-					. ' WHERE group_id IN ('. $cids .')'
-					;
-
-			$this->_db->setQuery($query);
-
-			if(!$this->_db->execute()) {
-				$this->setError($this->_db->getErrorMsg());
+			
+			$query = $db->getQuery(true);
+			$query->delete('#__jem_groupmembers');
+			$query->where(array('group_id IN ('. $cids .')'));
+			$db->setQuery($query);
+				
+			try
+			{
+				$db->execute();
+			}
+			catch (RuntimeException $e)
+			{
+				JError::raiseWarning(500, $e->getMessage());
 				return false;
 			}
 		}

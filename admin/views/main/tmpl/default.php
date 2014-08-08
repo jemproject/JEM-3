@@ -9,24 +9,9 @@
 
 defined('_JEXEC') or die;
 
-$options = array(
-	'onActive' => 'function(title, description){
-		description.setStyle("display", "block");
-		title.addClass("open").removeClass("closed");
-	}',
-	'onBackground' => 'function(title, description){
-		description.setStyle("display", "none");
-		title.addClass("closed").removeClass("open");
-	}',
-	'startOffset' => 0,  // 0 starts on the first tab, 1 starts the second, etc...
-	'useCookie' => true, // this must not be a string. Don't use quotes.
-);
-
 $slidesOptions = array(
  // It is the ID of the active tab.
 );
-
-
 
 ?>
 <form action="<?php echo JRoute::_('index.php?option=com_jem');?>" id="application-form" method="post" name="adminForm" class="form-validate">

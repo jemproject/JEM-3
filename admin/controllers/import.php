@@ -48,7 +48,7 @@ class JemControllerImport extends JControllerLegacy {
 		# in here we're retrieving the $dbname
 		$object = JTable::getInstance($dbname, 'JEMTable');
 		$object_fields = get_object_vars($object);
-
+		
 		if($type == 'events') {
 			// add additional fields
 			$object_fields['categories'] = '';
@@ -90,9 +90,9 @@ class JemControllerImport extends JControllerLegacy {
 				if ($convert) {
 					array_walk($data, 'jem_convert_ansi2utf8');
 				}
-
+				
 				for($c=0; $c < $numfields; $c++) {
-					// here, we make sure that the field match one of the fields of jem_venues table or special fields,
+					// here, we make sure that the field match one of the fields of jem_table or special fields,
 					// otherwise, we don't add it
 					if(array_key_exists($data[$c], $object_fields)) {
 						$fields[$c] = $data[$c];

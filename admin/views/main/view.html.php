@@ -16,9 +16,6 @@ class JEMViewMain extends JViewLegacy {
 
 	public function display($tpl = null)
 	{
-		// Load pane behavior
-		jimport('joomla.html.pane');
-
 		//initialise variables
 		$document	= JFactory::getDocument();
 		$user 		= JFactory::getUser();

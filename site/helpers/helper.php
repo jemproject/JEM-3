@@ -117,28 +117,32 @@ class JemHelper {
 		if ($nrdaysnow > $nrdaysupdate || $forced) {
 
 			$db = JFactory::getDbo();
-			$query = $db->getQuery(true);
-
+			
 			# delete outdated events
 			if ($jemsettings->oldevent == 1) {
-				$query = 'UPDATE #__jem_events SET published = -2 WHERE dates > 0 AND '
-						.' DATE_SUB(NOW(), INTERVAL '.$jemsettings->minus.' DAY) > (IF (enddates IS NOT NULL, enddates, dates))'
-						.' AND published = 1';
+				$query = $db->getQuery(true);
+				$query->update('#__jem_events');
+				$query->set('published = -2');
+				$query->where(array("dates > 0","DATE_SUB(NOW(), INTERVAL '.$jemsettings->minus.' DAY) > (IF (enddates IS NOT NULL, enddates, dates))","published=1"));
 				$db->SetQuery($query);
 				$db->execute();
 			}
 
 			# Set state archived of outdated events
 			if ($jemsettings->oldevent == 2) {
-				$query = 'UPDATE #__jem_events SET published = 2 WHERE dates > 0 AND '
-						.' DATE_SUB(NOW(), INTERVAL '.$jemsettings->minus.' DAY) > (IF (enddates IS NOT NULL, enddates, dates)) '
-						.' AND published = 1';
+				$query = $db->getQuery(true);
+				$query->update('#__jem_events');
+				$query->set('published = 2');
+				$query->where(array("dates > 0","DATE_SUB(NOW(), INTERVAL '.$jemsettings->minus.' DAY) > (IF (enddates IS NOT NULL, enddates, dates))","published=1"));
 				$db->SetQuery($query);
 				$db->execute();
 			}
 
 			# Set timestamp of last cleanup
-			$query = 'UPDATE #__jem_settings SET lastupdate = '.time().' WHERE id = 1';
+			$query = $db->getQuery(true);
+			$query->update('#__jem_settings');
+			$query->set('lastupdate = '.time());
+			$query->where('id=1');
 			$db->SetQuery($query);
 			$db->execute();
 		}

@@ -8,54 +8,13 @@
  */
 defined('_JEXEC') or die;
 
-jimport('joomla.application.component.modeladmin');
 
 /**
  * Model: Venue
  */
 class JEMModelVenue extends JModelAdmin
 {
-	/**
-	 * Method to test whether a record can be deleted.
-	 *
-	 * @param	object	A record object.
-	 * @return	boolean	True if allowed to delete the record. Defaults to the permission set in the component.
-	 */
-	protected function canDelete($record)
-	{
-		if (!empty($record->id))
-		{
-			if ($record->published != -2) {
-				return ;
-			}
-
-			$user = JFactory::getUser();
-
-			if (!empty($record->catid)) {
-				return $user->authorise('core.delete', 'com_jem.category.'.(int) $record->catid);
-			} else {
-				return $user->authorise('core.delete', 'com_jem');
-			}
-		}
-	}
-
-	/**
-	 * Method to test whether a record can be deleted.
-	 *
-	 * @param	object	A record object.
-	 * @return	boolean	True if allowed to change the state of the record. Defaults to the permission set in the component.
-	 */
-	protected function canEditState($record)
-	{
-		$user = JFactory::getUser();
-
-		if (!empty($record->catid)) {
-			return $user->authorise('core.edit.state', 'com_jem.category.'.(int) $record->catid);
-		} else {
-			return $user->authorise('core.edit.state', 'com_jem');
-		}
-	}
-
+	
 	/**
 	 * Returns a reference to the a Table object, always creating it.
 	 *
@@ -165,27 +124,26 @@ class JEMModelVenue extends JModelAdmin
 	public function save($data)
 	{
 		// Variables
-		$date 			= JFactory::getDate();
-		$jinput 		= JFactory::getApplication()->input;
-		$user 			= JFactory::getUser();
-		$jemsettings 	= JEMHelper::config();
 		$app 			= JFactory::getApplication();
+		$date 			= JFactory::getDate();
+		$jinput 		= $app->input;
+		$user 			= JFactory::getUser();
 		$fileFilter 	= new JInput($_FILES);
 		$table 			= $this->getTable();
-
+		
 		// Check if we're in the front or back
 		if ($app->isAdmin())
 			$backend = true;
 		else
 			$backend = false;
 
-		$ip = $jinput->get('author_ip', '', 'string');
-		$data['author_ip'] 		= $ip;
-
-		//uppercase needed by mapservices
+		// uppercase needed by mapservices
 		if ($data['country']) {
 			$data['country'] = JString::strtoupper($data['country']);
 		}
+		
+		$data['author_ip'] 		= $jinput->getString('author_ip');
+		
 				
 		if (parent::save($data)){
 			// At this point we do have an id.

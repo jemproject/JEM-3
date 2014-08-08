@@ -37,7 +37,6 @@ class JemModelAttendee extends JModelAdmin
 	{
 		$row = JTable::getInstance('Register', 'JEMTable');
 		$row->load($id);
-		//$row->bind($attendee);
 		$row->waiting = $row->waiting ? 0 : 1;
 		return $row->store();
 	}

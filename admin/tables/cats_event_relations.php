@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 /**
  * Table: Cats_event_relations
  */
-class JEMTableCats_event_relations extends JTable
+class JemTableCats_event_relations extends JTable
 {
 	/**
 	 * Primary Key

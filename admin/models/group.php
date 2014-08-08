@@ -14,48 +14,6 @@ defined('_JEXEC') or die;
  */
 class JemModelGroup extends JModelAdmin
 {
-	/**
-	 * Method to test whether a record can be deleted.
-	 *
-	 * @param	object	A record object.
-	 * @return	boolean	True if allowed to delete the record. Defaults to the permission set in the component.
-	 *
-	 */
-	protected function canDelete($record)
-	{
-		if (!empty($record->id))
-		{
-			if ($record->published != -2) {
-				return ;
-			}
-
-			$user = JFactory::getUser();
-
-			if (!empty($record->catid)) {
-				return $user->authorise('core.delete', 'com_jem.category.'.(int) $record->catid);
-			} else {
-				return $user->authorise('core.delete', 'com_jem');
-			}
-		}
-	}
-
-	/**
-	 * Method to test whether a record can be deleted.
-	 *
-	 * @param	object	A record object.
-	 * @return	boolean	True if allowed to change the state of the record. Defaults to the permission set in the component.
-	 *
-	 */
-	protected function canEditState($record)
-	{
-		$user = JFactory::getUser();
-
-		if (!empty($record->catid)) {
-			return $user->authorise('core.edit.state', 'com_jem.category.'.(int) $record->catid);
-		} else {
-			return $user->authorise('core.edit.state', 'com_jem');
-		}
-	}
 
 	/**
 	 * Returns a reference to the a Table object, always creating it.
