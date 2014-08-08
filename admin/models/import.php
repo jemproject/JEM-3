@@ -241,18 +241,18 @@ class JEMModelImport extends JModelLegacy {
 		// parse each row
 		foreach ($data as $row) {
 			$values = array();
+			
 			// parse each specified field and retrieve corresponding value for the record
 			foreach ($fieldsname as $k => $field) {
 				$values[$field] = $row[$k];
 			}
-
+			
 			// retrieve the specified table
 			$object = JTable::getInstance($tablename, $prefix);
 			$objectname = get_class($object);
 			$rootkey = $this->_rootkey();
 
-			if ($objectname == "JEMTableCategories") {
-
+			if ($objectname == "JemTableCategories") {
 				// check if column "parent_id" exists
 				if (array_key_exists('parent_id', $values)) {
 
@@ -293,9 +293,8 @@ class JEMModelImport extends JModelLegacy {
 
 			// Bind the data
 			$object->bind($values, $ignore);
-
-			// check/store function for the Category Table
-			if ($objectname == "JEMTableCategories") {
+			
+			if ($objectname == "JemTableCategories") {
 				// Make sure the data is valid
 				if (!$object->checkCsvImport()) {
 					$this->setError($object->getError());
@@ -305,8 +304,8 @@ class JEMModelImport extends JModelLegacy {
 
 				// Store it in the db
 				if ($replace) {
-
-					if ($values['id'] != '1' && $objectname == "JEMTableCategories") {
+					
+					if ($values['id'] != '1' && $objectname == "JemTableCategories") {
 						// We want to keep id from database so first we try to insert into database.
 						// if it fails, it means the record already exists, we can use store().
 						if (!$object->insertIgnore()) {
@@ -366,7 +365,7 @@ class JEMModelImport extends JModelLegacy {
 				}
 			}
 
-			if ($objectname == "JEMTableEvents") {
+			if ($objectname == "JemTableEvents") {
 				// we need to update the categories-events table too
 				// store cat relations
 				if (isset($values['categories'])) {
@@ -379,6 +378,7 @@ class JEMModelImport extends JModelLegacy {
 			}
 		} // foreach
 
+		
 		// Specific actions outside the foreach loop
 
 		if ($objectname == "JEMTableCategories") {
