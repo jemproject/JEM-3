@@ -37,9 +37,6 @@ defined('_JEXEC') or die;
 		// Retrieving params
 		$params = $this->state->get('params');
 
-		// highlighter
-		$highlighter = $settings->get('highlight','0');
-
 		// Check for errors.
 		if (count($errors = $this->get('Errors')))
 		{
@@ -53,17 +50,7 @@ defined('_JEXEC') or die;
 		// Load Scripts
 		//JHtml::_('bootstrap.framework');
 		
-		
 		$document->addScript('http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js');
-
-		if ($highlighter) {
-			$document->addScript($url.'media/com_jem/js/highlighter.js');
-			$style = '
-			    .red a:link, .red a:visited, .red a:active {
-			    color:red;}
-			    ';
-			$document->addStyleDeclaration($style);
-		}
 
 		//assign data to template
 		$this->user			= $user;

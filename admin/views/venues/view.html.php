@@ -33,7 +33,6 @@ defined('_JEXEC') or die;
 		$this->activeFilters	= $this->get('ActiveFilters');
 		$this->settings			= $settings;
 		$params 				= $this->state->get('params');
-		$highlighter 			= $settings->get('highlight','0');
 
 		// Check for errors.
 		if (count($errors = $this->get('Errors'))) {
@@ -47,15 +46,6 @@ defined('_JEXEC') or die;
 		// Add Scripts
 		$document->addScript('http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js');
 
-		if ($highlighter) {
-			$document->addScript($url.'media/com_jem/js/highlighter.js');
-			$style = '
-			    .red a:link, .red a:visited, .red a:active {
-			        color:red;}
-			    ';
-			$document->addStyleDeclaration($style);
-		}
-		
 		$this->user = $user;
 
 		# add toolbar

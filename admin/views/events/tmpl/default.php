@@ -32,21 +32,6 @@ if ($saveOrder)
 $params		= (isset($this->state->params)) ? $this->state->params : new JObject();
 $settings	= $this->settings;
 ?>
-<script>
-$(document).ready(function() {
-	var h = <?php echo $settings->get('highlight','0'); ?>;
-
-	switch(h)
-	{
-	case 0:
-		break;
-	case 1:
-		highlightevents();
-		break;
-	}
-});
-</script>
-
 <script type="text/javascript">
 	Joomla.orderTable = function()
 	{
@@ -96,7 +81,7 @@ $(document).ready(function() {
 				<th class="center"><?php echo JHtml::_('searchtools.sort', 'COM_JEM_HITS', 'a.hits', $listDirn, $listOrder ); ?></th>
 				<th width="1%" class="center nowrap"><?php echo JText::_('COM_JEM_REGISTERED_USERS'); ?></th>
 				<th width="1%" class="center nowrap"><?php echo JHtml::_('searchtools.sort', 'COM_JEM_ID', 'a.id', $listDirn, $listOrder ); ?></th>
-				<th width="1%" class="center nowrap"><?php echo JHtml::_('grid.sort', 'COM_JEM_RECURRENCE', 'a.recurrence_group', $listDirn, $listOrder); ?></th>
+				<th width="1%" class="center nowrap"><?php echo JHtml::_('searchtools.sort', 'COM_JEM_RECURRENCE', 'a.recurrence_group', $listDirn, $listOrder); ?></th>
 			</tr>
 		</thead>
 

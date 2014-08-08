@@ -28,20 +28,6 @@ if ($saveOrder)
 $params		= (isset($this->state->params)) ? $this->state->params : new JObject();
 $settings	= $this->settings;
 ?>
-<script>
-$(document).ready(function() {
-	var h = <?php echo $settings->get('highlight','0'); ?>;
-
-	switch(h)
-	{
-	case 0:
-		break;
-	case 1:
-		highlightvenues();
-		break;
-	}
-});
-</script>
 <script type="text/javascript">
 	Joomla.orderTable = function()
 	{
