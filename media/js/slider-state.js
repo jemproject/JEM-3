@@ -1,11 +1,16 @@
 /**
- * @copyright   Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @version 3.0.1
+ * @package JEM
+ * @copyright (C) 2013-2014 joomlaeventmanager.net
+ * @copyright (C) 2005-2009 Christoph Lukes
+ * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
 /**
  * JavaScript behavior to allow selected collapse to be remained after save or page reload
  * keeping state in localstorage
+ * 
+ * @todo use id's for sliders + finetune
  */
 
 jQuery(function() {
@@ -20,7 +25,9 @@ jQuery(function() {
 
         var activatecollapse = function(href) {
             var $el = $('a[data-toggle="collapse"]a[href*=' + href + ']');
-            $el.collapse('show');
+            var $el2 = $el.parent().parent().parent();
+            var $el3 = $el2.find(".accordion-body");
+            $el3.collapse('show');
         };
 
         var hascollapse = function(href){
