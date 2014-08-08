@@ -54,6 +54,8 @@ CREATE TABLE IF NOT EXISTS `#__jem_events` (
   `recurrence_until` varchar(20) NOT NULL,
   `recurrence_freq` varchar(20) NOT NULL,
   `wholeday` varchar(2) NOT NULL,
+  `recurrence_count` int(11) NOT NULL,
+  `recurrence_weekday` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM CHARACTER SET `utf8` COLLATE `utf8_general_ci`;
 
