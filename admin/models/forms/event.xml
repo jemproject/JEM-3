@@ -72,7 +72,7 @@
 		/>
 		<field name="cats" type="catoptions"
 			multiple="true"
-			size="10"
+			size="5"
 			label="COM_JEM_FIELD_CATEGORIES"
 			labelclass=""
 			description="COM_JEM_FIELD_CATEGORIES"
@@ -291,18 +291,56 @@
 	<fieldset name="recurrence"
 		label="COM_JEM_RECURRING_EVENTS"
 	>
-		<field name="recurrence_type" type="list"
+		<field name="recurrence_freq" type="list"
 			default="0"
-			label="COM_JEM_RECURRENCE"
-			description="COM_JEM_RECURRENCE"
+			label="COM_JEM_EVENT_FIELD_RECURRENCE_FREQ"
+			filter="integer"
 		>
 			<option value="0">COM_JEM_NOTHING</option>
 			<option value="1">COM_JEM_DAYLY</option>
 			<option value="2">COM_JEM_WEEKLY</option>
 			<option value="3">COM_JEM_MONTHLY</option>
-			<option value="4">COM_JEM_WEEKDAY</option>
+			<option value="4">COM_JEM_YEARLY</option>
+			<option value="5">COM_JEM_WEEKDAY</option>
 		</field>
-		<field name="recurrence_limit_date" type="calendar"
+		<field name="recurrence_interval" type="text"
+			default="1"
+			label="COM_JEM_EVENT_FIELD_RECURRENCE_INTERVAL"
+			filter="integer"
+		/>
+		<field name="recurrence_weekday" type="list"
+			default="1"
+			multiple="true"
+			size="5"
+			label="COM_JEM_EVENT_FIELD_RECURRENCE_SELECTLIST_WEEKDAY"
+		>
+			<option value="MO">COM_JEM_MONDAY</option>
+			<option value="TU">COM_JEM_TUESDAY</option>
+			<option value="WE">COM_JEM_WEDNESDAY</option>
+			<option value="TH">COM_JEM_THURSDAY</option>
+			<option value="FR">COM_JEM_FRIDAY</option>
+			<option value="SA">COM_JEM_SATURDAY</option>
+			<option value="SU">COM_JEM_SUNDAY</option>
+		</field>
+		
+		<field name="recurrence_selectlist_weekdaystart" type="list"
+			default="1"
+			label="COM_JEM_EVENT_FIELD_RECURRENCE_SELECTLIST_WEEKDAYSTART"
+		>
+			<option value="MO">COM_JEM_MONDAY</option>
+			<option value="TU">COM_JEM_TUESDAY</option>
+			<option value="WE">COM_JEM_WEDNESDAY</option>
+			<option value="TH">COM_JEM_THURSDAY</option>
+			<option value="FR">COM_JEM_FRIDAY</option>
+			<option value="SA">COM_JEM_SATURDAY</option>
+			<option value="SU">COM_JEM_SUNDAY</option>
+		</field>
+		<field name="recurrence_intervaltext" type="text"
+			default=""
+			label="COM_JEM_EVENT_FIELD_RECURRENCE_INTERVALTEXT"
+		/>
+		
+		<field name="recurrence_until" type="calendar"
 			default="0000-00-00"
 			label="COM_JEM_RECURRENCE_COUNTER"
 			description="COM_JEM_RECURRENCE_COUNTER"
@@ -320,6 +358,12 @@
 		<field name="recurrence_multiexdates" type="text"
 				label="COM_JEM_EVENT_FIELD_RECURRENCE_MULTIEXDATES"
 				description="COM_JEM_EVENT_FIELD_RECURRENCE_MULTIEXDATES_DESC"
+			/>
+		<field name="recurrence_count" type="text"
+		class="inputbox"
+				size="10"
+				label="COM_JEM_EVENT_FIELD_RECURRENCE_COUNT"
+				description="COM_JEM_EVENT_FIELD_RECURRENCE_COUNT_DESC"
 			/>
 	</fieldset>
 

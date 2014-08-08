@@ -370,6 +370,16 @@ class JemModelEvent extends JModelAdmin
 				/* $form->setFieldAttribute('dates', 'disabled', 'true'); */
 				/* $form->setFieldAttribute('enddates', 'disabled', 'true'); */
 			}
+			
+			if ($items->recurrence_groupcheck) {
+				# disable recurrence fields
+				$form->removeField('recurrence_count');
+				$form->removeField('recurrence_exdates');
+				$form->removeField('recurrence_freq');
+				$form->removeField('recurrence_interval');
+				$form->removeField('recurrence_until');
+				$form->removeField('recurrence_weekday');
+			}
 		}
 	
 		$settings = JemHelper::globalattribs();
@@ -395,6 +405,8 @@ class JemModelEvent extends JModelAdmin
 			$form->removeField('captcha');
 			$form->setFieldAttribute('articletext', 'buttons', 'false');
 		}
+		
+	
 		
 		return $form;
 	}
@@ -486,9 +498,9 @@ class JemModelEvent extends JModelAdmin
 			$backend = false;
 
 		$cats 						= $data['cats'];
-		$metakeywords 				= $jinput->get('meta_keywords', '', '');
-		$metadescription 			= $jinput->get('meta_description', '', '');
-		$author_ip 					= $jinput->get('author_ip', '', '');
+		$metakeywords 				= $jinput->get('meta_keywords');
+		$metadescription 			= $jinput->get('meta_description');
+		$author_ip 					= $jinput->get('author_ip');
 		
 		$data['meta_keywords'] 		= $metakeywords;
 		$data['meta_description']	= $metadescription;
@@ -529,13 +541,8 @@ class JemModelEvent extends JModelAdmin
 			################
 			## RECURRENCE ##
 			################
-		
-			# @todo:alter
-			$recurrencenumber 	= $jinput->getInt('recurrence_interval', '');
-			$recurrencebyday 	= $jinput->getString('recurrence_byday', '');
-		
-
-			# check for dates that should be skipped from generating events
+			
+			# check if a startdate has been set
 			if (isset($data['dates'])) {
 				if ($data['dates'] == null) {
 					$dateSet = false;
@@ -546,10 +553,15 @@ class JemModelEvent extends JModelAdmin
 				$dateSet = false;
 			}
 			
-			if (!isset($data['recurrence_type'])) {
-				$data['recurrence_type'] = 0;
+			if (!isset($data['recurrence_freq'])) {
+				$data['recurrence_freq'] = 0;
 			}
-		
+			
+			# implode weekday values
+			# @todo implement check to see if days have been selected in case of freq week
+			if (isset($data['recurrence_weekday'])) {
+				$data['recurrence_weekday'] = implode(',', $data['recurrence_weekday']);
+			}
 		
 			# blank recurrence-fields
 			# 
@@ -557,22 +569,15 @@ class JemModelEvent extends JModelAdmin
 			# the recurrence-fields within the event-table will be blanked.
 			#
 			# but the recurrence_group field will stay filled as it's not removed by the user.		
-			if ($dateSet == false || $data['recurrence_type'] == '0')
+			if (empty($data['dates']) || $data['recurrence_freq'] == '0')
 			{
-				$data['recurrence_interval']		= '';
-				$data['recurrence_byday']		= '';
-				$data['recurrence_counter'] 	= '';
-				$data['recurrence_type']		= '';
-				$data['recurrence_limit']		= '';
-				$data['recurrence_limit_date']	= '';
-				$data['recurrence_first_id']	= '';
+				$data['recurrence_count'] 		= '';
+				$data['recurrence_freq']		= '';
+				$data['recurrence_interval']	= '';
+				$data['recurrence_until']		= '';
+				$data['recurrence_weekday']		= '';	
 				$data['recurrence_exdates']		= '';
-			} else {
-				# in here we know that there is a date and that we do have a recurrence-type
-				# so we can store the recurrence-info
-				$data['recurrence_interval']	= $recurrencenumber;
-				$data['recurrence_byday']		= $recurrencebyday;
-			}
+			} 
 
 			# the exdates are not stored in the event-table but they are trown in an variable
 			if (isset($data['recurrence_exdates'])) {
@@ -581,7 +586,7 @@ class JemModelEvent extends JModelAdmin
 				$exdates = false;
 			}
 		}
-		
+			
 		# parent-Save
 		if (parent::save($data)){
 

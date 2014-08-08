@@ -23,19 +23,12 @@ defined('_JEXEC') or die;
 	<!-- REGISTRATION -->
 	<fieldset class="form-horizontal">
 		<legend><span class="legendcolor"><?php echo JText::_('COM_JEM_EVENT_REGISTRATION_LEGEND') ?></span></legend>
+		<?php 
+			echo $this->form->renderField('registra'); 
+			echo $this->form->renderField('unregistra');
+			echo $this->form->renderField('maxplaces');
 		
-			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('registra'); ?></div> 
-				<div class="controls"><?php echo $this->form->getInput('registra'); ?></div>
-			</div>
-			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('unregistra'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('unregistra'); ?></div>
-			</div>
-			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('maxplaces'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('maxplaces'); ?></div>
-			</div>
+		?>
 			<div class="control-group">
 				<div class="control-label"><label><?php echo JText::_('COM_JEM_BOOKED_PLACES').':';?></label></div>
 				<div class="controls"><input id="event-booked" type="text"  disabled="disabled" readonly="readonly" value="<?php echo $this->item->booked; ?>"  /></div>
@@ -48,10 +41,7 @@ defined('_JEXEC') or die;
 			</div>
 			<?php endif; ?>
 
-			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('waitinglist'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('waitinglist'); ?></div>
-			</div>
+			<?php echo $this->form->renderField('waitinglist');?>
 	</fieldset>
 
 	<!-- IMAGE -->
@@ -112,72 +102,24 @@ defined('_JEXEC') or die;
 	</fieldset>
 
 <!-- Recurrence -->
+<?php if (!($this->item->recurrence_groupcheck)) { ?>
 		<fieldset class="form-horizontal">
 		<legend><span class="legendcolor"><?php echo JText::_('COM_JEM_EDITEVENT_FIELD_RECURRENCE'); ?></span></legend>
-			<div class="control-group">	
-				<div class="control-label"><?php echo $this->form->getLabel('recurrence_type'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('recurrence_type'); ?></div>
-			</div>
-				
-			<div class="control-group" id="recurrence_output">
-				<div class="control-label"><label></label></div>
-			</div>
-				
-			<div class="control-group" id="counter_row" style="display: none;">	
-				<div class="control-label"><?php echo $this->form->getLabel('recurrence_limit_date'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('recurrence_limit_date'); ?></div>
-			</div>
+			<?php 
+			echo $this->form->renderField('recurrence_freq'); 
+			echo $this->form->renderField('recurrence_interval');
+			echo $this->form->renderField('recurrence_count');
+			echo $this->form->renderField('recurrence_weekday');
+			echo $this->form->renderField('recurrence_exdates');
+			echo $this->form->renderField('recurrence_until');
+			?>
 			
-			
-			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('recurrence_exdates'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('recurrence_exdates'); ?></div>
-			</div>
-			
-<!-- Check if the're holidays -->
+			<!-- Check if the're holidays -->
 			<?php if ($this->item->recurrence_country_holidays) { ?>
 			<div class="control-group">
 				<div class="control-label"><label><?php //echo 'Exclude Holiday(s)';?></label></div>
 				<div class="controls"><?php // echo JemHelper::getHolidayOptions($this->item->recurrence_country_holidays); ?></div>
 			</div>
 			<?php } ?>
-			
-				<input type="hidden" name="recurrence_interval" id="recurrence_interval" value="<?php echo $this->item->recurrence_interval;?>" />
-				<input type="hidden" name="recurrence_byday" id="recurrence_byday" value="<?php echo $this->item->recurrence_byday;?>" />
-
-			<script
-			type="text/javascript">
-			<!--
-				var $select_output = new Array();
-				$select_output[1] = "<?php
-				echo JText::_('COM_JEM_OUTPUT_DAY');
-				?>";
-				$select_output[2] = "<?php
-				echo JText::_('COM_JEM_OUTPUT_WEEK');
-				?>";
-				$select_output[3] = "<?php
-				echo JText::_('COM_JEM_OUTPUT_MONTH');
-				?>";
-				$select_output[4] = "<?php
-				echo JText::_('COM_JEM_OUTPUT_WEEKDAY');
-				?>";
-
-				var $weekday = new Array();
-				$weekday[0] = new Array("MO","<?php echo JText::_('COM_JEM_MONDAY'); ?>");
-				$weekday[1] = new Array("TU","<?php echo JText::_('COM_JEM_TUESDAY'); ?>");
-				$weekday[2] = new Array("WE","<?php echo JText::_('COM_JEM_WEDNESDAY'); ?>");
-				$weekday[3] = new Array("TH","<?php echo JText::_('COM_JEM_THURSDAY'); ?>");
-				$weekday[4] = new Array("FR","<?php echo JText::_('COM_JEM_FRIDAY'); ?>");
-				$weekday[5] = new Array("SA","<?php echo JText::_('COM_JEM_SATURDAY'); ?>");
-				$weekday[6] = new Array("SU","<?php echo JText::_('COM_JEM_SUNDAY'); ?>");
-
-				var $before_last = "<?php
-				echo JText::_('COM_JEM_BEFORE_LAST');
-				?>";
-				var $last = "<?php
-				echo JText::_('COM_JEM_LAST');
-				?>";
-				start_recurrencescript("jform_recurrence_type");
-			-->
-			</script>
 		</fieldset>
+<?php } ?>

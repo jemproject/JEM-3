@@ -858,7 +858,6 @@ class JemHelper {
 	 */
 	static function generate_events($table,$exdates=false,$holidays=false)
 	{
-		
 		# include route
 		require_once (JPATH_COMPONENT_SITE.'/helpers/route.php');
 
@@ -878,15 +877,13 @@ class JemHelper {
 		$endtimes 				= $table->endtimes;
 		$dates 					= $table->dates;
 		$enddates 				= $table->enddates;
-		$limit_date				= $table->recurrence_limit_date;
-		$recurrence_byday		= $table->recurrence_byday;
-		$recurrence_counter		= $table->recurrence_counter;
-		$recurrence_first_id	= $table->recurrence_first_id;
+		$recurrence_count		= $table->recurrence_count;
+		$recurrence_freq		= $table->recurrence_freq;
+		$recurrence_interval	= $table->recurrence_interval;
+		$recurrence_until		= $table->recurrence_until;
+		$recurrence_weekday		= $table->recurrence_weekday;
 		$recurrence_group		= $table->recurrence_group;
-		$recurrence_interval	= (int)$table->recurrence_interval;
-		$recurrence_limit		= $table->recurrence_limit;
-		$recurrence_type		= $table->recurrence_type;
-
+		
 		# select all the data from the event and make an array of it
 		# this info will be used for the generated events.
 		$db = JFactory::getDbo();
@@ -898,7 +895,7 @@ class JemHelper {
 		$reference = $db->loadAssoc();
 
 		$rruledatetime1 = new DateTime($dates);
-		$rruledatetime2 = new DateTime($limit_date);
+		$rruledatetime2 = new DateTime($recurrence_until);
 		$rruleinterval	= $rruledatetime1->diff($rruledatetime2);
 		$rruleDiff 		= $rruleinterval->format('%a');
 
@@ -908,7 +905,7 @@ class JemHelper {
 			$anticipationDate	= $jdate2->modify($var9);
 			$rruleUntilLimit	= $anticipationDate;
 		} else {
-			$rruleUntilLimit	= $limit_date;
+			$rruleUntilLimit	= $recurrence_until;
 		}
 
 		# Check if startdate is before limitdate
@@ -945,22 +942,6 @@ class JemHelper {
 
 		$formatDifference 	= 'P'.$diffYear.'Y'.$diffMonth.'M'.$diffDay.'DT'.$diffHour.'H'.$diffMinutes.'M'.$diffSeconds.'S';
 
-		# Define FREQ according to Recurrence_type
-		switch($recurrence_type)
-		{
-			case "1":
-				$freq = 'DAILY';
-				break;
-			case "2":
-				$freq = 'WEEKLY';
-				break;
-			case "3":
-				$freq = 'MONTHLY';
-				break;
-			case "4":
-				$freq = 'BYDAY';
-		}
-
 		$jdate1 	= new JDate($rruleUntilLimit);
 		$year1 		= $jdate1->format('Y');
 		$month1 	= $jdate1->format('m');
@@ -971,22 +952,61 @@ class JemHelper {
 
 		$limit_date2 = $year1.$month1.$day1.'T'.$hour1.$minutes1.$seconds1.'Z';
 
+		
+		/*
 		# check for FREQ: BYDAY
 		if ($freq == 'BYDAY') {
 			if ($recurrence_interval == '5'){
 				# last
-				$rrule = 'FREQ=MONTHLY;UNTIL='.$limit_date2.';BYDAY='.$recurrence_byday.';BYSETPOS=-1';
+				$rrule = 'FREQ=MONTHLY;UNTIL='.$limit_date2.';BYDAY='.$recurrence_weekday.';BYSETPOS=-1';
 			} else if (recurrence_interval == '6'){
 				# before last
-				$rrule = 'FREQ=MONTHLY;UNTIL='.$limit_date2.';BYDAY='.$recurrence_byday.';BYSETPOS=-2';
+				$rrule = 'FREQ=MONTHLY;UNTIL='.$limit_date2.';BYDAY='.$recurrence_weekday.';BYSETPOS=-2';
 			} else if (recurrence_interval){
-				$rrule = 'FREQ=DAILY;INTERVAL='.$recurrence_interval.';UNTIL='.$limit_date2.';BYDAY='.$recurrence_byday;
+				$rrule = 'FREQ=DAILY;INTERVAL='.$recurrence_interval.';UNTIL='.$limit_date2.';BYDAY='.$recurrence_weekday;
 			}
 		} else {
 				$rrule = 'FREQ='.$freq.';INTERVAL='.$recurrence_interval.';UNTIL='.$limit_date2;
 		}
-
-
+		*/
+		
+		
+		# Define FREQ
+		switch($recurrence_freq) {
+			case "1":
+				$freq = 'DAILY';
+				break;
+			case "2":
+				$freq = 'WEEKLY';
+				break;
+			case "3":
+				$freq = 'MONTHLY';
+				break;
+			case "4":
+				$freq = 'YEARLY';
+				break;
+			case "5":
+				$freq = 'WEEKDAY';
+				break;
+			default:
+				$freq = '';
+		}		
+		
+		
+		if ($recurrence_freq == 5) {
+			# we're in the weekly freq
+			
+			# let's check if the user did select a weekday
+			if ($recurrence_weekday) {
+				$rrule = 'FREQ='.$freq.';INTERVAL='.$recurrence_interval.';UNTIL='.$limit_date2.';BYDAY='.$recurrence_weekday;
+			} else {
+				$rrule = 'FREQ='.$freq.';INTERVAL='.$recurrence_interval.';UNTIL='.$limit_date2;
+			}
+		} else {
+			$rrule = 'FREQ='.$freq.';INTERVAL='.$recurrence_interval.';UNTIL='.$limit_date2;
+		}
+		
+		
 		# Get new dates
 		$timezone    = JemHelper::getTimeZoneName();
 		$startDate   = new DateTime($startDateTime, new DateTimeZone($timezone));
@@ -1131,13 +1151,19 @@ class JemHelper {
 			foreach ($form_exdates_array as $form_exdate) {
 				$form_exdate_splits = explode(":",$form_exdate);
 
-				foreach ($form_exdate_splits as $form_exdate_split) {
+				$form_exdate_splits2 = array();
+				foreach ($form_exdate_splits as $ignoredate) {
+					$form_exdate_splits2[] = date("Y-m-d", strtotime($ignoredate));
+				}
+				
+				foreach ($form_exdate_splits2 as $form_exdate_split) {
+					
 					$date = date_parse($form_exdate_split);
 					if (checkdate($date["month"], $date["day"], $date["year"]) && !$date["errors"]) {
 
 						# retrieve first+last value of the created array
-						$first_form_exdate	=	reset($form_exdate_splits);
-						$last_form_exdate 	=	end ($form_exdate_splits);
+						$first_form_exdate	=	reset($form_exdate_splits2);
+						$last_form_exdate 	=	end ($form_exdate_splits2);
 
 						# now we're making a DateTimeperiod
 						$begin 		= new DateTime($first_form_exdate);
@@ -1405,11 +1431,11 @@ class JemHelper {
 
 			# define ical settings
 			$new_event->recurrence_until 		= $rruleUntilLimit;
-			$new_event->recurrence_counter 		= $recurrence_counter;
+			$new_event->recurrence_count 		= $recurrence_count;
 			$new_event->recurrence_interval 	= $recurrence_interval;
 			$new_event->recurrence_freq 		= $freq;
-			if ($recurrence_byday){
-				$new_event->recurrence_byday 		= $recurrence_byday;
+			if ($recurrence_weekday){
+				$new_event->recurrence_weekday 		= $recurrence_weekday;
 			}
 
 			# store event

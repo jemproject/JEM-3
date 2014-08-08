@@ -252,7 +252,7 @@ class JEMTableEvents extends JTable
 		################
 
 		# check if recurrence_groupcheck is true
-		$rec_groupcheck		= $jinput->get('recurrence_check','','int');
+		$rec_groupcheck		= $jinput->getInt('recurrence_check');
 
 		if ($rec_groupcheck) {
 			# the check returned true, so it's considered as an edit
@@ -296,29 +296,10 @@ class JEMTableEvents extends JTable
 
 		# check if the field recurrence_group is filled and if the recurrence_type has been set
 		# if the type has been set then it's part of recurrence and we should have a recurrence_group number
-		if (empty($this->recurrence_group) && $this->recurrence_type) {
+		if (empty($this->recurrence_group) && $this->recurrence_freq) {
 			$this->recurrence_group = mt_rand(0,9999);
 		}
 
-		# Define FREQ
-		if ($this->recurrence_type){
-
-			switch($this->recurrence_type) {
-				case "1":
-					$freq = 'DAILY';
-					break;
-				case "2":
-					$freq = 'WEEKLY';
-					break;
-				case "3":
-					$freq = 'MONTHLY';
-					break;
-				case "4":
-					$freq = 'DAILY';
-					break;
-			}
-				$this->recurrence_freq 		= $freq;
-		}
 		## END RECURRENCE ##
 
 		return parent::store($updateNulls);

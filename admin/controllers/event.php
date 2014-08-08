@@ -59,7 +59,7 @@ class JemControllerEvent extends JControllerForm
 		$db = JFactory::getDbo();
 		$query	= $db->getQuery(true);
 		$query->update('#__jem_events');
-		$query->set(array('recurrence_group = ""','recurrence_first_id = ""','recurrence_interval = ""','recurrence_type = ""','recurrence_counter = ""','recurrence_limit = ""','recurrence_limit_date = ""','recurrence_byday = ""','recurrence_until = ""','recurrence_freq = ""'));
+		$query->set(array('recurrence_count = ""','recurrence_freq = ""','recurrence_group = ""','recurrence_interval = ""','recurrence_until = ""','recurrence_weekday = ""'));
 		$query->where('id = '.$recordId);
 		$db->setQuery($query)->query();
 	
