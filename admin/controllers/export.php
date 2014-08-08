@@ -104,6 +104,6 @@ class JemControllerExport extends JControllerAdmin {
 		header("Content-Disposition: attachment; filename=" . $filename);
 		header("Pragma: no-cache");
 		header("Expires: 0");
-		echo "\xEF\xBB\xBF";
+		//echo "\xEF\xBB\xBF";
 	}
 }
