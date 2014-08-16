@@ -12,7 +12,7 @@ require_once JPATH_ADMINISTRATOR . '/components/com_jem/models/event.php';
 /**
  * Editevent Model
  */
-class JEMModelEditevent extends JEMModelEvent
+class JemModelEditevent extends JEMModelEvent
 {
 	public $_context = 'com_jem.editevent';
 
@@ -266,15 +266,17 @@ class JEMModelEditevent extends JEMModelEvent
 	{
 		$app 				= JFactory::getApplication();
 		$params		 		= JemHelper::globalattribs();
+		$jinput				= $app->input;
+		$itemid				= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
 
-		$filter_order 		= $app->getUserStateFromRequest('com_jem.selectvenue.filter_order', 'filter_order', 'l.venue', 'cmd');
-		$filter_order_Dir	= $app->getUserStateFromRequest('com_jem.selectvenue.filter_order_Dir', 'filter_order_Dir', 'ASC', 'word');
+		$filter_order 		= $app->getUserStateFromRequest('com_jem.selectvenue.'.$itemid.'.filter_order', 'filter_order', 'l.venue', 'cmd');
+		$filter_order_Dir	= $app->getUserStateFromRequest('com_jem.selectvenue.'.$itemid.'.filter_order_Dir', 'filter_order_Dir', 'ASC', 'word');
 
 		$filter_order 		= JFilterInput::getinstance()->clean($filter_order, 'cmd');
 		$filter_order_Dir 	= JFilterInput::getinstance()->clean($filter_order_Dir, 'word');
 
-		$filter_type 		= $app->getUserStateFromRequest('com_jem.selectvenue.filter_type', 'filter_type', '', 'int');
-		$search      		= $app->getUserStateFromRequest('com_jem.selectvenue.filter_search', 'filter_search', '', 'string');
+		$filter_type 		= $app->getUserStateFromRequest('com_jem.selectvenue.'.$itemid.'.filter_type', 'filter_type', '', 'int');
+		$search      		= $app->getUserStateFromRequest('com_jem.selectvenue.'.$itemid.'.filter_search', 'filter_search', '', 'string');
 		$search      		= $this->_db->escape(trim(JString::strtolower($search)));
 
 		// Query
@@ -331,9 +333,12 @@ class JEMModelEditevent extends JEMModelEvent
 
 		$jemsettings 		= JemHelper::config();
 		$app 				= JFactory::getApplication();
-		$jinput 			= JFactory::getApplication()->input;
-		$limit 				= $app->getUserStateFromRequest('com_jem.selectvenue.limit', 'limit', $jemsettings->display_num, 'int');
-		$limitstart 		= $jinput->getInt('limitstart');
+		$jinput 			= $app->input;
+		$itemid				= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
+		
+		$limit 				= $app->getUserStateFromRequest('com_jem.selectvenue.'.$itemid.'.limit', 'limit', $jemsettings->display_num, 'int');
+		$limitstart 		= $app->getUserStateFromRequest('com_jem.selectvenue.'.$itemid.'.limitstart', 'limitstart', 0, 'int');
+		$limitstart 		= $limit ? (int)(floor($limitstart / $limit) * $limit) : 0;
 
 		$query = $this->buildQueryVenues();
 		$total = $this->_getListCount($query);
@@ -371,9 +376,12 @@ class JEMModelEditevent extends JEMModelEvent
 
 		$jemsettings 		= JemHelper::config();
 		$app 				= JFactory::getApplication();
-		$jinput = JFactory::getApplication()->input;
-		$limit 				= $app->getUserStateFromRequest('com_jem.selectcontact.limit', 'limit', $jemsettings->display_num, 'int');
-		$limitstart 		= $jinput->getInt('limitstart');
+		$jinput 			= $app->input;
+		$itemid				= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
+		
+		$limit 				= $app->getUserStateFromRequest('com_jem.selectcontact.'.$itemid.'.limit', 'limit', $jemsettings->display_num, 'int');
+		$limitstart 		= $app->getUserStateFromRequest('com_jem.selectcontact.'.$itemid.'.limitstart', 'limitstart', 0, 'int');
+		$limitstart 		= $limit ? (int)(floor($limitstart / $limit) * $limit) : 0;
 
 		$query = $this->buildQueryContacts();
 		$total = $this->_getListCount($query);
@@ -393,15 +401,17 @@ class JEMModelEditevent extends JEMModelEvent
 	{
 		$app		  		= JFactory::getApplication();
 		$jemsettings  		= JemHelper::config();
+		$jinput 			= $app->input;
+		$itemid				= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
 
-		$filter_order 		= $app->getUserStateFromRequest('com_jem.selectcontact.filter_order', 'filter_order', 'con.ordering', 'cmd');
-		$filter_order_Dir	= $app->getUserStateFromRequest('com_jem.selectcontact.filter_order_Dir', 'filter_order_Dir', '', 'word');
+		$filter_order 		= $app->getUserStateFromRequest('com_jem.selectcontact.'.$itemid.'.filter_order', 'filter_order', 'con.ordering', 'cmd');
+		$filter_order_Dir	= $app->getUserStateFromRequest('com_jem.selectcontact.'.$itemid.'.filter_order_Dir', 'filter_order_Dir', '', 'word');
 
 		$filter_order 		= JFilterInput::getinstance()->clean($filter_order, 'cmd');
 		$filter_order_Dir	= JFilterInput::getinstance()->clean($filter_order_Dir, 'word');
 
-		$filter_type   		= $app->getUserStateFromRequest('com_jem.selectcontact.filter_type', 'filter_type', '', 'int');
-		$search       		= $app->getUserStateFromRequest('com_jem.selectcontact.filter_search', 'filter_search', '', 'string');
+		$filter_type   		= $app->getUserStateFromRequest('com_jem.selectcontact.'.$itemid.'.filter_type', 'filter_type', '', 'int');
+		$search       		= $app->getUserStateFromRequest('com_jem.selectcontact.'.$itemid.'.filter_search', 'filter_search', '', 'string');
 		$search       		= $this->_db->escape(trim(JString::strtolower($search)));
 
 		// Query

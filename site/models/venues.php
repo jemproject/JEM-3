@@ -8,8 +8,8 @@
  */
 defined('_JEXEC') or die;
 
-
 require_once dirname(__FILE__) . '/eventslist.php';
+
 /**
  * Model-Venues
  */
@@ -31,11 +31,12 @@ class JemModelVenues extends JemModelEventslist
 		$task           = $jinput->getCmd('task');
 
 		// List state information
-		$limitstart = $jinput->getInt('limitstart');
-		$this->setState('list.start', $limitstart);
-
-		$limit		= $jinput->getInt('limit', $params->get('display_venues_num'));
+		$limit		= $app->getUserStateFromRequest('com_jem.venues.'.$itemid.'.limit', 'limit', $params->get('display_venues_num'), 'int');
 		$this->setState('list.limit', $limit);
+		
+		$limitstart = $app->getUserStateFromRequest('com_jem.venues.'.$itemid.'.limitstart', 'limitstart', 0, 'int');
+		$limitstart = $limit ? (int)(floor($limitstart / $limit) * $limit) : 0;
+		$this->setState('list.start', $limitstart);
 
 		# params
 		$this->setState('params', $params);
@@ -59,7 +60,7 @@ class JemModelVenues extends JemModelEventslist
 		$user 	= JFactory::getUser();
 		$levels = $user->getAuthorisedViewLevels();
 		$jinput	= JFactory::getApplication()->input;
-		$task 	= $jinput->getString('task');
+		$task 	= $jinput->getCmd('task');
 
 		// Query
 		$db 	= JFactory::getDBO();
@@ -137,11 +138,9 @@ class JemModelVenues extends JemModelEventslist
 				}
 
 				//create target link
-				$task 	= JFactory::getApplication()->input->getString('task');
-
 				$item->linkEventsArchived = JRoute::_(JEMHelperRoute::getVenueRoute($item->venueslug.'&task=archive'));
 				$item->linkEventsPublished = JRoute::_(JEMHelperRoute::getVenueRoute($item->venueslug));
-
+				
 				$item->EventsPublished = $this->AssignedEvents($item->locid,'1');
 				$item->EventsArchived = $this->AssignedEvents($item->locid,'2');
 		}
@@ -208,6 +207,8 @@ class JemModelVenues extends JemModelEventslist
 	 *
 	 * Due to multi-cat this function is needed
 	 * filter-index (4) is pointing to the cats
+	 * 
+	 * @todo: check
 	 */
 
 	function getCategories($id)
@@ -325,17 +326,16 @@ class JemModelVenues extends JemModelEventslist
 		$search = $this->getState('filter.filter_search');
 
 		if (!empty($search)) {
-		if (stripos($search, 'id:') === 0) {
-		$query->where('c.id = '.(int) substr($search, 3));
-		} else {
-		$search = $db->Quote('%'.$db->escape($search, true).'%');
-
-		if($search && $settings->get('global_show_filter')) {
+			if (stripos($search, 'id:') === 0) {
+				$query->where('c.id = '.(int) substr($search, 3));
+			} else {
+				$search = $db->Quote('%'.$db->escape($search, true).'%');
+				if($search && $settings->get('global_show_filter')) {
 					if ($filter == 4) {
 						$query->where('c.catname LIKE '.$search);
-		}
-		}
-		}
+					}
+				}
+			}
 		}
 
 		$db->setQuery($query);
@@ -349,8 +349,5 @@ class JemModelVenues extends JemModelEventslist
 			}
 			return $cats;
 			}
-
-
-
 }
 ?>

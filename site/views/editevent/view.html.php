@@ -251,16 +251,15 @@ class JemViewEditevent extends JViewLegacy
 		$jemsettings = JemHelper::config();
 		$db          = JFactory::getDBO();
 		$document    = JFactory::getDocument();
+		$itemid 	 = $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
 
-		$filter_order     = $app->getUserStateFromRequest('com_jem.selectvenue.filter_order', 'filter_order', 'l.venue', 'cmd');
-		$filter_order_Dir = $app->getUserStateFromRequest('com_jem.selectvenue.filter_order_Dir', 'filter_order_Dir', 'ASC', 'word');
-		$filter_type      = $app->getUserStateFromRequest('com_jem.selectvenue.filter_type', 'filter_type', '', 'int');
-		$filter_state     = $app->getUserStateFromRequest('com_jem.selectvenue.filter_state', 'filter_state', '*', 'word');
-		$search           = $app->getUserStateFromRequest('com_jem.selectvenue.filter_search', 'filter_search', '', 'string');
+		$filter_order     = $app->getUserStateFromRequest('com_jem.selectvenue.'.$itemid.'.filter_order', 'filter_order', 'l.venue', 'cmd');
+		$filter_order_Dir = $app->getUserStateFromRequest('com_jem.selectvenue.'.$itemid.'.filter_order_Dir', 'filter_order_Dir', 'ASC', 'word');
+		$filter_type      = $app->getUserStateFromRequest('com_jem.selectvenue.'.$itemid.'.filter_type', 'filter_type', '', 'int');
+		$filter_state     = $app->getUserStateFromRequest('com_jem.selectvenue.'.$itemid.'.filter_state', 'filter_state', '*', 'word');
+		$search           = $app->getUserStateFromRequest('com_jem.selectvenue.'.$itemid.'.filter_search', 'filter_search', '', 'string');
 		$search           = $db->escape(trim(JString::strtolower($search)));
-		$limitstart       = $jinput->get('limitstart', '0', 'int');
-		$limit            = $app->getUserStateFromRequest('com_jem.selectvenue.limit', 'limit', $jemsettings->display_num, 'int');
-
+		
 		// Get/Create the model
 		$rows  		= $this->get('Venues');
 		$pagination = $this->get('VenuesPagination');
@@ -303,15 +302,14 @@ class JemViewEditevent extends JViewLegacy
 		$jemsettings = JemHelper::config();
 		$db          = JFactory::getDBO();
 		$document    = JFactory::getDocument();
+		$itemid 	 = $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
 
-		$filter_order     = $app->getUserStateFromRequest('com_jem.selectcontact.filter_order', 'filter_order', 'con.name', 'cmd');
-		$filter_order_Dir = $app->getUserStateFromRequest('com_jem.selectcontact.filter_order_Dir', 'filter_order_Dir', '', 'word');
-		$filter_type      = $app->getUserStateFromRequest('com_jem.selectcontact.filter_type', 'filter_type', '', 'int');
-		$search           = $app->getUserStateFromRequest('com_jem.selectcontact.filter_search', 'filter_search', '', 'string');
+		$filter_order     = $app->getUserStateFromRequest('com_jem.selectcontact.'.$itemid.'.filter_order', 'filter_order', 'con.name', 'cmd');
+		$filter_order_Dir = $app->getUserStateFromRequest('com_jem.selectcontact.'.$itemid.'.filter_order_Dir', 'filter_order_Dir', '', 'word');
+		$filter_type      = $app->getUserStateFromRequest('com_jem.selectcontact.'.$itemid.'.filter_type', 'filter_type', '', 'int');
+		$search           = $app->getUserStateFromRequest('com_jem.selectcontact.'.$itemid.'.filter_search', 'filter_search', '', 'string');
 		$search           = $db->escape(trim(JString::strtolower($search)));
-		$limitstart       = $jinput->get('limitstart', '0', 'int');
-		$limit            = $app->getUserStateFromRequest('com_jem.selectcontact.limit', 'limit', $jemsettings->display_num, 'int');
-
+		
 		// Load css
 		JemHelper::loadCss('jem');
 

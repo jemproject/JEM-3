@@ -22,8 +22,8 @@ class JemModelVenue extends JemModelEventslist
 		$params			= $app->getParams();
 
 		# determing the id to load
-		if ($jinput->get('id',null,'int')) {
-			$id = $jinput->get('id',null,'int');
+		if ($jinput->getInt('id',null)) {
+			$id = $jinput->getInt('id',null);
 		} else {
 			$id = $params->get('id');
 		}
@@ -44,15 +44,16 @@ class JemModelVenue extends JemModelEventslist
 		$jinput			= JFactory::getApplication()->input;
 		$itemid 		= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
 		$params 		= $app->getParams();
-		$task           = $jinput->get('task','','cmd');
-
-		# start
-		$limitstart = $app->getUserStateFromRequest('com_jem.venue.'.$itemid.'.limitstart', 'limitstart', 0, 'int');
-		$this->setState('list.start', $limitstart);
+		$task           = $jinput->getCmd('task');
 
 		# limit
 		$limit		= $app->getUserStateFromRequest('com_jem.venue.'.$itemid.'.limit', 'limit', $jemsettings->display_num, 'int');
 		$this->setState('list.limit', $limit);
+		
+		# start
+		$limitstart = $app->getUserStateFromRequest('com_jem.venue.'.$itemid.'.limitstart', 'limitstart', 0, 'int');
+		$limitstart = $limit ? (int)(floor($limitstart / $limit) * $limit) : 0;
+		$this->setState('list.start', $limitstart);
 
 		# Search
 		$search = $app->getUserStateFromRequest('com_jem.venue.'.$itemid.'.filter_search', 'filter_search', '', 'string');
@@ -98,7 +99,7 @@ class JemModelVenue extends JemModelEventslist
 	{
 		$params  = $this->state->params;
 		$jinput  = JFactory::getApplication()->input;
-		$task    = $jinput->get('task','','cmd');
+		$task    = $jinput->getCmd('task');
 
 		// Create a new query object.
 		$query = parent::getListQuery();

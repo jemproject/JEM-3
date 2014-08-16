@@ -32,11 +32,12 @@ class JemModelMyattendances extends JemModelEventslist
 		$itemid 			= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
 		
 		# limit/start
-		$limitstart = $app->getUserStateFromRequest('com_jem.myattendances.'.$itemid.'.limitstart', 'limitstart', 0, 'int');
-		$this->setState('list.start', $limitstart);
-		
 		$limit		= $app->getUserStateFromRequest('com_jem.myattendances.'.$itemid.'.limit', 'limit', $jemsettings->display_num, 'int');
 		$this->setState('list.limit', $limit);
+		
+		$limitstart = $app->getUserStateFromRequest('com_jem.myattendances.'.$itemid.'.limitstart', 'limitstart', 0, 'int');
+		$limitstart = $limit ? (int)(floor($limitstart / $limit) * $limit) : 0;
+		$this->setState('list.start', $limitstart);
 		
 		# Search
 		$search = $app->getUserStateFromRequest('com_jem.myattendances.'.$itemid.'.filter_search', 'filter_search', '', 'string');

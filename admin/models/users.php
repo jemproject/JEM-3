@@ -49,6 +49,7 @@ class JEMModelUsers extends JModelLegacy
 		
 		$limit		= $app->getUserStateFromRequest( 'com_jem.limit', 'limit', $app->getCfg('list_limit'), 'int');
 		$limitstart = $app->getUserStateFromRequest( 'com_jem.limitstart', 'limitstart', 0, 'int' );
+		$limitstart = $limit ? (int)(floor($limitstart / $limit) * $limit) : 0;
 
 		$this->setState('limit', $limit);
 		$this->setState('limitstart', $limitstart);

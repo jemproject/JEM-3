@@ -46,10 +46,13 @@ class JemModelSearch extends JModelLegacy
 		$app 			= JFactory::getApplication();
 		$jinput 		= $app->input;
 		$jemsettings 	= JEMHelper::config();
+		$itemid			= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
 
 		//get the number of events from database
-		$limit		= $app->getUserStateFromRequest('com_jem.search.limit', 'limit', $jemsettings->display_num, 'int');
+		$limit		= $app->getUserStateFromRequest('com_jem.search.'.$itemid.'.limit', 'limit', $jemsettings->display_num, 'int');
+		$limitstart = $app->getUserStateFromRequest('com_jem.search.'.$itemid.'.limitstart', 'limitstart', 0, 'int');
 		$limitstart	= $jinput->getInt('limitstart', 0);
+		$limitstart = $limit ? (int)(floor($limitstart / $limit) * $limit) : 0;
 
 		$this->setState('limit', $limit);
 		$this->setState('limitstart', $limitstart);
@@ -60,7 +63,7 @@ class JemModelSearch extends JModelLegacy
 
 		$filter_order_DirDefault = 'ASC';
 		// Reverse default order for dates in archive mode
-		$task = $jinput->getWord('task', '');
+		$task = $jinput->getCmd('task');
 		if($task == 'archive' && $filter_order == 'a.dates') {
 			$filter_order_DirDefault = 'DESC';
 		}
@@ -183,13 +186,14 @@ class JemModelSearch extends JModelLegacy
 	{
 		$app 	= JFactory::getApplication();
 		$jinput = $app->input;
+		$itemid	= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
 
 		// Get the paramaters of the active menu item
 		$params 	= $app->getParams();
 
 		$top_category = $params->get('top_category', 1);
 
-		$task 		= $jinput->getWord('task');
+		$task 		= $jinput->getCmd('task');
 
 		// First thing we need to do is to select only needed events
 		if ($task == 'archive') {
@@ -199,15 +203,16 @@ class JemModelSearch extends JModelLegacy
 		}
 
 		//$filter            = $jinput->getString('filter', '', 'request');
-		$filter            = $app->getUserStateFromRequest('com_jem.search.filter_search', 'filter_search', '', 'string');
-		$filter_type       = $jinput->request->getString('filter_type');
-		$filter_continent  = $app->getUserStateFromRequest('com_jem.search.filter_continent', 'filter_continent', '', 'string');
-		$filter_country    = $app->getUserStateFromRequest('com_jem.search.filter_country', 'filter_country', '', 'string');
-		$filter_city       = $app->getUserStateFromRequest('com_jem.search.filter_city', 'filter_city', '', 'string');
-		$filter_date_from  = $app->getUserStateFromRequest('com_jem.search.filter_date_from', 'filter_date_from', '', 'string');
-		$filter_date_to    = $app->getUserStateFromRequest('com_jem.search.filter_date_to', 'filter_date_to', '', 'string');
-		$filter_category   = $app->getUserStateFromRequest('com_jem.search.filter_category', 'filter_category', 0, 'int');
-		$filter_category = ($filter_category ? $filter_category : $top_category);
+		//$filter_type       = $jinput->request->getString('filter_type');
+		$filter            = $app->getUserStateFromRequest('com_jem.search.'.$itemid.'.filter_search', 'filter_search', '', 'string');
+		$filter_type       = $app->getUserStateFromRequest('com_jem.search.'.$itemid.'.filter_type', 'filter_type', '', 'string');
+		$filter_continent  = $app->getUserStateFromRequest('com_jem.search.'.$itemid.'.filter_continent', 'filter_continent', '', 'string');
+		$filter_country    = $app->getUserStateFromRequest('com_jem.search.'.$itemid.'.filter_country', 'filter_country', '', 'string');
+		$filter_city       = $app->getUserStateFromRequest('com_jem.search.'.$itemid.'.filter_city', 'filter_city', '', 'string');
+		$filter_date_from  = $app->getUserStateFromRequest('com_jem.search.'.$itemid.'.filter_date_from', 'filter_date_from', '', 'string');
+		$filter_date_to    = $app->getUserStateFromRequest('com_jem.search.'.$itemid.'.filter_date_to', 'filter_date_to', '', 'string');
+		$filter_category   = $app->getUserStateFromRequest('com_jem.search.'.$itemid.'.filter_category', 'filter_category', 0, 'int');
+		$filter_category   = ($filter_category ? $filter_category : $top_category);
 
 		// no result if no filter:
 		if (!($filter || $filter_continent || $filter_country || $filter_city || $filter_date_from || $filter_date_to || $filter_category != $top_category)) {
@@ -295,7 +300,6 @@ class JemModelSearch extends JModelLegacy
 	function getCategories($id)
 	{
 		$user = JFactory::getUser();
-		// Support Joomla access levels instead of single group id
 		$levels = $user->getAuthorisedViewLevels();
 
 		$query = 'SELECT c.id, c.catname, c.access, c.ordering, c.checked_out AS cchecked_out,'

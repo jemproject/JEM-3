@@ -6,19 +6,13 @@
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
-
 defined('_JEXEC') or die;
 
-jimport('joomla.application.component.model');
-jimport('joomla.html.pagination');
 
 /**
- * JEM Component JEM Model
- *
- * @package JEM
- *
-*/
-class JEMModelMyevents extends JModelLegacy
+ * Model-MyEvents
+ */
+class JemModelMyevents extends JModelLegacy
 {
 	/**
 	 * Events data array
@@ -49,13 +43,15 @@ class JEMModelMyevents extends JModelLegacy
 	{
 		parent::__construct();
 
-		$app = JFactory::getApplication();
+		$app		 = JFactory::getApplication();
 		$jemsettings = JEMHelper::config();
+		$jinput 	 = JFactory::getApplication()->input;
+		$itemid		 = $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
 
 		//get the number of events from database
-
-		$limit		= $app->getUserStateFromRequest('com_jem.myevents.limit', 'limit', $jemsettings->display_num, 'int');
-		$limitstart = $app->getUserStateFromRequest('com_jem.myevents.limitstart', 'limitstart', 0, 'int');
+		$limit		= $app->getUserStateFromRequest('com_jem.myevents.'.$itemid.'.limit', 'limit', $jemsettings->display_num, 'int');
+		$limitstart = $app->getUserStateFromRequest('com_jem.myevents.'.$itemid.'.limitstart', 'limitstart', 0, 'int');
+		$limitstart = $limit ? (int)(floor($limitstart / $limit) * $limit) : 0;
 
 		$this->setState('limit', $limit);
 		$this->setState('limitstart', $limitstart);
@@ -206,10 +202,12 @@ class JEMModelMyevents extends JModelLegacy
 	 */
 	protected function _buildOrderBy()
 	{
-		$app = JFactory::getApplication();
+		$app 				= JFactory::getApplication();
+		$jinput 			= JFactory::getApplication()->input;
+		$itemid				= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
 
-		$filter_order		= $app->getUserStateFromRequest('com_jem.myevents.filter_order', 'filter_order', 'a.dates', 'cmd');
-		$filter_order_Dir	= $app->getUserStateFromRequest('com_jem.myevents.filter_order_Dir', 'filter_order_Dir', 'ASC', 'word');
+		$filter_order		= $app->getUserStateFromRequest('com_jem.myevents.'.$itemid.'.filter_order', 'filter_order', 'a.dates', 'cmd');
+		$filter_order_Dir	= $app->getUserStateFromRequest('com_jem.myevents.'.$itemid.'.filter_order_Dir', 'filter_order_Dir', 'ASC', 'word');
 
 		$filter_order		= JFilterInput::getInstance()->clean($filter_order, 'cmd');
 		$filter_order_Dir	= JFilterInput::getInstance()->clean($filter_order_Dir, 'word');
@@ -233,19 +231,22 @@ class JEMModelMyevents extends JModelLegacy
 	{
 		$app 		= JFactory::getApplication();
 		$jinput 	= $app->input;
-		$task 		= $jinput->getWord('task');
+		$task 		= $jinput->getCmd('task');
 		$params 	= $app->getParams();
 		$settings 	= JEMHelper::globalattribs();
 		$user 		= JFactory::getUser();
 		$levels		= $user->getAuthorisedViewLevels();
+		$itemid		= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
+		$db 		= JFactory::getDBO();
+		
 
-		$filter_type 	= $app->getUserStateFromRequest('com_jem.myevents.filter_type', 'filter_type', '', 'int');
+		$filter_type 	= $app->getUserStateFromRequest('com_jem.myevents.'.$itemid.'.filter_type', 'filter_type', '', 'int');
 		
 		if ($filter_type == 0) {
 			$filter_type = 1;
 		}
 		
-		$search 		= $app->getUserStateFromRequest('com_jem.myevents.filter_search', 'filter_search', '', 'string');
+		$search 		= $app->getUserStateFromRequest('com_jem.myevents.'.$itemid.'.filter_search', 'filter_search', '', 'string');
 		$search 		= $this->_db->escape(trim(JString::strtolower($search)));
 
 		$where = array();
@@ -271,23 +272,34 @@ class JEMModelMyevents extends JModelLegacy
 		}
 		// === END Excluded categories add === //
 
-		if ($settings->get('global_show_filter') && $search) {
-			switch($filter) {
-				case 1:
-					$where[] = ' LOWER(a.title) LIKE \'%'.$search.'%\' ';
-					break;
-				case 2:
-					$where[] = ' LOWER(l.venue) LIKE \'%'.$search.'%\' ';
-					break;
-				case 3:
-					$where[] = ' LOWER(l.city) LIKE \'%'.$search.'%\' ';
-					break;
-				case 4:
-					$where[] = ' LOWER(c.catname) LIKE \'%'.$search.'%\' ';
-					break;
-				case 5:
-				default:
-					$where[] = ' LOWER(l.state) LIKE \'%'.$search.'%\' ';
+		
+		
+		if (!empty($search)) {
+			if (stripos($search, 'id:') === 0) {
+				$query->where('a.id = '.(int) substr($search, 3));
+			} else {
+				$search = $db->Quote('%'.$db->escape($search, true).'%');
+		
+				if($search && $settings->get('global_show_filter')) {
+					switch($filter_type) {
+						
+						case 1:
+							$where[] = ' LOWER(a.title) LIKE '.$search;
+							break;
+						case 2:
+							$where[] = ' LOWER(l.venue) LIKE '.$search;
+							break;
+						case 3:
+							$where[] = ' LOWER(l.city) LIKE '.$search;
+							break;
+						case 4:
+							$where[] = ' LOWER(c.catname) LIKE '.$search;
+							break;
+						case 5:
+						default:
+							$where[] = ' LOWER(l.state) LIKE '.$search;
+					}
+				}
 			}
 		}
 

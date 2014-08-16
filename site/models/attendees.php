@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 /**
  * Model-Attendees
  */
-class JEMModelAttendees extends JModelLegacy
+class JemModelAttendees extends JModelLegacy
 {
 	/**
 	 * Events data array
@@ -57,21 +57,23 @@ class JEMModelAttendees extends JModelLegacy
 	{
 		parent::__construct();
 
-		$app =  JFactory::getApplication();
-		$jinput = JFactory::getApplication()->input;
-		$jemsettings =  JEMHelper::config();
+		$app 			= JFactory::getApplication();
+		$jinput 		= JFactory::getApplication()->input;
+		$jemsettings 	= JEMHelper::config();
+		$itemid			= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
 
 		$id = $jinput->getInt('id');
 		$this->setId($id);
 
-		$limit		= $app->getUserStateFromRequest( 'com_jem.attendees.limit', 'limit', $jemsettings->display_num, 'int');
-		$limitstart = $app->getUserStateFromRequest( 'com_jem.attendees.limitstart', 'limitstart', 0, 'int' );
+		$limit		= $app->getUserStateFromRequest('com_jem.attendees.'.$itemid.'.limit', 'limit', $jemsettings->display_num, 'int');
+		$limitstart = $app->getUserStateFromRequest('com_jem.attendees.'.$itemid.'.limitstart', 'limitstart', 0, 'int');
+		$limitstart = $limit ? (int)(floor($limitstart / $limit) * $limit) : 0;
 
 		$this->setState('limit', $limit);
 		$this->setState('limitstart', $limitstart);
 
 		//set unlimited if export or print action | task=export or task=print
-		$this->setState('unlimited', $jinput->getString('task'));
+		$this->setState('unlimited', $jinput->getCmd('task'));
 
 
 	}
@@ -186,12 +188,13 @@ class JEMModelAttendees extends JModelLegacy
 	 */
 	protected function _buildContentOrderBy()
 	{
-		$app =  JFactory::getApplication();
+		$app	= JFactory::getApplication();
+		$jinput = JFactory::getApplication()->input;
+		$itemid	= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
 
-		$filter_order		= $app->getUserStateFromRequest( 'com_jem.attendees.filter_order', 		'filter_order', 	'u.username', 'cmd' );
-		$filter_order_Dir	= $app->getUserStateFromRequest( 'com_jem.attendees.filter_order_Dir',	'filter_order_Dir',	'', 'word' );
-
-
+		$filter_order		= $app->getUserStateFromRequest('com_jem.attendees.'.$itemid.'.filter_order','filter_order','u.username','cmd');
+		$filter_order_Dir	= $app->getUserStateFromRequest('com_jem.attendees.'.$itemid.'.filter_order_Dir','filter_order_Dir','','word');
+		
 		$filter_order		= JFilterInput::getinstance()->clean($filter_order, 'cmd');
 		$filter_order_Dir	= JFilterInput::getinstance()->clean($filter_order_Dir, 'word');
 
@@ -209,14 +212,16 @@ class JEMModelAttendees extends JModelLegacy
 	 */
 	protected function _buildContentWhere()
 	{
-		$app =  JFactory::getApplication();
-		$user = JFactory::getUser();
+		$app	=  JFactory::getApplication();
+		$user	= JFactory::getUser();
 		$levels = $user->getAuthorisedViewLevels();
+		$jinput = JFactory::getApplication()->input;
+		$itemid	= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
 
-		$filter_type 		= $app->getUserStateFromRequest( 'com_jem.attendees.filter_type', 'filter_type', '', 'int' );
-		$search 			= $app->getUserStateFromRequest( 'com_jem.attendees.filter_search', 'filter_search', '', 'string' );
+		$filter_type 		= $app->getUserStateFromRequest('com_jem.attendees.'.$itemid.'.filter_type','filter_type','','int');
+		$search 			= $app->getUserStateFromRequest('com_jem.attendees.'.$itemid.'.filter_search','filter_search','','string');
 		$search 			= $this->_db->escape( trim(JString::strtolower( $search ) ) );
-		$filter_waiting	= $app->getUserStateFromRequest( 'com_jem.attendees.waiting',	'filter_waiting',	0, 'int' );
+		$filter_waiting		= $app->getUserStateFromRequest('com_jem.attendees.'.$itemid.'.filter_waiting','filter_waiting',0,'int');
 
 		$where = array();
 

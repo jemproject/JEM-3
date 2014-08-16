@@ -6,19 +6,13 @@
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
-
 defined('_JEXEC') or die;
 
-jimport('joomla.application.component.model');
-jimport('joomla.html.pagination');
 
 /**
- * JEM Component JEM Model
- *
- * @package JEM
- *
+ * Model-MyVenues
  */
-class JEMModelMyvenues extends JModelLegacy
+class JemModelMyvenues extends JModelLegacy
 {
 	var $_venues = null;
 	var $_total_venues = null;
@@ -30,12 +24,14 @@ class JEMModelMyvenues extends JModelLegacy
 	{
 		parent::__construct();
 
-		$app = JFactory::getApplication();
+		$app		 = JFactory::getApplication();
 		$jemsettings = JEMHelper::config();
+		$jinput		 = JFactory::getApplication()->input;
+		$itemid		 = $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
 
-		//get the number of events
-		$limit		= $app->getUserStateFromRequest('com_jem.myvenues.limit', 'limit', $jemsettings->display_num, 'int');
-		$limitstart = $app->getUserStateFromRequest('com_jem.myvenues.limitstart', 'limitstart', 0, 'int');
+		$limit		= $app->getUserStateFromRequest('com_jem.myvenues.'.$itemid.'.limit', 'limit', $jemsettings->display_num, 'int');
+		$limitstart = $app->getUserStateFromRequest('com_jem.myvenues.'.$itemid.'.limitstart', 'limitstart', 0, 'int');
+		$limitstart = $limit ? (int)(floor($limitstart / $limit) * $limit) : 0;
 
 		$this->setState('limit', $limit);
 		$this->setState('limitstart', $limitstart);
@@ -134,10 +130,12 @@ class JEMModelMyvenues extends JModelLegacy
 	 */
 	protected function _buildOrderByVenues()
 	{
-		$app = JFactory::getApplication();
+		$app 				= JFactory::getApplication();
+		$jinput 			= JFactory::getApplication()->input;
+		$itemid				= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
 
-		$filter_order		= $app->getUserStateFromRequest('com_jem.myvenues.filter_order', 'filter_order', 'l.venue', 'cmd');
-		$filter_order_Dir	= $app->getUserStateFromRequest('com_jem.myvenues.filter_order_Dir', 'filter_order_Dir', '', 'word');
+		$filter_order		= $app->getUserStateFromRequest('com_jem.myvenues.'.$itemid.'.filter_order', 'filter_order', 'l.venue', 'cmd');
+		$filter_order_Dir	= $app->getUserStateFromRequest('com_jem.myvenues.'.$itemid.'.filter_order_Dir', 'filter_order_Dir', '', 'word');
 
 		$filter_order		= JFilterInput::getInstance()->clean($filter_order, 'cmd');
 		$filter_order_Dir	= JFilterInput::getInstance()->clean($filter_order_Dir, 'word');
@@ -163,9 +161,11 @@ class JEMModelMyvenues extends JModelLegacy
 		$user 			= JFactory::getUser();
 		$settings 		= JEMHelper::globalattribs();
 		$user 			= JFactory::getUser();
+		$jinput			= JFactory::getApplication()->input;
+		$itemid			= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
 
-		$filter_type	= $app->getUserStateFromRequest('com_jem.myvenues.filter_type', 'filter_type', '', 'int');
-		$search 		= $app->getUserStateFromRequest('com_jem.myvenues.filter_search', 'filter_search', '', 'string');
+		$filter_type	= $app->getUserStateFromRequest('com_jem.myvenues.'.$itemid.'.filter_type', 'filter_type', '', 'int');
+		$search 		= $app->getUserStateFromRequest('com_jem.myvenues.'.$itemid.'.filter_search', 'filter_search', '', 'string');
 		$search 		= $this->_db->escape(trim(JString::strtolower($search)));
 
 		$where = array();

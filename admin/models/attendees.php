@@ -89,22 +89,6 @@ class JemModelAttendees extends JModelList
 		$app 			= JFactory::getApplication();
 		$jemsettings	= JemHelper::config();
 		
-		# List state information
-		$limitstart = $app->getUserStateFromRequest($this->context.'.limitstart', 'limitstart', 0, 'int');
-		$this->setState('list.start', $limitstart);
-		
-		$limit		= $app->getUserStateFromRequest($this->context.'.limit', 'limit', $jemsettings->display_num, 'int');
-		$this->setState('list.limit', $limit);
-		
-		$search = $this->getUserStateFromRequest($this->context.'.filter.search', 'filter.search');
-		$this->setState('filter.search', $search);
-		
-		$waiting = $this->getUserStateFromRequest($this->context.'.filter.waiting', 'filter.waiting', '');
-		$this->setState('filter.waiting', $waiting);
-		
-		$filterfield = $this->getUserStateFromRequest($this->context.'.filter.filtertype', 'filter.filtertype', '', 'int');
-		$this->setState('filter.filtertype', $filterfield);
-		
 		# it's needed to set the parent option
 		parent::populateState('a.dates', 'asc');
 	}

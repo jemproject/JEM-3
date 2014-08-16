@@ -36,6 +36,7 @@ class JemModelCategoryelement extends JModelLegacy
 		
 		$limit 			= $app->getUserStateFromRequest('com_jem.categoryelement.limit', 'limit', $jemsettings->display_num, 'int');
 		$limitstart 	= $jinput->getInt('limitstart');
+		$limitstart 	= $limit ? (int)(floor($limitstart / $limit) * $limit) : 0;
 		
 		$this->setState('limit', $limit);
 		$this->setState('limitstart', $limitstart);	
@@ -86,6 +87,7 @@ class JemModelCategoryelement extends JModelLegacy
 		
 		$query->order($filter_order . ' ' . $filter_order_Dir);
 
+		
 		$db->setQuery($query);
 		$mitems = $db->loadObjectList();
 

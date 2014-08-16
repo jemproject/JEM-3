@@ -59,16 +59,16 @@ class JemModelEventslist extends JModelList
 		$app				= JFactory::getApplication();
 		$jemsettings		= JemHelper::config();
 		$jinput             = JFactory::getApplication()->input;
-		$task               = $jinput->get('task','','cmd');
+		$task               = $jinput->getCmd('task');
 		$itemid				= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
-
-		
+	
 		# List state information
-		$limitstart = $app->getUserStateFromRequest('com_jem.eventslist.'.$itemid.'.limitstart', 'limitstart', 0, 'int');
-		$this->setState('list.start', $limitstart);
-
 		$limit		= $app->getUserStateFromRequest('com_jem.eventslist.'.$itemid.'.limit', 'limit', $jemsettings->display_num, 'int');
 		$this->setState('list.limit', $limit);
+		
+		$limitstart = $app->getUserStateFromRequest('com_jem.eventslist.'.$itemid.'.limitstart', 'limitstart', 0, 'int');
+		$limitstart = $limit ? (int)(floor($limitstart / $limit) * $limit) : 0;
+		$this->setState('list.start', $limitstart);
 
 		# Search - variables
 		$search = $app->getUserStateFromRequest('com_jem.eventslist.'.$itemid.'.filter_search', 'filter_search', '', 'string');
@@ -91,9 +91,19 @@ class JemModelEventslist extends JModelList
 		$this->setState('params', $params);
 
 		$user = JFactory::getUser();
-
-		if ($params->get('hideopendates','0') == 1) {
-			$this->setState('filter.hideopendates',1);
+		
+		###############
+		## opendates ##
+		###############
+		
+		# did we select option to show only opendates?
+		if ($params->get('onlyopendates','0')) {
+			$this->setState('filter.onlyopendates',1);
+		} else {
+			# do we want to hide opendates?
+			if ($params->get('hideopendates','0') == 1) {
+				$this->setState('filter.hideopendates',1);
+			}
 		}
 
 		
@@ -178,7 +188,7 @@ class JemModelEventslist extends JModelList
 		$this->setState('filter.access', true);
 		$this->setState('filter.groupby',array('a.id'));
 
-		//parent::populateState('a.dates', 'ASC');
+		parent::populateState('a.dates', 'ASC');
 	}
 
 	/**
@@ -235,7 +245,7 @@ class JemModelEventslist extends JModelList
 	{		
 		$app 			= JFactory::getApplication();
 		$jinput 		= JFactory::getApplication()->input;
-		$task 			= $jinput->get('task','','cmd');
+		$task 			= $jinput->getCmd('task');
 		$itemid 		= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
 
 		$params 		= $app->getParams();
@@ -362,12 +372,13 @@ class JemModelEventslist extends JModelList
 		}
 		
 
-		#############################
-		## FILTER - CALENDAR_DATES ##
-		#############################
-		$cal_from	= $this->getState('filter.calendar_from');
-		$cal_to		= $this->getState('filter.calendar_to');
+		####################
+		## FILTER - DATES ##
+		####################
+		$cal_from		= $this->getState('filter.calendar_from');
+		$cal_to			= $this->getState('filter.calendar_to');
 		$hideopendates	= $this->getState('filter.hideopendates');
+		$onlyopendates	= $this->getState('filter.onlyopendates');
 
 		if ($cal_from) {
 			$query->where($cal_from);
@@ -379,6 +390,10 @@ class JemModelEventslist extends JModelList
 				
 		if ($hideopendates) {
 			$query->where('a.dates IS NOT NULL');
+		}
+		
+		if ($onlyopendates) {
+			$query->where('a.dates IS NULL');
 		}
 
 		#####################
@@ -699,33 +714,34 @@ class JemModelEventslist extends JModelList
 		return $cats;
 	}
 
+	
 	function calendarMultiday($items) {
-
+	
 		$app 			= JFactory::getApplication();
 		$params 		= $app->getParams();
 		$startdayonly	= $this->getState('filter.calendar_startdayonly');
-
+	
 		foreach($items AS $item) {
 			if (!is_null($item->enddates) && $startdayonly) {
 				if ($item->enddates != $item->dates) {
 					$day = $item->start_day;
-
+	
 					for ($counter = 0; $counter <= $item->datesdiff-1; $counter++) {
 						$day++;
-
+	
 						# next day:
 						$nextday = mktime(0, 0, 0, $item->start_month, $day, $item->start_year);
-
+	
 						# ensure we only generate days of current month in this loop
 						if (strftime('%m', $this->_date) == strftime('%m', $nextday)) {
 							$multi[$counter] = clone $item;
 							$multi[$counter]->dates = strftime('%Y-%m-%d', $nextday);
-
+	
 							$item->multi = 'first';
 							$item->multitimes = $item->times;
 							$item->multiname = $item->title;
 							$item->sort = 'zlast';
-
+	
 							if ($multi[$counter]->dates < $item->enddates) {
 								$multi[$counter]->multi = 'middle';
 								$multi[$counter]->multistartdate = $item->dates;
@@ -745,23 +761,24 @@ class JemModelEventslist extends JModelList
 								$multi[$counter]->times = $item->times;
 								$multi[$counter]->endtimes = $item->endtimes;
 							}
-							# add generated days to data
-							$items = array_merge($items, $multi);
 						}
-						# unset temp array holding generated days before working on the next multiday event
-						unset($multi);
-					}
+					} // for
+	
+					# add generated days to data
+					$items = array_merge($items, $multi);
+					# unset temp array holding generated days before working on the next multiday event
+					unset($multi);
 				}
 			}
-		}
-
+		} // foreach
+	
 		foreach ($items as $item) {
 			$time[] = $item->times;
 			$title[] = $item->title;
 		}
-
+	
 		array_multisort($time, SORT_ASC, $title, SORT_ASC, $items);
-		
+	
 		return $items;
 	}
 }

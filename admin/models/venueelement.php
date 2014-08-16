@@ -57,6 +57,7 @@ class JemModelVenueelement extends JModelLegacy
 		
 		$limit 			= $app->getUserStateFromRequest('com_jem.venueelement.limit', 'limit', $jemsettings->display_num, 'int');
 		$limitstart 	= $jinput->getInt('limitstart');
+		$limitstart 	= $limit ? (int)(floor($limitstart / $limit) * $limit) : 0;
 		
 		$this->setState('limit', $limit);
 		$this->setState('limitstart', $limitstart);

@@ -6,18 +6,13 @@
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
-
 defined('_JEXEC') or die;
 
-jimport('joomla.application.component.model');
 
 /**
- * JEM Component Categories Model
- *
- * @package JEM
- *
+ * Model-Categories
  */
-class JEMModelCategories extends JModelLegacy
+class JemModelCategories extends JModelLegacy
 {
 	/**
 	 * Top category id
@@ -84,6 +79,7 @@ class JEMModelCategories extends JModelLegacy
 
 		$app = JFactory::getApplication();
 		$jinput = JFactory::getApplication()->input;
+		$itemid	= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
 
 		// Get the parameters of the active menu item
 		$params = $app->getParams('com_jem');
@@ -101,8 +97,9 @@ class JEMModelCategories extends JModelLegacy
 		$this->_showemptysubcats = (bool)$params->get('showemptychilds', 1);
 
 		//get the number of events from database
-		$limit 		= $jinput->getInt('limit', $params->get('cat_num'));
-		$limitstart = $jinput->getInt('limitstart');
+		$limit		= $app->getUserStateFromRequest('com_jem.categories.'.$itemid.'.limit','limit',$params->get('cat_num'),'int');
+		$limitstart = $app->getUserStateFromRequest('com_jem.categories.'.$itemid.'.limitstart','limitstart',0,'int');
+		$limitstart = $limit ? (int)(floor($limitstart / $limit) * $limit) : 0;
 
 		$this->setState('limit', $limit);
 		$this->setState('limitstart', $limitstart);
@@ -158,7 +155,7 @@ class JEMModelCategories extends JModelLegacy
 
 				//create target link
 				// TODO: Move to view?
-				$task = $jinput->getWord('task');
+				$task = $jinput->getCmd('task');
 				if ($task == 'archive') {
 					$category->linktext   = JText::_('COM_JEM_SHOW_ARCHIVE');
 					$category->linktarget = JRoute::_(JEMHelperRoute::getCategoryRoute($category->slug.'&task=archive'));
@@ -228,14 +225,11 @@ class JEMModelCategories extends JModelLegacy
 	 */
 	protected function _buildDataQuery($id)
 	{
-		$user = JFactory::getUser();
+		$user 	= JFactory::getUser();
 		$jinput = JFactory::getApplication()->input;
-		// Support Joomla access levels instead of single group id
 		$levels = $user->getAuthorisedViewLevels();
-
-		$id = (int)$id;
-
-		$task = $jinput->getWord('task');
+		$id 	= (int)$id;
+		$task 	= $jinput->getCmd('task');
 
 		// First thing we need to do is to select only the requested events
 		if ($task == 'archive') {
@@ -264,8 +258,7 @@ class JEMModelCategories extends JModelLegacy
 
 	function getCategories($id)
 	{
-		$user = JFactory::getUser();
-		// Support Joomla access levels instead of single group id
+		$user	= JFactory::getUser();
 		$levels = $user->getAuthorisedViewLevels();
 
 		$query = 'SELECT DISTINCT c.id, c.catname, c.access, c.checked_out AS cchecked_out,'
@@ -334,7 +327,7 @@ class JEMModelCategories extends JModelLegacy
 
 		// check archive task and ensure that only categories get selected
 		// if they contain a published/archived event
-		$task = $jinput->getWord('task');
+		$task = $jinput->getCmd('task');
 		if($task == 'archive') {
 			$where_sub .= ' AND i.published = 2';
 		} else {
@@ -398,7 +391,7 @@ class JEMModelCategories extends JModelLegacy
 			;
 
 		if (!$this->_showemptycats) {
-			$task = $jinput->getWord('task');
+			$task = $jinput->getCmd('task');
 			if($task == 'archive') {
 				$query .= ' AND e.published = 2';
 			} else {
