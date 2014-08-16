@@ -108,12 +108,43 @@ defined('_JEXEC') or die;
 
 	<fieldset class="form-horizontal">
 		<legend><?php echo JText::_('COM_JEM_SETTINGS_LEGEND_CSS'); ?></legend>
-			<?php foreach ($this->form->getFieldset('stylesheet') as $field): ?>
-			<div class="control-group">	
-				<div class="control-label"><?php echo $field->label; ?></div>
-				<div class="controls"><?php echo $field->input; ?></div>
-			</div>
-			<?php endforeach; ?>
+		
+		
+		<span class="label label-info"><?php echo JText::_('COM_JEM_SETTINGS_FIELD_CSS_BACKEND_USECUSTOM');?></span>
+			<?php 
+				echo $this->form->renderField('css_backend_usecustom','css');
+				echo $this->form->renderField('css_backend_customfile','css');
+			?>
+		<span class="label label-info"><?php echo JText::_('COM_JEM_SETTINGS_FIELD_CSS_CALENDAR_USECUSTOM');?></span>
+			<?php
+				echo $this->form->renderField('css_calendar_usecustom','css');
+				echo $this->form->renderField('css_calendar_customfile','css');
+			?>
+		<span class="label label-info"><?php echo JText::_('COM_JEM_SETTINGS_FIELD_CSS_COLORPICKER_USECUSTOM');?></span>	
+			<?php
+				echo $this->form->renderField('css_colorpicker_usecustom','css');
+				echo $this->form->renderField('css_colorpicker_customfile','css');
+			?>
+		<span class="label label-info"><?php echo JText::_('COM_JEM_SETTINGS_FIELD_CSS_GEOSTYLE_USECUSTOM');?></span>	
+			<?php
+				echo $this->form->renderField('css_geostyle_usecustom','css');
+				echo $this->form->renderField('css_geostyle_customfile','css');
+			?>	
+		<span class="label label-info"><?php echo JText::_('COM_JEM_SETTINGS_FIELD_CSS_GOOGLEMAP_USECUSTOM');?></span>	
+			<?php
+				echo $this->form->renderField('css_googlemap_usecustom','css');
+				echo $this->form->renderField('css_googlemap_customfile','css');
+			?>	
+		<span class="label label-info"><?php echo JText::_('COM_JEM_SETTINGS_FIELD_CSS_JEM_USECUSTOM');?></span>	
+			<?php
+				echo $this->form->renderField('css_jem_usecustom','css');
+				echo $this->form->renderField('css_jem_customfile','css');
+			?>	
+		<span class="label label-info"><?php echo JText::_('COM_JEM_SETTINGS_FIELD_CSS_PRINT_USECUSTOM');?></span>	
+			<?php
+				echo $this->form->renderField('css_print_usecustom','css');
+				echo $this->form->renderField('css_print_customfile','css');
+			?>	
 	</fieldset>
 
 	<fieldset class="form-horizontal">

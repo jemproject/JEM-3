@@ -724,6 +724,16 @@
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
+			<field name="show_dropwdownbutton" type="radio"
+				label="COM_JEM_SETTINGS_FIELD_SHOW_DROPDOWN_BUTTON"
+				description="COM_JEM_SETTINGS_FIELD_SHOW_DROPDOWN_BUTTON_DESC"
+				class="btn-group btn-group-yesno"
+				default="1"
+			>
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+			</field>
+			<field type="spacer"></field>
 			<field name="global_show_icons" type="radio"
 				label="COM_JEM_SHOW_ICONS"
 				description="COM_JEM_SHOW_ICONS_DESC"
@@ -802,15 +812,6 @@
 			<field name="show_poweredby" type="radio"
 				label="COM_JEM_SETTINGS_FIELD_SHOW_POWEREDBY"
 				description="COM_JEM_SETTINGS_FIELD_SHOW_POWEREDBY_DESC"
-				class="btn-group btn-group-yesno"
-				default="1"
-			>
-			<option value="0">JNO</option>
-			<option value="1">JYES</option>
-			</field>
-			<field name="show_dropwdownbutton" type="radio"
-				label="COM_JEM_SETTINGS_FIELD_SHOW_DROPDOWN_BUTTON"
-				description="COM_JEM_SETTINGS_FIELD_SHOW_DROPDOWN_BUTTON_DESC"
 				class="btn-group btn-group-yesno"
 				default="1"
 			>
@@ -1188,106 +1189,113 @@
 
 	<fields name="css">
 		<fieldset name="stylesheet" label="Stylesheet">
-			<field name="css_backend_usecustom" type="list"
-				description="COM_JEM_SETTINGS_FIELD_CSS_BACKEND_USECUSTOM_DESC"
-				label="COM_JEM_SETTINGS_FIELD_CSS_BACKEND_USECUSTOM"
+			<field name="css_backend_usecustom" type="radio"
+				label="COM_JEM_SETTINGS_FIELD_CSS_USECUSTOM"
+				class="btn-group btn-group-yesno"
+				default="0"
 				>
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
 			<field name="css_backend_customfile" type="text"
-				description="COM_JEM_SETTINGS_FIELD_CSS_BACKEND_CUSTOMFILE_DESC"
-				label="COM_JEM_SETTINGS_FIELD_CSS_BACKEND_CUSTOMFILE"
+				label="COM_JEM_SETTINGS_FIELD_CSS_CUSTOMFILE"
+				description="COM_JEM_SETTINGS_FIELD_CSS_CUSTOMFILE_DESC"
 				class="inputbox"
 				size="50"
 				required="false"
 			/>
 			<field type="spacer" name="spacer1" hr="true" />
-			<field name="css_calendar_usecustom" type="list"
-				description="COM_JEM_SETTINGS_FIELD_CSS_CALENDAR_USECUSTOM_DESC"
-				label="COM_JEM_SETTINGS_FIELD_CSS_CALENDAR_USECUSTOM"
+			<field name="css_calendar_usecustom" type="radio"
+				label="COM_JEM_SETTINGS_FIELD_CSS_USECUSTOM"
+				class="btn-group btn-group-yesno"
+				default="0"
 				>
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
 			<field name="css_calendar_customfile" type="text"
-				description="COM_JEM_SETTINGS_FIELD_CSS_CALENDAR_CUSTOMFILE_DESC"
-				label="COM_JEM_SETTINGS_FIELD_CSS_CALENDAR_CUSTOMFILE"
+				description="COM_JEM_SETTINGS_FIELD_CSS_CUSTOMFILE_DESC"
+				label="COM_JEM_SETTINGS_FIELD_CSS_CUSTOMFILE"
 				class="inputbox"
 				size="50"
 				required="false"
 			/>
 			<field type="spacer" name="spacer2" hr="true" />
-			<field name="css_colorpicker_usecustom" type="list"
-				description="COM_JEM_SETTINGS_FIELD_CSS_COLORPICKER_USECUSTOM_DESC"
-				label="COM_JEM_SETTINGS_FIELD_CSS_COLORPICKER_USECUSTOM"
+			<field name="css_colorpicker_usecustom" type="radio"
+				label="COM_JEM_SETTINGS_FIELD_CSS_USECUSTOM"
+				class="btn-group btn-group-yesno"
+				default="0"
 				>
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
 			<field name="css_colorpicker_customfile" type="text"
-				description="COM_JEM_SETTINGS_FIELD_CSS_COLORPICKER_CUSTOMFILE_DESC"
-				label="COM_JEM_SETTINGS_FIELD_CSS_COLORPICKER_CUSTOMFILE"
+				description="COM_JEM_SETTINGS_FIELD_CSS_CUSTOMFILE_DESC"
+				label="COM_JEM_SETTINGS_FIELD_CSS_CUSTOMFILE"
 				class="inputbox"
 				size="50"
 				required="false"
 			/>
 			<field type="spacer" name="spacer3" hr="true" />
-			<field name="css_geostyle_usecustom" type="list"
-				description="COM_JEM_SETTINGS_FIELD_CSS_GEOSTYLE_USECUSTOM_DESC"
-				label="COM_JEM_SETTINGS_FIELD_CSS_GEOSTYLE_USECUSTOM"
+			<field name="css_geostyle_usecustom" type="radio"
+				label="COM_JEM_SETTINGS_FIELD_CSS_USECUSTOM"
+				class="btn-group btn-group-yesno"
+				default="0"
 				>
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
 			<field name="css_geostyle_customfile" type="text"
-				description="COM_JEM_SETTINGS_FIELD_CSS_GEOSTYLE_CUSTOMFILE_DESC"
-				label="COM_JEM_SETTINGS_FIELD_CSS_GEOSTYLE_CUSTOMFILE"
+				description="COM_JEM_SETTINGS_FIELD_CSS_CUSTOMFILE_DESC"
+				label="COM_JEM_SETTINGS_FIELD_CSS_CUSTOMFILE"
 				class="inputbox"
 				size="50"
 				required="false"
 			/>
 			<field type="spacer" name="spacer4" hr="true" />
-			<field name="css_googlemap_usecustom" type="list"
-				description="COM_JEM_SETTINGS_FIELD_CSS_GOOGLEMAP_USECUSTOM_DESC"
-				label="COM_JEM_SETTINGS_FIELD_CSS_GOOGLEMAP_USECUSTOM"
+			<field name="css_googlemap_usecustom" type="radio"
+				label="COM_JEM_SETTINGS_FIELD_CSS_USECUSTOM"
+				class="btn-group btn-group-yesno"
+				default="0"
 				>
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
 			<field name="css_googlemap_customfile" type="text"
-				description="COM_JEM_SETTINGS_FIELD_CSS_GOOGLEMAP_CUSTOMFILE_DESC"
-				label="COM_JEM_SETTINGS_FIELD_CSS_GOOGLEMAP_CUSTOMFILE"
+				description="COM_JEM_SETTINGS_FIELD_CSS_CUSTOMFILE_DESC"
+				label="COM_JEM_SETTINGS_FIELD_CSS_CUSTOMFILE"
 				class="inputbox"
 				size="50"
 				required="false"
 			/>
 			<field type="spacer" name="spacer5" hr="true" />
-			<field name="css_jem_usecustom" type="list"
-				description="COM_JEM_SETTINGS_FIELD_CSS_JEM_USECUSTOM_DESC"
-				label="COM_JEM_SETTINGS_FIELD_CSS_JEM_USECUSTOM"
+			<field name="css_jem_usecustom" type="radio"
+				label="COM_JEM_SETTINGS_FIELD_CSS_USECUSTOM"
+				class="btn-group btn-group-yesno"
+				default="0"
 				>
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
 			<field name="css_jem_customfile" type="text"
-				description="COM_JEM_SETTINGS_FIELD_CSS_JEM_CUSTOMFILE_DESC"
-				label="COM_JEM_SETTINGS_FIELD_CSS_JEM_CUSTOMFILE"
+				description="COM_JEM_SETTINGS_FIELD_CSS_CUSTOMFILE_DESC"
+				label="COM_JEM_SETTINGS_FIELD_CSS_CUSTOMFILE"
 				class="inputbox"
 				size="50"
 				required="false"
 			/>
 			<field type="spacer" name="spacer6" hr="true" />
-			<field name="css_print_usecustom" type="list"
-				description="COM_JEM_SETTINGS_FIELD_CSS_PRINT_USECUSTOM_DESC"
-				label="COM_JEM_SETTINGS_FIELD_CSS_PRINT_USECUSTOM"
+			<field name="css_print_usecustom" type="radio"
+				label="COM_JEM_SETTINGS_FIELD_CSS_USECUSTOM"
+				class="btn-group btn-group-yesno"
+				default="0"
 				>
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
 			<field name="css_print_customfile" type="text"
-				description="COM_JEM_SETTINGS_FIELD_CSS_PRINT_CUSTOMFILE_DESC"
-				label="COM_JEM_SETTINGS_FIELD_CSS_PRINT_CUSTOMFILE"
+				description="COM_JEM_SETTINGS_FIELD_CSS_CUSTOMFILE_DESC"
+				label="COM_JEM_SETTINGS_FIELD_CSS_CUSTOMFILE"
 				class="inputbox"
 				size="50"
 				required="false"
