@@ -25,8 +25,8 @@
 			description="COM_JEM_GLOBAL_FIELD_FILTER_FILTERTYPE_DESC"
 			>
 			<option value="">- Select Filtertype -</option>
-			<option value="0">COM_JEM_NAME</option>
-			<option value="1">COM_JEM_USERNAME</option>
+			<option value="1">COM_JEM_NAME</option>
+			<option value="2">COM_JEM_USERNAME</option>
 		</field>
 	</fields>
 	<fields name="list">
