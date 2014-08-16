@@ -30,7 +30,7 @@ defined('_JEXEC') or die;
 	<?php if ($this->settings->get('global_display',1)) : ?>
 	<div class="jem_fright">
 		<?php
-		echo $this->attending_pagination->getLimitBox();
+			echo $this->pagination->getLimitBox();
 		?>
 	</div>
 	<?php endif; ?>
@@ -73,11 +73,13 @@ defined('_JEXEC') or die;
 		</tr>
 	</thead>
 	<tbody>
-	<?php if (count((array)$this->attending) == 0) : ?>
-		<tr align="center"><td colspan="20"><?php echo JText::_('COM_JEM_NO_EVENTS'); ?></td></tr>
-	<?php else : ?>
-		<?php foreach ($this->attending as $i => $row) : ?>
-			<tr class="row<?php echo $i % 2; ?>">
+	<?php if ($this->noevents == 1) : ?>
+			<tr align="center"><td colspan="20"><?php echo JText::_('COM_JEM_NO_EVENTS'); ?></td></tr>
+		<?php else : ?>
+			<?php $this->rows = $this->getRows(); ?>
+			<?php foreach ($this->rows as $row) : ?>
+			<tr class="sectiontableentry<?php echo ($row->odd +1) . $this->params->get('pageclass_sfx'); ?>"
+				itemscope="itemscope" itemtype="http://schema.org/Event">
 
 				<td class="jem_date" align="left">
 					<?php echo JEMOutput::formatShortDateTime($row->dates, $row->times,
@@ -120,9 +122,6 @@ defined('_JEXEC') or die;
 					</td>
 				<?php endif; ?>
 			</tr>
-			<?php
-				$i = 1 - $i;
-			?>
 		<?php endforeach; ?>
 	<?php endif; ?>
 	</tbody>
@@ -136,5 +135,5 @@ defined('_JEXEC') or die;
 </form>
 
 <div class="pagination">
-	<?php echo $this->attending_pagination->getPagesLinks(); ?>
+	<?php echo $this->pagination->getPagesLinks(); ?>
 </div>
