@@ -59,16 +59,15 @@ class JemViewMyevents extends JViewLegacy
 			$noevents = 0;
 		}
 
-		// get variables
-		$filter_order		= $app->getUserStateFromRequest('com_jem.myevents.filter_order', 'filter_order', 	'a.dates', 'cmd');
-		$filter_order_Dir	= $app->getUserStateFromRequest('com_jem.myevents.filter_order_Dir', 'filter_order_Dir',	'', 'word');
-// 		$filter_state 		= $app->getUserStateFromRequest('com_jem.myevents.filter_state', 'filter_state', 	'*', 'word');
-		$filter_type		= $app->getUserStateFromRequest('com_jem.myevents.filter_type', 'filter_type', '', 'int');
-		$search 			= $app->getUserStateFromRequest('com_jem.myevents.filter_search', 'filter_search', '', 'string');
+		// get userstate
+		$itemid 			= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
+		$filter_order		= $app->getUserStateFromRequest('com_jem.myevents.'.$itemid.'.filter_order','filter_order', 'a.dates', 'cmd');
+		$filter_order_Dir	= $app->getUserStateFromRequest('com_jem.myevents.'.$itemid.'.filter_order_Dir', 'filter_order_Dir','', 'word');
+		$filter_type		= $app->getUserStateFromRequest('com_jem.myevents.'.$itemid.'.filter_type', 'filter_type', '', 'int');
+		$search 			= $app->getUserStateFromRequest('com_jem.myevents.'.$itemid.'.filter_search', 'filter_search', '', 'string');
 		$search 			= $db->escape(trim(JString::strtolower($search)));
-
-		$task 		= $jinput->getWord('task');
-
+		$task 				= $jinput->getCmd('task');
+	
 		//search filter
 		$filters = array();
 		$filters[] = JHtml::_('select.option', '0', '&mdash; '.JText::_('COM_JEM_GLOBAL_SELECT_FILTER').' &mdash;');
@@ -85,10 +84,7 @@ class JemViewMyevents extends JViewLegacy
 		if ($jemsettings->showcat == 1) {
 			$filters[] = JHtml::_('select.option', '4', JText::_('COM_JEM_CATEGORY'));
 		}
-		if ($jemsettings->showstate == 1) {
-			$filters[] = JHtml::_('select.option', '5', JText::_('COM_JEM_STATE'));
-		}
-		$lists['filter'] = JHtml::_('select.genericlist', $filters, 'filter', array('size'=>'1','class'=>'inputbox'), 'value', 'text', $filter_type);
+		$lists['filter'] = JHtml::_('select.genericlist', $filters, 'filter_type', array('size'=>'1','class'=>'inputbox'), 'value', 'text', $filter_type);
 
 		// search filter
 		$lists['search']= $search;

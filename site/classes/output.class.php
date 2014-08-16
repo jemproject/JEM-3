@@ -23,7 +23,7 @@ class JEMOutput {
 		$settings 	= JemHelper::globalattribs();
 
 		if ($settings->get('show_poweredby','1')==1) {
-			if ($app->input->get('print','','int')) {
+			if ($app->input->getInt('print')) {
 				return;
 			} else {
 				echo '<font color="grey">Powered by <a href="http://www.joomlaeventmanager.net" target="_blank">JEM</a></font>';
@@ -48,7 +48,7 @@ class JEMOutput {
 			$app = JFactory::getApplication();
 
 			# check for print-screen
-			if ($app->input->get('print','','int')) {
+			if ($app->input->getInt('print')) {
 				return;
 			}
 
@@ -93,7 +93,7 @@ class JEMOutput {
 			$settings 	= JemHelper::globalattribs();
 
 			# check for print
-			if ($app->input->get('print','','int')) {
+			if ($app->input->getInt('print')) {
 				return;
 			}
 
@@ -142,7 +142,7 @@ class JEMOutput {
 		if ($settings->get('global_show_archive_icon',1)) {
 
 			# check if we're in a print-screen
-			if ($app->input->get('print','','int')) {
+			if ($app->input->getInt('print')) {
 				return;
 			}
 
@@ -217,7 +217,7 @@ class JEMOutput {
 			$app = JFactory::getApplication();
 
 			# check for print
-			if ($app->input->get('print','','int')) {
+			if ($app->input->getInt('print')) {
 				return;
 			}
 
@@ -352,7 +352,7 @@ class JEMOutput {
 			}
 
 			# check if we're in a print-screen
-			if ($app->input->get('print','','int')) {
+			if ($app->input->getInt('print')) {
 				//button in popup
 				$overlib = JText::_('COM_JEM_PRINT_DESC');
 				$text = JText::_('COM_JEM_PRINT');
@@ -399,7 +399,7 @@ class JEMOutput {
 		if ($settings->get('global_show_email_icon')) {
 
 			# check for print-screen
-			if ($app->input->get('print','','int')) {
+			if ($app->input->getInt('print')) {
 				return;
 			}
 
@@ -451,17 +451,13 @@ class JEMOutput {
 		if ($settings->get('global_show_ical_icon','0')==1) {
 
 			# check for print-screen
-			if ($app->input->get('print','','int')) {
+			if ($app->input->getInt('print')) {
 				return;
 			}
 
 			JHtml::_('bootstrap.tooltip');
-
-			if ($settings->get('global_show_icons','0')==1) {
-				$text = JHtml::_('image', 'com_jem/iCal2.0.png', JText::_('COM_JEM_EXPORT_ICS'), NULL, true);
-			} else {
-				$text = JText::_('COM_JEM_EXPORT_ICS');
-			}
+			
+			$text = JHtml::_('image', 'com_jem/iCal2.0.png', JText::_('COM_JEM_EXPORT_ICS'), NULL, true);
 
 			$desc = JText::_('COM_JEM_ICAL_DESC');
 			$title = JText::_('COM_JEM_ICAL');
@@ -492,7 +488,7 @@ class JEMOutput {
 		//$image = JHtml::_('image', 'com_jem/publish.png', JText::_('COM_JEM_PUBLISH'), NULL, true).'&#160;'.JText::_('COM_JEM_PUBLISH');
 		$image = '<span class="icon-publish"></span>&#160;'.JText::_('COM_JEM_PUBLISH');
 
-		if ($app->input->get('print','','int')) {
+		if ($app->input->getInt('print')) {
 			//button in popup
 			return;
 		}
@@ -525,7 +521,7 @@ class JEMOutput {
 		//$image = JHtml::_('image', 'com_jem/trash.png', JText::_('COM_JEM_TRASH'), NULL, true).'&#160;'.JText::_('COM_JEM_TRASH');
 		$image = '<span class="icon-trash"></span>&#160;'.JText::_('COM_JEM_TRASH');
 
-		if ($app->input->get('print','','int')) {
+		if ($app->input->getInt('print')) {
 			//button in popup
 			return;
 		}
@@ -557,7 +553,7 @@ class JEMOutput {
 		//$image = JHtml::_('image', 'com_jem/unpublish.png', JText::_('COM_JEM_UNPUBLISH'), NULL, true).'&#160;'.JText::_('COM_JEM_UNPUBLISH');
 		$image = '<span class="icon-unpublish"></span>&#160;'.JText::_('COM_JEM_UNPUBLISH');
 
-		if ($app->input->get('print','','int')) {
+		if ($app->input->getInt('print')) {
 			return;
 		}
 
@@ -589,7 +585,7 @@ class JEMOutput {
 
 		$text = JHtml::_('image', 'com_jem/export_excel.png', JText::_('COM_JEM_EXPORT'), NULL, true).' '.JText::_('COM_JEM_EXPORT');
 
-		if ($app->input->get('print','','int')) {
+		if ($app->input->getInt('print')) {
 			return;
 		}
 			# button in view
@@ -628,7 +624,7 @@ class JEMOutput {
 
 		$text = JHtml::_('image', 'com_jem/icon-16-back.png', JText::_('COM_JEM_BACK'), NULL, true).' '.JText::_('COM_JEM_BACK');
 
-		if ($jinput->get('print','','int')) {
+		if ($jinput->getInt('print')) {
 			return;
 		}
 

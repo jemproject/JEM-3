@@ -60,8 +60,7 @@ class JemModelCategoryCal extends JModelLegacy
 		$app = JFactory::getApplication();
 		$jemsettings = JEMHelper::config();
 		$jinput = JFactory::getApplication()->input;
-
-		$this->setdate(time());
+		
 
 		// Get the parameters of the active menu item
 		$params 	= $app->getParams();
@@ -72,14 +71,9 @@ class JemModelCategoryCal extends JModelLegacy
 			$id = $params->get('id');
 		}
 
+		$this->setdate(time());
 		$this->setId((int)$id);
-
-		//get the number of events from database
-		$limit			= $app->getUserStateFromRequest('com_jem.category.limit', 'limit', $jemsettings->display_num, 'int');
-		$limitstart 	= $app->getUserStateFromRequest('com_jem.category.limitstart', 'limitstart', 0, 'int');
-
-		$this->setState('limit', $limit);
-		$this->setState('limitstart', $limitstart);
+		
 	}
 
 	function setdate($date)
@@ -100,28 +94,11 @@ class JemModelCategoryCal extends JModelLegacy
 		$this->_data		= null;
 
 		$app 			= JFactory::getApplication();
-		$jinput = JFactory::getApplication()->input;
+		$jinput 		= JFactory::getApplication()->input;
 		$item 			= $jinput->getInt('Itemid');
 		$app->setUserState('com_jem.categorycal.catid'.$item, $this->_id);
 	}
 
-	/**
-	 * set limit
-	 * @param int value
-	 */
-	function setLimit($value)
-	{
-		$this->setState('limit', (int) $value);
-	}
-
-	/**
-	 * set limitstart
-	 * @param int value
-	 */
-	function setLimitStart($value)
-	{
-		$this->setState('limitstart', (int) $value);
-	}
 
 	/**
 	 * Method to get the events
@@ -228,41 +205,6 @@ class JemModelCategoryCal extends JModelLegacy
 		return $items;
 	}
 
-	/**
-	 * Method to get a pagination object for the events
-	 *
-	 * @access public
-	 * @return integer
-	 */
-	function getPagination()
-	{
-		// Lets load the content if it doesn't already exist
-		if (empty($this->_pagination))
-		{
-			jimport('joomla.html.pagination');
-			$this->_pagination = new JPagination($this->getTotal(), $this->getState('limitstart'), $this->getState('limit'));
-		}
-
-		return $this->_pagination;
-	}
-
-	/**
-	 * Total nr of Categories
-	 *
-	 * @access public
-	 * @return integer
-	 */
-	function getTotal()
-	{
-		// Lets load the total nr if it doesn't already exist
-		if (empty($this->_total))
-		{
-			$query = $this->_buildQuery();
-			$this->_total = $this->_getListCount($query);
-		}
-
-		return $this->_total;
-	}
 
 	/**
 	 * Build the query
@@ -331,7 +273,7 @@ class JemModelCategoryCal extends JModelLegacy
 	{
 		$app			= JFactory::getApplication();
 		$jinput 		= $app->input;
-		$task			= $jinput->getWord('task');
+		$task			= $jinput->getCmd('task');
 		$params			= $app->getParams();
 		$jemsettings	= JemHelper::config();
 		$user			= JFactory::getUser();
@@ -421,7 +363,7 @@ class JemModelCategoryCal extends JModelLegacy
 
 		//TODO: Make option for categories without events to be invisible in list
 		//check archive task and ensure that only categories get selected if they contain a published/archived event
-		$task 	= $jinput->getWord('task');
+		$task 	= $jinput->getCmd('task');
 		if($task == 'archive') {
 			$where .= ' AND i.published = 2';
 		} else {

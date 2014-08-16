@@ -17,13 +17,4 @@
 			/>
 		</fieldset>
 	</fields>
-	
-	<!-- Add fields to the parameters object for the layout. -->
-	<fields name="params">
-
-		<!-- Basic options. -->
-		<fieldset name="basic"
-			label="COM_JEM_ATTRIBS_EVENT_SETTINGS_LABEL">
-		</fieldset>
-		</fields>
 </metadata>

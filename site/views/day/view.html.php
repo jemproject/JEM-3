@@ -36,7 +36,7 @@ class JemViewDay extends JEMView
 		$params 		= $app->getParams();
 		$db 			= JFactory::getDBO();
 		$uri 			= JFactory::getURI();
-		$task 			= $jinput->getWord('task');
+		$task 			= $jinput->getCmd('task');
 		$pathway 		= $app->getPathWay();
 		$jinput 		= $app->input;
 		$print			= $jinput->getBool('print');
@@ -157,9 +157,6 @@ class JemViewDay extends JEMView
 		}
 		if ($jemsettings->showcat == 1 && !($requestCategoryId)) {
 			$filters[] = JHtml::_('select.option', '4', JText::_('COM_JEM_CATEGORY'));
-		}
-		if ($jemsettings->showstate == 1 && !($requestVenueId)) {
-			$filters[] = JHtml::_('select.option', '5', JText::_('COM_JEM_STATE'));
 		}
 		$lists['filter'] = JHtml::_('select.genericlist', $filters, 'filter_type', array('size'=>'1','class'=>'inputbox'), 'value', 'text', $filter_type);
 

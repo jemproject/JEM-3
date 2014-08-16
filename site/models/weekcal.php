@@ -35,7 +35,7 @@ class JemModelWeekcal extends JemModelEventslist
 		$jinput			= JFactory::getApplication()->input;
 		$itemid 		= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
 		$params 		= $app->getParams();
-		$task           = $jinput->get('task','','cmd');
+		$task           = $jinput->getCmd('task');
 		$top_category 	= $params->get('top_category', 0);
 		$startdayonly 	= $params->get('show_only_start', false);
 		$numberOfWeeks	= $params->get('nrweeks', '1');
@@ -152,7 +152,7 @@ class JemModelWeekcal extends JemModelEventslist
 	{
 		$params  = $this->state->params;
 		$jinput  = JFactory::getApplication()->input;
-		$task    = $jinput->get('task','','cmd');
+		$task    = $jinput->getCmd('task');
 
 		// Create a new query object.
 		$query = parent::getListQuery();

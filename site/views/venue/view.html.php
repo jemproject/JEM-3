@@ -64,12 +64,13 @@ class JemViewVenue extends JEMView {
 			.today .daynum {background-color:' . $currentdaycolor . ';}';
 			$document->addStyleDeclaration ($style);
 
+			JHtml::_('behavior.framework','1.4.0.1');
 			// add calendar-js (using full path - see issue #590)
 			JHtml::_('script', 'media/com_jem/js/calendar.js');
 
 			// Retrieve year/month variables
-			$year = $jinput->get('yearID', strftime("%Y"),'int');
-			$month = $jinput->get('monthID', strftime("%m"),'int');
+			$year = $jinput->getInt('yearID', strftime("%Y"));
+			$month = $jinput->getInt('monthID', strftime("%m"));
 
 			// get data from model and set the month
 			$model = $this->getModel('VenueCal');
@@ -126,7 +127,7 @@ class JemViewVenue extends JEMView {
 			$params 		= $app->getParams('com_jem');
 			$pathway 		= $app->getPathWay ();
 			$uri 			= JFactory::getURI();
-			$task 			= $jinput->getWord('task');
+			$task 			= $jinput->getCmd('task');
 			$user			= JFactory::getUser();
 			$itemid 		= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
 			$print			= $jinput->getBool('print');
@@ -316,17 +317,8 @@ class JemViewVenue extends JEMView {
 			if ($jemsettings->showtitle == 1) {
 				$filters[] = JHtml::_('select.option', '1', JText::_('COM_JEM_TITLE'));
 			}
-			if ($jemsettings->showlocate == 1) {
-				$filters[] = JHtml::_('select.option', '2', JText::_('COM_JEM_VENUE'));
-			}
-			if ($jemsettings->showcity == 1) {
-				$filters[] = JHtml::_('select.option', '3', JText::_('COM_JEM_CITY'));
-			}
 			if ($jemsettings->showcat == 1) {
 				$filters[] = JHtml::_('select.option', '4', JText::_('COM_JEM_CATEGORY'));
-			}
-			if ($jemsettings->showstate == 1) {
-				$filters[] = JHtml::_('select.option', '5', JText::_('COM_JEM_STATE'));
 			}
 			$lists['filter'] = JHtml::_('select.genericlist', $filters, 'filter_type', array('size'=>'1','class'=>'inputbox input-medium'), 'value', 'text', $filter_type);
 			$lists['search'] = $search;

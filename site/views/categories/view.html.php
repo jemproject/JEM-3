@@ -28,7 +28,7 @@ class JemViewCategories extends JEMView
 		$settings		= JemHelper::globalattribs();
 		$user			= JFactory::getUser();
 		$print			= $jinput->getBool('print');
-		$task			= $jinput->getWord('task');
+		$task			= $jinput->getCmd('task');
 		$model 			= $this->getModel();
 		$id 			= $jinput->getInt('id', 1);
 

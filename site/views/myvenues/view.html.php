@@ -58,14 +58,14 @@ class JemViewMyvenues extends JViewLegacy
 			$novenues = 0;
 		}
 		// get variables
-		$filter_order		= $app->getUserStateFromRequest('com_jem.myvenues.filter_order', 'filter_order', 	'l.venue', 'cmd');
-		$filter_order_Dir	= $app->getUserStateFromRequest('com_jem.myvenues.filter_order_Dir', 'filter_order_Dir',	'', 'word');
-// 		$filter_state 		= $app->getUserStateFromRequest('com_jem.myvenues.filter_state', 'filter_state', 	'*', 'word');
-		$filter_type		= $app->getUserStateFromRequest('com_jem.myvenues.filter_type', 'filter_type', '', 'int');
-		$search 			= $app->getUserStateFromRequest('com_jem.myvenues.filter_search', 'filter_search', '', 'string');
+		$itemid 			= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
+		$filter_order		= $app->getUserStateFromRequest('com_jem.myvenues.'.$itemid.'.filter_order', 'filter_order', 	'l.venue', 'cmd');
+		$filter_order_Dir	= $app->getUserStateFromRequest('com_jem.myvenues.'.$itemid.'.filter_order_Dir', 'filter_order_Dir',	'', 'word');
+		$filter_type		= $app->getUserStateFromRequest('com_jem.myvenues.'.$itemid.'.filter_type', 'filter_type', '', 'int');
+		$search 			= $app->getUserStateFromRequest('com_jem.myvenues.'.$itemid.'.filter_search', 'filter_search', '', 'string');
 		$search 			= $db->escape(trim(JString::strtolower($search)));
 
-		$task 		= $jinput->getWord('task');
+		$task 		= $jinput->getCmd('task');
 
 		//search filter
 		$filters = array();
@@ -73,22 +73,13 @@ class JemViewMyvenues extends JViewLegacy
 		// Workaround issue #557: Show venue name always.
 		$jemsettings->showlocate = 1;
 
-		//if ($jemsettings->showtitle == 1) {
-		//	$filters[] = JHtml::_('select.option', '1', JText::_('COM_JEM_TITLE'));
-		//}
 		if ($jemsettings->showlocate == 1) {
 			$filters[] = JHtml::_('select.option', '2', JText::_('COM_JEM_VENUE'));
 		}
 		if ($jemsettings->showcity == 1) {
 			$filters[] = JHtml::_('select.option', '3', JText::_('COM_JEM_CITY'));
 		}
-		//if ($jemsettings->showcat == 1) {
-		//	$filters[] = JHtml::_('select.option', '4', JText::_('COM_JEM_CATEGORY'));
-		//}
-		if ($jemsettings->showstate == 1) {
-			$filters[] = JHtml::_('select.option', '5', JText::_('COM_JEM_STATE'));
-		}
-		$lists['filter'] = JHtml::_('select.genericlist', $filters, 'filter', array('size'=>'1','class'=>'inputbox'), 'value', 'text', $filter_type);
+		$lists['filter'] = JHtml::_('select.genericlist', $filters, 'filter_type', array('size'=>'1','class'=>'inputbox'), 'value', 'text', $filter_type);
 
 		// search filter
 		$lists['search']= $search;

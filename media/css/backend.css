@@ -37,6 +37,17 @@ div.linkicon {
    color: #BD362F;
 }
 
+table.tableheader{
+	width:100%;
+	border:1px solid black;
+	margin-bottom:18px;
+	background-color:#DFEDED;
+}
+
+table.tableheader td{
+	padding:10px;
+}
+
 
 input.button {
 	/*background-color:#......;*/

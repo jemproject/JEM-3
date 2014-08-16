@@ -33,14 +33,14 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 	}
 </script>
 <form action="<?php echo JRoute::_('index.php?option=com_jem&view=attendees&eid='.$this->eventid); ?>"  method="post" name="adminForm" id="adminForm">
-	<table class="adminlist">
+	<table class="tableheader">
 		<tr>
-			<td width="70%">
+			<td>
 				<b><?php echo JText::_('COM_JEM_DATE').':'; ?></b>&nbsp;<?php echo $this->event->dates; ?><br />
 				<b><?php echo JText::_('COM_JEM_EVENT_TITLE').':'; ?></b>&nbsp;<?php echo $this->escape($this->event->title); ?>
 			</td>
-			<td width="30%">
-		<div class="btn-wrapper">
+			<td>
+		<div class="btn-wrapper pull-right input-prepend input-append">
 				<div class="btn"><a title="<?php echo JText::_('COM_JEM_PRINT'); ?>" onclick="window.open('index.php?option=com_jem&amp;view=attendees&amp;layout=print&amp;tmpl=component&amp;eid=<?php echo $this->eventid; ?>', 'popup', 'width=750,height=400,scrollbars=yes,toolbar=no,status=no,resizable=yes,menubar=no,location=no,directories=no,top=10,left=10')"><?php echo JText::_('COM_JEM_PRINT'); ?></a></div>
 				<div class="btn"><a title="<?php echo JText::_('COM_JEM_CSV_EXPORT'); ?>" onclick="window.open('index.php?option=com_jem&amp;task=attendees.export&amp;tmpl=raw&amp;eid=<?php echo $this->eventid; ?>')"><?php echo JText::_('COM_JEM_CSV_EXPORT'); ?></a></div>
 			</div>
@@ -96,15 +96,15 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 				<td><?php echo JHtml::_('date',$row->uregdate,JText::_('DATE_FORMAT_LC2')); ?></td>
 				<td class="center"><?php echo $row->uid; ?></td>
 				<?php if ($this->event->waitinglist): ?>
-				<td class="hasTip" title="<?php echo ($row->waiting ? JText::_('COM_JEM_ON_WAITINGLIST') : JText::_('COM_JEM_ATTENDING')).'::'; ?>">
+				<td>
 					
 				<?php if ($row->waiting):?>	
 					<a href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i;?>','attendees.toggle')">
-						<?php echo JHtml::_('image','com_jem/publish_y.png',JText::_('COM_JEM_ON_WAITINGLIST'),NULL,true); ?>
+						<?php echo JHtml::_('image','com_jem/publish_y.png',JText::_('COM_JEM_ON_WAITINGLIST'),array('class'=>'hasTooltip','title' => ($row->waiting ? JText::_('COM_JEM_ON_WAITINGLIST') : JText::_('COM_JEM_ATTENDING'))),true); ?>
 					</a>
 				<?php else: ?>
 					<a href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i;?>','attendees.toggle')">
-						<?php echo JHtml::_('image','com_jem/tick.png',JText::_('COM_JEM_ATTENDING'),NULL,true); ?>
+						<?php echo JHtml::_('image','com_jem/tick.png',JText::_('COM_JEM_ATTENDING'),array('class'=>'hasTooltip','title' => ($row->waiting ? JText::_('COM_JEM_ON_WAITINGLIST') : JText::_('COM_JEM_ATTENDING'))),true); ?>
 					</a>
 				<?php endif;?>	
 					
@@ -112,7 +112,7 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 				<?php endif;?>
 				<td class="center">
 				<a href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i;?>','attendees.remove')">
-				<?php echo JHtml::_('image','com_jem/publish_x.png',JText::_('COM_JEM_REMOVE'),NULL,true); ?>
+				<?php echo JHtml::_('image','com_jem/publish_x.png',JText::_('COM_JEM_REMOVE'),array('class'=>'hasTooltip','title' => ($row->waiting ? JText::_('COM_JEM_ON_WAITINGLIST') : JText::_('COM_JEM_ATTENDING'))),true); ?>
 				</a>
 				</td>
 			</tr>

@@ -69,8 +69,8 @@ class JemViewCategory extends JEMView
 			$document->addStyleDeclaration($style);
 
 			// Retrieve date variables
-			$year	= JFactory::getApplication()->input->request->get('yearID', strftime("%Y"),'int');
-			$month	= JFactory::getApplication()->input->request->get('monthID', strftime("%m"),'int');
+			$year	= JFactory::getApplication()->input->request->getInt('yearID', strftime("%Y"));
+			$month	= JFactory::getApplication()->input->request->getInt('monthID', strftime("%m"));
 
 			if (JFactory::getApplication()->input->get('id')) {
 				$catid = JFactory::getApplication()->input->get('id');
@@ -181,7 +181,7 @@ class JemViewCategory extends JEMView
 			$filter_type		= $app->getUserStateFromRequest('com_jem.category.'.$itemid.'.filter_filtertype', 'filter_type', '', 'int');
 			$search 			= $app->getUserStateFromRequest('com_jem.category.'.$itemid.'.filter_search', 'filter_search', '', 'string');
 			$search 			= $db->escape(trim(JString::strtolower($search)));
-			$task 				= $jinput->getWord('task');
+			$task 				= $jinput->getCmd('task');
 
 			// table ordering
 			$lists['order_Dir'] = $filter_order_Dir;

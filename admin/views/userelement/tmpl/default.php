@@ -66,6 +66,7 @@ JHtml::_('bootstrap.tooltip');
 	</div>
 
 	<input type="hidden" name="task" value="selectuser" />
+	<input type="hidden" name="function" value="<?php echo $this->escape($function); ?>" />
 	<input type="hidden" name="filter_order" value="<?php echo $this->lists['order']; ?>" />
 	<input type="hidden" name="filter_order_Dir" value="<?php echo $this->lists['order_Dir']; ?>" />
 	<?php echo JHtml::_('form.token'); ?>

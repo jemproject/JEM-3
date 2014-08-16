@@ -48,7 +48,7 @@ class JemViewVenues extends JViewLegacy
 		JHtml::_('script', 'com_jem/dropdown.js', false, true);
 
 		// Request variables
-		$task 	= JRequest::getWord('task');
+		$task 	= JRequest::getCmd('task');
 		$rows 	= $this->get('Items');
 
 		$pagetitle = $params->def('page_title', $menuitem->title);

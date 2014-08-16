@@ -153,7 +153,7 @@ $settings	= $this->settings;
 						<?php if ( $row->vchecked_out && ( $row->vchecked_out != $this->user->get('id') ) ) : ?>
 							<?php echo $this->escape($row->venue); ?>
 						<?php else : ?>
-							<span class="editlinktip hasTip" title="<?php echo JText::_( 'COM_JEM_EDIT_VENUE' );?>::<?php echo $row->venue; ?>">
+							<span>
 								<a href="<?php echo $venuelink; ?>">
 									<?php echo $this->escape($row->venue); ?>
 								</a>

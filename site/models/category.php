@@ -32,7 +32,7 @@ class JemModelCategory extends JemModelEventslist
 	public function __construct()
 	{
 		$app			= JFactory::getApplication();
-		$jinput = JFactory::getApplication()->input;
+		$jinput 		= JFactory::getApplication()->input;
 		$jemsettings	= JEMHelper::config();
 		$itemid			= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
 
@@ -127,8 +127,9 @@ class JemModelCategory extends JemModelEventslist
 		$value	= $app->getUserStateFromRequest('com_jem.category.'.$itemid.'.limit', 'limit', $jemsettings->display_num, 'int');
 		$this->setState('list.limit', $value);
 
-		$value = $app->getUserStateFromRequest('com_jem.category.'.$itemid.'.limitstart', 'limitstart', 0, 'int');
-		$this->setState('list.start', $value);
+		$limitstart = $app->getUserStateFromRequest('com_jem.category.'.$itemid.'.limitstart', 'limitstart', 0, 'int');
+		$limitstart = $limit ? (int)(floor($limitstart / $limit) * $limit) : 0;
+		$this->setState('list.start', $limitstart);
 
 		# Search - variables
 		$search = $app->getUserStateFromRequest('com_jem.category.'.$itemid.'.filter_search', 'filter_search', '', 'string');
@@ -251,7 +252,7 @@ class JemModelCategory extends JemModelEventslist
 	{
 		$params  = $this->state->params;
 		$jinput  = JFactory::getApplication()->input;
-		$task    = $jinput->get('task','','cmd');
+		$task    = $jinput->getCmd('task');
 
 		// Create a new query object.
 		$query = parent::getListQuery();

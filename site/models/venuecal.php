@@ -27,8 +27,8 @@ class JemModelVenueCal extends JemModelEventslist
 		$jinput = JFactory::getApplication()->input;
 		$params = $app->getParams();
 
-		if ($jinput->get('id',null,'int')) {
-			$id = $jinput->get('id',null,'int');
+		if ($jinput->getInt('id',null)) {
+			$id = $jinput->get('id',null);
 		} else {
 			$id = $params->get('id');
 		}
@@ -66,7 +66,7 @@ class JemModelVenueCal extends JemModelEventslist
 		$jinput			= JFactory::getApplication()->input;
 		$itemid 		= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
 		$params 		= $app->getParams();
-		$task           = $jinput->get('task','','cmd');
+		$task           = $jinput->getCmd('task');
 		$startdayonly 	= $params->get('show_only_start', false);
 
 		# params
@@ -143,7 +143,7 @@ class JemModelVenueCal extends JemModelEventslist
 	{
 		$params  = $this->state->params;
 		$jinput  = JFactory::getApplication()->input;
-		$task    = $jinput->get('task','','cmd');
+		$task    = $jinput->getCmd('task');
 
 		// Create a new query object.
 		$query = parent::getListQuery();

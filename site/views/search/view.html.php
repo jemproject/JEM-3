@@ -33,6 +33,7 @@ class JemViewSearch extends JEMView
 		$uri 			= JFactory::getURI();
 		$pathway 		= $app->getPathWay();
 		$user			= JFactory::getUser();
+		$itemid 		= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
 
 		// Decide which parameters should take priority
 		$useMenuItemParams = ($menuitem && $menuitem->query['option'] == 'com_jem'
@@ -49,13 +50,13 @@ class JemViewSearch extends JEMView
 		// Load Script
 		JHtml::_('script', 'com_jem/search.js', false, true);
 
-		$filter_continent	= $app->getUserStateFromRequest('com_jem.search.filter_continent', 'filter_continent', '', 'string');
-		$filter_country		= $app->getUserStateFromRequest('com_jem.search.filter_country', 'filter_country', '', 'string');
-		$filter_city		= $app->getUserStateFromRequest('com_jem.search.filter_city', 'filter_city', '', 'string');
-		$filter_date_from	= $app->getUserStateFromRequest('com_jem.search.filter_date_from', 'filter_date_from', '', 'string');
-		$filter_date_to		= $app->getUserStateFromRequest('com_jem.search.filter_date_to', 'filter_date_to', '', 'string');
-		$filter_category 	= $app->getUserStateFromRequest('com_jem.search.filter_category', 'filter_category', 0, 'int');
-		$task				= $jinput->getWord('task');
+		$filter_continent	= $app->getUserStateFromRequest('com_jem.search.'.$itemid.'.filter_continent', 'filter_continent', '', 'string');
+		$filter_country		= $app->getUserStateFromRequest('com_jem.search.'.$itemid.'.filter_country', 'filter_country', '', 'string');
+		$filter_city		= $app->getUserStateFromRequest('com_jem.search.'.$itemid.'.filter_city', 'filter_city', '', 'string');
+		$filter_date_from	= $app->getUserStateFromRequest('com_jem.search.'.$itemid.'.filter_date_from', 'filter_date_from', '', 'string');
+		$filter_date_to		= $app->getUserStateFromRequest('com_jem.search.'.$itemid.'.filter_date_to', 'filter_date_to', '', 'string');
+		$filter_category 	= $app->getUserStateFromRequest('com_jem.search.'.$itemid.'.filter_category', 'filter_category', 0, 'int');
+		$task				= $jinput->getCmd('task');
 
 		//get data from model
 		$rows = $this->get('Data');
@@ -114,6 +115,7 @@ class JemViewSearch extends JEMView
 		}
 
 		//create select lists
+		# @todo alter
 		$lists	= $this->_buildSortLists();
 
 		if ($lists['filter']) {
@@ -203,7 +205,7 @@ class JemViewSearch extends JEMView
 		$app 	= JFactory::getApplication();
 		$jinput = $app->input;
 		$db 	= JFactory::getDBO();
-		$task 	= $jinput->getWord('task');
+		$task 	= $jinput->getCmd('task');
 
 		$filter_order		= JFactory::getApplication()->input->getCmd('filter_order', 'a.dates');
 		$filter_order_DirDefault = 'ASC';

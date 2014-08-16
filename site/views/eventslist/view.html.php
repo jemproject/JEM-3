@@ -40,6 +40,7 @@ class JemViewEventslist extends JEMView
 		$itemid 		= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
 		$print			= $jinput->getBool('print');
 		$admin			= JEMUser::superuser();
+		$task 			= JRequest::getCmd('task');
 
 		// Load css
 		JemHelper::loadCss('jem');
@@ -55,8 +56,7 @@ class JemViewEventslist extends JEMView
 		JHtml::_('bootstrap.framework');
 		JHtml::_('script', 'com_jem/dropdown.js', false, true);
 
-		// get variables
-		$task 				= JRequest::getWord('task', '');
+		// userstate variables
 		$filter_order		= $app->getUserStateFromRequest('com_jem.eventslist.'.$itemid.'.filter_order', 'filter_order', 'a.dates', 'cmd');
 		$filter_order_DirDefault = 'ASC';
 		// Reverse default order for dates in archive mode

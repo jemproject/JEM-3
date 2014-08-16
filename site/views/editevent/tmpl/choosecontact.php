@@ -36,7 +36,6 @@ $function = JFactory::getApplication()->input->getCmd('function', 'jSelectContac
 		<div id="jem_filter" class="floattext">
 			<div class="jem_fleft">
 				<?php
-				echo '<label for="filter_type">'.JText::_('COM_JEM_FILTER').'</label>&nbsp;';
 				echo $this->searchfilter.'&nbsp;';
 				?>
 				<div class="btn-wrapper input-append">
@@ -48,7 +47,6 @@ $function = JFactory::getApplication()->input->getCmd('function', 'jSelectContac
 			</div>
 			<div class="jem_fright">
 				<?php
-				echo '<label for="limit">'.JText::_('COM_JEM_DISPLAY_NUM').'</label>&nbsp;';
 				echo $this->pagination->getLimitBox();
 				?>
 			</div>
