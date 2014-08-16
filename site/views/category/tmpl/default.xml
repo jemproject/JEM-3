@@ -18,27 +18,4 @@
 			/>
 		</fieldset>
 	</fields>
-
-	<fields name="params">
-		<fieldset name="basic">
-			<field name="displayChilds" type="radio"
-				default="0"
-				label="COM_JEM_DISPLAYCHILDS"
-				description="COM_JEM_DISPLAYCHILDSDESC"
-				class="btn-group btn-group-yesno"
-			>
-				<option value="0">JNo</option>
-				<option value="1">JYes</option>
-			</field>
-			<field name="only_first" type="radio"
-				default="0"
-				label="COM_JEM_DISPLAYFIRSTOCCURENCEONLY"
-				description="COM_JEM_DISPLAYFIRSTOCCURENCEONLYDESC"
-				class="btn-group btn-group-yesno"
-			>
-				<option value="0">JNo</option>
-				<option value="1">JYes</option>
-			</field>
-		</fieldset>
-	</fields>
 </metadata>

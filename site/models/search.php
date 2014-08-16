@@ -6,18 +6,13 @@
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
-
 defined('_JEXEC') or die;
 
-jimport('joomla.application.component.model');
 
 /**
- * JEM Component search Model
- *
- * @package JEM
- *
+ * Model-Search
  */
-class JEMModelSearch extends JModelLegacy
+class JemModelSearch extends JModelLegacy
 {
 	/**
 	 * Events data array
@@ -205,7 +200,7 @@ class JEMModelSearch extends JModelLegacy
 
 		//$filter            = $jinput->getString('filter', '', 'request');
 		$filter            = $app->getUserStateFromRequest('com_jem.search.filter_search', 'filter_search', '', 'string');
-		$filter_type       = $jinput->request->getString('filter_type', '');
+		$filter_type       = $jinput->request->getString('filter_type');
 		$filter_continent  = $app->getUserStateFromRequest('com_jem.search.filter_continent', 'filter_continent', '', 'string');
 		$filter_country    = $app->getUserStateFromRequest('com_jem.search.filter_country', 'filter_country', '', 'string');
 		$filter_city       = $app->getUserStateFromRequest('com_jem.search.filter_city', 'filter_city', '', 'string');
@@ -235,9 +230,12 @@ class JEMModelSearch extends JModelLegacy
 				case 'city' :
 					$where .= ' AND LOWER(l.city) LIKE '.$filter;
 					break;
+				default:
+					$where .= ' AND LOWER(a.title) LIKE '.$filter;
+					break;
 			}
 		}
-
+		
 		// filter date
 		if ($params->get('date_filter_type', 0) == 1) // match on all events dates (between start and end)
 		{

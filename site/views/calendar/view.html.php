@@ -61,8 +61,8 @@ class JemViewCalendar extends JViewLegacy
 		// add javascript (using full path - see issue #590)
 		JHtml::_('script', 'media/com_jem/js/calendar.js');
 		
-		$year 	= JFactory::getApplication()->input->request->get('yearID', strftime("%Y"),'int');
-		$month 	= JFactory::getApplication()->input->request->get('monthID', strftime("%m"),'int');
+		$year 	= JFactory::getApplication()->input->request->getInt('yearID', strftime("%Y"));
+		$month 	= JFactory::getApplication()->input->request->getInt('monthID', strftime("%m"));
 
 		//get data from model and set the month
 		$model = $this->getModel();

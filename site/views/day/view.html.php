@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 require JPATH_COMPONENT_SITE.'/classes/view.class.php';
 
 /**

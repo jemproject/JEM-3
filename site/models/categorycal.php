@@ -7,12 +7,12 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 defined('_JEXEC') or die;
-jimport('joomla.application.component.model');
+
 
 /**
  * Model-CategoryCal
  */
-class JEMModelCategoryCal extends JModelLegacy
+class JemModelCategoryCal extends JModelLegacy
 {
 	/**
 	 * Category id
@@ -66,8 +66,8 @@ class JEMModelCategoryCal extends JModelLegacy
 		// Get the parameters of the active menu item
 		$params 	= $app->getParams();
 
-		if ($jinput->get('id', null, 'int')) {
-			$id = $jinput->get('id', null, 'int');
+		if ($jinput->getInt('id', null)) {
+			$id = $jinput->getInt('id', null);
 		} else {
 			$id = $params->get('id');
 		}
@@ -348,16 +348,16 @@ class JEMModelCategoryCal extends JModelLegacy
 		}
 
 		// display event from direct childs ?
-		if (!$params->get('displayChilds', 0)) {
-			$where[] = ' rel.catid = '.$this->_id;
-		} else {
+		//if (!$params->get('displayChilds', 0)) {
+		//	$where[] = ' rel.catid = '.$this->_id;
+		//} else {
 			$where[] = ' (rel.catid = '.$this->_id . ' OR c.parent_id = '.$this->_id . ')';
-		}
+		//}
 
 		// display all event of recurring serie ?
-		if ($params->get('only_first',0)) {
-			$where[] = ' a.recurrence_first_id = 0 ';
-		}
+		//if ($params->get('only_first',0)) {
+		//	$where[] = ' a.recurrence_first_id = 0 ';
+		//}
 
 		$where[] = ' c.published = 1';
 		$where[] = ' c.access IN (' . implode(',', $levels) . ')';
