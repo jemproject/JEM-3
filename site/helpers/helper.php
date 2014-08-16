@@ -283,16 +283,19 @@ class JemHelper {
 		$db = Jfactory::getDBO();
 
 		// get event details for registration
-		$query = ' SELECT maxplaces, waitinglist FROM #__jem_events WHERE id = ' . $db->Quote($event);
+		$query = $db->getQuery(true);
+		$query->select(array('maxplaces','waitinglist'));
+		$query->from('#__jem_events');
+		$query->where('id = ' . $db->Quote($event));
 		$db->setQuery($query);
 		$event_places = $db->loadObject();
 
 		// get attendees after deletion, and their status
-		$query = 'SELECT r.id, r.waiting '
-				. ' FROM #__jem_register AS r'
-				. ' WHERE r.event = '.$db->Quote($event)
-				. ' ORDER BY r.uregdate ASC '
-				;
+		$query = $db->getQuery(true);
+		$query->select(array('r.id, r.waiting'));
+		$query->from('#__jem_register AS r');
+		$query->where('r.event = '.$db->Quote($event));
+		$query->order('r.uregdate ASC');
 		$db->SetQuery($query);
 		$res = $db->loadObjectList();
 
@@ -311,8 +314,13 @@ class JemHelper {
 		{
 			// need to bump users to attending status
 			$bumping = array_slice($waiting, 0, $event_places->maxplaces - $registered);
-			$query = ' UPDATE #__jem_register SET waiting = 0 WHERE id IN ('.implode(',', $bumping).')';
+			
+			$query = $db->getQuery(true);
+			$query->update('#__jem_register');
+			$query->set('waiting = 0');
+			$query->where('id IN ('.implode(',', $bumping).')');	
 			$db->setQuery($query);
+			
 			if (!$db->execute()) {
 				$this->setError(JText::_('COM_JEM_FAILED_BUMPING_USERS_FROM_WAITING_TO_CONFIRMED_LIST'));
 				Jerror::raisewarning(0, JText::_('COM_JEM_FAILED_BUMPING_USERS_FROM_WAITING_TO_CONFIRMED_LIST').': '.$db->getErrorMsg());
@@ -349,11 +357,12 @@ class JemHelper {
 		$ids = implode(",", $ids);
 
 		$db = Jfactory::getDBO();
-
-		$query = ' SELECT COUNT(id) as total, SUM(waiting) as waitinglist, event '
-				. ' FROM #__jem_register '
-				. ' WHERE event IN (' . $ids .')'
-				. ' GROUP BY event ';
+		
+		$query = $db->getQuery(true);
+		$query->select('COUNT(id) as total, SUM(waiting) as waitinglist, event');
+		$query->from('#__jem_register');
+		$query->where('event IN (' . $ids .')');
+		$query->group('event');
 
 		$db->setQuery($query);
 		$res = $db->loadObjectList('event');
