@@ -22,7 +22,7 @@ class Pkg_JemInstallerScript {
 	 */
 	protected $versions = array(
 		'PHP' => array (
-			'5.3' => '5.3.1',
+			'5.3' => '5.3.10',
 			'0' => '5.4.14' // Preferred version
 			),
 		'MySQL' => array (
@@ -30,9 +30,8 @@ class Pkg_JemInstallerScript {
 			'0' => '5.5' // Preferred version
 			),
 		'Joomla!' => array (
-			'3.0' => '', // Not supported
-			'2.5' => '2.5.6',
-			'0' => '2.5.19' // Preferred version
+			'3.0' => '3.3.0', 
+			'0' => '3.3.0' // Preferred version
 			)
 		);
 
@@ -40,7 +39,7 @@ class Pkg_JemInstallerScript {
 	 * List of required PHP extensions.
 	 * @var array
 	 */
-	protected $extensions = array ('curl','gd', 'json', 'pcre'
+	protected $extensions = array ('gd', 'json', 'pcre'
 			, 'iconv' /* import */
 			, 'ctype', 'SimpleXML' /* iCalCreator */
 		);
