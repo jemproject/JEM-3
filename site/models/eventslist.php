@@ -84,9 +84,6 @@ class JemModelEventslist extends JModelList
 			$this->setState('filter.published',1);
 		}
 		
-		//$published = $this->getUserStateFromRequest($this->context.'.filter.published', 'filter.published', '');
-		//$this->setState('filter.published', $published);
-
 		$params = $app->getParams();
 		$this->setState('params', $params);
 
@@ -96,15 +93,7 @@ class JemModelEventslist extends JModelList
 		## opendates ##
 		###############
 		
-		# did we select option to show only opendates?
-		if ($params->get('onlyopendates','0')) {
-			$this->setState('filter.onlyopendates',1);
-		} else {
-			# do we want to hide opendates?
-			if ($params->get('hideopendates','0') == 1) {
-				$this->setState('filter.hideopendates',1);
-			}
-		}
+		$this->setState('filter.opendates', $params->get('showopendates', 0));
 
 		
 		###########
@@ -216,7 +205,7 @@ class JemModelEventslist extends JModelList
 		// Compile the store id.
 		$id .= ':' . serialize($this->getState('filter.published'));
 		$id .= ':' . $this->getState('filter.access');
-		$id .= ':' . $this->getState('filter.hideopendates');
+		$id .= ':' . $this->getState('filter.opendates');
 		$id .= ':' . $this->getState('filter.featured');
 		$id .= ':' . serialize($this->getState('filter.event_id'));
 		$id .= ':' . $this->getState('filter.event_id.include');
@@ -388,12 +377,21 @@ class JemModelEventslist extends JModelList
 			$query->where($cal_to);
 		}
 				
-		if ($hideopendates) {
-			$query->where('a.dates IS NOT NULL');
-		}
-		
-		if ($onlyopendates) {
-			$query->where('a.dates IS NULL');
+		#############################
+		## FILTER - OPEN_DATES     ##
+		#############################
+		$opendates	= $this->getState('filter.opendates');
+
+		switch ($opendates) {
+			case 0: // don't show events without start date
+			default:
+				$query->where('a.dates IS NOT NULL');
+				break;
+			case 1: // show all events, with or without start date
+				break;
+			case 2: // show only events without startdate
+				$query->where('a.dates IS NULL');
+				break;
 		}
 
 		#####################
@@ -491,80 +489,80 @@ class JemModelEventslist extends JModelList
 	 * Method to get a list of events.
 	 */
 	public function getItems()
-	{
+	{		
 		$items	= parent::getItems();
 
-		$user	= JFactory::getUser();
-		$userId	= $user->get('id');
-		$guest	= $user->get('guest');
-		$groups = $user->getAuthorisedViewLevels();
-		$input	= JFactory::getApplication()->input;
-
-		$calendarMultiday = $this->getState('filter.calendar_multiday');
-
-		# Get the global params
-		$globalParams = JComponentHelper::getParams('com_jem', true);
-
-		# Convert the parameter fields into objects.
-		foreach ($items as $index => $item)
-		{
-			$eventParams = new JRegistry;
-			$eventParams->loadString($item->attribs);
-
-			$item->params = clone $this->getState('params');
-			$item->params->merge($eventParams);
-
-			# access permissions.
-			if (!$guest)
-			{
-				$asset = 'com_jem.event.' . $item->id;
-
-				# Check general edit permission first.
-				if ($user->authorise('core.edit', $asset))
-				{
-					$item->params->set('access-edit', true);
-				}
-
-				# Now check if edit.own is available.
-				elseif (!empty($userId) && $user->authorise('core.edit.own', $asset))
-				{
-					# Check for a valid user and that they are the owner.
-					if ($userId == $item->created_by)
-					{
+		if ($items) {
+			$user	= JFactory::getUser();
+			$userId	= $user->get('id');
+			$guest	= $user->get('guest');
+			$groups = $user->getAuthorisedViewLevels();
+			$input	= JFactory::getApplication()->input;
+			
+			$calendarMultiday = $this->getState('filter.calendar_multiday');
+			
+			# Get the global params
+			$globalParams = JComponentHelper::getParams('com_jem', true);
+			
+			# Convert the parameter fields into objects.
+			foreach ($items as $index => $item) :
+				$eventParams = new JRegistry;
+				$eventParams->loadString($item->attribs);
+			
+				$item->params = clone $this->getState('params');
+				$item->params->merge($eventParams);
+			
+				# access permissions.
+				if (!$guest){
+					$asset = 'com_jem.event.' . $item->id;
+			
+					# Check general edit permission first.
+					if ($user->authorise('core.edit', $asset)) {
 						$item->params->set('access-edit', true);
 					}
+			
+					# Now check if edit.own is available.
+					elseif (!empty($userId) && $user->authorise('core.edit.own', $asset)){
+					# Check for a valid user and that they are the owner.
+						if ($userId == $item->created_by){
+							$item->params->set('access-edit', true);
+						}
+					}
 				}
+			
+				# adding categories
+				$item->categories = $this->getCategories($item->id);
+			
+				# retrieving filter-access
+				$access = $this->getState('filter.access');
+			
+				if ($access){
+					// If the access filter has been set, we already have only the events this user can view.
+					$item->params->set('access-view', true);
+				}
+			
+			
+				# check if the item-categories is empty, if so the user has no access to that event at all.
+				if (empty($item->categories)) {
+					unset ($items[$index]);
+				}
+			endforeach;
+			
+			if ($items) {
+				$items = JemHelper::getAttendeesNumbers($items);
+			
+				if ($calendarMultiday) {
+					$items = self::calendarMultiday($items);
+				}
+			
 			}
-
-			# adding categories
-			$item->categories = $this->getCategories($item->id);
-
-			# retrieving filter-access
-			$access = $this->getState('filter.access');
-
-			if ($access)
-			{
-				// If the access filter has been set, we already have only the events this user can view.
-				$item->params->set('access-view', true);
-			}
-
-
-			# check if the item-categories is empty, if so the user has no access to that event at all.
-			if (empty($item->categories)) {
-				unset ($items[$index]);
-			}
+			
+			return $items;
 		}
-
-		if ($items) {
-			$items = JemHelper::getAttendeesNumbers($items);
-
-		if ($calendarMultiday) {
-			$items = self::calendarMultiday($items);
+		else {
+			return array();
 		}
-
-		}
-
-		return $items;
+		
 	}
 
 
@@ -722,7 +720,7 @@ class JemModelEventslist extends JModelList
 		$startdayonly	= $this->getState('filter.calendar_startdayonly');
 	
 		foreach($items AS $item) {
-			if (!is_null($item->enddates) && $startdayonly) {
+			if (!is_null($item->enddates) && !$startdayonly) {
 				if ($item->enddates != $item->dates) {
 					$day = $item->start_day;
 	

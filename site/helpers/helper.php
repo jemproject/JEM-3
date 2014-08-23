@@ -466,6 +466,27 @@ class JemHelper {
 		}
 		return true;
 	}
+	
+	
+	/**
+	 * Returns array of positive numbers
+	 *
+	 * @param string comma separated list of ids
+	 * @return mixed array of numbers greater zero or false
+	 */
+	static function getValidIds($idstring)
+	{
+		$ids = array();
+		$tmp = explode(',', $idstring);
+		foreach ($tmp as $id) {
+			if ((int)$id > 0) {
+				$ids[] = (int)$id;
+			}
+		}
+	
+		return (empty($ids) ? false : $ids);
+	}
+	
 
 	/**
 	 * Creates a tooltip

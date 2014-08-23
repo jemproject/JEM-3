@@ -199,8 +199,8 @@ JHtml::_('bootstrap.tooltip');
 		$multidaydate .= '</div>';
 
 		//generate the output
-		$content .= $colorpic;
 		$content .= JemHelper::caltooltip($catname.$eventname.$timehtml.$venue, $eventdate, $row->title, $detaillink, 'hasTooltip', $timetp, $category->color);
+		$content .= $colorpic;
 		$content .= $contentend;
 
 		$this->cal->setEventContent($year, $month, $day, $content);

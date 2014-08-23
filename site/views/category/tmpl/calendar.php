@@ -126,11 +126,13 @@ defined('_JEXEC') or die;
 				$colorpic .= '<span class="colorpic" style="width:6px;background-color: '.$category->color.';"></span>';
 			}
 
-			//count occurence of the category
-			if (!array_key_exists($category->id, $countcatevents)) {
-				$countcatevents[$category->id] = 1;
-			} else {
-				$countcatevents[$category->id]++;
+			# count occurence of the category
+			if (!isset($row->multi) || ($row->multi == 'first')) {
+				if (!array_key_exists($category->id, $countcatevents)) {
+					$countcatevents[$category->id] = 1;
+				} else {
+					$countcatevents[$category->id]++;
+				}
 			}
 			
 			$catinfo[] = array('catid' => $category->id,'color' => $category->color);

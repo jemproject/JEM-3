@@ -85,16 +85,10 @@ class JemModelCalendar extends JemModelEventslist
 			}
 		}
 
-		# set filter multiday
+		# set filter
 		$this->setState('filter.calendar_multiday',true);
-
-		if ($startdayonly == '0') {
-			$startday = true;
-		} else {
-			$startday = false;
-		}
 		$this->setState('filter.groupby',array('a.id'));
-		$this->setState('filter.calendar_startdayonly',$startday);
+		$this->setState('filter.calendar_startdayonly',$startdayonly);
 
 	}
 

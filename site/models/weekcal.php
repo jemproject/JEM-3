@@ -113,16 +113,8 @@ class JemModelWeekcal extends JemModelEventslist
 			}
 		}
 
-		# set startdayonly
-		if ($startdayonly == '0') {
-			$startday = true;
-		} else {
-			$startday = false;
-		}
-
-
 		$this->setState('filter.groupby','a.id');
-		$this->setState('filter.calendar_startdayonly',$startday);
+		$this->setState('filter.calendar_startdayonly',$startdayonly);
 	}
 
 
@@ -168,11 +160,12 @@ class JemModelWeekcal extends JemModelEventslist
 	function calendarMultiday($items) {
 		$app 			= JFactory::getApplication();
 		$params 		= $app->getParams();
+		$startdayonly = $this->getState('filter.calendar_startdayonly');
 
-		foreach($items AS $item) {
+		foreach($items AS $item) :
 			$item->categories = $this->getCategories($item->id);
 
-			if (!is_null($item->enddates)) {
+			if (!is_null($item->enddates) && !$startdayonly) {
 				if ($item->enddates != $item->dates) {
 					// $day = $item->start_day;
 					$day = $item->start_day;
@@ -212,12 +205,13 @@ class JemModelWeekcal extends JemModelEventslist
 							$multi[$counter]->endtimes = $item->endtimes;
 						}
 
-						//add generated days to data
-						$items = array_merge($items, $multi);
-
-						//unset temp array holding generated days before working on the next multiday event
-						unset($multi);
-					}
+					} // for
+					
+					//add generated days to data
+					$items = array_merge($items, $multi);
+					
+					//unset temp array holding generated days before working on the next multiday event
+					unset($multi);
 				}
 			}
 
@@ -225,9 +219,9 @@ class JemModelWeekcal extends JemModelEventslist
 			if (empty($item->categories)) {
 				unset($item);
 			}
-		}
+		endforeach;
 
-		foreach ($items as $index => $item) {
+		foreach ($items as $index => $item) :
 			$date = $item->dates;
 			$firstweekday = $params->get('firstweekday',1); // 1 = Monday, 0 = Sunday
 
@@ -280,14 +274,14 @@ class JemModelWeekcal extends JemModelEventslist
 			} elseif ($date_timestamp < $check_startdate) {
 				unset ($items[$index]);
 			}
-		}
+		endforeach;
 
 		// Do we still have events? Return if not.
 		if(empty($items)) {
 			return $items;
 		}
 
-		foreach ($items as $item) {
+		foreach ($items as $item) :
 			$time[] = $item->times;
 			$title[] = $item->title;
 			$id[] = $item->id;
@@ -296,7 +290,7 @@ class JemModelWeekcal extends JemModelEventslist
 			$multitime[] = (isset($item->multitime) ? $item->multitime : false);
 			$multititle[] = (isset($item->multititle) ? $item->multititle : false);
 			$sort[] = (isset($item->sort) ? $item->sort : 'zlast');
-		}
+		endforeach;
 
 		array_multisort($sort, SORT_ASC, $multitime, $multititle, $time, SORT_ASC, $title, $items);
 

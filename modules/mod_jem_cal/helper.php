@@ -27,8 +27,6 @@ abstract class modjemcalqhelper
 		$model = JModelLegacy::getInstance('Eventslist', 'JemModel', array('ignore_request' => true));
 
 		# Set params for the model
-		//$app = JFactory::getApplication();
-		//$appParams = $app->getParams('com_jem');
 		$model->setState('params', $params);
 
 		# Access filter
@@ -38,8 +36,6 @@ abstract class modjemcalqhelper
 		$levels		= $user->getAuthorisedViewLevels();
 		$settings 	= JEMHelper::globalattribs();
 
-		$catid 				= trim($params->get('catid'));
-		$venid 				= trim($params->get('venid'));
 		$StraightToDetails	= $params->get('StraightToDetails', '1');
 		$DisplayCat			= $params->get('DisplayCat', '0');
 		$DisplayVenue		= $params->get('DisplayVenue', '0');
@@ -48,22 +44,27 @@ abstract class modjemcalqhelper
 		$FixItemID			= $params->get('FixItemID', '0');
 		$defaultItemid	 	= $settings->get('default_Itemid','');
 
+		# clean parameter data
+		$catids = JemHelper::getValidIds($params->get('catid'));
+		$venids = JemHelper::getValidIds($params->get('venid'));
+		$eventids = JemHelper::getValidIds($params->get('eventid'));
+		
 		# filter category's
-		if ($catid) {
-			$ids = explode(',', $catid);
-			$ids = JArrayHelper::toInteger($ids);
-			//$categories = ' AND c.id IN (' . implode(',', $ids) . ')';
-			$model->setState('filter.category_id',$ids);
+		if ($catids) {
+			$model->setState('filter.category_id',$catids);
 			$model->setState('filter.category_id.include',true);
 		}
 
 		# filter venue's
-		if ($venid) {
-			$ids = explode(',', $venid);
-			$ids = JArrayHelper::toInteger($ids);
-			/*$venues = ' AND l.id IN (' . implode(',', $ids) . ')';*/
-			$model->setState('filter.venue_id',$ids);
+		if ($venids) {
+			$model->setState('filter.venue_id',$venids);
 			$model->setState('filter.venue_id.include',true);
+		}
+
+		# filter event id's
+		if ($eventids) {
+			$model->setState('filter.event_id',$eventids);
+			$model->setState('filter.event_id.include',true);
 		}
 
 		# filter published

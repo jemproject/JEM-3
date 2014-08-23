@@ -26,75 +26,84 @@ abstract class modJEMHelper
 	public static function getList(&$params)
 	{
 		mb_internal_encoding('UTF-8');
-		
+
 		$db		= JFactory::getDBO();
 		$user	= JFactory::getUser();
 		$levels = $user->getAuthorisedViewLevels();
-		
+
 		# Retrieve Eventslist model for the data
 		$model = JModelLegacy::getInstance('Eventslist', 'JemModel', array('ignore_request' => true));
-		
+
 		# Set params for the model
 		# has to go before the getItems function
 		$model->setState('params', $params);
 		$model->setState('filter.access',true);
-		
+
 		# filter published
 		#  0: unpublished
 		#  1: published
 		#  2: archived
 		# -2: trashed
-		
-		# upcoming events
-		if ($params->get('type')==0) {
-			$model->setState('filter.published',1);
-			$model->setState('filter.orderby',array('a.dates ASC','a.times ASC'));
 
-			$cal_from = "(TIMEDIFF(CONCAT(a.dates,' ',IFNULL(a.times,'00:00:00')),NOW()) > 1 OR (a.enddates AND TIMEDIFF(CONCAT(a.enddates,' ',IFNULL(a.times,'00:00:00')),NOW())) > 1) ";
-		}
-		
+		$type = $params->get('type');
+
 		# archived events
-		if ($params->get('type')==1) {
+		if ($type == 2) {
 			$model->setState('filter.published',2);
 			$model->setState('filter.orderby',array('a.dates DESC','a.times DESC'));
 			$cal_from = "";
 		}
-		
-		# currently running events only
-		elseif ($params->get('type') == 2) {
+
+		# upcoming or running events, on mistake default to upcoming events
+		else {
 			$model->setState('filter.published',1);
 			$model->setState('filter.orderby',array('a.dates ASC','a.times ASC'));
-		
-			$cal_from = " (a.dates = CURDATE() OR (a.enddates >= CURDATE() AND a.dates <= CURDATE()))";
+
+			$offset_minutes = 60 * $params->get('offset_hours', 0);
+
+			$cal_from = "((TIMESTAMPDIFF(MINUTE, NOW(), CONCAT(a.dates,' ',IFNULL(a.times,'00:00:00'))) > $offset_minutes) ";
+			$cal_from .= ($type == 1) ? " OR (TIMESTAMPDIFF(MINUTE, NOW(), CONCAT(IFNULL(a.enddates,a.dates),' ',IFNULL(a.endtimes,'23:59:59'))) > $offset_minutes)) " : ") ";
 		}
-			
+
 		$model->setState('filter.calendar_from',$cal_from);
 		$model->setState('filter.groupby','a.id');
-		
-		$catid 	= trim($params->get('catid'));
-		$venid 	= trim($params->get('venid'));
 
-		if ($catid) {
-			$ids = explode(',', $catid);
-			$categories = ' AND (c.id=' . implode(' OR c.id=', $ids) . ')';
+		# clean parameter data
+		$catids = JemHelper::getValidIds($params->get('catid'));
+		$venids = JemHelper::getValidIds($params->get('venid'));
+		$eventids = JemHelper::getValidIds($params->get('eventid'));
+		
+		# filter category's
+		if ($catids) {
+			$model->setState('filter.category_id',$catids);
+			$model->setState('filter.category_id.include',true);
 		}
-		if ($venid) {
-			$ids = explode(',', $venid);
-			$venues = ' AND (l.id=' . implode(' OR l.id=', $ids) . ')';
+
+		# filter venue's
+		if ($venids) {
+			$model->setState('filter.venue_id',$venids);
+			$model->setState('filter.venue_id.include',true);
+		}
+
+		# filter event id's
+		if ($eventids) {
+			$model->setState('filter.event_id',$eventids);
+			$model->setState('filter.event_id.include',true);
 		}
 		
+
 		# count
 		$count = $params->get('count', '2');
-		
+
 		$model->setState('list.limit',$count);
-		
+
 		# Retrieve the available Events
 		$events = $model->getItems();
-		
+
 		# Loop through the result rows and prepare data
 		$i		= 0;
 		$lists	= array();
-		
+
 		foreach ($events as $row)
 		{
 			//cut titel
@@ -114,11 +123,10 @@ abstract class modJEMHelper
 			$lists[$i]->venueurl 	= !empty($row->venueslug) ? JRoute::_(JEMHelperRoute::getVenueRoute($row->venueslug)) : null;
 			$i++;
 		}
-		
-		
 
 		return $lists;
 	}
+
 
 	/**
 	 * Method to get a valid url

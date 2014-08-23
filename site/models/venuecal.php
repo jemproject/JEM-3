@@ -96,16 +96,9 @@ class JemModelVenueCal extends JemModelEventslist
 		$where = ' DATEDIFF(a.dates, '. $filter_date_to .') <= 0';
 		$this->setState('filter.calendar_to',$where);
 
-		# set filter multiday
+		# set filter
 		$this->setState('filter.calendar_multiday',true);
-
-		if ($startdayonly == '0') {
-			$startday = true;
-		} else {
-			$startday = false;
-		}
-
-		$this->setState('filter.calendar_startdayonly',$startday);
+		$this->setState('filter.calendar_startdayonly',$startdayonly);
 
 		$this->setState('filter.filter_locid',$this->_id);
 
