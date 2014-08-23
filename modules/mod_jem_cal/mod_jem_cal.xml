@@ -272,8 +272,8 @@
 					name="eventid" 
 					type="text"
 					default=""
-					label="MOD_JEM_WIDE_EVENTID"
-					description="MOD_JEM_WIDE_EVENTID_DESC"
+					label="MOD_JEM_CAL_EVENTID"
+					description="MOD_JEM_CAL_EVENTID_DESC"
 				/>
 				<field
 					name="FixItemID" 
