@@ -28,6 +28,9 @@ class JEMViewMain extends JViewLegacy {
 		// Load css
 		JHtml::_('stylesheet', 'com_jem/backend.css', array(), true);
 
+		JHtml::_('jquery.framework');
+		JHtml::_('script', 'com_jem/slider-state.js', false, true);
+		
 		// assign vars to the template
 		$this->events		= $events;
 		$this->venue		= $venue;
