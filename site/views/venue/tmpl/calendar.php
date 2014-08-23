@@ -30,6 +30,7 @@ JHtml::_('bootstrap.tooltip');
 	$countcatevents = array ();
 	$countperday = array();
 	$limit = $this->params->get('daylimit', 10);
+	$catinfo	= array();
 
 	foreach ($this->rows as $row) :
 		if (!JemHelper::isValidDate($row->dates)) {
@@ -81,6 +82,8 @@ JHtml::_('bootstrap.tooltip');
 		$ix = 0;
 		$content = '';
 		$contentend = '';
+		
+		$catz = array();
 
 		//walk through categories assigned to an event
 		foreach($row->categories AS $category) {
@@ -88,8 +91,7 @@ JHtml::_('bootstrap.tooltip');
 			$detaillink = JRoute::_(JemHelperRoute::getEventRoute($row->slug));
 
 			//wrap a div for each category around the event for show hide toggler
-			$content    .= '<div id="catz" class="cat'.$category->id.'">';
-			$contentend .= '</div>';
+			$catz[]= 'cat'.$category->id;
 
 			//attach category color if any in front of the catname
 			if ($category->color) {
@@ -116,8 +118,17 @@ JHtml::_('bootstrap.tooltip');
 					$countcatevents[$category->id]++;
 				}
 			}
+			
+			$catinfo[] = array('catid' => $category->id,'color' => $category->color);
 		}
-
+		
+		// end of category-loop
+		
+		$catz = implode(' ',$catz);
+		
+		$content    .= '<div id="catz" hidecat="" class="'.$catz.'">';
+		$contentend .= '</div>';
+		
 		$color  = '<div id="eventcontenttop" class="eventcontenttop">';
 		$color .= $colorpic;
 		$color .= '</div>';
@@ -197,6 +208,12 @@ JHtml::_('bootstrap.tooltip');
 
 		$this->cal->setEventContent($year, $month, $day, $content);
 	endforeach;
+	
+	// create hidden input fields
+	foreach ($catinfo as $val) {
+		echo "<input name='category".$val['catid']."' type='hidden' value='".$val['color']."'>";
+	}
+	echo "<input id='usebgcatcolor' name='usebgcatcolor' type='hidden' value='".$this->params->get('usebgcatcolor','0')."'>";
 
 	// print the calendar
 	echo $this->cal->showMonth();

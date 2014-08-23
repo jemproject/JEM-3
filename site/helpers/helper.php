@@ -478,9 +478,9 @@ class JemHelper {
 		
 		if ($href) {
 			$href = JRoute::_ ($href);
-			$tip = '<span class="'.$class.'" title="'.$titleTip.'"><a href="'.$href.'">'.$time.$text.'</a></span>';
+			$tip = '<div class="'.$class.'" title="'.$titleTip.'"><a href="'.$href.'">'.$time.$text.'</a></div>';
 		} else {
-			$tip = '<span class="'.$class.'" title="'.$titleTip.'">'.$text.'</span>';
+			$tip = '<div class="'.$class.'" title="'.$titleTip.'">'.$text.'</div>';
 		}
 		return $tip;
 	}

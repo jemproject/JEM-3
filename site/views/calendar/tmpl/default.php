@@ -10,6 +10,7 @@ defined('_JEXEC') or die;
 
 // Load tooltips behavior
 JHtml::_('bootstrap.tooltip');
+
 ?>
 
 <div id="jem" class="jlcalendar jem_calendar<?php echo $this->pageclass_sfx;?>">
@@ -18,62 +19,64 @@ JHtml::_('bootstrap.tooltip');
 <div class="clearfix"></div>
 <div class="info_container">
 
-
+<!-- heading -->
 	<?php if ($this->params->get('show_page_heading', 1)): ?>
 		<h1>
 			<?php echo $this->escape($this->params->get('page_heading')); ?>
 		</h1>
 	<?php endif; ?>
 
-	
-<!-- Info -->		
-	
+<!-- introtext -->			
 	<?php if ($this->params->get('showintrotext')) : ?>
 		<div class="description no_space floattext">
 			<?php echo $this->params->get('introtext'); ?>
 		</div>
 		<p> </p>
 	<?php endif; ?>
+	
+<!-- calendar -->
 <div class="calendarbox">
-	<?php
+<?php
+
+	# look for specialdays
+	# @todo alter
 	if ($this->special_days) {
 	
 		# Add additional days
 		foreach($this->special_days AS $special_day) {
 			
-		# parse the date value
-		$date = date_parse_from_format("Y-m-d", $special_day['date']);
+			# parse the date value
+			$date = date_parse_from_format("Y-m-d", $special_day['date']);
 	
-		# define array for startdate_org
-		$date = array(
-		'year' => $date['year'],
-		'month' => $date['month'],
-		'day' => $date['day']
-		);
+			# define array for startdate_org
+			$date = array(
+				'year' => $date['year'],
+				'month' => $date['month'],
+				'day' => $date['day']
+			);
 	
-		
-		$icon = JHtml::_('image', 'com_jem/calculator_error.png', $special_day['calendar_name'], NULL, true).' '.$special_day['calendar_name'];
-		
-		$this->cal->setEventContent($date['year'],$date['month'],$date['day'],$icon);
+			$icon = JHtml::_('image', 'com_jem/calculator_error.png', $special_day['calendar_name'], NULL, true).' '.$special_day['calendar_name'];
+			$this->cal->setEventContent($date['year'],$date['month'],$date['day'],$icon);
+		}
 	}
 	
-	}
-	
-	
-	
+	# define variables
 	$countcatevents = array ();
-	$countperday = array();
-	$limit = $this->params->get('daylimit', 10);
+	$countperday	= array();
+	$limit			= $this->params->get('daylimit', 10);
 
+	$catinfo			= array();
+	
+	# loop
 	foreach ($this->rows as $row) :
 		if (!JemHelper::isValidDate($row->dates)) {
-			continue; // skip, open date !
+			continue; // skip events with open date !
 		}
 
-		//get event date
-		$year = strftime('%Y', strtotime($row->dates));
-		$month = strftime('%m', strtotime($row->dates));
-		$day = strftime('%d', strtotime($row->dates));
+		// get event date
+		$year	= strftime('%Y', strtotime($row->dates));
+		$month	= strftime('%m', strtotime($row->dates));
+		$day	= strftime('%d', strtotime($row->dates));
 
 		@$countperday[$year.$month.$day]++;
 		if ($countperday[$year.$month.$day] == $limit+1) {
@@ -115,15 +118,17 @@ JHtml::_('bootstrap.tooltip');
 		$ix = 0;
 		$content = '';
 		$contentend = '';
-
+		
+		$catz = array();
+		
+		
 		//walk through categories assigned to an event
 		foreach($row->categories AS $category) {
 			//Currently only one id possible...so simply just pick one up...
 			$detaillink = JRoute::_(JemHelperRoute::getEventRoute($row->slug));
 
 			//wrap a div for each category around the event for show hide toggler
-			$content    .= '<div id="catz" class="cat'.$category->id.'">';
-			$contentend .= '</div>';
+			$catz[]= 'cat'.$category->id;
 
 			//attach category color if any in front of the catname
 			if ($category->color) {
@@ -150,8 +155,20 @@ JHtml::_('bootstrap.tooltip');
 					$countcatevents[$category->id]++;
 				}
 			}
+			
+			
+			$catinfo[] = array('catid' => $category->id,'color' => $category->color);
+			
 		}
-
+		// end of category-loop
+		
+		$catz = implode(' ',$catz);
+		
+		$content    .= '<div id="catz" hidecat="" class="'.$catz.'">';
+		$contentend .= '</div>';
+		
+		
+		
 		$color  = '<div id="eventcontenttop" class="eventcontenttop">';
 		$color .= $colorpic;
 		$color .= '</div>';
@@ -182,7 +199,8 @@ JHtml::_('bootstrap.tooltip');
 						if ($end != '') {
 							$timetp .= ' - '.$end;
 						}
-						$timetp .= '<br />';
+						//$timetp .= '<br />';
+						$timetp .= ' ';
 					}
 				}
 			}
@@ -225,13 +243,21 @@ JHtml::_('bootstrap.tooltip');
 		$multidaydate .= '</div>';
 
 		//generate the output
-		$content .= $colorpic;
 		$content .= JemHelper::caltooltip($catname.$eventname.$timehtml.$venue, $eventdate, $row->title, $detaillink, 'hasTooltip', $timetp, $category->color);
+		$content .= $colorpic;
 		$content .= $contentend;
 
 		$this->cal->setEventContent($year, $month, $day, $content);
 	endforeach;
-
+	
+	$catinfo	= JemHelper::arrayUnique($catinfo);
+	
+	// create hidden input fields
+	foreach ($catinfo as $val) {
+		echo "<input name='category".$val['catid']."' type='hidden' value='".$val['color']."'>";	
+	}
+	echo "<input id='usebgcatcolor' name='usebgcatcolor' type='hidden' value='".$this->params->get('usebgcatcolor','0')."'>";
+	
 	// print the calendar
 	echo $this->cal->showMonth();
 	?>

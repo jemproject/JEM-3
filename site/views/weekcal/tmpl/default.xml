@@ -53,8 +53,17 @@
 				label="COM_JEM_CALENDAR_EVENTBACKGROUNDCOLOR"
 				description="COM_JEM_CALENDAR_EVENTBACKGROUNDCOLOR_DESC"
 			/>
+			<field name="usebgcatcolor" type="radio"
+				default="0"
+				label="COM_JEM_CALENDAR_USEBACKGROUNDCATEGORYCOLOR"
+				description="COM_JEM_CALENDAR_USEBACKGROUNDCATEGORYCOLOR_DESC"
+				class="btn-group btn-group-yesno"
+			>
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
 			<field name="currentdaycolor" type="color"
-				default="#CCCC99"
+				default="#823456"
 				label="COM_JEM_CALENDAR_CURRENTDAYCOLOR"
 				description="COM_JEM_CALENDAR_CURRENTDAYCOLOR_DESC"
 			/>

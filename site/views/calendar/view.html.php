@@ -38,22 +38,11 @@ class JemViewCalendar extends JViewLegacy
 		$eventandmorecolor = $params->get('eventandmorecolor');
 
 		$style = '
-		div[id^=\'catz\'] a {
-			color:' . $evlinkcolor . ';
-		}
-		div[id^=\'catz\'] {
-			background-color:'.$evbackgroundcolor .';
-		}
-		.eventcontent {
-			background-color:'.$evbackgroundcolor .';
-		}
-		.eventandmore {
-			background-color:'.$eventandmorecolor .';
-		}
-
-		.today .daynum {
-			background-color:'.$currentdaycolor.';
-		}';
+		div[id^=\'catz\'] a {color:' . $evlinkcolor . ';}
+		div[id^=\'catz\'] {background-color:'.$evbackgroundcolor .';}
+		.eventcontent {background-color:'.$evbackgroundcolor .';}
+		.eventandmore {background-color:'.$eventandmorecolor .';}
+		.today .daynum {background-color:'.$currentdaycolor.';}';
 
 		$document->addStyleDeclaration($style);
 

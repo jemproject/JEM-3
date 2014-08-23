@@ -61,12 +61,16 @@ class JemViewCategory extends JEMView
 			$eventandmorecolor = $params->get('eventandmorecolor');
 
 			$style = '
-			div[id^=\'scat\'] a {color:' . $evlinkcolor . ';}
-			div[id^=\'scat\'] {background-color:'.$evbackgroundcolor .';}
+			div[id^=\'catz\'] a {color:' . $evlinkcolor . ';}
+			div[id^=\'catz\'] {background-color:'.$evbackgroundcolor .';}
 			.eventcontent {background-color:'.$evbackgroundcolor .';}
 			.eventandmore {background-color:'.$eventandmorecolor .';}
 			.today .daynum {background-color:'.$currentdaycolor.';}';
 			$document->addStyleDeclaration($style);
+			
+			JHtml::_('behavior.framework','1.4.0.1');
+			// add javascript (using full path - see issue #590)
+			JHtml::_('script', 'media/com_jem/js/calendar.js');
 
 			// Retrieve date variables
 			$year	= JFactory::getApplication()->input->request->getInt('yearID', strftime("%Y"));

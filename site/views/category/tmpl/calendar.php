@@ -31,6 +31,7 @@ defined('_JEXEC') or die;
 	$countcatevents = array ();
 	$countperday = array();
 	$limit = $this->params->get('daylimit', 10);
+	$catinfo	= array();
 
 	foreach ($this->rows as $row) :
 		if (!JemHelper::isValidDate($row->dates)) {
@@ -96,6 +97,9 @@ defined('_JEXEC') or die;
 		$ix = 0;
 		$content = '';
 		$contentend = '';
+		
+		$catz = array();
+		
 
 		//walk through categories assigned to an event
 		foreach($row->categories AS $category) {
@@ -103,12 +107,11 @@ defined('_JEXEC') or die;
 			$detaillink = JRoute::_(JemHelperRoute::getEventRoute($row->slug));
 
 			//wrap a div for each category around the event for show hide toggler
-			$content    .= '<div id="scat" class="cat'.$category->id.'">';
-			$contentend .= '</div>';
-
+			$catz[]= 'cat'.$category->id;
+			
 			//attach category color if any in front of the catname
 			if ($category->color) {
-				$multicatname .= '<span class="colorpic" style="background-color: '.$category->color.';"></span>&nbsp;'.$category->catname;
+				$multicatname .= '<span class="colorpic" style="width:6px;background-color: '.$category->color.';"></span>&nbsp;'.$category->catname;
 			} else {
 				$multicatname .= $category->catname;
 			}
@@ -120,7 +123,7 @@ defined('_JEXEC') or die;
 
 			//attach category color if any in front of the event title in the calendar overview
 			if (isset($category->color) && $category->color) {
-				$colorpic .= '<span class="colorpic" style="background-color: '.$category->color.';"></span>';
+				$colorpic .= '<span class="colorpic" style="width:6px;background-color: '.$category->color.';"></span>';
 			}
 
 			//count occurence of the category
@@ -129,8 +132,18 @@ defined('_JEXEC') or die;
 			} else {
 				$countcatevents[$category->id]++;
 			}
+			
+			$catinfo[] = array('catid' => $category->id,'color' => $category->color);
 		}
 
+		$catz = implode(' ',$catz);
+		
+		//wrap a div for each category around the event for show hide toggler
+		$content    .= '<div id="catz" class="'.$catz.'">';
+		$contentend .= '</div>';
+		
+		
+		
 		//for time in calendar
 		$timetp = '';
 
@@ -199,12 +212,20 @@ defined('_JEXEC') or die;
 		$multidaydate .= '</div>';
 
 		//generate the output
-		//$content .= $colorpic;
+		$content .= $colorpic;
 		$content .= JemHelper::caltooltip($catname.$eventname.$timehtml.$venue, $eventdate, $row->title, $detaillink, 'hasTooltip', $timetp, $category->color);
 		$content .= $contentend;
 
 		$this->cal->setEventContent($year, $month, $day, $content);
 	endforeach;
+	
+	$catinfo	= JemHelper::arrayUnique($catinfo);
+	
+	// create hidden input fields
+	foreach ($catinfo as $val) {
+		echo "<input name='category".$val['catid']."' type='hidden' value='".$val['color']."'>";
+	}
+	echo "<input id='usebgcatcolor' name='usebgcatcolor' type='hidden' value='".$this->params->get('usebgcatcolor','0')."'>";
 
 	// print the calendar
 	echo $this->cal->showMonth();
