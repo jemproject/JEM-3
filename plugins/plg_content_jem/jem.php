@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 3.0.1
+ * @version 3.0.2
  * @package JEM
  * @subpackage JEM Content Plugin
  * @copyright (C) 2013-2014 joomlaeventmanager.net

@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 3.0.1
+ * @version 3.0.2
  * @package JEM
  * @copyright (C) 2013-2014 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -29,11 +29,8 @@ require_once (JPATH_COMPONENT_ADMINISTRATOR.'/helpers/helper.php');
 # load recurrence files
 JLoader::registerNamespace('Recurr', JPATH_COMPONENT_SITE . '/classes');
 
-// Set the table directory
+# Set the table directory
 JTable::addIncludePath(JPATH_COMPONENT.'/tables');
-
-// import joomla controller library
-jimport('joomla.application.component.controller');
 
 # perform cleanup if it wasn't done today (archive, delete, recurrence)
 JemHelper::cleanup();
