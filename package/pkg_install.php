@@ -45,6 +45,7 @@ class Pkg_JemInstallerScript {
 		);
 
 	public function install($parent) {
+		// $this->getHeader();
 		return true;
 	}
 
@@ -53,6 +54,7 @@ class Pkg_JemInstallerScript {
 	}
 
 	public function update($parent) {
+		// $this->getHeader();
 		return self::install($parent);
 	}
 
@@ -169,5 +171,16 @@ class Pkg_JemInstallerScript {
 			}
 		}
 		return true;
+	}
+	
+	/**
+	 * Helper method that outputs a short JEM header with logo and text
+	 */
+	private function getHeader() {
+		?>
+		<img src="../media/com_jem/images/jemlogo.png" alt="" style="float:left; padding-right:20px;" />
+		<h1><?php echo JText::_('PKG_JEM'); ?></h1>
+		<p class="small"><?php echo JText::_('PKG_JEM_INSTALLATION_HEADER'); ?></p>
+		<?php
 	}
 }

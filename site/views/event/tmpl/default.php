@@ -24,7 +24,7 @@ $mapType = $this->mapType;
 
 <div id="jem" class="event_id<?php echo $this->item->did; ?> jem_event<?php echo $this->pageclass_sfx;?>"
 	itemscope="itemscope" itemtype="http://schema.org/Event">
-<div class="topbox">	
+<div class="topbox">	                                                    
 	<div class="btn-group pull-right hidden-phone">
 		<?php 
 			if ($this->print) { 
@@ -78,7 +78,7 @@ $mapType = $this->mapType;
 
 <!-- EVENT-INFO -->	
 <?php if ($this->img_position == 1) { ?>
-<div class="row-fluid container">
+<div class="row-fluid container-fluid">
 	<div class="span12 row">
 		<div class="span7 col-md-7">	
 <?php } ?>
