@@ -90,10 +90,9 @@ abstract class modJEMteaserHelper
 		$model->setState('filter.groupby','a.id');
 
 		# clean parameter data
-		$catids = JemHelper::getValidIds($params->get('catid'));
-		$venids = JemHelper::getValidIds($params->get('venid'));
-		$eventids = JemHelper::getValidIds($params->get('eventid'));
-		
+		$catids = $params->get('catid');
+		$venids = $params->get('venid');
+		$eventids = $params->get('eventid');
 		
 		# filter category's
 		if ($catids) {

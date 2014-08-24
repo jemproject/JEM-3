@@ -82,20 +82,26 @@
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
 				</field>
-				<field name="catid" type="text"
+				<field name="catid" type="categoryedit"
 					default=""
 					label="MOD_JEM_WIDE_CATEGORY_ID"
 					description="MOD_JEM_WIDE_CATEGORY_ID_DESC"
+					multiple="true"
+					autocomplete="true"
 				/>
-				<field name="venid" type="text"
+				<field name="venid" type="venueoptions"
 					default=""
 					label="MOD_JEM_WIDE_VENUE_ID"
 					description="MOD_JEM_WIDE_VENUE_ID_DESC"
+					multiple="true"
+					autocomplete="true"
 				/>
-				<field name="eventid" type="text"
+				<field name="eventid" type="eventoptions"
 					default=""
 					label="MOD_JEM_WIDE_EVENT_ID"
 					description="MOD_JEM_WIDE_EVENT_ID_DESC"
+					multiple="true"
+					autocomplete="true"
 				/>
 				<field name="datemethod" type="list"
 					default="1"

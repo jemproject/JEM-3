@@ -20,8 +20,8 @@
 	</files>
 
 	<config>
-		<fields name="params">
-			<fieldset name="basic">
+		<fields name="params" >
+			<fieldset name="basic" addfieldpath="/administrator/components/com_jem/models/fields">
 				<field 
 					name="Default_Stylesheet" 
 					type="radio"
@@ -256,24 +256,30 @@
 				/>
 				<field 
 					name="catid" 
-					type="text"
+					type="categoryedit"
 					default=""
 					label="MOD_JEM_CAL_CATID"
 					description="MOD_JEM_CAL_CATID_DESC"
+					multiple="true"
+					autocomplete="true"
 				/>
 				<field 
 					name="venid" 
-					type="text"
+					type="venueoptions"
 					default=""
 					label="MOD_JEM_CAL_VENID"
 					description="MOD_JEM_CAL_VENID_DESC"
+					multiple="true"
+					autocomplete="true"
 				/>
 				<field 
 					name="eventid" 
-					type="text"
+					type="eventoptions"
 					default=""
 					label="MOD_JEM_CAL_EVENTID"
 					description="MOD_JEM_CAL_EVENTID_DESC"
+					multiple="true"
+					autocomplete="true"
 				/>
 				<field
 					name="FixItemID" 

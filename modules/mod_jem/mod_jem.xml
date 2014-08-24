@@ -71,20 +71,26 @@
 					<option value="1">MOD_JEM_DATE</option>
 					<option value="2">MOD_JEM_TITLE</option>
 				</field>
-				<field name="catid" type="text"
+				<field name="catid" type="categoryedit"
 					default=""
 					label="MOD_JEM_CATEGORY_ID"
 					description="MOD_JEM_CATEGORY_ID_DESC"
+					multiple="true"
+					autocomplete="true"
 				/>
-				<field name="venid" type="text"
+				<field name="venid" type="venueoptions"
 					default=""
 					label="MOD_JEM_VENUE_ID"
 					description="MOD_JEM_VENUE_ID_DESC"
+					multiple="true"
+					autocomplete="true"
 				/>
-				<field name="eventid" type="text"
+				<field name="eventid" type="eventoptions"
 					default=""
 					label="MOD_JEM_EVENT_ID"
 					description="MOD_JEM_EVENT_ID_DESC"
+					multiple="true"
+					autocomplete="true"
 				/>
 				<field name="formatdate" type="customtooltip"
 					default="D, j. F Y"

@@ -69,9 +69,9 @@ abstract class modJEMHelper
 		$model->setState('filter.groupby','a.id');
 
 		# clean parameter data
-		$catids = JemHelper::getValidIds($params->get('catid'));
-		$venids = JemHelper::getValidIds($params->get('venid'));
-		$eventids = JemHelper::getValidIds($params->get('eventid'));
+		$catids = $params->get('catid');
+		$venids = $params->get('venid');
+		$eventids = $params->get('eventid');
 		
 		# filter category's
 		if ($catids) {
@@ -91,7 +91,6 @@ abstract class modJEMHelper
 			$model->setState('filter.event_id.include',true);
 		}
 		
-
 		# count
 		$count = $params->get('count', '2');
 
