@@ -1104,7 +1104,7 @@ class JEMOutput {
 						$path = $category->path;
 						$path = str_replace('/',' &#187; ',$path);
 
-						$value = '<span class="editlinktip hasTip" title="'.JText::_( 'COM_JEM_EDIT_CATEGORY' ).'::'.$path.'">';
+						$value = '<span class="hasTooltip" title="'.JHtml::tooltipText(JText::_('COM_JEM_EDIT_CATEGORY'), $path, 0).'">';
 						$value .= '<a href="index.php?option=com_jem&amp;task=category.edit&amp;id='. $category->id.'">'.
 								$category->catname.'</a>';
 						$value .= '</span>';
