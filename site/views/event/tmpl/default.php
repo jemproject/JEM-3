@@ -110,7 +110,14 @@ $mapType = $this->mapType;
 					echo $this->escape($this->item->venue).' - ';
 				endif;
 
-				echo $this->escape($this->item->city).', '.$this->escape($this->item->state); ?>
+				if ($this->item->city && $this->item->state) {
+					echo $this->escape($this->item->city).', '.$this->escape($this->item->state);
+				} else { 
+					if ($this->item->city) {
+						echo $this->escape($this->item->city);
+					}
+				}
+				 ?>
 			</dd>
 		<?php endif;
 			$n = count($this->categories);
