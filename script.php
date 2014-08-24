@@ -252,6 +252,11 @@ class com_jemInstallerScript
 
 		if ($type == 'update') {
 
+			// Changes between 3.0.2 -> 3.0.3
+			if (version_compare($this->oldRelease, '3.0.3', 'lt') && version_compare($this->newRelease, '3.0.2', 'gt')) {
+				$this->update303();
+			}
+
 		}
 	}
 
@@ -390,7 +395,7 @@ class com_jemInstallerScript
 	private function deleteObsoleteFiles()
 	{
 		$files = array(
-			# since 3.0.2
+			# 3.0.1 -> 3.0.2
 			'/administrator/components/com_jem/tables/category.php',
 			'/administrator/components/com_jem/tables/date.php',
 			'/administrator/components/com_jem/tables/event.php',
@@ -407,7 +412,14 @@ class com_jemInstallerScript
 			'/administrator/components/com_jem/tables/recurrencemaster.php',
 			'/administrator/components/com_jem/tables/venue.php',
 			'/administrator/components/com_jem/views/attendee/tmpl/default.php',
-			'/media/com_jem/js/highlighter.js'
+			'/media/com_jem/js/highlighter.js',
+			# 3.0.2 -> 3.0.3
+			'/components/com_jem/models/categorycal.php',
+			'/components/com_jem/models/venuecal.php',
+			'/components/com_jem/views/category/tmpl/calendar.php',
+			'/components/com_jem/views/category/tmpl/calendar.xml',
+			'/components/com_jem/views/venue/tmpl/calendar.php',
+			'/components/com_jem/views/venue/tmpl/calendar.xml'
 		);
 		$folders = array();
 
@@ -422,6 +434,15 @@ class com_jemInstallerScript
 				echo JText::sprintf('FILES_JOOMLA_ERROR_FILE_FOLDER', $folder).'<br />';
 			}
 		}
+	}
+	
+	
+	/**
+	 * Updating files: 302->303
+	 */
+	private function update303(){
+
+		
 	}
 
 

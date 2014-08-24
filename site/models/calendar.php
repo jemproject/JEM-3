@@ -44,7 +44,6 @@ class JemModelCalendar extends JemModelEventslist
 		$itemid 		= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
 		$params 		= $app->getParams();
 		$task           = $jinput->getCmd('task');
-		$top_category 	= $params->get('top_category', 0);
 		$startdayonly 	= $params->get('show_only_start', false);
 
 		# params
@@ -73,16 +72,27 @@ class JemModelCalendar extends JemModelEventslist
 		$where = ' DATEDIFF(a.dates, '. $filter_date_to .') <= 0';
 		$this->setState('filter.calendar_to',$where);
 
-		##################
-		## TOP-CATEGORY ##
-		##################
-
-		if ($top_category) {
-			$children = JEMCategories::getChilds($top_category);
-			if (count($children)) {
-				$where = 'rel.catid IN ('. implode(',', $children) .')';
-				$this->setState('filter.category_top', $where);
-			}
+		#####################
+		## FILTER-CATEGORY ##
+		#####################
+		
+		$catids = $params->get('catids');
+		$venids = $params->get('venueids');
+		$eventids = $params->get('eventids');
+		
+		if ($catids) {
+			$this->setState('filter.category_id',$catids);
+			$this->setState('filter.category_id.include',true);
+		}
+		
+		if ($venids) {
+			$this->setState('filter.venue_id',$venids);
+			$this->setState('filter.venue_id.include',false);
+		}
+		
+		if ($eventids) {
+			$this->setState('filter.event_id',$eventids);
+			$this->setState('filter.event_id.include',false);
 		}
 
 		# set filter
@@ -126,7 +136,8 @@ class JemModelCalendar extends JemModelEventslist
 		$query->select('DATEDIFF(a.enddates, a.dates) AS datesdiff,DAYOFMONTH(a.dates) AS start_day, YEAR(a.dates) AS start_year, MONTH(a.dates) AS start_month');
 
 		// here we can extend the query of the Eventslist model
-
+		
+		
 		return $query;
 	}
 	

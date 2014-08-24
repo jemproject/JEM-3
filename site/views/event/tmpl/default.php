@@ -24,7 +24,7 @@ $mapType = $this->mapType;
 
 <div id="jem" class="event_id<?php echo $this->item->did; ?> jem_event<?php echo $this->pageclass_sfx;?>"
 	itemscope="itemscope" itemtype="http://schema.org/Event">
-<div class="topbox">	                                                    
+<div class="topbox">	
 	<div class="btn-group pull-right hidden-phone">
 		<?php 
 			if ($this->print) { 

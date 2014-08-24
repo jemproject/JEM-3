@@ -25,96 +25,7 @@ class JemViewVenue extends JEMView {
 	 * Creates the Venue View
 	 */
 	function display($tpl = null) {
-		if ($this->getLayout() == 'calendar') {
-			$app 	= JFactory::getApplication();
-			$jinput = $app->input;
-
-			// initialize variables
-			$document 		= JFactory::getDocument();
-			$menu 			= $app->getMenu();
-			$menuitem		= $menu->getActive();
-			$jemsettings	= JEMHelper::config();
-			$params 		= $app->getParams();
-			$uri 			= JFactory::getURI();
-			$pathway 		= $app->getPathWay();
-			$jinput 		= $app->input;
-			$print			= $jinput->getBool('print');
-
-			# load css
-			JemHelper::loadCss('jem');
-			JemHelper::loadCss('calendar');
-			JemHelper::loadCustomCss();
-			JemHelper::loadCustomTag();
-
-			if ($print) {
-				JemHelper::loadCss('print');
-				$document->setMetaData('robots', 'noindex, nofollow');
-			}
-
-			$evlinkcolor = $params->get('eventlinkcolor');
-			$evbackgroundcolor = $params->get('eventbackgroundcolor');
-			$currentdaycolor = $params->get('currentdaycolor');
-			$eventandmorecolor = $params->get('eventandmorecolor');
-
-			$style = '
-			div[id^=\'catz\'] a {color:' . $evlinkcolor . ';}
-			div[id^=\'catz\'] {background-color:' . $evbackgroundcolor . ';}
-			.eventcontent {background-color:'.$evbackgroundcolor .';}
-			.eventandmore {background-color:' . $eventandmorecolor . ';}
-			.today .daynum {background-color:' . $currentdaycolor . ';}';
-			$document->addStyleDeclaration ($style);
-
-			JHtml::_('behavior.framework','1.4.0.1');
-			// add calendar-js (using full path - see issue #590)
-			JHtml::_('script', 'media/com_jem/js/calendar.js');
-
-			// Retrieve year/month variables
-			$year = $jinput->getInt('yearID', strftime("%Y"));
-			$month = $jinput->getInt('monthID', strftime("%m"));
-
-			// get data from model and set the month
-			$model = $this->getModel('VenueCal');
-			$model->setDate(mktime(0, 0, 1, $month, 1, $year));
-			$rows = $this->get('Items','VenueCal');
-
-			// Set Page title
-			$pagetitle = $params->def('page_title', $menuitem->title);
-			$params->def('page_heading', $params->get('page_title'));
-			$pageclass_sfx = $params->get('pageclass_sfx');
-
-			// Add site name to title if param is set
-			if ($app->getCfg('sitename_pagetitles', 0) == 1) {
-				$pagetitle = JText::sprintf('JPAGETITLE', $app->getCfg('sitename'), $pagetitle);
-			}
-			elseif ($app->getCfg('sitename_pagetitles', 0) == 2) {
-				$pagetitle = JText::sprintf('JPAGETITLE', $pagetitle, $app->getCfg('sitename'));
-			}
-
-			$document->setTitle($pagetitle);
-			$document->setMetaData('title', $pagetitle);
-
-			// init calendar
-			$itemid = $jinput->getInt('Itemid');
-			$venueID = $params->get('id');
-
-			$partItemid = ($itemid > 0) ? '&Itemid='.$itemid : '';
-			$partVenid = ($venueID > 0) ? '&id=' . $venueID : '';
-			$cal = new JEMCalendar($year, $month, 0, $app->getCfg('offset'));
-			$cal->enableMonthNav('index.php?view=venue&layout=calendar'.$partVenid.$partItemid);
-			$cal->setFirstWeekDay($params->get('firstweekday',1));
-			$cal->enableDayLinks(false);
-
-			// map variables
-			$this->rows 			= $rows;
-			$this->params 			= $params;
-			$this->jemsettings 		= $jemsettings;
-			$this->cal 				= $cal;
-			$this->pageclass_sfx	= htmlspecialchars($pageclass_sfx);
-
-		} else {
-
-
-
+		
 			// initialize variables
 			$app 			= JFactory::getApplication();
 			$jinput 		= $app->input;
@@ -344,7 +255,6 @@ class JemViewVenue extends JEMView {
 			$this->allowedtoeditvenue 	= $allowedtoeditvenue;
 			$this->pageclass_sfx		= htmlspecialchars($pageclass_sfx);
 			$this->print				= $print;
-		}
 
 		parent::display($tpl);
 	}

@@ -5,11 +5,36 @@
 			<![CDATA[COM_JEM_CALENDAR_VIEW_DEFAULT_DESC]]>
 		</message>
 	</layout>
-
+	
 	<fields name="params">
 		<fieldset name="basic"
 			addfieldpath="/administrator/components/com_jem/models/fields"
 		>
+			<field name="catids" type="categoryedit"
+				default=""
+				label="COM_JEM_CALENDAR_SELECT_CATEGORIES"
+				description="COM_JEM_CALENDAR_SELECT_CATEGORIES_DESC"
+				multiple="true"
+				required="true"
+				autocomplete="true"
+			/>
+			<field name="venueids" type="venueoptions"
+				default=""
+				label="COM_JEM_CALENDAR_SELECT_VENUES"
+				description="COM_JEM_CALENDAR_SELECT_VENUES_DESC"
+				multiple="true"
+				required="false"
+				autocomplete="true"
+			/>
+			<field name="eventids" type="eventoptions"
+				default=""
+				label="COM_JEM_CALENDAR_SELECT_EVENTS"
+				description="COM_JEM_CALENDAR_SELECT_EVENTS_DESC"
+				multiple="true"
+				required="false"
+				autocomplete="true"
+			/>
+			<field type="spacer" name="spacer1" hr="true"></field>
 			<field name="introtext" type="textarea"
 				filter="safehtml"
 				default=""
@@ -54,11 +79,6 @@
 				<option value="0">COM_JEM_SUNDAY</option>
 				<option value="1">COM_JEM_MONDAY</option>
 			</field>
-			<field name="top_category" type="modal_categories"
-				default="0"
-				label="COM_JEM_SELECT_TOP_CATEGORY"
-				description="COM_JEM_SELECT_TOP_CATEGORY_DESC"
-			/>
 			<field name="daylimit" type="text"
 				default="10"
 				label="COM_JEM_MAX_EVENTS_PER_DAY"

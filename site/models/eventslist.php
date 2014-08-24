@@ -419,13 +419,13 @@ class JemModelEventslist extends JModelList
 		
 		if (is_numeric($venueId)) {
 			$type = $this->getState('filter.venue_id.include', true) ? '= ' : '<> ';
-			$query->where('l.id '.$type.(int) $venueId);
+			$query->where('a.locid '.$type.(int) $venueId);
 		}
 		elseif (is_array($venueId)) {
 			JArrayHelper::toInteger($venueId);
 			$venueId = implode(',', $venueId);
 			$type = $this->getState('filter.venue_id.include', true) ? 'IN' : 'NOT IN';
-			$query->where('l.id '.$type.' ('.$venueId.')');
+			$query->where('a.locid '.$type.' ('.$venueId.')');
 		}
 		
 

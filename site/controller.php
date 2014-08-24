@@ -70,23 +70,7 @@ class JemController extends JControllerLegacy
 					break;
 			}
 
-			// Push the model into the view
-			if ($viewName == 'venue') {
-				$model1 = $this->getModel('Venue');
-				$model2 = $this->getModel('VenueCal');
-
-				$view->setModel($model1, true);
-				$view->setModel($model2);
-			} elseif($viewName == 'category') {
-				$model1 = $this->getModel('Category');
-				$model2 = $this->getModel('CategoryCal');
-
-				$view->setModel($model1, true);
-				$view->setModel($model2);
-			} else {
-				$view->setModel($model, true);
-			}
-
+			$view->setModel($model, true);
 			$view->setLayout($layoutName);
 
 			// Push document object into the view.
