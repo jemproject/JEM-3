@@ -55,17 +55,8 @@
 			<field type="spacer" name="myspacer2" hr="true" />
 			<field name="displayLegend" type="radio"
 				default="1"
-				label="COM_JEM_DISPLAY_LEGEND"
-				description="COM_JEM_DISPLAY_LEGEND_DESC"
-				class="btn-group btn-group-yesno"
-			>
-				<option value="0">JNO</option>
-				<option value="1">JYES</option>
-			</field>
-			<field name="show_only_start" type="radio"
-				default="1"
-				label="COM_JEM_SHOWONLYSTARTDAY"
-				description="COM_JEM_SHOWONLYSTARTDAY_DESC"
+				label="COM_JEM_CALENDAR_SHOW_LEGEND"
+				description="COM_JEM_CALENDAR_SHOW_LEGEND_DESC"
 				class="btn-group btn-group-yesno"
 			>
 				<option value="0">JNO</option>
@@ -73,16 +64,16 @@
 			</field>
 			<field name="firstweekday" type="list"
 				default="1"
-				label="COM_JEM_SELECTFIRSTWEEKDAY"
-				description="COM_JEM_SELECTFIRSTWEEKDAYDESC"
+				label="COM_JEM_CALENDAR_FIRSTWEEKDAY"
+				description="COM_JEM_CALENDAR_FIRSTWEEKDAY_DESC"
 			>
 				<option value="0">COM_JEM_SUNDAY</option>
 				<option value="1">COM_JEM_MONDAY</option>
 			</field>
 			<field name="daylimit" type="text"
 				default="10"
-				label="COM_JEM_MAX_EVENTS_PER_DAY"
-				description="COM_JEM_MAX_EVENTS_PER_DAY_DESC"
+				label="COM_JEM_CALENDAR_MAXEVENTS"
+				description="COM_JEM_CALENDAR_MAXEVENTS_DESC"
 			/>
 			<field name="eventlinkcolor" type="color"
 				default="#000000"
