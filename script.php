@@ -442,8 +442,69 @@ class com_jemInstallerScript
 	 */
 	private function update303(){
 
-		
+		require_once (JPATH_COMPONENT_SITE.'/classes/categories.class.php');
+
+		# update calendar entries
+		$types = array('calendar','category','venue');
+
+		foreach ($types as $type) :
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$query->select('id, link, params');
+			$query->from('#__menu');
+			
+			if ($type == 'calendar') {
+				$query->where(array("link LIKE 'index.php?option=com_jem&view=calendar'"));
+			} else {
+				$query->where(array("link LIKE 'index.php?option=com_jem&view=".$type."&layout=calendar%'"));
+			}
+			
+			$query->order('id');
+			$db->setQuery($query);
+			$items = $db->loadObjectList();
+	
+			foreach ($items as $item) :
+			
+				# set params
+				$params = json_decode($item->params, true);
+			
+				if ($type == 'category' || $type == 'venue') {
+					# get id nr
+					$id = strstr($item->link, '&id=');
+					$id = str_replace('&id=', '', $id);
+	
+					if ($type == 'category') {
+						$params['catids'] = $id;
+						$params['catidsfilter'] = 1;
+					}
+
+					if ($type == 'venue') {
+						$params['venueids'] = $id;
+						$params['venueidsfilter'] = 1;
+					}
+				}
+			
+				if ($type == 'calendar') {
+					# retrieve value 'top_category'
+					$top_category	= $params['top_category'];
+					$children = JEMCategories::getChilds($top_category);
+					if (count($children)) {
+						$params['catids'] = implode(',', $children);
+						$params['catidsfilter'] = 1;
+					}
+				}
+				
+				# store params + new link value
+				$paramsString = json_encode($params);
+						
+				$query = $db->getQuery(true);
+				$query->update('#__menu')
+				->set(array('params = '.$db->quote($paramsString),'link = '.$db->Quote('index.php?option=com_jem&view=calendar')))
+				->where(array("id = ".$item->id));
+				$db->setQuery($query);
+				$db->query();
+									
+			endforeach;
+		endforeach;		
 	}
-
-
 }

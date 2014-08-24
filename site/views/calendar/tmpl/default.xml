@@ -10,6 +10,7 @@
 		<fieldset name="basic"
 			addfieldpath="/administrator/components/com_jem/models/fields"
 		>
+			<field type="spacer" hr="true"></field>
 			<field name="catids" type="categoryedit"
 				default=""
 				label="COM_JEM_CALENDAR_SELECT_CATEGORIES"
@@ -18,6 +19,15 @@
 				required="true"
 				autocomplete="true"
 			/>
+			<field name="catidsfilter" type="list"
+				default="1"
+				label="COM_JEM_GLOBAL_FIELD_HIDESHOW"
+				description="COM_JEM_GLOBAL_FIELD_HIDESHOW_DESC"
+			>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+			<field type="spacer" hr="true"></field>
 			<field name="venueids" type="venueoptions"
 				default=""
 				label="COM_JEM_CALENDAR_SELECT_VENUES"
@@ -26,6 +36,15 @@
 				required="false"
 				autocomplete="true"
 			/>
+			<field name="venueidsfilter" type="list"
+				default="1"
+				label="COM_JEM_GLOBAL_FIELD_HIDESHOW"
+				description="COM_JEM_GLOBAL_FIELD_HIDESHOW_DESC"
+			>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+			<field type="spacer" hr="true"></field>
 			<field name="eventids" type="eventoptions"
 				default=""
 				label="COM_JEM_CALENDAR_SELECT_EVENTS"
@@ -34,6 +53,14 @@
 				required="false"
 				autocomplete="true"
 			/>
+			<field name="eventidsfilter" type="list"
+				default="1"
+				label="COM_JEM_GLOBAL_FIELD_HIDESHOW"
+				description="COM_JEM_GLOBAL_FIELD_HIDESHOW_DESC"
+			>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
 			<field type="spacer" name="spacer1" hr="true"></field>
 			<field name="introtext" type="textarea"
 				filter="safehtml"

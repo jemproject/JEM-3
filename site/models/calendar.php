@@ -82,17 +82,25 @@ class JemModelCalendar extends JemModelEventslist
 		
 		if ($catids) {
 			$this->setState('filter.category_id',$catids);
+			
+			
 			$this->setState('filter.category_id.include',true);
+			
 		}
 		
 		if ($venids) {
 			$this->setState('filter.venue_id',$venids);
+			
+			
 			$this->setState('filter.venue_id.include',false);
+			
 		}
 		
 		if ($eventids) {
 			$this->setState('filter.event_id',$eventids);
+			
 			$this->setState('filter.event_id.include',false);
+			
 		}
 
 		# set filter
