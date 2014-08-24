@@ -1308,6 +1308,7 @@ class JEMModelImport extends JModelLegacy {
 			}
 				
 			$object = JTable::getInstance($tablename, 'JEMTable');
+			
 			$object->bind($row, $ignore);
 	
 			// Make sure the data is valid

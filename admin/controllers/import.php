@@ -374,7 +374,7 @@ class JemControllerImport extends JControllerLegacy {
 			}
 			
 			# Copy Attachments
-			if ($model->getEventlistVersion == '1.1.x') {
+			if ($model->getEventlistVersion() == '1.1.x') {
 				if($copyAttachments) {
 					$model->copyAttachments();
 					$msg .= JText::_('COM_JEM_IMPORT_JEM_IMPORT_WORKING_STEP_COPY_ATTACHMENTS');

@@ -10,30 +10,19 @@ defined('_JEXEC') or die;
 
 
 /**
- * Table: Groups
+ * Table: Groupmembers
  */
-class JEMTableGroups extends JTable
+class JEMTableGroupmembers extends JTable
 {
 	public function __construct(&$db)
 	{
-		parent::__construct('#__jem_groups', 'id', $db);
+		parent::__construct('#__jem_groupmembers', 'id', $db);
 	}
 
 
 	// overloaded check function
 	function check()
 	{
-		// Not typed in a category name?
-		if (trim($this->name ) == '') {
-			$this->setError(JText::_('COM_JEM_ADD_GROUP_NAME'));
-			return false;
-		}
-
-		// Set alias
-		//$this->alias = JApplication::stringURLSafe($this->alias);
-		//if (empty($this->alias)) {
-		//	$this->alias = JApplication::stringURLSafe($this->title);
-		//}
 
 		return true;
 	}
