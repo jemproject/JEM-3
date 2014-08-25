@@ -44,7 +44,6 @@ class JemModelCalendar extends JemModelEventslist
 		$itemid 		= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
 		$params 		= $app->getParams();
 		$task           = $jinput->getCmd('task');
-		$startdayonly 	= $params->get('show_only_start', false);
 
 		# params
 		$this->setState('params', $params);
@@ -102,8 +101,6 @@ class JemModelCalendar extends JemModelEventslist
 		# set filter
 		$this->setState('filter.calendar_multiday',true);
 		$this->setState('filter.groupby',array('a.id'));
-		$this->setState('filter.calendar_startdayonly',$startdayonly);
-
 	}
 
 

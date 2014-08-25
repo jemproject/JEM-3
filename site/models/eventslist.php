@@ -717,10 +717,9 @@ class JemModelEventslist extends JModelList
 	
 		$app 			= JFactory::getApplication();
 		$params 		= $app->getParams();
-		$startdayonly	= $this->getState('filter.calendar_startdayonly');
-	
+		
 		foreach($items AS $item) {
-			if (!is_null($item->enddates) && !$startdayonly) {
+			if (!is_null($item->enddates)) {
 				if ($item->enddates != $item->dates) {
 					$day = $item->start_day;
 	
@@ -762,10 +761,12 @@ class JemModelEventslist extends JModelList
 						}
 					} // for
 	
-					# add generated days to data
-					$items = array_merge($items, $multi);
-					# unset temp array holding generated days before working on the next multiday event
-					unset($multi);
+					if (isset($multi)) {
+						# add generated days to data
+						$items = array_merge($items, $multi);
+						# unset temp array holding generated days before working on the next multiday event
+                    	unset($multi);
+					}
 				}
 			}
 		} // foreach
