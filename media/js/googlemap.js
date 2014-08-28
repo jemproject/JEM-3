@@ -74,7 +74,7 @@ function initialize() {
 		});
 
 		var ib = new InfoBox(myOptions);
-		ib.open(map, marker);
+		// ib.open(map, marker);
 		 
 	} else {
 				
@@ -83,10 +83,9 @@ function initialize() {
 	
 		geocoder.geocode( { 'address': address}, function(results, status) {
 		      if (status == google.maps.GeocoderStatus.OK) {
-		    	  // Geocoding-status is ok, but we want to retrieve an exact address
+		    	  // Geocoding-status is ok
 		    	  
 		    	  if (results[0].geometry.location_type){
-		    		 // we're searching for an exact/valid-address
 		    		  
 		    		  	//In this case it creates a marker, but you can get the lat and lng from the location.LatLng
 				        map.setCenter(results[0].geometry.location);
@@ -129,7 +128,6 @@ function initialize() {
 				    	//ib.open(map, marker);
 		    	  } else {
 		    		  alert(status);
-		    		  alert('foo6');
 		    		  error();
 		    	  }
 		      } else {
