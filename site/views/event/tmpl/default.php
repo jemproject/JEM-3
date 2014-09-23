@@ -165,7 +165,11 @@ $mapType = $this->mapType;
 
 <!-- AUTHOR -->
 		<?php if ($params->get('event_show_author') && !empty($this->item->author)) : ?>
+		<?php if (!empty($this->item->contactid2) && $params->get('event_link_author') == true): ?>
+		<dt class="createdby"><?php echo JText::_('COM_JEM_CONTACT'); ?></dt>
+		<?php else: ?>
 		<dt class="createdby"><?php echo JText::_('COM_JEM_EVENT_CREATED_BY_LABEL'); ?></dt>
+		<?php endif; ?>
 		<dd class="createdby">
 		<?php $author = $this->item->created_by_alias ? $this->item->created_by_alias : $this->item->author; ?>
 		<?php if (!empty($this->item->contactid2) && $params->get('event_link_author') == true): ?>
