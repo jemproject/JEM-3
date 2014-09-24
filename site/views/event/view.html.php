@@ -42,6 +42,7 @@ class JemViewEvent extends JEMView
 		$menuitem			= $menu->getActive();
 		$pathway 			= $app->getPathway();
 		$jinput 			= $app->input;
+		$this->KunenaConfig	= $this->get('KunenaConfig');
 
 		$this->params		= $app->getParams('com_jem');
 		$this->item			= $this->get('Item');

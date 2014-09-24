@@ -542,6 +542,7 @@
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="0">COM_JEM_DONT_USE_COM_SOL</option>
 				<option value="1">COM_JEM_COMBUILDER</option>
+				<option value="2">COM_JEM_COM_SOL_KUNENA</option>
 			</field>
 			<field name="event_comunoption" type="list"
 				label="COM_JEM_TYPE_COM_INTEGRATION"

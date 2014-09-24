@@ -70,8 +70,13 @@ if (!($this->formhandler == 2) && !($this->formhandler == 1)) {
 </div><!-- end span row-fluid -->
 <?php } ?>
 
-<!-- Attending users -->
 
+
+
+
+
+
+<!-- Attending users -->
 <?php
 $type_attendee = $params->get('event_attendeelist_visiblefor','0');
 
@@ -89,8 +94,6 @@ if ($type_attendee == 1) {
 if ($params->get('event_show_name_attendee','1') && $check || JFactory::getUser()->authorise('core.manage')) :
 ?>
 
-
-
 <div class="row-fluid">
 <div class="span12 userbox">
 
@@ -100,51 +103,108 @@ if ($params->get('event_show_name_attendee','1') && $check || JFactory::getUser(
 	
 
 <?php
-//loop through attendees
-foreach ($this->registers as $register) :
-	$text = '';
-	// is a plugin catching this ?
-	//TODO: remove markup..the plugin should handle this to improve flexibility
-	if ($res = $this->dispatcher->trigger('onAttendeeDisplay', array( $register->uid, &$text ))) :
-		echo '<li>'.$text.'</li>';
-	endif;
-	//if CB
-	if ($this->settings->get('event_comunsolution','0')==1) :
+// define variables before the foreach
+
+# Community Builder
+if ($this->settings->get('event_comunsolution','0')==1) {
+	global $_CB_framework, $mainframe, $ueConfig;
+
+	if (defined('JPATH_ADMINISTRATOR')) {
+		if (!file_exists( JPATH_ADMINISTRATOR.'/components/com_comprofiler/plugin.foundation.php')) {
+			// echo 'CB not installed!';
+		} else {
+			include_once(JPATH_ADMINISTRATOR.'/components/com_comprofiler/plugin.foundation.php' );
+		}
+	} else {
+		if (!file_exists($mainframe->getCfg('absolute_path').'/administrator/components/com_comprofiler/plugin.foundation.php')) {
+			// echo 'CB not installed!';
+		} else {
+			include_once($mainframe->getCfg( 'absolute_path' ).'/administrator/components/com_comprofiler/plugin.foundation.php');
+		}
+	}
+}
+
+
+# Kunena
+if ($this->settings->get('event_comunsolution','0')==2) {
+	$kconfig = $this->KunenaConfig;
 	
-		if ($this->settings->get('event_comunoption','0')==1) :
-			//User has avatar
-			if(!empty($register->avatar)) :
-				$avatarname = $register->avatar;
-				if (strpos($avatarname,'gallery/') !== false) {
-    				$useravatar = JHtml::image('components/com_comprofiler/images/'.$register->avatar,$register->name);
-				}
-				else
-				{
-					$useravatar = JHtml::image('images/comprofiler/'.'tn'.$register->avatar,$register->name);
-				}
+	if ($kconfig->get('username')) {
+		$name = 'username';
+	} else {
+		$name = 'name';
+	}
+	//$width = '60';
+	//$height = '60';
+	
+	if (!file_exists( JPATH_ADMINISTRATOR.'/components/com_kunena/api.php')) {
+		// echo 'Kunena not installed!';
+	} else {
+		include_once(JPATH_ADMINISTRATOR.'/components/com_kunena/api.php' );
+	}
+}
 
-				echo "<li><a href='".JRoute::_('index.php?option=com_comprofiler&task=userProfile&user='.$register->uid )."'>".$useravatar."<span class='username'>".$register->name."</span></a></li>";
+//  loop trough the registerdata
+foreach ($this->registers as $register) :
 
-			//User has no avatar
-			else :
-				   $nouseravatar = JHtml::image('components/com_comprofiler/images/english/tnnophoto.jpg',$register->name);
-				echo "<li><a href='".JRoute::_( 'index.php?option=com_comprofiler&task=userProfile&user='.$register->uid )."'>".$nouseravatar."<span class='username'>".$register->name."</span></a></li>";
-			endif;
-		endif;
+	# no communitycomponent is set so only show the name according to global setting
+	if ($this->settings->get('event_comunsolution','0')==0) {
+		$name = $this->settings->get('global_regname','1') ? 'name' : 'username';
+		echo "<li><span class='username'>".$register->$name."</span></li>";
+	}
 
-		//only show the username with link to profile
-		if ($this->settings->get('event_comunoption','0')==0) :
-			echo "<li><span class='username'><a href='".JRoute::_( 'index.php?option=com_comprofiler&amp;task=userProfile&amp;user='.$register->uid )."'>".$register->name." </a></span></li>";
-		endif;
+	# Community Builder
+	if ($this->settings->get('event_comunsolution','0')==1) :
+		$format = $ueConfig['name_format'];
+	
+		switch ($format) {
+			case 1 :
+				$name = $register->name;
+				break;
+			case 2 :
+				$name = $register->name." ".$register->username;	
+				break;
+			case 4 :
+				$name = $register->username." ".$register->name;
+				break;
+			case 3 :
+			default:
+				$name = $register->username;
+				break;
+			}
+	
+		# name with avatar + link
+		if ($this->settings->get('event_comunoption','0')==1) {
+			$cbUser = CBuser::getInstance($user->id);
+			if (!$cbUser) {
+				$cbUser = CBuser::getInstance(null);
+			}
+			$avatar = $cbUser->getField( 'avatar', null, 'html', 'none', 'list' );
+			echo "<li><a href='".JRoute::_('index.php?option=com_comprofiler&task=userProfile&user='.$register->uid )."'>".$avatar."<span class='username'>".$name."</span></a></li>";
+		}
 
-	//if CB end - if not CB than only name
+		# name with link
+		if ($this->settings->get('event_comunoption','0')==0) {
+			echo "<li><span class='username'><a href='".JRoute::_( 'index.php?option=com_comprofiler&amp;task=userProfile&amp;user='.$register->uid )."'>".$name." </a></span></li>";
+		}
 	endif;
 
-	//no communitycomponent is set so only show the username
-	if ($this->settings->get('event_comunsolution','0')==0) :
-		echo "<li><span class='username'>".$register->name."</span></li>";
-	endif;
-
+	# Kunena
+	if ($this->settings->get('event_comunsolution','0')==2) {
+		$user	= KunenaFactory::getUser(JFactory::getUser()->id);
+		$avatar = $user->getAvatarImage('', '', '');
+		
+		# name with avatar + link
+		if ($this->settings->get('event_comunoption','0')==1) {
+			echo "<li><a href='".JRoute::_('index.php?option=com_kunena&view=user&userid='.$register->uid )."'>".$avatar."<span class='username'>".$register->$name."</span></a></li>";
+		}
+		
+		# name with link
+		if ($this->settings->get('event_comunoption','0')==0) {
+			echo "<li><span class='username'><a href='".JRoute::_('index.php?option=com_kunena&view=user&userid='.$register->uid )."'>".$register->$name." </a></span></li>";
+		}
+	}
+	
 //end loop through attendees
 endforeach;
 ?>
@@ -153,7 +213,7 @@ endforeach;
 	
 </div></div>
 <?php endif; ?>
-
+<br>
 <div class="clearfix"></div>
 
 

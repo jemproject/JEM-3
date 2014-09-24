@@ -487,27 +487,13 @@ class JemModelEvent extends JModelItem
 	 */
 	function getRegisters($event = false)
 	{
-		// avatars should be displayed
-		$settings = JEMHelper::globalattribs();
-
-		$avatar = '';
-		$join = '';
-
-		if ($settings->get('event_comunoption','0') == 1 && $settings->get('event_comunsolution','0') == 1) {
-			$avatar = ', c.avatar';
-			$join = ' LEFT JOIN #__comprofiler as c ON c.user_id = r.uid';
-		}
-
-		$name = $settings->get('global_regname','1') ? 'u.name' : 'u.username';
-
 		// Get registered users
 		$db = $this->getDbo();
 		$query = $db->getQuery(true);
 		$query = 'SELECT '
-				. $name . ' AS name, r.uid' . $avatar
+				. 'u.name,u.username, r.uid'
 				. ' FROM #__jem_register AS r'
 				. ' LEFT JOIN #__users AS u ON u.id = r.uid'
-				. $join
 				. ' WHERE event = '. $event
 				. '   AND waiting = 0 ';
 		$db->setQuery($query);
@@ -606,6 +592,53 @@ class JemModelEvent extends JModelItem
 		}
 
 		return true;
+	}
+	
+	function getKunenaConfig() {
+		static $kconfig = false;
+		if ($kconfig === false) {
+			// Run only one time
+			$kconfig = null;
+	
+			// Make sure that Kunena API (if exists) has been loaded
+			$api = JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
+			if (is_file($api))
+				require_once $api;
+	
+			if (class_exists('KunenaFactory')) {
+	
+				// Support for Kunena 1.6, 1.7 and 2.0
+				$kconfig = KunenaFactory::getConfig();
+	
+			} elseif (is_file(JPATH_ROOT.'/components/com_kunena/lib/kunena.config.class.php')) {
+	
+				// Support for Kunena 1.0 and 1.5
+				require_once JPATH_ROOT.'/components/com_kunena/lib/kunena.config.class.php';
+	
+				// Next 4 lines are needed to make <1.0.9 and <1.5.2 to work
+				if (is_file(JPATH_ROOT.'/components/com_kunena/lib/kunena.debug.php'))
+					require_once JPATH_ROOT.'/components/com_kunena/lib/kunena.debug.php';
+				if (is_file(JPATH_ROOT.'/components/com_kunena/lib/kunena.user.class.php'))
+					require_once JPATH_ROOT.'/components/com_kunena/lib/kunena.user.class.php';
+	
+				if (method_exists('CKunenaConfig', 'getInstance')) {
+					// Support for Kunena 1.0.9+ and 1.5
+					$kconfig = CKunenaConfig::getInstance();
+	
+				} elseif (class_exists('CKunenaConfig')) {
+					// Support for Kunena 1.0.8
+					$kconfig = new CKunenaConfig();
+					$kconfig->load();
+	
+				} elseif (class_exists('fb_Config')) {
+					// Support for Kunena 1.0.6RC2 and 1.0.7b
+					$kconfig = new fb_Config();
+					$kconfig->load();
+	
+				}
+			}
+		}
+		return $kconfig;
 	}
 }
 ?>
