@@ -18,8 +18,8 @@
 			default="a.name ASC"
 			>
 			<option value="">JGLOBAL_SORT_BY</option>
-			<option value="a.name ASC">NAME_ASC</option>
-			<option value="a.name DESC">NAME_DESC</option>
+			<option value="a.name ASC">COM_JEM_GROUPS_FILTER_NAME_ASC</option>
+			<option value="a.name DESC">COM_JEM_GROUPS_FILTER_NAME_DESC</option>
 		</field>
 		<field
 			name="limit"
