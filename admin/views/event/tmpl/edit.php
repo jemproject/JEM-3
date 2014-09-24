@@ -31,18 +31,6 @@ $params = $params->toArray();
 	window.addEvent('domready', function(){
 	checkmaxplaces();
 
-	$("jform_attribs_event_show_mapserv").addEvent('change', testmap);
-
-	var mapserv = $("jform_attribs_event_show_mapserv");
-	var nrmapserv = mapserv.options[mapserv.selectedIndex].value;
-
-	if (nrmapserv == 1 || nrmapserv == 2) {
-		eventmapon();
-	} else {
-		eventmapoff();
-	}
-
-
 	$('jform_attribs_event_comunsolution').addEvent('change', testcomm);
 
 	var commhandler = $("jform_attribs_event_comunsolution");
@@ -87,30 +75,6 @@ $params = $params->toArray();
 		} else {
 			commoff();
 		}
-	}
-
-	function testmap()
-	{
-		var mapserv = $("jform_attribs_event_show_mapserv");
-		var nrmapserv = mapserv.options[mapserv.selectedIndex].value;
-
-		if (nrmapserv == 1 || nrmapserv == 2) {
-			eventmapon();
-		} else {
-			eventmapoff();
-		}
-	}
-
-	function eventmapon()
-	{
-		document.getElementById('eventmap1').style.display = '';
-		document.getElementById('eventmap2').style.display = '';
-	}
-
-	function eventmapoff()
-	{
-		document.getElementById('eventmap1').style.display = 'none';
-		document.getElementById('eventmap2').style.display = 'none';
 	}
 
 	function common()

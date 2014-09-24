@@ -651,6 +651,7 @@ class JEMOutput {
 	 */
 	static function mapicon($data,$view=false,$params)
 	{
+			
 		$global = JemHelper::globalattribs();
 
 		//stop if disabled
@@ -659,18 +660,12 @@ class JEMOutput {
 		}
 
 		if ($view == 'event') {
-			$tld		= 'event_tld';
-			$lg			= 'event_lg';
 			$mapserv	= $params->get('event_show_mapserv');
 		} else if ($view == 'venues') {
-			$mapserv	= $params->get('global_show_mapserv');
-			$tld		= 'global_tld';
-			$lg			= 'global_lg';
-			$mapserv	= 0;
+			# @todo check
+			$mapserv	= $params->get('show_mapserv');
 		} else {
-			$tld		= 'global_tld';
-			$lg			= 'global_lg';
-			$mapserv	= $params->get('global_show_mapserv');
+			$mapserv	= $params->get('show_mapserv');
 		}
 
 		//Link to map
@@ -689,16 +684,13 @@ class JEMOutput {
 			$data->longitude = null;
 		}
 
-		$url = 'http://maps.google.'.$params->get($tld,'com').'/maps?hl='.$params->get($lg,'com').'&q='.urlencode($data->street.', '.$data->postalCode.' '.$data->city.', '.$data->country.'+ ('.$data->venue.')').'&ie=UTF8&z=15&iwloc=B&output=embed" ';
-
-
 		// google map link or include
 		switch ($mapserv)
 		{
 			case 1:
 				// link
 				if($data->latitude && $data->longitude) {
-					$url = 'http://maps.google.'.$params->get($tld).'/maps?hl='.$params->get($lg).'&q=loc:'.$data->latitude.',+'.$data->longitude.'&ie=UTF8&z=15&iwloc=B&output=embed';
+					$url = 'http://maps.google.com/maps?q='.$data->latitude.',+'.$data->longitude.'&ie=UTF8&z=15&output=embed';
 				}
 
 				$message = JText::_('COM_JEM_MAP').':';
@@ -707,12 +699,15 @@ class JEMOutput {
 				break;
 
 			case 2:
-				// include iframe
+				$api		= trim($global->get('global_googleapi'));
+				
+				# iframe
 				if($data->latitude && $data->longitude) {
-					$url = 'https://maps.google.com/maps?q=loc:'.$data->latitude.',+'.$data->longitude.'&amp;ie=UTF8&amp;t=m&amp;z=14&amp;iwloc=B&amp;output=embed';
+					$output = '<iframe width="500" height="250" frameborder="0" style="border: 1px solid #000" src="https://www.google.com/maps/embed/v1/search?key='.$api.'&q='.urlencode($data->latitude.',+'.$data->longitude).'"></iframe>';
+				} else {
+					$output = '<iframe width="500" height="250" frameborder="0" style="border: 1px solid #000" src="https://www.google.com/maps/embed/v1/search?key='.$api.'&q='.urlencode($data->street.', '.$data->postalCode.' '.$data->city).'"></iframe>';
 				}
 
-				$output = '<div style="border: 1px solid #000;width:500px;"><iframe width="500" height="250" src="'.$url.'" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" ></iframe></div>';
 				break;
 
 			case 3:

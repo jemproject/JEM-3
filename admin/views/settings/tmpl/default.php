@@ -10,7 +10,6 @@
  */
 defined('_JEXEC') or die;
 
-
 JHtml::_('behavior.formvalidation');
 JHtml::_('bootstrap.tooltip');
 JHtml::_('behavior.modal', 'a.flyermodal');
@@ -66,29 +65,6 @@ window.addEvent('domready', function(){
 
 	if($('jform_gddisabled1').checked) {
 		lbon();
-	}
-
-	$("jform_globalattribs_event_show_mapserv").addEvent('change', testmap);
-
-	var mapserv = $("jform_globalattribs_event_show_mapserv");
-	var nrmapserv = mapserv.options[mapserv.selectedIndex].value;
-
-	if (nrmapserv == 1 || nrmapserv == 2) {
-		eventmapon();
-	} else {
-		eventmapoff();
-	}
-
-
-	$("jform_globalattribs_global_show_mapserv").addEvent('change', testmap);
-
-	var mapserv = $("jform_globalattribs_global_show_mapserv");
-	var nrmapserv = mapserv.options[mapserv.selectedIndex].value;
-
-	if (nrmapserv == 1 || nrmapserv == 2) {
-		globalmapon();
-	} else {
-		globalmapoff();
 	}
 
 	$("jform_oldevent").addEvent('change', testevhandler);
@@ -151,27 +127,6 @@ function testcomm()
 		common();
 	} else {
 		commoff();
-	}
-}
-
-function testmap()
-{
-	var mapserv = $("jform_globalattribs_event_show_mapserv");
-	var nrmapserv = mapserv.options[mapserv.selectedIndex].value;
-
-	if (nrmapserv == 1 || nrmapserv == 2) {
-		eventmapon();
-	} else {
-		eventmapoff();
-	}
-
-	var mapserv2 = $("jform_globalattribs_global_show_mapserv");
-	var nrmapserv2 = mapserv2.options[mapserv2.selectedIndex].value;
-
-	if (nrmapserv2 == 1 || nrmapserv2 == 2) {
-		globalmapon();
-	} else {
-		globalmapoff();
 	}
 }
 
@@ -272,35 +227,6 @@ function lboff()
 {
 	document.getElementById('lb1').style.display = 'none';
 }
-
-function eventmapon()
-{
-	document.getElementById('eventmap1').style.display = '';
-	document.getElementById('eventmap2').style.display = '';
-}
-
-function eventmapoff()
-{
-	document.getElementById('eventmap1').style.display = 'none';
-	document.getElementById('eventmap2').style.display = 'none';
-	document.getElementById('jform_globalattribs_event_tld').value = '';
-	document.getElementById('jform_globalattribs_event_lg').value = '';
-}
-
-function globalmapon()
-{
-	document.getElementById('globalmap1').style.display = '';
-	document.getElementById('globalmap2').style.display = '';
-}
-
-function globalmapoff()
-{
-	document.getElementById('globalmap1').style.display = 'none';
-	document.getElementById('globalmap2').style.display = 'none';
-	document.getElementById('jform_globalattribs_global_tld').value = '';
-	document.getElementById('jform_globalattribs_global_lg').value = '';
-}
-
 
 function evhandleron()
 {

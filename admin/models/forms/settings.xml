@@ -908,22 +908,6 @@
 				<option value="2">COM_JEM_GOOGLE_MAP_DISP</option>
 				<option value="3">COM_JEM_GOOGLE_MAP_DISP_API</option>
 			</field>
-			<field name="global_tld" type="text"
-				label="COM_JEM_GOOGLE_MAP_TLD"
-				description="COM_JEM_GOOGLE_MAP_TLD_DESC"
-				class="inputbox"
-				size="10"
-				maxlength="10"
-				required="false"
-			/>
-			<field name="global_lg" type="text"
-				label="COM_JEM_GOOGLE_MAP_LG"
-				description="COM_JEM_GOOGLE_MAP_LG_DESC"
-				class="inputbox"
-				size="10"
-				maxlength="10"
-				required="false"
-			/>
 			<field name="global_show_ownedvenuesonly" type="list"
 				label="COM_JEM_SETTINGS_FIELD_SHOW_OWNEDVENUESONLY"
 				description="COM_JEM_SETTINGS_FIELD_SHOW_OWNEDVENUESONLY_DESC"
@@ -1056,22 +1040,6 @@
 				<option value="2">COM_JEM_GOOGLE_MAP_DISP</option>
 				<option value="3">COM_JEM_GOOGLE_MAP_DISP_API</option>
 			</field>
-			<field name="event_tld" type="text"
-				label="COM_JEM_GOOGLE_MAP_TLD"
-				description="COM_JEM_GOOGLE_MAP_TLD_DESC"
-				class="inputbox"
-				size="10"
-				maxlength="10"
-				required="false"
-			/>
-			<field name="event_lg" type="text"
-				label="COM_JEM_GOOGLE_MAP_LG"
-				description="COM_JEM_GOOGLE_MAP_LG_DESC"
-				class="inputbox"
-				size="10"
-				maxlength="10"
-				required="false"
-			/>
 		</fieldset>
 
 		<fieldset name="evregistration"
