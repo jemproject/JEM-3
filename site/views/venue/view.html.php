@@ -34,6 +34,7 @@ class JemViewVenue extends JEMView {
 			$menuitem		= $menu->getActive();
 			$jemsettings 	= JemHelper::config();
 			$settings 		= JemHelper::globalattribs();
+			$vsettings		= JemHelper::viewSettings('vvenue');
 			$db 			= JFactory::getDBO();
 			$params 		= $app->getParams('com_jem');
 			$pathway 		= $app->getPathWay ();
@@ -249,6 +250,7 @@ class JemViewVenue extends JEMView {
 			$this->pagination 			= $pagination;
 			$this->jemsettings 			= $jemsettings;
 			$this->settings				= $settings;
+			$this->vsettings			= $vsettings;
 			$this->item					= $menuitem;
 			$this->pagetitle			= $pagetitle;
 			$this->task					= $task;

@@ -34,6 +34,7 @@ class JemViewCategory extends JEMView
 			$app 			= JFactory::getApplication();
 			$jinput 		= JFactory::getApplication()->input;
 			$document 		= JFactory::getDocument();
+			$vsettings		= JemHelper::viewSettings('vcategory');
 			$jemsettings 	= JemHelper::config();
 			$settings 		= JemHelper::globalattribs();
 			$db  			= JFactory::getDBO();
@@ -232,6 +233,7 @@ class JemViewCategory extends JEMView
 			$this->description		= $description;
 			$this->pagination		= $pagination;
 			$this->jemsettings		= $jemsettings;
+			$this->vsettings		= $vsettings;
 			$this->settings			= $settings;
 			$this->pageclass_sfx	= htmlspecialchars($pageclass_sfx);
 			$this->maxLevel			= $params->get('maxLevel', -1);

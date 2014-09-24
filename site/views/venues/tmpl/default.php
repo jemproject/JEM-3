@@ -58,7 +58,7 @@ defined('_JEXEC') or die;
 		
 		<!--  -->
 		<dl class="location">
-			<?php if (($this->settings->get('global_show_detlinkvenue',1)) && (!empty($row->url))) : ?>
+			<?php if (($this->vsettings->get('show_detlinkvenue',1)) && (!empty($row->url))) : ?>
 			<dt class="venue_website">
 				<?php echo JText::_('COM_JEM_WEBSITE').':'; ?>
 			</dt>
@@ -68,7 +68,7 @@ defined('_JEXEC') or die;
 			<?php endif; ?>
 		</dl>
 		</div>
-		<?php if ( $this->settings->get('global_show_detailsadress',1)) : ?>
+		<?php if ( $this->vsettings->get('show_detailsadress',1)) : ?>
 		<div class="dl">
 			<dl class="location floattext" itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
 				<?php if ($row->street) : ?>
@@ -117,8 +117,8 @@ defined('_JEXEC') or die;
 				</dd>
 				<?php endif; ?>
 
-				<?php if ($this->settings->get('global_show_mapserv') == 1) : ?>
-					<?php echo JemOutput::mapicon($row,null,$this->settings); ?>
+				<?php if ($this->vsettings->get('show_mapserv') == 1) : ?>
+					<?php echo JemOutput::mapicon($row,null,$this->vsettings); ?>
 				<?php endif; ?>
 			</dl>
 			</div>
@@ -143,13 +143,13 @@ defined('_JEXEC') or die;
 
 
 
-			<?php if ($this->settings->get('global_show_mapserv') == 2) : ?>
-				<?php echo JemOutput::mapicon($row,null,$this->settings); ?>
+			<?php if ($this->vsettings->get('show_mapserv') == 2) : ?>
+				<?php echo JemOutput::mapicon($row,null,$this->vsettings); ?>
 			<?php endif; ?>
 		<?php endif; ?>
 
 
-		<?php if ($this->settings->get('global_show_mapserv')== 3) : ?>
+		<?php if ($this->vsettings->get('show_mapserv')== 3) : ?>
 			<input type="hidden" id="latitude" value="<?php echo $row->latitude;?>">
 			<input type="hidden" id="longitude" value="<?php echo $row->longitude;?>">
 
@@ -158,11 +158,11 @@ defined('_JEXEC') or die;
 			<input type="hidden" id="city" value="<?php echo $row->city;?>">
 			<input type="hidden" id="state" value="<?php echo $row->state;?>">
 			<input type="hidden" id="postalCode" value="<?php echo $row->postalCode;?>">
-		<?php echo JemOutput::mapicon($row,'venues',$this->settings); ?>
+		<?php echo JemOutput::mapicon($row,'venues',$this->vsettings); ?>
 	<?php endif; ?>
 
 
-		<?php if ($this->settings->get('global_show_locdescription',1) && $row->locdescription != '' && $row->locdescription != '<br />') : ?>
+		<?php if ($this->vsettings->get('show_locdescription',1) && $row->locdescription != '' && $row->locdescription != '<br />') : ?>
 			<h2 class="description">
 				<?php echo JText::_('COM_JEM_VENUE_DESCRIPTION').':'; ?>
 			</h2>

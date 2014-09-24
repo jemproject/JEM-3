@@ -48,7 +48,7 @@ defined('_JEXEC') or die;
 		</h2>
 
 		<div class="floattext">
-			<?php if ($this->jemsettings->discatheader) { ?>
+			<?php if ($this->vsettings->get('show_category_image','1')) { ?>
 				<div class="image imagetop">
 					<?php // flyer
 						if (empty($row->image)) {

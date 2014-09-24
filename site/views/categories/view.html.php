@@ -25,6 +25,7 @@ class JemViewCategories extends JEMView
 
 		$document 		= JFactory::getDocument();
 		$jemsettings 	= JemHelper::config();
+		$vsettings		= JemHelper::viewSettings('vcategories');
 		$settings		= JemHelper::globalattribs();
 		$user			= JFactory::getUser();
 		$print			= $jinput->getBool('print');
@@ -110,6 +111,7 @@ class JemViewCategories extends JEMView
 		$this->pagination		= $pagination;
 		$this->item				= $menuitem;
 		$this->jemsettings		= $jemsettings;
+		$this->vsettings		= $vsettings;
 		$this->settings			= $settings;
 		$this->pagetitle		= $pagetitle;
 		$this->print_link		= $print_link;

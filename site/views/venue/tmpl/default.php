@@ -62,7 +62,7 @@ $mapType = $this->mapType;
 	
 	<div class="span7">	
 	 	<div class="dl">
-	 	   <?php if (($this->settings->get('global_show_detlinkvenue',1)) && (!empty($this->venue->url))) : ?>
+	 	   <?php if (($this->vsettings->get('show_detlinkvenue',1)) && (!empty($this->venue->url))) : ?>
 		<dl class="location">
 		<dt class="title"><?php echo JText::_('COM_JEM_TITLE').':'; ?></dt>
 		<dd class="title" itemprop="name"><?php echo $this->escape($this->venue->venue); ?></dd>
@@ -74,7 +74,7 @@ $mapType = $this->mapType;
 		</dl>
 	<?php endif; ?>
 
-	<?php if ($this->settings->get('global_show_detailsadress',1)) : ?>
+	<?php if ($this->vsettings->get('show_detailsadress',1)) : ?>
 		<dl class="location floattext" itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
 			<?php if ($this->venue->street) : ?>
 			<dt class="venue_street"><?php echo JText::_('COM_JEM_STREET').':'; ?></dt>
@@ -129,8 +129,8 @@ $mapType = $this->mapType;
 			?>
 
 			<?php
-			if ($this->settings->get('global_show_mapserv')== 1) {
-				echo JemOutput::mapicon($this->venue,null,$this->settings);
+			if ($this->vsettings->get('show_mapserv')== 1) {
+				echo JemOutput::mapicon($this->venue,null,$this->vsettings);
 			}
 			?>
 		</dl></div>
@@ -144,12 +144,12 @@ $mapType = $this->mapType;
 	</div>	
 	</div> <!-- row-fluid -->
 	<?php
-		if ($this->settings->get('global_show_mapserv')== 2) {
-			echo JemOutput::mapicon($this->venue,null,$this->settings);
+		if ($this->vsettings->get('show_mapserv')== 2) {
+			echo JemOutput::mapicon($this->venue,null,$this->vsettings);
 		}
 		?>
 	<?php endif; ?>
-	<?php if ($this->settings->get('global_show_mapserv')== 3) : ?>			
+	<?php if ($this->vsettings->get('show_mapserv')== 3) : ?>			
 			<input type="hidden" id="latitude" value="<?php echo $this->venue->latitude;?>">
 			<input type="hidden" id="longitude" value="<?php echo $this->venue->longitude;?>">
 			
@@ -163,7 +163,7 @@ $mapType = $this->mapType;
 	<?php endif; ?>
 	
 
-	<?php if ($this->settings->get('global_show_locdescription',1) && $this->venuedescription != '' &&
+	<?php if ($this->vsettings->get('show_locdescription',1) && $this->venuedescription != '' &&
 	          $this->venuedescription != '<br />') : ?>
 
 		<h2 class="description"><?php echo JText::_('COM_JEM_VENUE_DESCRIPTION'); ?></h2>

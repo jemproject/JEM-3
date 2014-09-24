@@ -44,7 +44,7 @@ JHtml::_('behavior.modal','a.flyermodal');
 	<?php endif; ?>
 	
 	
-	<?php if ($this->jemsettings->discatheader) : ?>
+	<?php if ($this->vsettings->get('show_category_image','1'))  : ?>
 	<h2 class="jem">
 			<?php echo '&nbsp'; ?>
 	</h2>

@@ -17,6 +17,35 @@ use Recurr\RecurrenceRuleTransformer;
  */
 class JemHelper {
 
+
+	/**
+	 * Pulls settings from database and stores in an static object
+	 *
+	 * @return object
+	 */
+	static function viewSettings($view)
+	{
+		static $settings;
+	
+		if (!is_object($settings)) {
+			$db = JFactory::getDBO();
+			$query = $db->getQuery(true);
+	
+			$query->select($view);
+			$query->from('#__jem_settings');
+			$query->where('id = 1');
+	
+			$db->setQuery($query);
+			$settings = $db->loadResult();		
+		}
+	
+		$vregistry = new JRegistry;
+		$vregistry->loadString($settings);
+	
+		return $vregistry;
+	}
+	
+	
 	/**
 	 * Pulls settings from database and stores in an static object
 	 * @return object

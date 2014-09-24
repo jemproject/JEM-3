@@ -25,6 +25,7 @@ class JemViewVenues extends JViewLegacy
 		$document		= JFactory::getDocument();
 		$jemsettings	= JemHelper::config();
 		$settings 		= JemHelper::globalattribs();
+		$vsettings		= JemHelper::viewSettings('vvenues');
 		$user			= JFactory::getUser();
 		$print			= $jinput->getBool('print');
 
@@ -113,10 +114,12 @@ class JemViewVenues extends JViewLegacy
 		$this->item				= $menuitem;
 		$this->jemsettings		= $jemsettings;
 		$this->settings			= $settings;
+		$this->vsettings		= $vsettings;
 		$this->task				= $task;
 		$this->pagetitle		= $pagetitle;
 		$this->pageclass_sfx	= htmlspecialchars($pageclass_sfx);
 		$this->print			= $print;
+		$this->app				= $app;
 
 		parent::display($tpl);
 	}
