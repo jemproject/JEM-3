@@ -132,13 +132,6 @@
 	<fieldset name="usercontrol"
 		label="COM_JEM_USER_CONTROL"
 	>
-		<field name="datdesclimit" type="text"
-			label="COM_JEM_DESCRIPTION_LIMIT"
-			description="COM_JEM_DESCRIPTION_LIMIT_DESC"
-			class="inputbox"
-			size="5"
-			required="false"
-		/>
 		<field name="imageenabled" type="list"
 			label="COM_JEM_IMAGE_UPLOAD_OPTIONS"
 			description="COM_JEM_IMAGE_UPLOAD_OPTIONS_DESC"
