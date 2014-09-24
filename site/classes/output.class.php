@@ -26,7 +26,7 @@ class JEMOutput {
 			if ($app->input->getInt('print')) {
 				return;
 			} else {
-				echo '<font color="grey">Powered by <a href="http://www.joomlaeventmanager.net" target="_blank">JEM</a></font>';
+				echo 'Powered by <a href="http://www.joomlaeventmanager.net" target="_blank">JEM</a>';
 			}
 		}
 	}
