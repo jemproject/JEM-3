@@ -177,7 +177,7 @@ class JemModelEventslist extends JModelList
 		$this->setState('filter.access', true);
 		$this->setState('filter.groupby',array('a.id'));
 
-		parent::populateState('a.dates', 'ASC');
+		// parent::populateState('a.dates', 'ASC');
 	}
 
 	/**
