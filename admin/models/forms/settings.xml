@@ -789,8 +789,8 @@
 				default="1"
 				required="false"
 			>
-				<option value="0">COM_JEM_USERNAME</option>
-				<option value="1">COM_JEM_NAME</option>
+				<option value="0">COM_JEM_NAME</option>
+				<option value="1">COM_JEM_USERNAME</option>
 			</field>
 			<field name="show_poweredby" type="radio"
 				label="COM_JEM_SETTINGS_FIELD_SHOW_POWEREDBY"
