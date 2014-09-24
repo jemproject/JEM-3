@@ -25,6 +25,7 @@ class JemViewCalendar extends JViewLegacy
 		$menuitem	= $menu->getActive();
 		$jemsettings = JemHelper::config();
 		$params 	= $app->getParams();
+		$settings 	= JemHelper::globalattribs();
 
 		// Load css
 		JemHelper::loadCss('jem');
@@ -83,10 +84,11 @@ class JemViewCalendar extends JViewLegacy
 		$cal->enableDayLinks(false);
 		//$cal->enableDatePicker();
 
-		$this->rows        = $rows;
-		$this->params      = $params;
-		$this->jemsettings = $jemsettings;
-		$this->cal         = $cal;
+		$this->rows			= $rows;
+		$this->params		= $params;
+		$this->jemsettings	= $jemsettings;
+		$this->settings		= $settings;
+		$this->cal			= $cal;
 		$this->pageclass_sfx = htmlspecialchars($pageclass_sfx);
 		$this->special_days = $special_days;
 

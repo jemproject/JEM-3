@@ -73,7 +73,7 @@ defined('_JEXEC') or die;
 		//for time in tooltip
 		$timehtml = '';
 
-		if ($this->jemsettings->showtime == 1) {
+		if ($this->settings->get('global_show_timedetails','1')) {
 			$start = JemOutput::formattime($row->times);
 			$end = JemOutput::formattime($row->endtimes);
 
@@ -149,7 +149,7 @@ defined('_JEXEC') or die;
 		//for time in calendar
 		$timetp = '';
 
-		if ($this->jemsettings->showtime == 1) {
+		if ($this->settings->get('global_show_timedetails','1')) {
 			$start = JemOutput::formattime($row->times,'',false);
 			$end   = JemOutput::formattime($row->endtimes,'',false);
 
