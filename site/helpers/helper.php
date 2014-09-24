@@ -984,8 +984,8 @@ class JemHelper {
 		$minutes1 	= $jdate1->format('i');
 		$seconds1 	= $jdate1->format('s');
 
-		$limit_date2 = $year1.$month1.$day1.'T'.$hour1.$minutes1.$seconds1.'Z';
-
+		//$limit_date2 = $year1.$month1.$day1.'T'.$hour1.$minutes1.$seconds1.'Z';
+		$limit_date2 = $year1.$month1.$day1.'T235900Z';
 		
 		/*
 		# check for FREQ: BYDAY
