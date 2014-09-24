@@ -26,6 +26,7 @@ class JemViewWeekcal extends JViewLegacy
 		$menuitem 	= $menu->getActive();
 		$jemsettings = JemHelper::config();
 		$params 	= $app->getParams();
+		$settings 	= JemHelper::globalattribs();
 
 		// Load css
 		JemHelper::loadCss('calendar');
@@ -79,6 +80,7 @@ class JemViewWeekcal extends JViewLegacy
 		$this->rows 		= $rows;
 		$this->params		= $params;
 		$this->jemsettings	= $jemsettings;
+		$this->settings		= $settings;
 		$this->currentweek	= $currentweek;
 		$this->cal			= $cal;
 		$this->pageclass_sfx = htmlspecialchars($pageclass_sfx);
