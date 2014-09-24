@@ -155,9 +155,6 @@ class JemViewEventslist extends JEMView
 		if ($jemsettings->showcat == 1) {
 			$filters[] = JHtml::_('select.option', '4', JText::_('COM_JEM_CATEGORY'));
 		}
-		if ($jemsettings->showstate == 1) {
-			$filters[] = JHtml::_('select.option', '5', JText::_('COM_JEM_STATE'));
-		}
 		$lists['filter'] = JHtml::_('select.genericlist', $filters, 'filter_type', array('size'=>'1','class'=>'inputbox input-medium'), 'value', 'text', $filter_type );
 		$lists['search']= $search;
 
