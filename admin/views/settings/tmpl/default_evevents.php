@@ -23,7 +23,7 @@ endif;
 defined('_JEXEC') or die;
 ?>
 <fieldset class="form-horizontal">
-	<legend><?php echo JText::_('COM_JEM_EVENTS'); ?></legend>
+	<legend><?php echo JText::_('COM_JEM_EVENT'); ?></legend>
 		
 			<?php foreach ($this->form->getFieldset('evevents') as $field): ?>
 			<div class="control-group">

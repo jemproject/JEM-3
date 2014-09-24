@@ -59,7 +59,34 @@ class JEMTableSettings extends JTable
 			$array['css'] = (string) $registrycss;
 		}
 		
-
+		if (isset($array['vvenue']) && is_array($array['vvenue']))
+		{
+			$registry = new JRegistry;
+			$registry->loadArray($array['vvenue']);
+			$array['vvenue'] = (string) $registry;
+		}
+		
+		if (isset($array['vvenues']) && is_array($array['vvenues']))
+		{
+			$registry = new JRegistry;
+			$registry->loadArray($array['vvenues']);
+			$array['vvenues'] = (string) $registry;
+		}
+		
+		if (isset($array['vcategories']) && is_array($array['vcategories']))
+		{
+			$registry = new JRegistry;
+			$registry->loadArray($array['vcategories']);
+			$array['vcategories'] = (string) $registry;
+		}
+		
+		if (isset($array['vcategory']) && is_array($array['vcategory']))
+		{
+			$registry = new JRegistry;
+			$registry->loadArray($array['vcategory']);
+			$array['vcategory'] = (string) $registry;
+		}
+		
 		//don't override without calling base class
 		return parent::bind($array, $ignore);
 	}

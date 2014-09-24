@@ -60,6 +60,26 @@ class JEMModelSettings extends JModelForm
 		$registryCss = new JRegistry;
 		$registryCss->loadString($data->css);
 		$data->css = $registryCss->toArray();
+		
+		// Convert vvenue settings to an array
+		$vvenue = new JRegistry;
+		$vvenue->loadString($data->vvenue);
+		$data->vvenue = $vvenue->toArray();
+		
+		// Convert vvenues settings to an array
+		$vvenues = new JRegistry;
+		$vvenues->loadString($data->vvenues);
+		$data->vvenues = $vvenues->toArray();
+		
+		# Convert vcategories settings to an array
+		$vvenues = new JRegistry;
+		$vvenues->loadString($data->vcategories);
+		$data->vcategories = $vvenues->toArray();
+		
+		# Convert vcategory settings to an array
+		$vvenues = new JRegistry;
+		$vvenues->loadString($data->vcategory);
+		$data->vcategory = $vvenues->toArray();
 
 		return $data;
 	}

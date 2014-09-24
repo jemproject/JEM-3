@@ -1364,4 +1364,121 @@
         		description="COM_JEM_SETTINGS_FIELD_CSS_COLOR_FONT_TABLE_TD_A_DESC" />
 		</fieldset>
 	</fields>
+	<!-- settings for Venue-view -->
+<fields name="vvenue">
+<fieldset name="vvenue">
+	<field name="show_locdescription" type="radio"
+				label="COM_JEM_DISPLAY_VENUE_DESCRIPT"
+				description="COM_JEM_DISPLAY_VENUE_DESCRIPT_DESC"
+				class="btn-group btn-group-yesno"
+				default="1"
+				required="false"
+			>
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field name="show_detailsadress" type="radio"
+				label="COM_JEM_DISPLAY_ADDRESS"
+				description="COM_JEM_DISPLAY_ADDRESS_DESC"
+				class="btn-group btn-group-yesno"
+				default="1"
+				required="false"
+			>
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field name="show_detlinkvenue" type="list"
+				label="COM_JEM_DISPLAY_ADDRESS"
+				description="COM_JEM_DISPLAY_ADDRESS_DESC"
+				class="inputbox"
+				default="0"
+				required="false"
+			>
+				<option value="0">COM_JEM_NO_LINK</option>
+				<option value="1">COM_JEM_LINK_TO_URL</option>
+				<option value="2">COM_JEM_LINK_TO_VENUEVIEW</option>
+			</field>
+			<field name="show_mapserv" type="list"
+				label="COM_JEM_DISPLAY_LINK_TO_MAP"
+				description="COM_JEM_DISPLAY_LINK_TO_MAP_DESC"
+				class="inputbox"
+				default="0"
+				required="false"
+			>
+				<option value="0">COM_JEM_NO_MAP_SERVICE</option>
+				<option value="1">COM_JEM_GOOGLE_MAP_LINK</option>
+				<option value="2">COM_JEM_GOOGLE_MAP_DISP</option>
+				<option value="3">COM_JEM_GOOGLE_MAP_DISP_API</option>
+			</field>
+</fieldset>
+</fields>
+<!-- settings for Venues-view -->
+<fields name="vvenues">
+<fieldset name="vvenues">
+	<field name="show_locdescription" type="radio"
+				label="COM_JEM_DISPLAY_VENUE_DESCRIPT"
+				description="COM_JEM_DISPLAY_VENUE_DESCRIPT_DESC"
+				class="btn-group btn-group-yesno"
+				default="1"
+				required="false"
+			>
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field name="show_detailsadress" type="radio"
+				label="COM_JEM_DISPLAY_ADDRESS"
+				description="COM_JEM_DISPLAY_ADDRESS_DESC"
+				class="btn-group btn-group-yesno"
+				default="1"
+				required="false"
+			>
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field name="show_mapserv" type="list"
+				label="COM_JEM_DISPLAY_LINK_TO_MAP"
+				description="COM_JEM_DISPLAY_LINK_TO_MAP_DESC"
+				class="inputbox"
+				default="0"
+				required="false"
+			>
+				<option value="0">COM_JEM_NO_MAP_SERVICE</option>
+				<option value="1">COM_JEM_GOOGLE_MAP_LINK</option>
+				<option value="2">COM_JEM_GOOGLE_MAP_DISP</option>
+			</field>
+</fieldset>
+</fields>
+
+
+<!-- settings for Categories-view -->
+<fields name="vcategories">
+<fieldset name="vcategories">
+	<field name="show_category_image" type="radio"
+		label="COM_JEM_SETTINGS_SHOW_CATEGORY_IMAGES"
+		description="COM_JEM_SETTINGS_SHOW_CATEGORY_IMAGES_DESC"
+		class="btn-group btn-group-yesno"
+		default="0"
+		required="false"
+		>
+		<option value="0">JNO</option>
+		<option value="1">JYES</option>
+	</field>
+</fieldset>
+</fields>
+
+<!-- settings for Category-view -->
+<fields name="vcategory">
+<fieldset name="vcategory">
+	<field name="show_category_image" type="radio"
+		label="COM_JEM_SETTINGS_SHOW_CATEGORY_IMAGES"
+		description="COM_JEM_SETTINGS_SHOW_CATEGORY_IMAGES_DESC"
+		class="btn-group btn-group-yesno"
+		default="0"
+		required="false"
+		>
+		<option value="0">JNO</option>
+		<option value="1">JYES</option>
+	</field>
+</fieldset>
+</fields>
 </form>

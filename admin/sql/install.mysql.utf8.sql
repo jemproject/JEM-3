@@ -359,6 +359,11 @@ CREATE TABLE IF NOT EXISTS `#__jem_settings` (
   `globalattribs` varchar(5120) NOT NULL,
   `css` varchar (5120) NOT NULL DEFAULT '',
   `version` varchar (20) NOT NULL DEFAULT '3.0.1',
+  `vevent` text NOT NULL DEFAULT '',
+  `vvenue` text NOT NULL DEFAULT '',
+  `vvenues` text NOT NULL DEFAULT '',
+  `vcategories` text NOT NULL DEFAULT '',
+  `vcategory` text NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE `utf8_general_ci`;
 
@@ -396,7 +401,7 @@ INSERT IGNORE INTO #__jem_settings VALUES
 1, 0, '0', 0, 0, '1364604520', '', '', 'COM', 'US', '10%', '10',
 0, 1, 1, 1, 1, 1, 1, 1, 0, '10%', 1, 1, 'media/com_jem/attachments', '1000',
 'txt,csv,htm,html,xml,css,doc,xls,zip,rtf,ppt,pdf,swf,flv,avi,wmv,mov,jpg,jpeg,gif,png,tar.gz',
-0, '60', 100, 1, '', '','','3.0.3');
+0, '60', 100, 1, '', '','','3.0.3','','','','','');
 
 INSERT IGNORE INTO `#__jem_countries` (`id`, `continent`, `iso2`, `iso3`, `un`, `name`) VALUES
 (1, 'AS', 'AF', 'AFG', 4, 'Afghanistan, Islamic Republic of'),

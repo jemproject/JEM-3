@@ -10,9 +10,24 @@
  */
 defined('_JEXEC') or die;
 
+
 JHtml::_('behavior.formvalidation');
 JHtml::_('bootstrap.tooltip');
 JHtml::_('behavior.modal', 'a.flyermodal');
+jimport( 'joomla.html.html.tabs' );
+
+$options = array(
+		'onActive' => 'function(title, description){
+        description.setStyle("display", "block");
+        title.addClass("open").removeClass("closed");
+    }',
+		'onBackground' => 'function(title, description){
+        description.setStyle("display", "none");
+        title.addClass("closed").removeClass("open");
+    }',
+		'startOffset' => 0,  // 0 starts on the first tab, 1 starts the second, etc...
+		'useCookie' => true, // this must not be a string. Don't use quotes.
+);
 ?>
 
 <script>
@@ -67,6 +82,7 @@ window.addEvent('domready', function(){
 		lbon();
 	}
 
+	
 	$("jform_oldevent").addEvent('change', testevhandler);
 
 	var evhandler = $("jform_oldevent");
@@ -83,7 +99,7 @@ window.addEvent('domready', function(){
 	var commhandler = $("jform_globalattribs_event_comunsolution");
 	var nrcommhandler = commhandler.options[commhandler.selectedIndex].value;
 
-	if (nrcommhandler == 1) {
+	if (nrcommhandler > 0) {
 		common();
 	} else {
 		commoff();
@@ -123,12 +139,14 @@ function testcomm()
 	var commhandler = $("jform_globalattribs_event_comunsolution");
 	var nrcommhandler = commhandler.options[commhandler.selectedIndex].value;
 
-	if (nrcommhandler == 1) {
+	if (nrcommhandler > 0) {
 		common();
 	} else {
 		commoff();
 	}
 }
+
+
 
 function testevhandler()
 {
@@ -228,6 +246,7 @@ function lboff()
 	document.getElementById('lb1').style.display = 'none';
 }
 
+
 function evhandleron()
 {
 	document.getElementById('evhandler1').style.display = '';
@@ -279,18 +298,46 @@ function commoff()
 			<?php echo JHtml::_('bootstrap.endTab'); ?>
 			
 			
+			<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'settings-views', JText::_('COM_JEM_SETTINGS_TAB_VIEWS', true)); ?>
+<!-- # we're in tab view -->
 			
-			<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'settings-layout2', JText::_('COM_JEM_EVENT_PAGE', true)); ?>
+					
+			<?php echo JHtml::_('tabs.start', 'views', $options); ?>
+			<?php echo JHtml::_('tabs.panel', JText::_('COM_JEM_SETTINGS_TAB_VCATEGORIES'), 'vcategories'); ?>
 			<div class="row-fluid">
-				<div class="span6">		
-					<?php echo $this->loadTemplate('evevents'); ?>
-				</div><div class="span6">
-					<?php echo $this->loadTemplate('evvenues'); ?>
-					<?php echo $this->loadTemplate('evregistration'); ?>
+				<div class="span6">
+					<?php echo $this->loadTemplate('vcategories'); ?>
 				</div>
 			</div>
-			<?php echo JHtml::_('bootstrap.endTab'); ?>
+			<?php echo JHtml::_('tabs.panel', JText::_('COM_JEM_SETTINGS_TAB_VCATEGORY'), 'vcategory'); ?>
+			<div class="row-fluid">
+				<div class="span6">
+					<?php echo $this->loadTemplate('vcategory'); ?>
+				</div>
+			</div>
+					
+			<?php echo JHtml::_('tabs.panel', JText::_('COM_JEM_SETTINGS_TAB_VEVENT'), 'vevent'); ?>
+			<div class="row-fluid">
+					<?php echo $this->loadTemplate('vevent'); ?>
+			</div>
 			
+			<?php echo JHtml::_('tabs.panel', JText::_('COM_JEM_SETTINGS_TAB_VVENUE'), 'vvenue'); ?>
+			<div class="row-fluid">
+				<div class="span6">
+					<?php echo $this->loadTemplate('vvenue'); ?>
+				</div>
+			</div>
+			<?php echo JHtml::_('tabs.panel', JText::_('COM_JEM_SETTINGS_TAB_VVENUES'), 'vvenues'); ?>
+			<div class="row-fluid">
+				<div class="span6">
+					<?php echo $this->loadTemplate('vvenues'); ?>
+				</div>
+			</div>
+			<?php echo JHtml::_('tabs.end'); ?>
+			
+			
+		
+			<?php echo JHtml::_('bootstrap.endTab'); ?>
 			
 			
 			<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'settings-layout', JText::_('COM_JEM_LAYOUT', true)); ?>
@@ -302,9 +349,7 @@ function commoff()
 			
 			
 			<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'settings-params', JText::_('COM_JEM_GLOBAL_PARAMETERS', true)); ?>
-			<div class="row-fluid">
 				<?php echo $this->loadTemplate('parameters'); ?>
-			</div>
 			<?php echo JHtml::_('bootstrap.endTab'); ?>
 			
 			
