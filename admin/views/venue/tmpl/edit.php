@@ -254,6 +254,10 @@ $slidesOptions = array(
 				<div class="control-label"><?php echo $this->form->getLabel('url'); ?></div>
 				<div class="controls"><?php echo $this->form->getInput('url'); ?></div>
 			</div>
+			<div class="control-group">
+				<div class="control-label"><?php echo $this->form->getLabel('map'); ?></div>
+				<div class="controls"><?php echo $this->form->getInput('map'); ?></div>
+			</div>
 		</fieldset>
 		
 		<fieldset class="form-vertical">
@@ -342,13 +346,7 @@ $slidesOptions = array(
 
 <!-- Geodata -->
 	<?php echo JHtml::_('bootstrap.addSlide', 'venue-sliders-'.$this->item->id, JText::_('COM_JEM_FIELDSET_GEODATA'), 'venue-geodata'); ?>
-	
-	
 		<fieldset class="form-vertical" id="geodata">
-			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('map'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('map'); ?></div>
-			</div>
 			<div class="control-group">
 				<div class="control-label"><?php echo $this->form->getLabel('geocode'); ?></div>
 				<div class="controls"> <input type="checkbox" id="geocode" /></div>
