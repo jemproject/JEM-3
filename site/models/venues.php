@@ -94,7 +94,7 @@ class JemModelVenues extends JemModelEventslist
 
 
 	/**
-	 * Method to get a list of events.
+	 * Method to get a list of venues.
 	 */
 	public function getItems()
 	{
