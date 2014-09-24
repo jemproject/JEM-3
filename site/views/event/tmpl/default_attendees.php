@@ -10,8 +10,9 @@
  */
 
 defined('_JEXEC') or die;
-$user				= JFactory::getUser();
-$userId				= $user->get('id');
+$user		= JFactory::getUser();
+$userId		= $user->get('id');
+$params		= $this->item->params;
 ?>
 
 <?php
@@ -72,8 +73,20 @@ if (!($this->formhandler == 2) && !($this->formhandler == 1)) {
 <!-- Attending users -->
 
 <?php
-//only set style info if users already have registered and user is allowed to see it
-if ($this->registers && $userId && $this->showNameAttendee) :
+$type_attendee = $params->get('event_attendeelist_visiblefor','0');
+
+if ($type_attendee == 0) {
+# visible for guest
+	$check = ($user->get('guest') == true);
+}
+
+if ($type_attendee == 1) {
+# visible for registered
+	$check = ($userId == true);	
+}
+
+
+if ($params->get('event_show_name_attendee','1') && $check || JFactory::getUser()->authorise('core.manage')) :
 ?>
 
 

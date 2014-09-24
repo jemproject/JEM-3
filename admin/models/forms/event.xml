@@ -421,6 +421,24 @@
 				<option	value="0">JNO</option>
 				<option	value="1">JYES</option>
 			</field>
+			<field type="spacer" name="myspacer" label="" />
+			<field name="event_show_name_attendee" type="list"
+				label="COM_JEM_SETTINGS_FIELD_SHOW_NAME_ATTENDEE"
+				description="COM_JEM_SETTINGS_FIELD_SHOW_NAME_ATTENDEE_DESC"
+				>
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field name="event_attendeelist_visiblefor" type="list"
+				label="COM_JEM_EVENT_FIELD_EVENT_ATTENDEELIST_VISIBLEFOR"
+				description="COM_JEM_EVENT_FIELD_EVENT_ATTENDEELIST_VISIBLEFOR_DESC"
+			>
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option	value="0">COM_JEM_GLOBAL_FIELD_GUEST</option>
+				<option	value="1">COM_JEM_GLOBAL_FIELD_REGISTERED</option>
+			</field>
+			<field type="spacer" name="myspacer2" label="" />
 			<field name="event_show_hits" type="list"
 				label="COM_JEM_EVENT_FIELD_SHOW_HITS_LABEL"
 				description="COM_JEM_EVENT_FIELD_SHOW_HITS_DESC"
