@@ -56,6 +56,9 @@ CREATE TABLE IF NOT EXISTS `#__jem_events` (
   `wholeday` varchar(2) NOT NULL,
   `recurrence_count` int(11) NOT NULL,
   `recurrence_weekday` varchar(100) NOT NULL,
+  `startDateTime` varchar(100) NOT NULL,
+  `endDateTime` varchar(100) NOT NULL,
+  `note` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM CHARACTER SET `utf8` COLLATE `utf8_general_ci`;
 
@@ -272,7 +275,6 @@ CREATE TABLE IF NOT EXISTS `#__jem_settings` (
   `id` int(11) unsigned NOT NULL,
   `oldevent` tinyint(4) NOT NULL,
   `minus` tinyint(4) NOT NULL,
-  `showtime` tinyint(4) NOT NULL,
   `showtitle` tinyint(4) NOT NULL,
   `showlocate` tinyint(4) NOT NULL,
   `showcity` tinyint(4) NOT NULL,
@@ -287,7 +289,6 @@ CREATE TABLE IF NOT EXISTS `#__jem_settings` (
   `formattime` varchar(100) NOT NULL,
   `timename` varchar(50) NOT NULL,
   `showdetails` tinyint(4) NOT NULL,
-  `showtimedetails` tinyint(4) NOT NULL,
   `showevdescription` tinyint(4) NOT NULL,
   `showdetailstitle` tinyint(4) NOT NULL,
   `showdetailsadress` tinyint(4) NOT NULL,
@@ -295,7 +296,6 @@ CREATE TABLE IF NOT EXISTS `#__jem_settings` (
   `showlinkvenue` tinyint(4) NOT NULL,
   `showdetlinkvenue` tinyint(4) NOT NULL,
   `delivereventsyes` tinyint(4) NOT NULL,
-  `datdesclimit` varchar(15) NOT NULL,
   `autopubl` tinyint(4) NOT NULL,
   `deliverlocsyes` tinyint(4) NOT NULL,
   `autopublocate` tinyint(4) NOT NULL,
@@ -338,7 +338,6 @@ CREATE TABLE IF NOT EXISTS `#__jem_settings` (
   `display_num` tinyint(4) NOT NULL,
   `cat_num` tinyint(4) NOT NULL,
   `filter` tinyint(4) NOT NULL,
-  `discatheader` tinyint(4) NOT NULL,
   `display` tinyint(4) NOT NULL,
   `icons` tinyint(4) NOT NULL,
   `show_print_icon` tinyint(4) NOT NULL,
@@ -394,14 +393,14 @@ CREATE TABLE IF NOT EXISTS `#__jem_countries` (
 ) ENGINE=MyISAM CHARACTER SET `utf8` COLLATE `utf8_general_ci`;
 
 INSERT IGNORE INTO #__jem_settings VALUES
-(1, 2, 1, 1, 1, 1, 1, 1, '100%', '20%', '40%', '20%', '', 
-'D, j. F Y', 'd.m.y', '%H.%M', 'h', 1, 1, 1, 1, 1, 1, 1, 1, -2, '1000', -2, -2, -2, 1, '',
+(1, 2, 1, 1, 1, 1, 1, '100%', '20%', '40%', '20%', '', 
+'D, j. F Y', 'd.m.y', '%H.%M', 'h', 1, 1, 1, 1, 1, 1, 1, -2, '1000', -2, -2, -2, 1, '',
 1, 1, 1, 1, '100', '100', '100', 1, 1, 0, 0, 1, 2, 2, -2, 1, 0, -2, 1, 0, 1, 
 '[title], [a_name], [categories], [times]', 'The event titled [title] starts on [dates]!',
 1, 0, '0', 0, 0, '1364604520', '', '', 'COM', 'US', '10%', '10',
 0, 1, 1, 1, 1, 1, 1, 1, 0, '10%', 1, 1, 'media/com_jem/attachments', '1000',
 'txt,csv,htm,html,xml,css,doc,xls,zip,rtf,ppt,pdf,swf,flv,avi,wmv,mov,jpg,jpeg,gif,png,tar.gz',
-0, '60', 100, 1, '', '','','3.0.3','','','','','');
+0, '60', 100, 1, '', '','','3.0.1','','','','','');
 
 INSERT IGNORE INTO `#__jem_countries` (`id`, `continent`, `iso2`, `iso3`, `un`, `name`) VALUES
 (1, 'AS', 'AF', 'AFG', 4, 'Afghanistan, Islamic Republic of'),
