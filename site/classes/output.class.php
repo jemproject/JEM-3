@@ -688,11 +688,13 @@ class JEMOutput {
 		switch ($mapserv)
 		{
 			case 1:
+				$url = 'http://maps.google.com/maps?&q='.urlencode($data->street.', '.$data->postalCode.' '.$data->city.', '.$data->country.'+ ('.$data->venue.')').'&ie=UTF8&z=15&output=embed" ';
+				
 				// link
 				if($data->latitude && $data->longitude) {
 					$url = 'http://maps.google.com/maps?q='.$data->latitude.',+'.$data->longitude.'&ie=UTF8&z=15&output=embed';
 				}
-
+				
 				$message = JText::_('COM_JEM_MAP').':';
 				$attributes = ' rel="{handler: \'iframe\', size: {x: 800, y: 500}}" latitude="" longitude=""';
 				$output = '<dt class="venue_mapicon">'.$message.'</dt><dd class="venue_mapicon"><a class="flyermodal mapicon" title="'.JText::_('COM_JEM_MAP').'" target="_blank" href="'.$url.'"'.$attributes.'>'.$mapimage.'</a></dd>';
