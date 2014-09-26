@@ -289,12 +289,7 @@ CREATE TABLE IF NOT EXISTS `#__jem_settings` (
   `formattime` varchar(100) NOT NULL,
   `timename` varchar(50) NOT NULL,
   `showdetails` tinyint(4) NOT NULL,
-  `showevdescription` tinyint(4) NOT NULL,
-  `showdetailstitle` tinyint(4) NOT NULL,
-  `showdetailsadress` tinyint(4) NOT NULL,
-  `showlocdescription` tinyint(4) NOT NULL,
   `showlinkvenue` tinyint(4) NOT NULL,
-  `showdetlinkvenue` tinyint(4) NOT NULL,
   `delivereventsyes` tinyint(4) NOT NULL,
   `autopubl` tinyint(4) NOT NULL,
   `deliverlocsyes` tinyint(4) NOT NULL,
@@ -310,8 +305,6 @@ CREATE TABLE IF NOT EXISTS `#__jem_settings` (
   `imagewidth` varchar(20) NOT NULL,
   `gddisabled` tinyint(4) NOT NULL,
   `imageenabled` tinyint(4) NOT NULL,
-  `comunsolution` tinyint(4) NOT NULL,
-  `comunoption` tinyint(4) NOT NULL,
   `catlinklist` tinyint(4) NOT NULL,
   `showfroregistra` tinyint(4) NOT NULL,
   `showfrounregistra` tinyint(4) NOT NULL,
@@ -324,7 +317,6 @@ CREATE TABLE IF NOT EXISTS `#__jem_settings` (
   `lightbox` tinyint(4) NOT NULL,
   `meta_keywords` varchar(255) NOT NULL,
   `meta_description` varchar(255) NOT NULL,
-  `showstate` tinyint(4) NOT NULL,
   `showeventimage` tinyint(4) NOT NULL,
   `statewidth` varchar(20) NOT NULL,
   `regname` tinyint(4) NOT NULL,
@@ -335,15 +327,8 @@ CREATE TABLE IF NOT EXISTS `#__jem_settings` (
   `tableeventimagewidth` varchar(20) NOT NULL,
   `display_num` tinyint(4) NOT NULL,
   `cat_num` tinyint(4) NOT NULL,
-  `filter` tinyint(4) NOT NULL,
-  `display` tinyint(4) NOT NULL,
-  `icons` tinyint(4) NOT NULL,
-  `show_print_icon` tinyint(4) NOT NULL,
-  `show_email_icon` tinyint(4) NOT NULL,
-  `events_ical` tinyint(4) NOT NULL,
   `showatte` int(11) NOT NULL,
   `attewidth` varchar(10) NOT NULL,
-  `show_archive_icon` tinyint(4) NOT NULL,
   `weekdaystart` int(11) NOT NULL DEFAULT '0',
   `attachments_path` varchar(100) NOT NULL DEFAULT 'media/com_jem/attachments',
   `attachments_maxsize` varchar(15) NOT NULL DEFAULT '1000',
@@ -390,8 +375,8 @@ CREATE TABLE IF NOT EXISTS `#__jem_countries` (
   KEY `iso2` (`iso2`)
 ) ENGINE=MyISAM CHARACTER SET `utf8` COLLATE `utf8_general_ci`;
 
-INSERT INTO `#__jem_settings` (`id`, `oldevent`, `minus`, `showtitle`, `showlocate`, `showcity`, `showmapserv`, `tablewidth`, `datewidth`, `titlewidth`, `locationwidth`, `citywidth`, `formatdate`, `formatShortDate`, `formattime`, `timename`, `showdetails`, `showevdescription`, `showdetailstitle`, `showdetailsadress`, `showlocdescription`, `showlinkvenue`, `showdetlinkvenue`, `delivereventsyes`, `autopubl`, `deliverlocsyes`, `autopublocate`, `showcat`, `catfrowidth`, `evdelrec`, `evpubrec`, `locdelrec`, `locpubrec`, `sizelimit`, `imagehight`, `imagewidth`, `gddisabled`, `imageenabled`, `comunsolution`, `comunoption`, `catlinklist`, `showfroregistra`, `showfrounregistra`, `eventedit`, `eventeditrec`, `eventowner`, `venueedit`, `venueeditrec`, `venueowner`, `lightbox`, `meta_keywords`, `meta_description`, `showstate`, `showeventimage`, `statewidth`, `regname`, `storeip`, `lastupdate`, `checked_out`, `checked_out_time`, `tld`, `lg`, `tableeventimagewidth`, `display_num`, `cat_num`, `filter`, `display`, `icons`, `show_print_icon`, `show_email_icon`, `events_ical`, `showatte`, `attewidth`, `show_archive_icon`, `weekdaystart`, `attachments_path`, `attachments_maxsize`, `attachments_types`, `ownedvenuesonly`, `recurrence_anticipation`, `ical_max_items`, `empty_cat`, `defaultCountry`, `globalattribs`, `css`, `version`, `vevent`, `vvenue`, `vvenues`, `vcategories`, `vcategory`) VALUES
-(1, 2, 1, 1, 1, 1, 1, '100%', '20%', '40%', '20%', '', 'D, j. F Y', 'd.m.y', '%H.%M', 'h', 1, 1, 1, 1, 1, 1, 1, -2, -2, -2, -2, 1, '', 1, 1, 1, 1, '100', '100', '100', 1, 1, 0, 0, 1, 2, 2, -2, 1, 0, -2, 1, 0, 1, '[title], [a_name], [times]', 'The event titled [title] starts on [dates]!', 1, 0, '0', 0, 0, '1411720674', 0, '0000-00-00 00:00:00', '10%', 10, 0, 1, 1, 1, 1, 1, 1, 0, '10%', 1, 1, 'media/com_jem/attachments', '1000', 'txt,csv,htm,html,xml,css,doc,xls,zip,rtf,ppt,pdf,swf,flv,avi,wmv,mov,jpg,jpeg,gif,png,tar.gz', 0, '60', 100, 1, '0', '', '', '3.0.1', '', '', '', '', '');
+INSERT INTO `#__jem_settings` (`id`, `oldevent`, `minus`, `showtitle`, `showlocate`, `showcity`, `showmapserv`, `tablewidth`, `datewidth`, `titlewidth`, `locationwidth`, `citywidth`, `formatdate`, `formatShortDate`, `formattime`, `timename`, `showdetails`, `showlinkvenue`, `delivereventsyes`, `autopubl`, `deliverlocsyes`, `autopublocate`, `showcat`, `catfrowidth`, `evdelrec`, `evpubrec`, `locdelrec`, `locpubrec`, `sizelimit`, `imagehight`, `imagewidth`, `gddisabled`, `imageenabled`, `catlinklist`, `showfroregistra`, `showfrounregistra`, `eventedit`, `eventeditrec`, `eventowner`, `venueedit`, `venueeditrec`, `venueowner`, `lightbox`, `meta_keywords`, `meta_description`, `showeventimage`, `statewidth`, `regname`, `storeip`, `lastupdate`, `checked_out`, `checked_out_time`, `tableeventimagewidth`, `display_num`, `cat_num`, `showatte`, `attewidth`, `weekdaystart`, `attachments_path`, `attachments_maxsize`, `attachments_types`, `ownedvenuesonly`, `recurrence_anticipation`, `ical_max_items`, `empty_cat`, `defaultCountry`, `globalattribs`, `css`, `version`, `vevent`, `vvenue`, `vvenues`, `vcategories`, `vcategory`) VALUES
+(1, 2, 1, 1, 1, 1, 1, '100%', '20%', '40%', '20%', '', 'D, j. F Y', 'd.m.y', '%H.%M', 'h', 1, 1, -2, -2, -2, -2, 1, '', 1, 1, 1, 1, '100', '100', '100', 1, 1, 1, 2, 2, -2, 1, 0, -2, 1, 0, 1, '[title], [a_name], [times]', 'The event titled [title] starts on [dates]!', 0, '0', 0, 0, '1411731117', 0, '0000-00-00 00:00:00', '10%', 10, 0, 0, '10%', 1, 'media/com_jem/attachments', '1000', 'txt,csv,htm,html,xml,css,doc,xls,zip,rtf,ppt,pdf,swf,flv,avi,wmv,mov,jpg,jpeg,gif,png,tar.gz', 0, '60', 100, 1, '0', '', '', '3.0.1', '', '', '', '', '');
 
 
 INSERT IGNORE INTO `#__jem_countries` (`id`, `continent`, `iso2`, `iso3`, `un`, `name`) VALUES

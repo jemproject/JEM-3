@@ -6,7 +6,9 @@ UPDATE #__jem_settings
 SET `version`='3.0.3'
 WHERE `version`='3.0.1';
 
-
+-- 
+-- Other changes
+--
 ALTER TABLE `#__jem_settings`
 	DROP `datdesclimit`,
 	DROP `discatheader`,
@@ -14,6 +16,20 @@ ALTER TABLE `#__jem_settings`
 	DROP `showtimedetails`,
 	DROP `tld`,
 	DROP `lg`,
+	DROP `show_print_icon`,
+	DROP `show_archive_icon`,
+	DROP `comunsolution`,
+	DROP `comunoption`,
+	DROP `showdetailsadress`,
+	DROP `showlocdescription`,
+	DROP `showdetlinkvenue`,
+	DROP `icons`,
+	DROP `show_email_icon`,
+	DROP `filter`,
+	DROP `showdetailstitle`,
+	DROP `showevdescription`,
+	DROP `showstate`,
+	DROP `display`,
 	ADD `vevent` text NOT NULL DEFAULT '',
   	ADD `vvenue` text NOT NULL DEFAULT '',
   	ADD `vvenues` text NOT NULL DEFAULT '',
