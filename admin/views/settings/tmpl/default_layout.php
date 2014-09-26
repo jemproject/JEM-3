@@ -12,12 +12,18 @@ defined('_JEXEC') or die;
 <div class="span6">
 	<fieldset class="form-horizontal">
 		<legend><?php echo JText::_('COM_JEM_GENERAL_LAYOUT_SETTINGS'); ?></legend>
-			<?php foreach ($this->form->getFieldset('layoutgenerallayoutsetting') as $field): ?>
-			<div class="control-group">	
-				<div class="control-label"><?php echo $field->label; ?></div>
-				<div class="controls"><?php echo $field->input; ?></div>
-			</div>
-			<?php endforeach; ?>
+		<div class="control-group">
+			<div class="control-label"><?php echo $this->form->getLabel('tablewidth'); ?></div>
+			<div class="controls"><?php echo $this->form->getInput('tablewidth'); ?></div>
+		</div>
+	</fieldset>
+	
+	<fieldset class="form-horizontal">
+		<legend><?php echo JText::_('COM_JEM_SETTINGS_LEGEND_DATE_COLUMN'); ?></legend>
+		<div class="control-group">
+			<div class="control-label"><?php echo $this->form->getLabel('datewidth'); ?></div>
+			<div class="controls"><?php echo $this->form->getInput('datewidth'); ?></div>
+		</div>
 	</fieldset>
 	
 	<fieldset class="form-horizontal">
