@@ -111,9 +111,6 @@ class JemViewCategory extends JEMView
 			if ($jemsettings->showcity == 1) {
 				$filters[] = JHtml::_('select.option', '3', JText::_('COM_JEM_CITY'));
 			}
-			if ($jemsettings->showcat == 1) {
-				$filters[] = JHtml::_('select.option', '4', JText::_('COM_JEM_CATEGORY'));
-			}
 			$lists['filter'] = JHtml::_('select.genericlist', $filters, 'filter_type', array('size'=>'1','class'=>'inputbox input-medium'), 'value', 'text', $filter_type);
 
 			// search filter
