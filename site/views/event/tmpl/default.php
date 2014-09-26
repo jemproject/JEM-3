@@ -83,7 +83,6 @@ $mapType = $this->mapType;
 		<div class="span7 col-md-7">	
 <?php } ?>
 
-<div class="dl">
 	<dl class="event_info">
 		<?php if ($params->get('event_show_detailstitle',1)) : ?>
 			<dt class="title"><?php echo JText::_('COM_JEM_TITLE').':'; ?></dt>
@@ -185,7 +184,7 @@ $mapType = $this->mapType;
 		<?php endif; ?>
 		</dd>
 		<?php endif; ?>
-		</dl></div>
+		</dl>
 		
 		<?php if ($this->img_position == 1) { ?>
 		</div><div class="span5 col-md-5">
@@ -243,7 +242,7 @@ $mapType = $this->mapType;
          			<?php echo JText::_('COM_JEM_CONTACT') ; ?>
          		</h2>
 
-        		<dl class="dl">
+        		<dl>
         		<dt class="con_name"><?php echo JText::_('COM_JEM_NAME').':'; ?></dt>
         			<dd class="con_name">
           <?php        $contact = $this->item->conname;
@@ -306,7 +305,6 @@ $mapType = $this->mapType;
 		<div class="span12 row">
 			<div class="span7 col-md-7">	
 <?php } ?>
-		<div class="dl">
 		<dl class="location_dl">
 			<dt class="venue"><?php echo JText::_('COM_JEM_LOCATION').':'; ?></dt>
 			<dd class="venue">
@@ -317,9 +315,8 @@ $mapType = $this->mapType;
 				<a target="_blank" href="<?php echo $this->item->url; ?>"> <?php echo JText::_('COM_JEM_WEBSITE'); ?></a>
 			<?php endif; ?>
 			</dd>
-		</dl></div>
+		</dl>
 		<?php if ($params->get('event_show_detailsadress','1')) : ?>
-		<div class="dl">
 			<dl class="location_dl" itemprop="address" itemscope
 			itemtype="http://schema.org/PostalAddress">
 				<?php if ($this->item->street) : ?>
@@ -378,7 +375,7 @@ $mapType = $this->mapType;
 				<?php if ($params->get('event_show_mapserv')== 1) : ?>
 					<?php echo JemOutput::mapicon($this->item,'event',$params); ?>
 				<?php endif; ?>
-			</dl></div>
+			</dl>
 		<?php endif; ?>
 	
 	

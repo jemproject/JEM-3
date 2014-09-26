@@ -161,7 +161,7 @@ div#jc h4 {
 	definitionlist 
 ---------------- **/
  
-div#jem .dl dt {
+div#jem dl dt {
 	margin:0;
 	padding:0.3em 0;
 	float:left;
@@ -172,7 +172,7 @@ div#jem .dl dt {
 	border-bottom:1px solid #DDDDDD;
 }
 
-div#jem .dl dd { 
+div#jem dl dd { 
 	display:block;
 	margin:0 0 5px 12em;
 	padding:0.3em 0;
@@ -710,7 +710,7 @@ div#jem .resize_tipicon {
 	}
 
 
-div#jem .dl dt {
+div#jem dl dt {
 	margin:0;
 	padding:0 !important;
 	float:none !important;
@@ -721,7 +721,7 @@ div#jem .dl dt {
 	border-bottom:1px solid #DDDDDD;
 }
 
-div#jem .dl dd { 
+div#jem dl dd { 
 	display:block;
 	margin:0 !important;
 	padding:0.3em 0;

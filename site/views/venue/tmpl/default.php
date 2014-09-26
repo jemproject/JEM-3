@@ -61,7 +61,6 @@ $mapType = $this->mapType;
 	<div class="span12">
 	
 	<div class="span7">	
-	 	<div class="dl">
 	 	   <?php if (($this->vsettings->get('show_detlinkvenue',1)) && (!empty($this->venue->url))) : ?>
 		<dl class="location">
 		<dt class="title"><?php echo JText::_('COM_JEM_TITLE').':'; ?></dt>
@@ -133,7 +132,7 @@ $mapType = $this->mapType;
 				echo JemOutput::mapicon($this->venue,'venue',$this->vsettings);
 			}
 			?>
-		</dl></div>
+		</dl>
 	</div>
 	
 	<div class="span5">

@@ -22,10 +22,7 @@ if (!($this->formhandler == 2) && !($this->formhandler == 1)) {
 <div class="row-fluid">
 <div class="span12">
 <div class="span7">
-
-
-<div class="dl">
-	<dl class="">
+	<dl>
 		<?php 
 		if ($this->item->maxplaces > 0 ) {?>
 			<dt class=""><?php echo JText::_('COM_JEM_MAX_PLACES').':';?></dt>
@@ -57,9 +54,7 @@ if (!($this->formhandler == 2) && !($this->formhandler == 1)) {
 		<dt class=""><?php echo JText::_('COM_JEM_REGISTERED_USERS').':';?></dt>
 		<dd class=""><?php echo count($this->registers); ?></dd>
 		<?php } ?>
-		
 	</dl>
-</div>
 </div><!-- end span7 -->
 
 
