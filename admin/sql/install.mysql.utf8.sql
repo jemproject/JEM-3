@@ -392,15 +392,9 @@ CREATE TABLE IF NOT EXISTS `#__jem_countries` (
   KEY `iso2` (`iso2`)
 ) ENGINE=MyISAM CHARACTER SET `utf8` COLLATE `utf8_general_ci`;
 
-INSERT IGNORE INTO #__jem_settings VALUES
-(1, 2, 1, 1, 1, 1, 1, '100%', '20%', '40%', '20%', '', 
-'D, j. F Y', 'd.m.y', '%H.%M', 'h', 1, 1, 1, 1, 1, 1, 1, -2, '1000', -2, -2, -2, 1, '',
-1, 1, 1, 1, '100', '100', '100', 1, 1, 0, 0, 1, 2, 2, -2, 1, 0, -2, 1, 0, 1, 
-'[title], [a_name], [categories], [times]', 'The event titled [title] starts on [dates]!',
-1, 0, '0', 0, 0, '1364604520', '', '', 'COM', 'US', '10%', '10',
-0, 1, 1, 1, 1, 1, 1, 1, 0, '10%', 1, 1, 'media/com_jem/attachments', '1000',
-'txt,csv,htm,html,xml,css,doc,xls,zip,rtf,ppt,pdf,swf,flv,avi,wmv,mov,jpg,jpeg,gif,png,tar.gz',
-0, '60', 100, 1, '', '','','3.0.1','','','','','');
+INSERT INTO `#__jem_settings` (`id`, `oldevent`, `minus`, `showtitle`, `showlocate`, `showcity`, `showmapserv`, `tablewidth`, `datewidth`, `titlewidth`, `locationwidth`, `citywidth`, `formatdate`, `formatShortDate`, `formattime`, `timename`, `showdetails`, `showevdescription`, `showdetailstitle`, `showdetailsadress`, `showlocdescription`, `showlinkvenue`, `showdetlinkvenue`, `delivereventsyes`, `autopubl`, `deliverlocsyes`, `autopublocate`, `showcat`, `catfrowidth`, `evdelrec`, `evpubrec`, `locdelrec`, `locpubrec`, `sizelimit`, `imagehight`, `imagewidth`, `gddisabled`, `imageenabled`, `comunsolution`, `comunoption`, `catlinklist`, `showfroregistra`, `showfrounregistra`, `eventedit`, `eventeditrec`, `eventowner`, `venueedit`, `venueeditrec`, `venueowner`, `lightbox`, `meta_keywords`, `meta_description`, `showstate`, `showeventimage`, `statewidth`, `regname`, `storeip`, `lastupdate`, `checked_out`, `checked_out_time`, `tld`, `lg`, `tableeventimagewidth`, `display_num`, `cat_num`, `filter`, `display`, `icons`, `show_print_icon`, `show_email_icon`, `events_ical`, `showatte`, `attewidth`, `show_archive_icon`, `weekdaystart`, `attachments_path`, `attachments_maxsize`, `attachments_types`, `ownedvenuesonly`, `recurrence_anticipation`, `ical_max_items`, `empty_cat`, `defaultCountry`, `globalattribs`, `css`, `version`, `vevent`, `vvenue`, `vvenues`, `vcategories`, `vcategory`) VALUES
+(1, 2, 1, 1, 1, 1, 1, '100%', '20%', '40%', '20%', '', 'D, j. F Y', 'd.m.y', '%H.%M', 'h', 1, 1, 1, 1, 1, 1, 1, -2, -2, -2, -2, 1, '', 1, 1, 1, 1, '100', '100', '100', 1, 1, 0, 0, 1, 2, 2, -2, 1, 0, -2, 1, 0, 1, '[title], [a_name], [times]', 'The event titled [title] starts on [dates]!', 1, 0, '0', 0, 0, '1411720674', 0, '0000-00-00 00:00:00', 'COM', 'US', '10%', 10, 0, 1, 1, 1, 1, 1, 1, 0, '10%', 1, 1, 'media/com_jem/attachments', '1000', 'txt,csv,htm,html,xml,css,doc,xls,zip,rtf,ppt,pdf,swf,flv,avi,wmv,mov,jpg,jpeg,gif,png,tar.gz', 0, '60', 100, 1, '0', '', '', '3.0.1', '', '', '', '', '');
+
 
 INSERT IGNORE INTO `#__jem_countries` (`id`, `continent`, `iso2`, `iso3`, `un`, `name`) VALUES
 (1, 'AS', 'AF', 'AFG', 4, 'Afghanistan, Islamic Republic of'),
