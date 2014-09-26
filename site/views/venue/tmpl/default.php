@@ -130,7 +130,7 @@ $mapType = $this->mapType;
 
 			<?php
 			if ($this->vsettings->get('show_mapserv')== 1) {
-				echo JemOutput::mapicon($this->venue,null,$this->vsettings);
+				echo JemOutput::mapicon($this->venue,'venue',$this->vsettings);
 			}
 			?>
 		</dl></div>
@@ -145,7 +145,7 @@ $mapType = $this->mapType;
 	</div> <!-- row-fluid -->
 	<?php
 		if ($this->vsettings->get('show_mapserv')== 2) {
-			echo JemOutput::mapicon($this->venue,null,$this->vsettings);
+			echo JemOutput::mapicon($this->venue,'venue',$this->vsettings);
 		}
 		?>
 	<?php endif; ?>
@@ -159,7 +159,7 @@ $mapType = $this->mapType;
 			<input type="hidden" id="state" value="<?php echo $this->venue->state;?>">
 			<input type="hidden" id="postalCode" value="<?php echo $this->venue->postalCode;?>">
 			<input type="hidden" id="mapType" value="<?php echo $this->mapType;?>">
-		<?php echo JemOutput::mapicon($this->venue,null,$this->settings); ?>			
+		<?php echo JemOutput::mapicon($this->venue,'venue',$this->vsettings); ?>			
 	<?php endif; ?>
 	
 
