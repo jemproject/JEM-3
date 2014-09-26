@@ -12,6 +12,8 @@ ALTER TABLE `#__jem_settings`
 	DROP `discatheader`,
 	DROP `showtime`,
 	DROP `showtimedetails`,
+	DROP `tld`,
+	DROP `lg`,
 	ADD `vevent` text NOT NULL DEFAULT '',
   	ADD `vvenue` text NOT NULL DEFAULT '',
   	ADD `vvenues` text NOT NULL DEFAULT '',
