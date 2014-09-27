@@ -521,11 +521,10 @@ class JemHelper {
 	 * Creates a tooltip
 	 */
 	static function caltooltip($tooltip, $title = '', $text = '', $href = '', $class = '', $time = '', $color = '') {
-		$tooltip = (htmlspecialchars($tooltip));
-		$title = (htmlspecialchars($title));
-
-		$titleTip = JHtml::tooltipText($title, $tooltip, 0);
-		
+		$tooltip = $tooltip;
+		$title = $title;
+		$titleTip = JHtml::tooltipText($title, $tooltip, true,true);
+				
 		if ($href) {
 			$href = JRoute::_ ($href);
 			$tip = '<div class="'.$class.'" title="'.$titleTip.'"><a href="'.$href.'">'.$time.$text.'</a></div>';
