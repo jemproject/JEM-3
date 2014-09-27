@@ -101,7 +101,7 @@
 		<field name="country" type="countryoptions"
 			label="COM_JEM_COUNTRY"
 			description="COM_JEM_COUNTRY_DESC"
-			class="select_country"
+			class="select_country inputbox"
 		/>
 	</fieldset>
 
