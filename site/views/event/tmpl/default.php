@@ -305,7 +305,7 @@ $mapType = $this->mapType;
 		<div class="span12 row">
 			<div class="span7 col-md-7">	
 <?php } ?>
-		<dl class="location_dl">
+		<dl class="location_dl" itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
 			<dt class="venue"><?php echo JText::_('COM_JEM_LOCATION').':'; ?></dt>
 			<dd class="venue">
 			<?php echo "<a href='".JRoute::_(JemHelperRoute::getVenueRoute($this->item->venueslug))."'>".$this->escape($this->item->venue)."</a>"; ?>
@@ -315,10 +315,7 @@ $mapType = $this->mapType;
 				<a target="_blank" href="<?php echo $this->item->url; ?>"> <?php echo JText::_('COM_JEM_WEBSITE'); ?></a>
 			<?php endif; ?>
 			</dd>
-		</dl>
 		<?php if ($params->get('event_show_detailsadress','1')) : ?>
-			<dl class="location_dl" itemprop="address" itemscope
-			itemtype="http://schema.org/PostalAddress">
 				<?php if ($this->item->street) : ?>
 				<dt class="venue_street"><?php echo JText::_('COM_JEM_STREET').':'; ?></dt>
 			<dd class="venue_street" itemprop="streetAddress">
@@ -371,14 +368,12 @@ $mapType = $this->mapType;
 			}
 		}
 		?>
-
 				<?php if ($params->get('event_show_mapserv')== 1) : ?>
 					<?php echo JemOutput::mapicon($this->item,'event',$params); ?>
 				<?php endif; ?>
-			</dl>
-		<?php endif; ?>
-	
-	
+			<?php endif; ?>
+		</dl>
+		
 	<?php if ($this->img_position == 1) { ?>
 	</div><div class="span5 col-md-5">
 <!-- image -->

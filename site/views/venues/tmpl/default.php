@@ -92,7 +92,6 @@ defined('_JEXEC') or die;
 			<?php endif; ?>
 		
 		<?php if ( $this->vsettings->get('show_detailsadress',1)) : ?>
-			<dl class="location floattext" >
 				<?php if ($row->street) : ?>
 				<dt class="venue_street">
 					<?php echo JText::_('COM_JEM_STREET').':'; ?>
@@ -154,11 +153,11 @@ defined('_JEXEC') or die;
 				<dd class="venue_archivedevents">
 					<a href="<?php echo $row->linkEventsArchived; ?>"><?php echo $row->EventsArchived; ?></a>
 				</dd>
-			</dl>
 			<?php if ($this->vsettings->get('show_mapserv') == 2) : ?>
 				<?php echo JemOutput::mapicon($row,null,$this->vsettings); ?>
 			<?php endif; ?>
 		<?php endif; ?>
+		</dl>
 
 
 		<?php if ($this->vsettings->get('show_mapserv')== 3) : ?>

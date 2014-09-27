@@ -61,20 +61,14 @@ $mapType = $this->mapType;
 	<div class="span12">
 	
 	<div class="span7">	
-	 	   <?php if (($this->vsettings->get('show_detlinkvenue',1)) && (!empty($this->venue->url))) : ?>
-		<dl class="location">
-		<dt class="title"><?php echo JText::_('COM_JEM_TITLE').':'; ?></dt>
-		<dd class="title" itemprop="name"><?php echo $this->escape($this->venue->venue); ?></dd>
-		
+		<dl class="location" itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+	<?php if (($this->vsettings->get('show_detlinkvenue',1)) && (!empty($this->venue->url))) : ?>
 			<dt class="venue"><?php echo JText::_('COM_JEM_WEBSITE').':'; ?></dt>
 			<dd class="venue">
 				<a href="<?php echo $this->venue->url; ?>" target="_blank"><?php echo $this->venue->urlclean; ?></a>
 			</dd>
-		</dl>
 	<?php endif; ?>
-
 	<?php if ($this->vsettings->get('show_detailsadress',1)) : ?>
-		<dl class="location floattext" itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
 			<?php if ($this->venue->street) : ?>
 			<dt class="venue_street"><?php echo JText::_('COM_JEM_STREET').':'; ?></dt>
 			<dd class="venue_street" itemprop="streetAddress">
@@ -131,6 +125,7 @@ $mapType = $this->mapType;
 			if ($this->vsettings->get('show_mapserv')== 1) {
 				echo JemOutput::mapicon($this->venue,'venue',$this->vsettings);
 			}
+			endif;
 			?>
 		</dl>
 	</div>
@@ -147,7 +142,6 @@ $mapType = $this->mapType;
 			echo JemOutput::mapicon($this->venue,'venue',$this->vsettings);
 		}
 		?>
-	<?php endif; ?>
 	<?php if ($this->vsettings->get('show_mapserv')== 3) : ?>			
 			<input type="hidden" id="latitude" value="<?php echo $this->venue->latitude;?>">
 			<input type="hidden" id="longitude" value="<?php echo $this->venue->longitude;?>">
