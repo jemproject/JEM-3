@@ -419,7 +419,8 @@ class com_jemInstallerScript
 			'/components/com_jem/views/category/tmpl/calendar.php',
 			'/components/com_jem/views/category/tmpl/calendar.xml',
 			'/components/com_jem/views/venue/tmpl/calendar.php',
-			'/components/com_jem/views/venue/tmpl/calendar.xml'
+			'/components/com_jem/views/venue/tmpl/calendar.xml',
+			'/media/com_jem/js/settings.js'
 		);
 		$folders = array();
 
