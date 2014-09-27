@@ -83,7 +83,7 @@ class JemViewEventslist extends JEMView
 		}
 
 		// params
-		$pagetitle		= $params->def('page_title', $menuitem ? $menuitem->title : COM_JEM_EVENTS);
+		$pagetitle		= $params->def('page_title', $menuitem ? $menuitem->title : JText::_('COM_JEM_EVENTS'));
 		$pageheading 	= $params->def('page_heading', $params->get('page_title'));
 		$pageclass_sfx	= $params->get('pageclass_sfx');
 
