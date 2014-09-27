@@ -1411,7 +1411,6 @@
 			>
 				<option value="0">COM_JEM_NO_LINK</option>
 				<option value="1">COM_JEM_LINK_TO_URL</option>
-				<option value="2">COM_JEM_LINK_TO_VENUEVIEW</option>
 			</field>
 			<field name="show_mapserv" type="list"
 				label="COM_JEM_DISPLAY_LINK_TO_MAP"
