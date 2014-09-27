@@ -65,28 +65,27 @@ if (!($this->formhandler == 2) && !($this->formhandler == 1)) {
 </div><!-- end span row-fluid -->
 <?php } ?>
 
-
-
-
-
-
-
 <!-- Attending users -->
 <?php
 $type_attendee = $params->get('event_attendeelist_visiblefor','0');
 
 if ($type_attendee == 0) {
 # visible for guest
-	$check = ($user->get('guest') == true);
+	$check = $params->get('event_show_name_attendee','1') && $user->get('guest') == true;
 }
 
 if ($type_attendee == 1) {
 # visible for registered
-	$check = ($userId == true);	
+	$check = $params->get('event_show_name_attendee','1') && $userId == true;	
+}
+
+if ($type_attendee == 2) {
+	# visible for registered + guest 
+	$check = $params->get('event_show_name_attendee','1') && $user->get('guest') == true || $params->get('event_show_name_attendee','2') && $userId == true;
 }
 
 
-if ($params->get('event_show_name_attendee','1') && $check || JFactory::getUser()->authorise('core.manage')) :
+if ( $check || JFactory::getUser()->authorise('core.manage')) :
 ?>
 
 <div class="row-fluid">
