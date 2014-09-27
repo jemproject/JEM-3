@@ -248,6 +248,7 @@ $mapType = $this->mapType;
 					 echo $this->form->renderField('longitude');
 					 echo $this->form->renderField('url');
 					 echo $this->form->renderField('published');
+					 echo $this->form->renderField('map');
 					 ?>
 			</fieldset>
 			
@@ -259,16 +260,9 @@ $mapType = $this->mapType;
 			
 			</fieldset>
 			
-
 			<!-- VENUE-GEODATA-->
 			<fieldset class="form-horizontal" id="geodata">
 			<legend><?php echo JText::_('COM_JEM_FIELDSET_GEODATA'); ?></legend>
-			
-			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('map'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('map'); ?></div>
-			</div>
-			
 			<div class="control-group">
 				<div class="control-label"><?php echo $this->form->getLabel('geocode'); ?></div>
 				<div class="controls"> <input type="checkbox" id="geocode" /></div>
