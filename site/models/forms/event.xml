@@ -301,6 +301,7 @@
 			default="0"
 			label="COM_JEM_EVENT_FIELD_RECURRENCE_FREQ"
 			filter="integer"
+			class="inputbox"
 		>
 			<option value="0">COM_JEM_NOTHING</option>
 			<option value="1">COM_JEM_DAYLY</option>
@@ -313,6 +314,7 @@
 			default="1"
 			label="COM_JEM_EVENT_FIELD_RECURRENCE_INTERVAL"
 			filter="integer"
+			class="inputbox"
 		/>
 		<field name="recurrence_weekday" type="list"
 			default="1"
