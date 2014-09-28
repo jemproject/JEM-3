@@ -61,15 +61,15 @@ class JemModelEventslist extends JModelList
 		$jinput             = JFactory::getApplication()->input;
 		$task               = $jinput->getCmd('task');
 		$itemid				= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
-	
+			
 		# List state information
-		$limit		= $app->getUserStateFromRequest('com_jem.eventslist.'.$itemid.'.limit', 'limit', $jemsettings->display_num, 'int');
+		$limit		= $app->getUserStateFromRequest('com_jem.eventslist.'.$itemid.'.limit', 'limit', $jemsettings->display_num, 'uint');
 		$this->setState('list.limit', $limit);
 		
-		$limitstart = $app->getUserStateFromRequest('com_jem.eventslist.'.$itemid.'.limitstart', 'limitstart', 0, 'int');
-		$limitstart = $limit ? (int)(floor($limitstart / $limit) * $limit) : 0;
+		$limitstart = $app->getUserStateFromRequest('com_jem.eventslist.'.$itemid.'.limitstart', 'limitstart', 0,'uint');
+		$limitstart = ($limit != 0 ? (floor($limitstart / $limit) * $limit) : 0);
 		$this->setState('list.start', $limitstart);
-
+		
 		# Search - variables
 		$search = $app->getUserStateFromRequest('com_jem.eventslist.'.$itemid.'.filter_search', 'filter_search', '', 'string');
 		$this->setState('filter.filter_search', $search);
@@ -281,6 +281,10 @@ class JemModelEventslist extends JModelList
 		# country
 		$query->select(array('ct.name AS countryname'));
 		$query->join('LEFT', '#__jem_countries AS ct ON ct.iso2 = l.country');
+		
+		# Join over the asset groups.
+		$query->select('ag.title AS access_level')
+		->join('LEFT', '#__viewlevels AS ag ON ag.id = a.access');
 
 		# the rest
 		$query->select(array($case_when_e, $case_when_l));
@@ -595,7 +599,7 @@ class JemModelEventslist extends JModelList
 		$case_when_c .= ' ELSE ';
 		$case_when_c .= $id_c.' END as catslug';
 
-		$query->select(array('DISTINCT c.id','c.catname','c.access','c.checked_out AS cchecked_out','c.color',$case_when_c));
+		$query->select(array('DISTINCT c.id','c.catname','c.path','c.access','c.checked_out AS cchecked_out','c.color',$case_when_c));
 		$query->from('#__jem_categories as c');
 		$query->join('LEFT', '#__jem_cats_event_relations AS rel ON rel.catid = c.id');
 
