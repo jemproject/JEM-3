@@ -830,7 +830,7 @@ class JemModelCategory extends JModelAdmin
 		
 		if (count($err)) {
 			$cids = implode(', ', $err);
-			$msg = JText::sprintf('COM_JEM_EVENT_ASSIGNED_CATEGORY', $cids);
+			$msg = JText::sprintf('COM_JEM_CATEGORIES_ASSIGNED_EVENT', $cids);
 			return $msg;
 		}
 		else {

@@ -306,7 +306,7 @@ $params = $params->toArray();
 <!-- Recurrence -->
 	
 <?php if (!($this->item->recurrence_groupcheck)) { ?>
-	<?php echo JHtml::_('bootstrap.addSlide', 'slide', JText::_('COM_JEM_RECURRING_EVENTS'), 'event-recurrence'); ?>
+	<?php echo JHtml::_('bootstrap.addSlide', 'slide', JText::_('COM_JEM_EVENT_FIELDSET_RECURRING_EVENTS'), 'event-recurrence'); ?>
 		<fieldset class="form-vertical">
 			<?php 
 			echo $this->form->renderField('recurrence_freq'); 

@@ -31,7 +31,7 @@ class JemController extends JControllerLegacy
 		$user		= JFactory::getUser();
 		$jinput 	= JFactory::getApplication()->input;
 
-		// Set the default view name and format from the Request.
+		// Set the default view name and format.
 		$id				= $jinput->getInt('a_id');
 		$viewName 		= $jinput->getCmd('view', 'eventslist');
 		$viewFormat 	= $document->getType();
@@ -42,6 +42,8 @@ class JemController extends JControllerLegacy
 			// Somehow the person just went to the form - we don't allow that.
 			return JError::raiseError(403, JText::sprintf('JLIB_APPLICATION_ERROR_UNHELD_ID', $id));
 		}
+		
+		// @todo add check for editvenue-form
 
 		if ($view = $this->getView($viewName, $viewFormat)) {
 			// Do any specific processing by view.
@@ -134,6 +136,5 @@ class JemController extends JControllerLegacy
 		echo 1;
 		jexit();
 	}
-
 }
 ?>

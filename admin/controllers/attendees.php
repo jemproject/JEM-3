@@ -57,7 +57,7 @@ class JemControllerAttendees extends JControllerLegacy
 		$cache = JFactory::getCache('com_jem');
 		$cache->clean();
 
-		$msg = $total.' '.JText::_('COM_JEM_REGISTERED_USERS_DELETED');
+		$msg = $total.' '.JText::_('COM_JEM_ATTENDEES_REGISTERED_USERS_DELETED');
 
 		$this->setRedirect('index.php?option=com_jem&view=attendees&eid='.$eventid, $msg);
 	}

@@ -338,7 +338,7 @@ class JEMOutput {
 	{
 		$app 		= JFactory::getApplication();
 		$settings	= JemHelper::globalattribs();
-
+		
 		if ($settings->get('global_show_print_icon',0)) {
 			JHtml::_('bootstrap.tooltip');
 

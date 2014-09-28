@@ -83,7 +83,7 @@ class JemModelHousekeeping extends JModelLegacy
 			foreach ($images as $image)
 			{
 				if ($image !== JFilterInput::getInstance()->clean($image, 'path')) {
-					JError::raiseWarning(100, JText::_('COM_JEM_UNABLE_TO_DELETE').' '.htmlspecialchars($image, ENT_COMPAT, 'UTF-8'));
+					JError::raiseWarning(100, JText::_('COM_JEM_HOUSEKEEPING_UNABLE_TO_DELETE').' '.htmlspecialchars($image, ENT_COMPAT, 'UTF-8'));
 					$fail++;
 					continue;
 				}

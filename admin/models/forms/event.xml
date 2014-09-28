@@ -289,7 +289,7 @@
 	</fieldset>
 
 	<fieldset name="recurrence"
-		label="COM_JEM_RECURRING_EVENTS"
+		label="COM_JEM_EVENT_FIELDSET_RECURRING_EVENTS"
 	>
 		<field name="recurrence_freq" type="list"
 			default="0"

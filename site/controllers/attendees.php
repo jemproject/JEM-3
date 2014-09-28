@@ -103,8 +103,7 @@ class JEMControllerAttendees extends JControllerLegacy
 	}
 
 	/**
-	 * Exporttask
-	 * view: attendees
+	 * Export
 	 */
 	function export()
 	{
