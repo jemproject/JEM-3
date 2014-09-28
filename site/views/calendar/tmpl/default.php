@@ -216,13 +216,14 @@ JHtml::_('bootstrap.tooltip');
 		}
 
 		//venue
+		$venue = '';
 		if ($this->jemsettings->showlocate == 1) {
-			$venue  = '<div class="location"><span class="text-label">'.JText::_('COM_JEM_VENUE_SHORT').': </span>';
-			$venue .= $row->locid ? $this->escape($row->venue) : '-';
-
-			$venue .= '</div>';
-		} else {
-			$venue = '';
+			# check if there is a venue and if so display the venue
+			if ($row->locid) {
+				$venue  = '<div class="cal_venue"><span class="text-label">'.JText::_('COM_JEM_VENUE_SHORT').': </span>';
+				$venue .=  $this->escape($row->venue);
+				$venue .= '</div>';
+			}
 		}
 
 		//date in tooltip
