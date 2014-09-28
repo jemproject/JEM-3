@@ -85,6 +85,8 @@ use Recurr\Weekday;
  * @package Recurr
  * @author  Shaun Simmons <shaun@envysphere.com>
  */
+defined('_JEXEC') or die;
+
 class RecurrenceRule
 {
     const FREQ_SECONDLY = 6;

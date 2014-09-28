@@ -21,6 +21,8 @@ use Recurr\Exception\InvalidWeekday;
  * @package Recurr
  * @author  Shaun Simmons <shaun@envysphere.com>
  */
+defined('_JEXEC') or die;
+
 class Weekday
 {
     /**

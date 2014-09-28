@@ -28,6 +28,8 @@ use Recurr\Exception\MissingData;
  * @package Recurr
  * @author  Shaun Simmons <shaun@envysphere.com>
  */
+defined('_JEXEC') or die;
+
 class RecurrenceRuleTransformer
 {
     const FREQ_YEARLY   = 0;

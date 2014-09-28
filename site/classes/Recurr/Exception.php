@@ -12,6 +12,8 @@ namespace Recurr;
 /**
  * The base Recurr exception class
  */
+defined('_JEXEC') or die;
+
 class Exception extends \Exception
 {
 }

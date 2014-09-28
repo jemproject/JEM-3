@@ -19,6 +19,8 @@ namespace Recurr;
  * @package Recurr
  * @author  Shaun Simmons <shaun@envysphere.com>
  */
+defined('_JEXEC') or die;
+
 class Time
 {
     /** @var int */

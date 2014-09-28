@@ -8,6 +8,8 @@
  */
 
 namespace Recurr;
+defined('_JEXEC') or die;
+
 
 class TransformerConfig {
     protected $lastDayOfMonthFix = false;

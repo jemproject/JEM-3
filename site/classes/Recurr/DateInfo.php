@@ -1,5 +1,4 @@
 <?php
-
 /*
  * Copyright 2013 Shaun Simmons
  *
@@ -20,6 +19,8 @@ namespace Recurr;
  * @package Recurr
  * @author  Shaun Simmons <shaun@envysphere.com>
  */
+defined('_JEXEC') or die;
+
 class DateInfo
 {
     /** @var \DateTime */

@@ -15,6 +15,8 @@ use Recurr\Exception;
  * @package Recurr\Exception
  * @author  Shaun Simmons <shaun@envysphere.com>
  */
+defined('_JEXEC') or die;
+
 class InvalidArgument extends Exception
 {
 }

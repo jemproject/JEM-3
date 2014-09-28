@@ -27,6 +27,8 @@ use Recurr\RecurrenceRule;
  * @package Recurr
  * @author  Shaun Simmons <shaun@envysphere.com>
  */
+defined('_JEXEC') or die;
+
 class DateUtil
 {
     public static $leapBug = null;
