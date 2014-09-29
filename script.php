@@ -444,9 +444,12 @@ class com_jemInstallerScript
 	 */
 	private function update303(){
 
+
+		###############################
+		## # update calendar entries ##
+		###############################
 		require_once (JPATH_COMPONENT_SITE.'/classes/categories.class.php');
 
-		# update calendar entries
 		$types = array('calendar','category','venue');
 
 		foreach ($types as $type) :
@@ -507,6 +510,41 @@ class com_jemInstallerScript
 				$db->query();
 									
 			endforeach;
-		endforeach;		
+		endforeach;	
+
+		
+		##############################
+		## Removal of version field ##
+		##############################
+		
+		$query = $db->getQuery(true);
+		$settings_result = array();
+			
+		try
+		{
+			$db->setQuery('SHOW FULL COLUMNS FROM #__jem_settings');
+			$fields = $db->loadObjectList();
+				
+			foreach ($fields as $field){
+				$settings_result[$field->Field] = preg_replace("/[(0-9)]/", '', $field->Type);
+			}
+		
+			$settings_result = array_keys($settings_result);
+		}
+		catch (Exception $e)
+		{
+			$settings_result = false;
+		}
+		
+		if ($settings_result) {
+			if (in_array('version',$settings_result)) {
+				# the version was not added in the update.sql of JEM 3.0.2 but it was in the install.sql
+				# as the field can be removed we've to check if the field is there and if so then fire up an action
+				# to remove the field
+				$query = $db->getQuery(true);
+				$db->setQuery('alter table #__jem_settings drop column version');
+				$db->query();
+			} 
+		}
 	}
 }

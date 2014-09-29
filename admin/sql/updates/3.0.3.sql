@@ -1,14 +1,3 @@
---
--- Update version number
---
-
-UPDATE #__jem_settings
-SET `version`='3.0.3'
-WHERE `version`='3.0.1';
-
--- 
--- Other changes
---
 ALTER TABLE `#__jem_settings`
 	DROP `datdesclimit`,
 	DROP `discatheader`,
