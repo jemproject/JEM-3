@@ -498,9 +498,9 @@ class JemModelEvent extends JModelAdmin
 			$backend = false;
 
 		$cats 						= $data['cats'];
-		$metakeywords 				= $jinput->get('meta_keywords');
-		$metadescription 			= $jinput->get('meta_description');
-		$author_ip 					= $jinput->get('author_ip');
+		$metakeywords 				= $jinput->getString('meta_keywords');
+		$metadescription 			= $jinput->getString('meta_description');
+		$author_ip 					= $jinput->getString('author_ip');
 		
 		$data['meta_keywords'] 		= $metakeywords;
 		$data['meta_description']	= $metadescription;

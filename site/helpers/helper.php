@@ -766,7 +766,7 @@ class JemHelper {
 	 * $type = compononent(1), plugin(2)
 	 * $name = name to search in column name
 	 */
-	static function getParam($column,$setting,$type,$name) {
+	static function getParam($column,$setting,$type,$name,$prefix = false) {
 
 		switch($column) {
 			case 1:
@@ -792,7 +792,11 @@ class JemHelper {
 		$db = JFactory::getDbo();
 		$query = $db->getQuery(true);
 		$query->select(array($column));
-		$query->from('#__extensions');
+		if ($prefix) {
+			$query->from($prefix.'extensions');
+		} else {
+			$query->from('#__extensions');
+		}
 		$query->where(array('name = '.$db->quote($name),'type = '.$db->quote($type)));
 		$db->setQuery($query);
 

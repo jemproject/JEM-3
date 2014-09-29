@@ -32,39 +32,39 @@ defined('_JEXEC') or die;
 		<tbody>
 				<tr>
 					<td><?php echo JText::_('COM_JEM_SETTINGS_CONFIG_VS_COMPONENT').': '; ?></td>
-					<td><b><?php echo $this->config->vs_component; ?> </b></td>
+					<td><?php echo $this->config->vs_component; ?></td>
 				</tr>
 				<tr>
 					<td><?php echo JText::_('COM_JEM_SETTINGS_CONFIG_VS_PLG_MAILER').': '; ?></td>
-					<td><b><?php echo $this->config->vs_plg_mailer; ?> </b></td>
+					<td><?php echo $this->config->vs_plg_mailer; ?></td>
 				</tr>
 				<tr>
 					<td><?php echo JText::_('COM_JEM_SETTINGS_CONFIG_VS_MOD_JEM_CAL').': '; ?></td>
-					<td><b><?php echo $this->config->vs_mod_jem_cal; ?> </b></td>
+					<td><?php echo $this->config->vs_mod_jem_cal; ?></td>
 				</tr>
 				<tr>
 					<td><?php echo JText::_('COM_JEM_SETTINGS_CONFIG_VS_MOD_JEM').': '; ?></td>
-					<td><b><?php echo $this->config->vs_mod_jem; ?> </b></td>
+					<td><?php echo $this->config->vs_mod_jem; ?></td>
 				</tr>
 				<tr>
 					<td><?php echo JText::_('COM_JEM_SETTINGS_CONFIG_VS_MOD_JEM_WIDE').': '; ?></td>
-					<td><b><?php echo $this->config->vs_mod_jem_wide; ?> </b></td>
+					<td><?php echo $this->config->vs_mod_jem_wide; ?></td>
 				</tr>
 				<tr>
 					<td><?php echo JText::_('COM_JEM_SETTINGS_CONFIG_VS_MOD_JEM_TEASER').': '; ?></td>
-					<td><b><?php echo $this->config->vs_mod_jem_teaser; ?> </b></td>
+					<td><?php echo $this->config->vs_mod_jem_teaser; ?></td>
 				</tr>
 				<tr>
 					<td><?php echo JText::_('COM_JEM_SETTINGS_CONFIG_VS_PHP').': '; ?></td>
-					<td><b><?php echo $this->config->vs_php; ?> </b></td>
+					<td><?php echo $this->config->vs_php; ?></td>
 				</tr>
 				<tr>
 					<td><?php echo JText::_('COM_JEM_SETTINGS_CONFIG_VS_PHP_MAGICQUOTES').': '; ?></td>
-					<td><b><?php echo $this->config->vs_php_magicquotes; ?> </b></td>
+					<td><?php echo $this->config->vs_php_magicquotes; ?></td>
 				</tr>
 				<tr>
 					<td><?php echo JText::_('COM_JEM_SETTINGS_CONFIG_VS_GD').': '; ?></td>
-					<td><b><?php echo $this->config->vs_gd; ?> </b></td>
+					<td><?php echo $this->config->vs_gd; ?></td>
 				</tr>
 			</tbody>
 		</table>
