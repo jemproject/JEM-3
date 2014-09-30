@@ -179,7 +179,7 @@ As we don't have it we can import the EL-data, so we'll check for a version.
 
 
 <?php echo JHtml::_('bootstrap.addTab', 'import', 'tab2', JText::_('COM_JEM_IMPORT_CSV_TAB', true)); ?>	
-<form action="index.php" method="post" name="adminForm" enctype="multipart/form-data" id="adminForm">
+<form action="<?php echo JRoute::_('index.php?option=com_jem&view=import'); ?>" method="post" name="adminForm" enctype="multipart/form-data" id="adminForm">
 <div class="row-fluid">	
 	<div class="span6">
 	
@@ -276,7 +276,7 @@ As we don't have it we can import the EL-data, so we'll check for a version.
 	<input type="hidden" name="controller" value="import" />
 	<input type="hidden" name="task" id="task4" value="" />
 	
-	
+	</form>
 	<?php echo JHtml::_('bootstrap.endTab'); ?>	
 	
 	
