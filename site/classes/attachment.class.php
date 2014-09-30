@@ -65,6 +65,8 @@ abstract class JemAttachment {
 					JError::raiseWarning(0, JText::_('COM_JEM_ERROR_COULD_NOT_CREATE_FOLDER').': '.$path);
 					return false;
 				}
+				$file_content = '<!DOCTYPE html><title></title>';
+				JFile::write($path.'/index.html', $file_content);
 			}
 
 			$sanitizedFilename = JemHelper::sanitize($path, $file);
