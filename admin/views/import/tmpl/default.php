@@ -100,7 +100,7 @@ As we don't have it we can import the EL-data, so we'll check for a version.
 				<p><?php echo JText::_('COM_JEM_IMPORT_EL_PREFIX'); ?></p>
 				
 				<!-- hidden fields -->
-				<input type="hidden" name="task" id="el-task0" value="" />
+				<input type="hidden" name="eltask" id="el-task0" value="" />
 				<input type="hidden" name="step" id="el-step0" value="0" />
 				<input type="hidden" name="option" value="com_jem" />
 				<input type="hidden" name="view" value="import" />
@@ -407,10 +407,4 @@ As we don't have it we can import the JEM-data, so we'll check for a version.
 <?php endif; ?>
 
 <?php echo JHtml::_('bootstrap.endTab'); ?>
-	
-		
-	<?php echo JHtml::_('bootstrap.endTabSet');?>
-	
-
-	
-</form>
+<?php echo JHtml::_('bootstrap.endTabSet');?>
