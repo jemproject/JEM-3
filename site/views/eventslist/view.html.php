@@ -160,12 +160,7 @@ class JemViewEventslist extends JEMView
 
 		// Create the pagination object
 		$this->pagination 		= $this->get('Pagination');
-		$this->state			= $this->get('State');
-		$this->filterForm		= $this->get('FilterForm');
-		$this->activeFilters	= $this->get('ActiveFilters');
 		
-		$this->filterButton		= false;
-
 		$this->lists			= $lists;
 		$this->action			= $uri->toString();
 		$this->rows				= $rows;

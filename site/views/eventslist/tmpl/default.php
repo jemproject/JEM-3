@@ -7,38 +7,7 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 defined('_JEXEC') or die;
-
-$listOrder	= $this->escape($this->state->get('list.ordering'));
-$listDirn	= $this->escape($this->state->get('list.direction'));
-$archived	= $this->state->get('filter.published') == 2 ? true : false;
-$trashed	= $this->state->get('filter.published') == -2 ? true : false;
-
-$saveOrder	= $listOrder == 'a.ordering';
-
-if ($saveOrder)
-{
-	$saveOrderingUrl = 'index.php?option=com_jem&task=events.saveOrderAjax&tmpl=component';
-	JHtml::_('sortablelist.sortable', 'eventList', 'adminForm', strtolower($listDirn), $saveOrderingUrl);
-}
 ?>
-
-<script type="text/javascript">
-	Joomla.orderTable = function()
-	{
-		table = document.getElementById("sortTable");
-		direction = document.getElementById("directionTable");
-		order = table.options[table.selectedIndex].value;
-		if (order != '<?php echo $listOrder; ?>')
-		{
-			dirn = 'asc';
-		}
-		else
-		{
-			dirn = direction.options[direction.selectedIndex].value;
-		}
-		Joomla.tableOrdering(order, dirn, '');
-	}
-</script>
 
 
 <div id="jem" class="jem_eventslist<?php echo $this->pageclass_sfx;?>">
@@ -81,14 +50,10 @@ if ($saveOrder)
 	<?php endif; ?>
 
 <!--table-->
-	<form action="<?php echo $this->action; ?>" method="post" name="adminForm" id="adminForm">
+	
 		<?php echo $this->loadTemplate('events_table'); ?>
 
-		<input type="hidden" name="filter_order" value="<?php echo $this->lists['order']; ?>" />
-		<input type="hidden" name="filter_order_Dir" value="<?php echo $this->lists['order_Dir']; ?>" />
-		<input type="hidden" name="task" value="<?php echo $this->task; ?>" />
-		<input type="hidden" name="view" value="eventslist" />
-	</form>
+		
 
 	<div class="pagination">
 		<?php echo $this->pagination->getPagesLinks(); ?>

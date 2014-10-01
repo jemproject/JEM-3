@@ -34,10 +34,12 @@
 				<option value="0">COM_JEM_EXCLUDE</option>
 				<option value="1">COM_JEM_INCLUDE</option>
 			</field>
-			<field name="categoryswitchcats" type="text"
+			<field name="catids" type="categoryedit"
 				default=""
 				label="COM_JEM_CATEGORYSWITCHCATS"
 				description="COM_JEM_CATEGORYSWITCHCATS_DESC"
+				multiple="true"
+				autocomplete="true"
 			/>
 			<field type="spacer" name="spacer1" hr="true" />
 			<field name="footertext" type="footertext"

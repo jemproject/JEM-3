@@ -11,10 +11,10 @@ defined('_JEXEC') or die;
 $print = $this->print;
 $admin = $this->admin;
 ?>
-<?php if ($this->settings->get('global_show_filter',1) || $this->settings->get('global_display',1)) : 
-//echo JLayoutHelper::render('searchtools.default', array('view' => $this),JPATH_ROOT .'/components/com_jem/layouts');
-?>
-	<div id="jem_filter" class="floattext">
+
+<form action="<?php echo $this->action; ?>" method="post" name="adminForm" id="adminForm">
+<?php if ($this->settings->get('global_show_filter',1) || $this->settings->get('global_display',1)) : ?>
+<div id="jem_filter" class="floattext">
 		<?php if ($this->settings->get('global_show_filter',1)) : ?>
 			<div class="jem_fleft">
 				<?php
@@ -185,3 +185,9 @@ $admin = $this->admin;
 		<?php endif; ?>
 	</tbody>
 </table>
+
+		<input type="hidden" name="task" value="<?php echo $this->task; ?>" />
+		<input type="hidden" name="view" value="eventslist" />
+		<input type="hidden" name="filter_order" value="<?php echo $this->lists['order']; ?>" />
+		<input type="hidden" name="filter_order_Dir" value="<?php echo $this->lists['order_Dir'] ?>" />
+	</form>

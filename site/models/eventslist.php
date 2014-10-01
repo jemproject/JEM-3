@@ -9,7 +9,6 @@
 defined('_JEXEC') or die;
 
 
-
 /**
  * Model-Eventslist
  **/
@@ -58,7 +57,7 @@ class JemModelEventslist extends JModelList
 	{
 		$app				= JFactory::getApplication();
 		$jemsettings		= JemHelper::config();
-		$jinput             = JFactory::getApplication()->input;
+		$jinput             = $app->input;
 		$task               = $jinput->getCmd('task');
 		$itemid				= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
 			
@@ -66,8 +65,7 @@ class JemModelEventslist extends JModelList
 		$limit		= $app->getUserStateFromRequest('com_jem.eventslist.'.$itemid.'.limit', 'limit', $jemsettings->display_num, 'uint');
 		$this->setState('list.limit', $limit);
 		
-		$limitstart = $app->getUserStateFromRequest('com_jem.eventslist.'.$itemid.'.limitstart', 'limitstart', 0,'uint');
-		$limitstart = ($limit != 0 ? (floor($limitstart / $limit) * $limit) : 0);
+		$limitstart = $app->input->get('limitstart', 0, 'uint');
 		$this->setState('list.start', $limitstart);
 		
 		# Search - variables
@@ -95,7 +93,6 @@ class JemModelEventslist extends JModelList
 		
 		$this->setState('filter.opendates', $params->get('showopendates', 0));
 
-		
 		###########
 		## ORDER ##
 		###########
@@ -123,61 +120,38 @@ class JemModelEventslist extends JModelList
 		}
 		
 			
-		$filter_order		= $app->getUserStateFromRequest('com_jem.eventslist.'.$itemid.'.filter_order', 'filter_order', $sortCol, 'cmd');
+		$filter_order		= $app->getUserStateFromRequest('com_jem.eventslist.'.$itemid.'.filter_order', 'filter_order', $sortCol, 'string');
 		$filter_order_DirDefault = $sortDir;
 		// Reverse default order for dates in archive mode
 		if($task == 'archive' && $filter_order == 'a.dates') {
 			$filter_order_DirDefault = $sortDirArchive;
 		}
-		$filter_order_Dir	= $app->getUserStateFromRequest('com_jem.eventslist.'.$itemid.'.filter_order_Dir', 'filter_order_Dir', $filter_order_DirDefault, 'word');
-		$filter_order		= JFilterInput::getInstance()->clean($filter_order, 'cmd');
-		$filter_order_Dir	= JFilterInput::getInstance()->clean($filter_order_Dir, 'word');
+		$filter_order_Dir	= $app->getUserStateFromRequest('com_jem.eventslist.'.$itemid.'.filter_order_Dir', 'filter_order_Dir', $filter_order_DirDefault, 'string');
+		$filter_order		= JFilterInput::getInstance()->clean($filter_order, 'string');
+		$filter_order_Dir	= JFilterInput::getInstance()->clean($filter_order_Dir, 'string');
 
 		if ($filter_order == 'a.dates') {
 			$orderby = array('a.dates '.$filter_order_Dir,'a.times '.$filter_order_Dir);
 		} else {
 			$orderby = $filter_order . ' ' . $filter_order_Dir;
 		}
-		
 
 		$this->setState('filter.orderby',$orderby);
-		
-		# @todo finetune
-		$this->setState('list.ordering',$filter_order);
-		$this->setState('list.direction', $filter_order_Dir);
-		
-
+			
 		################################
 		## EXCLUDE/INCLUDE CATEGORIES ##
 		################################
-
-		$catswitch 		= $params->get('categoryswitch', '');
-
-		# set included categories
-		if ($catswitch) {
-		$included_cats = trim($params->get('categoryswitchcats', ''));
-		if ($included_cats) {
-			$included_cats = explode(",", $included_cats);
-			$this->setState('filter.category_id', $included_cats);
-			$this->setState('filter.category_id.include', true);
-
-		}
-		}
-
-		# set excluded categories
-		if (!$catswitch) {
-		$excluded_cats = trim($params->get('categoryswitchcats', ''));
-				if ($excluded_cats) {
-				$excluded_cats = explode(",", $excluded_cats);
-				$this->setState('filter.category_id', $excluded_cats);
-				$this->setState('filter.category_id.include', false);
-		}
+		
+		$catids = $params->get('catids');
+		$catidsfilter = $params->get('categoryswitch');
+		
+		if ($catids) {
+			$this->setState('filter.category_id',$catids);
+			$this->setState('filter.category_id.include',$catidsfilter);
 		}
 
 		$this->setState('filter.access', true);
 		$this->setState('filter.groupby',array('a.id'));
-
-		// parent::populateState('a.dates', 'ASC');
 	}
 
 	/**
@@ -484,7 +458,7 @@ class JemModelEventslist extends JModelList
 		if ($orderby) {
 			$query->order($orderby);
 		}
-
+		
 		return $query;
 	}
 
