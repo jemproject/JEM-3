@@ -50,9 +50,7 @@ class JemModelVenue extends JemModelEventslist
 		$limit		= $app->getUserStateFromRequest('com_jem.venue.'.$itemid.'.limit', 'limit', $jemsettings->display_num, 'int');
 		$this->setState('list.limit', $limit);
 		
-		# start
-		$limitstart = $app->getUserStateFromRequest('com_jem.venue.'.$itemid.'.limitstart', 'limitstart', 0, 'int');
-		$limitstart = $limit ? (int)(floor($limitstart / $limit) * $limit) : 0;
+		$limitstart = $app->input->get('limitstart', 0, 'uint');
 		$this->setState('list.start', $limitstart);
 
 		# Search

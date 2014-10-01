@@ -416,11 +416,17 @@ class com_jemInstallerScript
 			# 3.0.2 -> 3.0.3
 			'/components/com_jem/models/categorycal.php',
 			'/components/com_jem/models/venuecal.php',
+			'/components/com_jem/models/forms/filter_eventslist.xml',
 			'/components/com_jem/views/category/tmpl/calendar.php',
 			'/components/com_jem/views/category/tmpl/calendar.xml',
 			'/components/com_jem/views/venue/tmpl/calendar.php',
 			'/components/com_jem/views/venue/tmpl/calendar.xml',
 			'/components/com_jem/views/eventslist/tmpl/default_attachments.php',
+			'/components/com_jem/layouts/searchtools/default.php',
+			'/components/com_jem/layouts/searchtools/default/bar.php',
+			'/components/com_jem/layouts/searchtools/default/filters.php',
+			'/components/com_jem/layouts/searchtools/default/list.php',
+			'/components/com_jem/layouts/searchtools/grid/sort.php',
 			'/media/com_jem/js/settings.js'
 		);
 		$folders = array();
