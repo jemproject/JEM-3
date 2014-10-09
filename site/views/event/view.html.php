@@ -116,7 +116,7 @@ class JemViewEvent extends JEMView
 		$offset = $this->state->get('list.offset');
 
 		// Check the view access to the event (the model has already computed the values).
-		if (!$item->params->get('access-view') && !$item->params->get('show_noauth') &&  $user->get('guest')) {
+		if ($item->params->get('access-view') == false) {
 			JError::raiseWarning(403, JText::_('JERROR_ALERTNOAUTHOR'));
 			return;
 		}
@@ -388,7 +388,7 @@ class JemViewEvent extends JEMView
 		JemHelper::loadCss('jem');
 		JemHelper::loadCustomCss();
 		JemHelper::loadCustomTag();
-
+		
 		if ($this->print) {
 			JemHelper::loadCss('print');
 			$this->document->setMetaData('robots', 'noindex, nofollow');

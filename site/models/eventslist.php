@@ -150,6 +150,7 @@ class JemModelEventslist extends JModelList
 			$this->setState('filter.category_id.include',$catidsfilter);
 		}
 
+	
 		$this->setState('filter.access', true);
 		$this->setState('filter.groupby',array('a.id'));
 	}
@@ -517,6 +518,8 @@ class JemModelEventslist extends JModelList
 				if ($access){
 					// If the access filter has been set, we already have only the events this user can view.
 					$item->params->set('access-view', true);
+				} else {
+					$item->params->set('access-view', in_array($item->access, $groups));
 				}
 			
 			
