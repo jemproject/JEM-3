@@ -109,7 +109,7 @@ $mapType = $this->mapType;
 			<?php
 			for($cr = 1; $cr <= 10; $cr++) {
 				$currentRow = $this->venue->{'custom'.$cr};
-				if(substr($currentRow, 0, 7) == "http://") {
+				if(preg_match('%^https?://[^\s]+$%', $currentRow)) {
 					$currentRow = '<a href="'.$this->escape($currentRow).'" target="_blank">'.$this->escape($currentRow).'</a>';
 	 			}
 				if($currentRow) {
