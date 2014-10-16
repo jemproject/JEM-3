@@ -1016,26 +1016,7 @@ class JemHelper {
 		$minutes1 	= $jdate1->format('i');
 		$seconds1 	= $jdate1->format('s');
 
-		//$limit_date2 = $year1.$month1.$day1.'T'.$hour1.$minutes1.$seconds1.'Z';
-		$limit_date2 = $year1.$month1.$day1.'T235900Z';
-		
-		/*
-		# check for FREQ: BYDAY
-		if ($freq == 'BYDAY') {
-			if ($recurrence_interval == '5'){
-				# last
-				$rrule = 'FREQ=MONTHLY;UNTIL='.$limit_date2.';BYDAY='.$recurrence_weekday.';BYSETPOS=-1';
-			} else if (recurrence_interval == '6'){
-				# before last
-				$rrule = 'FREQ=MONTHLY;UNTIL='.$limit_date2.';BYDAY='.$recurrence_weekday.';BYSETPOS=-2';
-			} else if (recurrence_interval){
-				$rrule = 'FREQ=DAILY;INTERVAL='.$recurrence_interval.';UNTIL='.$limit_date2.';BYDAY='.$recurrence_weekday;
-			}
-		} else {
-				$rrule = 'FREQ='.$freq.';INTERVAL='.$recurrence_interval.';UNTIL='.$limit_date2;
-		}
-		*/
-		
+		$limit_date2 = $year1.$month1.$day1.'T235959Z';
 		
 		# Define FREQ
 		switch($recurrence_freq) {
