@@ -371,14 +371,14 @@
 		label="JGLOBAL_FIELDSET_METADATA_OPTIONS"
 	>
 		<field name="meta_keywords" type="textarea"
-			id="meta_keywordsOR"
+			id="meta_keywords"
 			label="JFIELD_META_KEYWORDS_LABEL"
 			description="JFIELD_META_KEYWORDS_DESC"
 			class="inputbox"
 			rows="3" cols="30"
 		/>
 		<field name="meta_description" type="textarea"
-			id="meta_descriptionOR"
+			id="meta_description"
 			label="JFIELD_META_DESCRIPTION_LABEL"
 			description="JFIELD_META_DESCRIPTION_DESC"
 			class="inputbox"
