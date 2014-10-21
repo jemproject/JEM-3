@@ -21,7 +21,27 @@ $settings	= json_decode($this->item->attribs);
 
 <script type="text/javascript">
 	window.addEvent('domready', function(){
-	checkmaxplaces();
+
+		checkmaxplaces();
+		starter("<?php echo JText::_ ('COM_JEM_META_ERROR'); ?>",$("jform_meta_keywords").value,$("jform_meta_description").value);
+		
+		$('jform_meta_keywords').addEvents({
+	    	focus: function(){
+	    		get_inputbox('jform_meta_keywords');
+	    	},
+	    	blur: function(){
+	        	change_metatags;
+	    	}
+		});
+
+		$('jform_meta_description').addEvents({
+	    	focus: function(){
+	    		get_inputbox('jform_meta_description');
+	    	},
+	    	blur: function(){
+	        	change_metatags;
+	    	}
+		});
 	});
 
 	function checkmaxplaces(){
@@ -164,7 +184,7 @@ $settings	= json_decode($this->item->attribs);
 			<!-- START META FIELDSET -->
 			<fieldset class="form-horizontal">
 				<legend><span class="legendcolor"><?php echo JText::_('COM_JEM_META_HANDLING'); ?></span></legend>
-					<div class="">
+					<p>
 						<input class="btn" type="button" onclick="insert_keyword('[title]')" value="<?php echo JText::_('COM_JEM_TITLE');	?>" />
 						<input class="btn" type="button" onclick="insert_keyword('[a_name]')" value="<?php	echo JText::_('COM_JEM_VENUE');?>" />
 						<input class="btn" type="button" onclick="insert_keyword('[categories]')" value="<?php	echo JText::_('COM_JEM_CATEGORIES');?>" />
@@ -172,43 +192,9 @@ $settings	= json_decode($this->item->attribs);
 						<input class="btn" type="button" onclick="insert_keyword('[times]')" value="<?php echo JText::_('COM_JEM_TIME');?>" />
 						<input class="btn" type="button" onclick="insert_keyword('[enddates]')" value="<?php echo JText::_('COM_JEM_ENDDATE');?>" />
 						<input class="btn" type="button" onclick="insert_keyword('[endtimes]')" value="<?php echo JText::_('COM_JEM_ENDTIME');?>" />
-						<br /><br />
-						<label for="meta_keywords">
-							<?php echo JText::_('COM_JEM_META_KEYWORDS').':';?>
-						</label>
-						
-						<?php
-						if (! empty ( $this->item->meta_keywords )) {
-							$meta_keywords = $this->item->meta_keywords;
-						} else {
-							$meta_keywords = $this->jemsettings->meta_keywords;
-						}
-						?>
-						<textarea class="inputbox" name="meta_keywords" id="meta_keywords" rows="5" cols="40" maxlength="150" onfocus="get_inputbox('meta_keywords')" onblur="change_metatags()"><?php echo $meta_keywords; ?></textarea>
-					</div>
-					<div class="">
-					<br />
-						<label for="meta_description">
-							<?php echo JText::_ ( 'COM_JEM_META_DESCRIPTION' ) . ':';?>
-						</label>
-						<?php
-						if (! empty ( $this->item->meta_description )) {
-							$meta_description = $this->item->meta_description;
-						} else {
-							$meta_description = $this->jemsettings->meta_description;
-						}
-						?>
-						<textarea class="inputbox" name="meta_description" id="meta_description" rows="5" cols="40" maxlength="200"	onfocus="get_inputbox('meta_description')" onblur="change_metatags()"><?php echo $meta_description;?></textarea>
-					</div>
-					<!-- include the metatags end-->
-				
-					<script type="text/javascript">
-					<!--
-						starter("<?php
-						echo JText::_ ( 'COM_JEM_META_ERROR' );
-						?>");	// window.onload is already in use, call the function manualy instead
-					-->
-					</script>
+					</p>
+					<?php echo $this->form->renderField('meta_keywords'); ?>
+					<?php echo $this->form->renderField('meta_description'); ?>
 			</fieldset>
 			<!--  END META FIELDSET -->
 
