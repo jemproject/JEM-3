@@ -519,6 +519,9 @@ class JemModelEventslist extends JModelList
 					// If the access filter has been set, we already have only the events this user can view.
 					$item->params->set('access-view', true);
 				} else {
+					$user	= JFactory::getUser();
+					$groups = $user->getAuthorisedViewLevels();
+					
 					$item->params->set('access-view', in_array($item->access, $groups));
 				}
 			
@@ -616,16 +619,16 @@ class JemModelEventslist extends JModelList
 		$db->setQuery($query3);
 		$groupnumber = $db->loadColumn();
 
-		if ($access){
-			$groups = implode(',', $user->getAuthorisedViewLevels());
-			$jemgroups = implode(',',$groupnumber);
+		//if ($access){
+		$groups = implode(',', $user->getAuthorisedViewLevels());
+		$jemgroups = implode(',',$groupnumber);
 
-			if ($jemgroups) {
-				$query->where('(c.access IN ('.$groups.') OR c.groupid IN ('.$jemgroups.'))');
-			} else {
-				$query->where('(c.access IN ('.$groups.'))');
-			}
+		if ($jemgroups) {
+			$query->where('(c.access IN ('.$groups.') OR c.groupid IN ('.$jemgroups.'))');
+		} else {
+			$query->where('(c.access IN ('.$groups.'))');
 		}
+		//}
 
 
 		#######################
