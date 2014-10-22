@@ -40,10 +40,42 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 				<b><?php echo JText::_('COM_JEM_EVENT_TITLE').':'; ?></b>&nbsp;<?php echo $this->escape($this->event->title); ?>
 			</td>
 			<td>
-		<div class="btn-wrapper pull-right input-prepend input-append">
-				<div class="btn"><a title="<?php echo JText::_('COM_JEM_PRINT'); ?>" onclick="window.open('index.php?option=com_jem&amp;view=attendees&amp;layout=print&amp;tmpl=component&amp;eid=<?php echo $this->eventid; ?>', 'popup', 'width=750,height=400,scrollbars=yes,toolbar=no,status=no,resizable=yes,menubar=no,location=no,directories=no,top=10,left=10')"><?php echo JText::_('COM_JEM_PRINT'); ?></a></div>
-				<div class="btn"><a title="<?php echo JText::_('COM_JEM_CSV_EXPORT'); ?>" onclick="window.open('index.php?option=com_jem&amp;task=attendees.export&amp;tmpl=raw&amp;eid=<?php echo $this->eventid; ?>')"><?php echo JText::_('COM_JEM_CSV_EXPORT'); ?></a></div>
-			</div>
+				<div class="btn-wrapper pull-right input-prepend input-append">
+					<?php
+					// @todo: use helper functions
+					
+					$text	= JHtml::_('image','com_jem/export_excel.png', JText::_('COM_JEM_EXPORT_FILE'), NULL, true).' '.JText::_('COM_JEM_EXPORT_FILE');
+					$status = 'status=no,toolbar=no,scrollbars=yes,titlebar=no,menubar=no,resizable=yes,width=800,height=480,directories=no,location=no';
+					$print_link = 'index.php?option=com_jem&amp;task=attendees.export&amp;tmpl=raw&amp;eid='.$this->eventid;
+						
+					$overlib = JText::_('COM_JEM_EXPORT_FILE');
+					$title = JHtml::tooltipText(JText::_('COM_JEM_EXPORT_FILE'), $overlib, 0);
+						
+					$attribs = array();
+					$attribs['title']   = $title;
+					$attribs['class'] = 'btn btn-small icon_csv hasTooltip';
+					$attribs['onclick'] = "window.open(this.href,'win2','" . $status . "'); return false;";
+					$attribs['rel']     = 'nofollow';
+					$output =  JHtml::_('link', $print_link, $text, $attribs);
+					echo $output;
+					
+
+					$text	= JHtml::_('image','system/printButton.png', JText::_('COM_JEM_PRINT'), NULL, true).' '.JText::_('COM_JEM_PRINT');
+					$status = 'status=no,toolbar=no,scrollbars=yes,titlebar=no,menubar=no,resizable=yes,width=800,height=480,directories=no,location=no';
+					$print_link = 'index.php?option=com_jem&amp;view=attendees&amp;layout=print&amp;tmpl=component&amp;eid='.$this->eventid;
+					
+					$overlib = JText::_('COM_JEM_PRINT');
+					$title = JHtml::tooltipText(JText::_('COM_JEM_PRINT'), $overlib, 0);
+					
+					$attribs = array();
+					$attribs['title']   = $title;
+					$attribs['class'] = 'btn btn-small icon_print hasTooltip';
+					$attribs['onclick'] = "window.open(this.href,'win2','" . $status . "'); return false;";
+					$attribs['rel']     = 'nofollow';
+					$output =  JHtml::_('link', $print_link, $text, $attribs);					
+					echo $output;
+					?>
+				</div>
 			</td>
 		</tr>
 	</table>
