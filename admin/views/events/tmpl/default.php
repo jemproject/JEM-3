@@ -96,6 +96,7 @@ $settings	= $this->settings;
 		<tbody id="search_in_here">
 			<?php
 			foreach ($this->items as $i => $row) :
+	
 				//Prepare date
 				$displaydate = JemOutput::formatLongDateTime($row->dates, null, $row->enddates, null);
 				// Insert a break between date and enddate if possible
