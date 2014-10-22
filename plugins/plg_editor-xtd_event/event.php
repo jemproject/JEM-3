@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 3.0.2
+ * @version 3.0.3
  * @package JEM
  * @subpackage JEM editors-xtd plugin (event)
  * @copyright (C) 2013-2014 joomlaeventmanager.net

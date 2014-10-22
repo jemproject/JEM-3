@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 3.0.2
+ * @version 3.0.3
  * @package JEM
  * @subpackage JEM Mailer Plugin
  * @copyright (C) 2013-2014 joomlaeventmanager.net
@@ -22,6 +22,7 @@ defined('_JEXEC') or die;
 // Import library dependencies
 jimport('joomla.event.plugin');
 jimport('joomla.utilities.mail');
+
 
 
 include_once(JPATH_SITE.'/components/com_jem/helpers/route.php');
