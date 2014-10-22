@@ -202,9 +202,13 @@ class JEMModelSettings extends JModelForm
 	
 		$config 					= new stdClass();
 		$config->vs_component		= JemHelper::getParam(1,'version',1,'com_jem');
+		$config->vs_plg_comments	= JemHelper::getParam(1,'version',2,'plg_jem_comments');
+		$config->vs_plg_content		= JemHelper::getParam(1,'version',2,'plg_content_jem');
 		$config->vs_plg_mailer		= JemHelper::getParam(1,'version',2,'plg_jem_mailer');
 		$config->vs_plg_search		= JemHelper::getParam(1,'version',2,'plg_search_jem');
 		$config->vs_plg_finder		= JemHelper::getParam(1,'version',2,'plg_finder_jem');
+		$config->vs_plg_xtdevent	= JemHelper::getParam(1,'version',2,'plg_editors_xtd_event');
+		$config->vs_plg_quickicon	= JemHelper::getParam(1,'version',2,'plg_quickicon_jemquickicon');
 		$config->vs_mod_jem_cal		= JemHelper::getParam(1,'version',3,'mod_jem_cal');
 		$config->vs_mod_jem			= JemHelper::getParam(1,'version',3,'mod_jem');
 		$config->vs_mod_jem_wide	= JemHelper::getParam(1,'version',3,'mod_jem_wide');

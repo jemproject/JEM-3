@@ -57,8 +57,20 @@ defined('_JEXEC') or die;
 		</tfoot>
 		<tbody>
 				<tr>
+					<td><?php echo JText::_('COM_JEM_SETTINGS_CONFIG_VS_PLG_CONTENT').': '; ?></td>
+					<td><?php echo $this->config->vs_plg_content; ?></td>
+				</tr>
+				<tr>
+					<td><?php echo JText::_('COM_JEM_SETTINGS_CONFIG_VS_PLG_COMMENTS').': '; ?></td>
+					<td><?php echo $this->config->vs_plg_comments; ?></td>
+				</tr>
+				<tr>
 					<td><?php echo JText::_('COM_JEM_SETTINGS_CONFIG_VS_PLG_MAILER').': '; ?></td>
 					<td><?php echo $this->config->vs_plg_mailer; ?></td>
+				</tr>
+				<tr>
+					<td><?php echo JText::_('COM_JEM_SETTINGS_CONFIG_VS_PLG_QUICKICON').': '; ?></td>
+					<td><?php echo $this->config->vs_plg_quickicon; ?></td>
 				</tr>
 				<tr>
 					<td><?php echo JText::_('COM_JEM_SETTINGS_CONFIG_VS_PLG_SEARCH').': '; ?></td>
@@ -67,6 +79,10 @@ defined('_JEXEC') or die;
 				<tr>
 					<td><?php echo JText::_('COM_JEM_SETTINGS_CONFIG_VS_PLG_FINDER').': '; ?></td>
 					<td><?php echo $this->config->vs_plg_finder; ?></td>
+				</tr>
+				<tr>
+					<td><?php echo JText::_('COM_JEM_SETTINGS_CONFIG_VS_PLG_XTDEVENT').': '; ?></td>
+					<td><?php echo $this->config->vs_plg_xtdevent; ?></td>
 				</tr>
 			</tbody>
 		</table></fieldset>
