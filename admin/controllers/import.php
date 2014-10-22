@@ -43,6 +43,7 @@ class JemControllerImport extends JControllerLegacy {
 	}
 
 	private function CsvImport($type, $dbname) {
+		
 		$replace = JFactory::getApplication()->input->post->get('replace_'.$type, 0, 'int');
 		
 		# in here we're retrieving the $dbname
@@ -227,7 +228,7 @@ class JemControllerImport extends JControllerLegacy {
 			}
 		}
 
-		if($step <= 1) {
+		if($step <= 1) {	
 			parent::display();
 			return;
 		} elseif($step == 2) {
@@ -398,7 +399,7 @@ class JemControllerImport extends JControllerLegacy {
 	 * Imports data from an old Jem installation
 	 */
 	public function jemImport() {
-	
+		
 		$model 		= $this->getModel('import');
 		$version	= $model->getJEMVersion();
 		$link 		= 'index.php?option=com_jem&view=import';
@@ -426,7 +427,7 @@ class JemControllerImport extends JControllerLegacy {
 			return;
 			}
 		}
-	
+		
 		if($step <= 1) {
 			parent::display();
 			return;

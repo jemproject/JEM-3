@@ -144,7 +144,7 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 				<?php endif;?>
 				<td class="center">
 				<a href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i;?>','attendees.remove')">
-				<?php echo JHtml::_('image','com_jem/publish_x.png',JText::_('COM_JEM_REMOVE'),array('class'=>'hasTooltip','title' => ($row->waiting ? JText::_('COM_JEM_ON_WAITINGLIST') : JText::_('COM_JEM_ATTENDING'))),true); ?>
+					<?php echo JHtml::_('image','com_jem/publish_x.png',JText::_('COM_JEM_REMOVE'),array('class'=>'hasTooltip'),true); ?>
 				</a>
 				</td>
 			</tr>
