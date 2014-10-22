@@ -43,7 +43,11 @@ class JemController extends JControllerLegacy
 			return JError::raiseError(403, JText::sprintf('JLIB_APPLICATION_ERROR_UNHELD_ID', $id));
 		}
 		
-		// @todo add check for editvenue-form
+		// Check for edit form.
+		if ($viewName == 'editvenue' && !$this->checkEditId('com_jem.edit.editvenue', $id)) {
+			// Somehow the person just went to the form - we don't allow that.
+			return JError::raiseError(403, JText::sprintf('JLIB_APPLICATION_ERROR_UNHELD_ID', $id));
+		}
 
 		if ($view = $this->getView($viewName, $viewFormat)) {
 			// Do any specific processing by view.
