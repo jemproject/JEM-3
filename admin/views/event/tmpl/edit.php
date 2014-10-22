@@ -36,15 +36,35 @@ $params = $params->toArray();
 	var commhandler = $("jform_attribs_event_comunsolution");
 	var nrcommhandler = commhandler.options[commhandler.selectedIndex].value;
 
-		if (nrcommhandler == 1) {
-			common();
-		} else {
-			commoff();
-		}
+	if (nrcommhandler == 1) {
+		common();
+	} else {
+		commoff();
+	}
 
+	starter("<?php echo JText::_ ('COM_JEM_META_ERROR'); ?>",$("jform_meta_keywords").value,$("jform_meta_description").value);
+
+	$('jform_meta_keywords').addEvents({
+	    focus: function(){
+	    	get_inputbox('jform_meta_keywords');
+	    },
+	    blur: function(){
+	        change_metatags;
+	    }
 	});
 
-
+	$('jform_meta_description').addEvents({
+	    focus: function(){
+	    	get_inputbox('jform_meta_description');
+	    },
+	    blur: function(){
+	        change_metatags;
+	    }
+	});
+		
+	});
+</script>
+<script type="text/javascript">
 	function checkmaxplaces()
 	{
 		$('jform_maxplaces').addEvent('change', function(){
@@ -92,11 +112,7 @@ $params = $params->toArray();
 	{
 		if (task == 'event.cancel' || document.formvalidator.isValid(document.id('event-form'))) {
 			Joomla.submitform(task, document.getElementById('event-form'));
-
 			<?php echo $this->form->getField('articletext')->save(); ?>
-
-			$("meta_keywords").value = $keywords;
-			$("meta_description").value = $description;
 		}
 	}
 </script>
@@ -343,29 +359,8 @@ $params = $params->toArray();
 				<input class="btn" type="button" onclick="insert_keyword('[enddates]')" value="<?php echo JText::_('COM_JEM_ENDDATE');?>" />
 				<input class="btn" type="button" onclick="insert_keyword('[endtimes]')" value="<?php echo JText::_('COM_JEM_END_TIME');?>" />
 			</p>
-			<div class="control-group">	
-				<div class="control-label"><label for="meta_keywords"><?php echo JText::_('COM_JEM_META_KEYWORDS').':';?></label></div>
-						<?php
-						if (! empty ( $this->item->meta_keywords )) {
-							$meta_keywords = $this->item->meta_keywords;
-						} else {
-							$meta_keywords = $this->jemsettings->meta_keywords;
-						}
-						?>
-				<div class="controls"><textarea class="inputbox" name="meta_keywords" id="meta_keywords" rows="5" cols="40" maxlength="150" onfocus="get_inputbox('meta_keywords')" onblur="change_metatags()"><?php echo $meta_keywords; ?></textarea></div>
-			</div>
-			
-			<div class="control-group">	
-				<div class="control-label"><label for="meta_description"><?php echo JText::_('COM_JEM_META_DESCRIPTION').':';?></label></div>
-					<?php
-					if (! empty ( $this->item->meta_description )) {
-						$meta_description = $this->item->meta_description;
-					} else {
-						$meta_description = $this->jemsettings->meta_description;
-					}
-					?>
-				<div class="controls"><textarea class="inputbox" name="meta_description" id="meta_description" rows="5" cols="40" maxlength="200"	onfocus="get_inputbox('meta_description')" onblur="change_metatags()"><?php echo $meta_description;?></textarea></div>
-			</div>
+			<?php  echo $this->form->renderField('meta_keywords'); ?>
+			<?php  echo $this->form->renderField('meta_description'); ?>
 		</fieldset>
 
 		<fieldset class="form-vertical">
@@ -381,20 +376,8 @@ $params = $params->toArray();
 
 		</fieldset>
 
-
-		<script type="text/javascript">
-		<!--
-			starter("<?php
-			echo JText::_ ( 'COM_JEM_META_ERROR' );
-			?>");	// window.onload is already in use, call the function manualy instead
-		-->
-		</script>
 	<?php echo JHtml::_('bootstrap.endSlide'); ?>
-	
-	
 	<?php echo JHtml::_('bootstrap.endAccordion'); ?>
-	
-	
 	
 	<input type="hidden" name="task" value="" />
 	<input type="hidden" name="author_ip" value="<?php echo $this->item->author_ip; ?>" />

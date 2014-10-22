@@ -21,10 +21,10 @@ var $description_vars;	// Array - HTML - Tags, die mit einem onchange versehen w
 var $inputbox = "";		// String - es wird mit Hilfe dieser Variable ermittel, ob der User Beschreibung bzw. Keywords angeklickt hat
 var meta_error;			// String - Fehler, der in der jeweiligen Sprache ausgegeben wird
 
-function starter($msg) {			// Funktion, welche beim Starten der Seite aufgerufen werden
-	get_keywords();					// leider funktionier window.onload nicht, da sonst die Popupfenster Fehler verursachen
-	get_description();
-	switchstart();
+function starter($msg,$metakeyword,$metadescription) {			// Starting the meta function
+	get_keywords($metakeyword);					// Retrieval of keywords (keyword/description) field
+	get_description($metadescription);			// Retrieval of description
+	//switchstart();
 	$meta_error = $msg;
 }
 
@@ -50,8 +50,8 @@ function seo_switch() {	// Bei jeder Veraenderung werden beide Funktionen aufger
 	include_description();
 }
 
-function get_keywords() {
-	$keywords = $("meta_keywords").value;	// Keywords auslesenen
+function get_keywords($metakeywords) {
+	$keywords = $metakeywords;
 	var $Nullvalue = "[NULL]";
 	$manual_keywords = "";					// die Anzeige der nicht zuordbaren Variable wird geleert
 	$keyword = $keywords.split(",");			// in eine Array aufspalten
@@ -89,7 +89,7 @@ function get_keywords() {
 }
 
 function get_description() {
-	$description = $("meta_description").value;	// uebergebene Bechreibung wird aufgerufen und eingefuegt
+	$description = $("jform_meta_description").value;	// uebergebene Bechreibung wird aufgerufen und eingefuegt
 	if ($description != "") {
 		var Ergebnis = $description.split("[");		// alle relevanten Teile werden getrennt
 		if (Ergebnis.length > 1) {
@@ -136,7 +136,7 @@ function include_keyword() {
 		}
 		$keywords = $keywords + $manual_keywords;
 	}
-	$("meta_keywords").value = $keywords;
+	$("jform_meta_keywords").value = $keywords;
 }
 
 function include_description() {
@@ -163,13 +163,13 @@ function include_description() {
 			}
 		}
 	}
-	$("meta_description").value = desc_output;
+	$("jform_meta_description").value = desc_output;
 }
 
 function insert_keyword($keyword) {
 	try {
 		var $input = $($inputbox).value;
-		if ($inputbox == "meta_keywords") {
+		if ($inputbox == "jform_meta_keywords") {
 			if ($input != "") {
 				$input += ",";
 			}
@@ -183,9 +183,9 @@ function insert_keyword($keyword) {
 }
 
 function change_metatags() {
-	if ($inputbox == "meta_keywords") {
+	if ($inputbox == "jform_meta_keywords") {
 		$keywords = $($inputbox).value;
-		get_keywords();
+		get_keywords($keywords);
 	} else {
 		$description = $($inputbox).value;
 		get_description();
@@ -194,7 +194,7 @@ function change_metatags() {
 }
 
 function get_inputbox($input) {
-	if ($input == "meta_keywords") {
+	if ($input == "jform_meta_keywords") {
 		$($input).value = $keywords;
 	} else {
 		$($input).value = $description;

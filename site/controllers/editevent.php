@@ -250,8 +250,9 @@ class JEMControllerEditevent extends JControllerForm
 		$isNew = $model->getState('editevent.new');
 		$id    = $model->getState('editevent.id');
 
-
-		if (JPluginHelper::importPlugin('jem','mailer')) {
+		$enabled = JPluginHelper::isEnabled('jem','mailer');
+	
+		if ($enabled) {
 			JPluginHelper::importPlugin('jem','mailer');
 			$dispatcher = JEventDispatcher::getInstance();
 			$dispatcher->trigger('onEventEdited', array($id, $isNew));

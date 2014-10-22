@@ -91,7 +91,7 @@ JHtml::_('bootstrap.tooltip');
 			<div class="control-label"><label><?php echo JText::_('COM_JEM_EXPORT_TABLE_ATTACHMENTS'); ?></label></div>
 			<div class="controls">
 				<div class="input-append">
-					<input type="submit" class="btn" id="csvexport" value="<?php echo JText::_('COM_JEM_EXPORT_FILE'); ?>" onclick="document.getElementsByName('task')[0].value='export.table_attachments';return true;"></input></div>
+					<input class="btn" type="submit" id="csvexport" value="<?php echo JText::_('COM_JEM_EXPORT_FILE'); ?>" onclick="document.getElementsByName('task')[0].value='export.table_attachments';return true;"></input></div>
 					<input class="btn" type="submit" id="sqlexport" value="<?php echo JText::_('COM_JEM_EXPORT_SQLFILE'); ?>" onclick="document.getElementsByName('task')[0].value='export.table_sql_attachments';return true;"></input>
 				</div>
 		</div>	
@@ -99,7 +99,7 @@ JHtml::_('bootstrap.tooltip');
 			<div class="control-label"><label><?php echo JText::_('COM_JEM_EXPORT_TABLE_CATEGORIES'); ?></label></div>
 			<div class="controls">
 				<div class="input-append">
-					<input type="submit" class="btn" id="csvexport" value="<?php echo JText::_('COM_JEM_EXPORT_FILE'); ?>" onclick="document.getElementsByName('task')[0].value='export.table_categories';return true;"></input></div>
+					<input class="btn" type="submit" id="csvexport" value="<?php echo JText::_('COM_JEM_EXPORT_FILE'); ?>" onclick="document.getElementsByName('task')[0].value='export.table_categories';return true;"></input></div>
 					<input class="btn" type="submit" id="sqlexport" value="<?php echo JText::_('COM_JEM_EXPORT_SQLFILE'); ?>" onclick="document.getElementsByName('task')[0].value='export.table_sql_categories';return true;"></input>
 				</div>
 		</div>
@@ -107,7 +107,7 @@ JHtml::_('bootstrap.tooltip');
 			<div class="control-label"><label><?php echo JText::_('COM_JEM_EXPORT_TABLE_CATSEVENTRELATIONS'); ?></label></div>
 			<div class="controls">
 				<div class="input-append">
-					<input type="submit" class="btn" id="csvexport" value="<?php echo JText::_('COM_JEM_EXPORT_FILE'); ?>" onclick="document.getElementsByName('task')[0].value='export.table_cats_event_relations';return true;"></input></div>
+					<input class="btn" type="submit" id="csvexport" value="<?php echo JText::_('COM_JEM_EXPORT_FILE'); ?>" onclick="document.getElementsByName('task')[0].value='export.table_cats_event_relations';return true;"></input></div>
 					<input class="btn" type="submit" id="sqlexport" value="<?php echo JText::_('COM_JEM_EXPORT_SQLFILE'); ?>" onclick="document.getElementsByName('task')[0].value='export.table_sql_cats_event_relations';return true;"></input>
 				</div>
 		</div>
@@ -115,7 +115,7 @@ JHtml::_('bootstrap.tooltip');
 			<div class="control-label"><label><?php echo JText::_('COM_JEM_EXPORT_TABLE_EVENTS'); ?></label></div>
 			<div class="controls">
 				<div class="input-append">
-					<input type="submit" class="btn" id="csvexport" value="<?php echo JText::_('COM_JEM_EXPORT_FILE'); ?>" onclick="document.getElementsByName('task')[0].value='export.table_events';return true;"></input></div>
+					<input class="btn" type="submit" id="csvexport" value="<?php echo JText::_('COM_JEM_EXPORT_FILE'); ?>" onclick="document.getElementsByName('task')[0].value='export.table_events';return true;"></input></div>
 					<input class="btn" type="submit" id="sqlexport" value="<?php echo JText::_('COM_JEM_EXPORT_SQLFILE'); ?>" onclick="document.getElementsByName('task')[0].value='export.table_sql_events';return true;"></input>
 				</div>
 		</div>
@@ -123,7 +123,7 @@ JHtml::_('bootstrap.tooltip');
 			<div class="control-label"><label><?php echo JText::_('COM_JEM_EXPORT_TABLE_GROUPS'); ?></label></div>
 			<div class="controls">
 				<div class="input-append">
-					<input type="submit" class="btn" id="csvexport" value="<?php echo JText::_('COM_JEM_EXPORT_FILE'); ?>" onclick="document.getElementsByName('task')[0].value='export.table_groups';return true;"></input></div>
+					<input class="btn" type="submit" id="csvexport" value="<?php echo JText::_('COM_JEM_EXPORT_FILE'); ?>" onclick="document.getElementsByName('task')[0].value='export.table_groups';return true;"></input></div>
 					<input class="btn" type="submit" id="sqlexport" value="<?php echo JText::_('COM_JEM_EXPORT_SQLFILE'); ?>" onclick="document.getElementsByName('task')[0].value='export.table_sql_groups';return true;"></input>
 				</div>
 		</div>
@@ -131,7 +131,7 @@ JHtml::_('bootstrap.tooltip');
 			<div class="control-label"><label><?php echo JText::_('COM_JEM_EXPORT_TABLE_RECURRENCEMASTER'); ?></label></div>
 			<div class="controls">
 				<div class="input-append">
-					<input type="submit" class="btn" id="csvexport" value="<?php echo JText::_('COM_JEM_EXPORT_FILE'); ?>" onclick="document.getElementsByName('task')[0].value='export.table_recurrence_master';return true;"></input></div>
+					<input class="btn" type="submit" id="csvexport" value="<?php echo JText::_('COM_JEM_EXPORT_FILE'); ?>" onclick="document.getElementsByName('task')[0].value='export.table_recurrence_master';return true;"></input></div>
 					<input class="btn" type="submit" id="sqlexport" value="<?php echo JText::_('COM_JEM_EXPORT_SQLFILE'); ?>" onclick="document.getElementsByName('task')[0].value='export.table_sql_recurrence_master';return true;"></input>
 				</div>
 		</div>
@@ -139,7 +139,7 @@ JHtml::_('bootstrap.tooltip');
 			<div class="control-label"><label><?php echo JText::_('COM_JEM_EXPORT_TABLE_RECURRENCE'); ?></label></div>
 			<div class="controls">
 				<div class="input-append">
-					<input type="submit" class="btn" id="csvexport" value="<?php echo JText::_('COM_JEM_EXPORT_FILE'); ?>" onclick="document.getElementsByName('task')[0].value='export.table_recurrence';return true;"></input></div>
+					<input class="btn" type="submit" id="csvexport" value="<?php echo JText::_('COM_JEM_EXPORT_FILE'); ?>" onclick="document.getElementsByName('task')[0].value='export.table_recurrence';return true;"></input></div>
 					<input class="btn" type="submit" id="sqlexport" value="<?php echo JText::_('COM_JEM_EXPORT_SQLFILE'); ?>" onclick="document.getElementsByName('task')[0].value='export.table_sql_recurrence';return true;"></input>
 				</div>
 		</div>
@@ -147,7 +147,7 @@ JHtml::_('bootstrap.tooltip');
 			<div class="control-label"><label><?php echo JText::_('COM_JEM_EXPORT_TABLE_REGISTER'); ?></label></div>
 			<div class="controls">
 				<div class="input-append">
-					<input type="submit" class="btn" id="csvexport" value="<?php echo JText::_('COM_JEM_EXPORT_FILE'); ?>" onclick="document.getElementsByName('task')[0].value='export.table_register';return true;"></input></div>
+					<input class="btn" type="submit" id="csvexport" value="<?php echo JText::_('COM_JEM_EXPORT_FILE'); ?>" onclick="document.getElementsByName('task')[0].value='export.table_register';return true;"></input></div>
 					<input class="btn" type="submit" id="sqlexport" value="<?php echo JText::_('COM_JEM_EXPORT_SQLFILE'); ?>" onclick="document.getElementsByName('task')[0].value='export.table_sql_register';return true;"></input>
 				</div>
 		</div>
@@ -155,7 +155,7 @@ JHtml::_('bootstrap.tooltip');
 			<div class="control-label"><label><?php echo JText::_('COM_JEM_EXPORT_TABLE_SETTINGS'); ?></label></div>
 			<div class="controls">
 				<div class="input-append">
-					<input type="submit" class="btn" id="csvexport" value="<?php echo JText::_('COM_JEM_EXPORT_FILE'); ?>" onclick="document.getElementsByName('task')[0].value='export.table_settings';return true;"></input></div>
+					<input class="btn" type="submit" id="csvexport" value="<?php echo JText::_('COM_JEM_EXPORT_FILE'); ?>" onclick="document.getElementsByName('task')[0].value='export.table_settings';return true;"></input></div>
 					<input class="btn" type="submit" id="sqlexport" value="<?php echo JText::_('COM_JEM_EXPORT_SQLFILE'); ?>" onclick="document.getElementsByName('task')[0].value='export.table_sql_settings';return true;"></input>
 				</div>
 		</div>
@@ -163,7 +163,7 @@ JHtml::_('bootstrap.tooltip');
 			<div class="control-label"><label><?php echo JText::_('COM_JEM_EXPORT_TABLE_VENUES'); ?></label></div>
 			<div class="controls">
 				<div class="input-append">
-					<input type="submit" class="btn" id="csvexport" value="<?php echo JText::_('COM_JEM_EXPORT_FILE'); ?>" onclick="document.getElementsByName('task')[0].value='export.table_venues';return true;"></input></div>
+					<input class="btn" type="submit" id="csvexport" value="<?php echo JText::_('COM_JEM_EXPORT_FILE'); ?>" onclick="document.getElementsByName('task')[0].value='export.table_venues';return true;"></input></div>
 					<input class="btn" type="submit" id="sqlexport" value="<?php echo JText::_('COM_JEM_EXPORT_SQLFILE'); ?>" onclick="document.getElementsByName('task')[0].value='export.table_sql_venues';return true;"></input>
 				</div>
 		</div>
@@ -173,6 +173,7 @@ JHtml::_('bootstrap.tooltip');
 				<div class="input-append">
 					<input class="btn" type="submit" id="sqlexport" value="<?php echo JText::_('COM_JEM_EXPORT_SQLFILE'); ?>" onclick="document.getElementsByName('task')[0].value='export.tabledump';return true;"></input>
 				</div>
+			</div>
 		</div>
 		
 		</fieldset>

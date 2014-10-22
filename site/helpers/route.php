@@ -24,7 +24,7 @@ require_once(JPATH_SITE.'/components/com_jem/classes/categories.class.php');
  */
 abstract class JEMHelperRoute
 {
-	protected static $lookup;
+	protected static $lookup2;
 	const ARTIFICALID = 0;
 
 	/**
@@ -130,7 +130,7 @@ abstract class JEMHelperRoute
 					$link .= '&Itemid='.$defaultItemid;
 				} 
 		}
-
+		
 		return $link;
 	}
 
@@ -219,93 +219,94 @@ abstract class JEMHelperRoute
 	{
 		$app = JFactory::getApplication();
 		$menus = $app->getMenu('site');
+		$settings 		= JEMHelper::globalattribs();
+		$defaultItemid 	= $settings->get('default_Itemid');
 
 		// Prepare the reverse lookup array.
-		if (self::$lookup === null) {
-			self::$lookup = array();
+		if (!isset(self::$lookup2)) {
+			self::$lookup2 = array();
 
 			$component = JComponentHelper::getComponent('com_jem');
 			$items = $menus->getItems('component_id', $component->id);
-
+					
+			// loop trough the menu-items of the component
 			if ($items) {
 				foreach ($items as $item)
 				{
 					if (isset($item->query) && isset($item->query['view'])) {
-						
+						// skip Calendar-layout
 						if (isset($item->query['layout']) && ($item->query['layout'] == 'calendar')) {
-							continue; // skip calendars
+							continue; 
 						}
 						
+						// define $view variable
 						$view = $item->query['view'];
-
-						if (!isset(self::$lookup[$view])) {
-							self::$lookup[$view] = array();
+						
+						// skip several views
+						if (isset($item->query['view'])) {
+							if ($view == 'calendar' || $view == 'search' || $view == 'venues') {
+								continue;
+							}
 						}
 
+						if (!isset(self::$lookup2[$view]))
+							self::$lookup2[$view] = array();
+						}
+
+						// check for Id's
 						if (isset($item->query['id'])) {
-							self::$lookup[$view][$item->query['id']] = $item->id;
+							if (!isset(self::$lookup2[$view][$item->query['id']]))
+							{
+								self::$lookup2[$view][$item->query['id']] = $item->id;
+							} 
+						} else { 
+							// Some views have no ID, but we have to set one
+							//self::$lookup2[$view][self::ARTIFICALID] = $item->id;
 						}
-						// Some views have no ID, but we have to set one
-						else {
-							self::$lookup[$view][self::ARTIFICALID] = $item->id;
-						}
-					}
 				}
 			}
+			
+			
 		}
+
+		// at this point we collected itemid's linking to the component
+	
 
 		if ($needles) {
 			foreach ($needles as $view => $ids)
 			{
-				if (isset(self::$lookup[$view])) {
+				if (isset(self::$lookup2[$view])) {
 					foreach($ids as $id)
 					{
-						if (isset(self::$lookup[$view][(int)$id])) {
-							// TODO: Check on access. See commented code below
-							return self::$lookup[$view][(int)$id];
+						if (isset(self::$lookup2[$view][(int)$id])) {
+							return self::$lookup2[$view][(int)$id];
 						}
 					}
 				}
 			}
 		}
-		else {
-			$active = $menus->getActive();
-			if ($active) {
-				return $active->id;
-			}
+		
+		
+		if ($defaultItemid) {
+			return $defaultItemd;
+		} else {
+			$component = JComponentHelper::getComponent('com_jem');
+			$items = $menus->getItems(array('component_id','link'), array($component->id,'index.php?option=com_jem&view=eventslist'),false);
+			
+			$default = reset($items);
+			
+			return !empty($default->id) ? $default->id : null;
 		}
-
-		return null;
-
-// 		$user = JFactory::getUser();
-
-// 		//false if there exists no menu item at all
-// 		if (!$items) {
-// 			return false;
-// 		} else {
-// 			//Not needed currently but kept because of a possible hierarchic link structure in future
-// 			foreach($needles as $needle => $id)
-// 			{
-// 				foreach($items as $item)
-// 				{
-// 					if (($item->query['view'] == $needle) && ($item->query['id'] == $id)) {
-// 						return $item;
-// 					}
-// 				}
-
-// 				/*
-// 				//no menuitem exists -> return first possible match
-// 				foreach($items as $item)
-// 				{
-// 					if ($item->published == 1 && $item->access <= $gid) {
-// 						return $item;
-// 					}
-// 				}
-// 				*/
-// 			}
-// 		}
-
-// 		return false;
+		
+		/*
+		$active = $menus->getActive();
+		
+		if ($active && $active->component == 'com_jem')
+		{
+			return $active->id;
+		}
+		*/
+		
 	}
 }
 ?>
