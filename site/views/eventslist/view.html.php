@@ -41,7 +41,7 @@ class JemViewEventslist extends JEMView
 		$print			= $jinput->getBool('print');
 		$admin			= JEMUser::superuser();
 		$task 			= $jinput->getCmd('task');
-		$template 		= JFactory::getTemplate();
+		$template 		= $app->getTemplate();
 
 		// Load css
 		JemHelper::loadCss('jem');
