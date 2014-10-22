@@ -12,6 +12,7 @@
 
 	<files>
 		<filename plugin="jem">jem.php</filename>
+		<filename>index.html</filename>
 		<folder>language</folder>
 	</files>
 

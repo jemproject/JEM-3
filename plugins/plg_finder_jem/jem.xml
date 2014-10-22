@@ -10,8 +10,8 @@
 	<version>3.0.2</version>
 	<description>PLG_FINDER_JEM_XML_DESCRIPTION</description>
 	<files>
-		<file plugin="jem">jem.php</file>
-
+		<filename plugin="jem">jem.php</file>
+		<filename>index.html</file>
 		<folder>language</folder>
 	</files>
 
