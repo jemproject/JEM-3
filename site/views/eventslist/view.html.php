@@ -40,7 +40,8 @@ class JemViewEventslist extends JEMView
 		$itemid 		= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
 		$print			= $jinput->getBool('print');
 		$admin			= JEMUser::superuser();
-		$task 			= JRequest::getCmd('task');
+		$task 			= $jinput->getCmd('task');
+		$template 		= JFactory::getTemplate();
 
 		// Load css
 		JemHelper::loadCss('jem');
