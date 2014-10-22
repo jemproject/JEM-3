@@ -190,10 +190,21 @@ class JEMModelSettings extends JModelForm
 				$gd_version .= ' (' . trim($gd_sup[1]) . ')';
 			}
 		}
-
+		
+		// language conflict detection
+		
+		$language = null;
+		# retrieve loaded language files
+		
+		$language = JFactory::getLanguage();
+		
+		$paths = count($language->getPaths('com_jem'));
+	
 		$config 					= new stdClass();
 		$config->vs_component		= JemHelper::getParam(1,'version',1,'com_jem');
 		$config->vs_plg_mailer		= JemHelper::getParam(1,'version',2,'plg_jem_mailer');
+		$config->vs_plg_search		= JemHelper::getParam(1,'version',2,'plg_search_jem');
+		$config->vs_plg_finder		= JemHelper::getParam(1,'version',2,'plg_finder_jem');
 		$config->vs_mod_jem_cal		= JemHelper::getParam(1,'version',3,'mod_jem_cal');
 		$config->vs_mod_jem			= JemHelper::getParam(1,'version',3,'mod_jem');
 		$config->vs_mod_jem_wide	= JemHelper::getParam(1,'version',3,'mod_jem_wide');
@@ -201,6 +212,7 @@ class JEMModelSettings extends JModelForm
 		$config->vs_php				= phpversion();
 		$config->vs_php_magicquotes	= $quote;
 		$config->vs_gd				= $gd_version;
+		$config->vs_lng_paths		= $paths;
 
 		return $config;
 	}
