@@ -27,6 +27,17 @@
 .icon-48-plugins			{ background-image: url(../images/icon-48-plugins.png); }
 
 
+.btn-small.icon_print {
+	padding-bottom: 4px;
+	padding-top: 4px;
+}
+
+.btn-small.icon_csv {
+	padding-bottom:4px;
+	padding-top:4px;
+}
+
+
 /** linkicons **/
 div.linkicon {
 	text-align:center;
