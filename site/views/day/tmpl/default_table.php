@@ -22,7 +22,7 @@ defined('_JEXEC') or die;
 <?php if ($this->settings->get('global_show_filter') || $this->settings->get('global_display')) : ?>
 	<div id="jem_filter" class="floattext">
 		<?php if ($this->settings->get('global_show_filter')) : ?>
-			<div class="jem_fleft">
+			<div class="pull-left">
 				<?php
 					echo $this->lists['filter'].'&nbsp;';
 				?>
@@ -34,7 +34,7 @@ defined('_JEXEC') or die;
 			</div>
 		<?php endif; ?>
 		<?php if ($this->settings->get('global_display')) : ?>
-			<div class="jem_fright">
+			<div class="pull-right">
 				<?php
 					echo $this->pagination->getLimitBox();
 				?>
