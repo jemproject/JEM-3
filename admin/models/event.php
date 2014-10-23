@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 3.0.2
+ * @version 3.0.3
  * @package JEM
  * @copyright (C) 2013-2014 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -472,10 +472,10 @@ class JemModelEvent extends JModelAdmin
 		$table->version ++;
 		
 		//get time-values from time selectlist and combine them accordingly
-		$starthours		= $jinput->get('starthours','','cmd');
-		$startminutes	= $jinput->get('startminutes','','cmd');
-		$endhours		= $jinput->get('endhours','','cmd');
-		$endminutes		= $jinput->get('endminutes','','cmd');
+		$starthours		= $jinput->getCmd('starthours');
+		$startminutes	= $jinput->getCmd('startminutes');
+		$endhours		= $jinput->getCmd('endhours');
+		$endminutes		= $jinput->getCmd('endminutes');
 		
 		// StartTime
 		if ($starthours != '' && $startminutes != '') {
@@ -527,8 +527,7 @@ class JemModelEvent extends JModelAdmin
 			$backend = false;
 
 		$cats 						= $data['cats'];
-		$author_ip 					= $jinput->getString('author_ip');
-		$data['author_ip']			= $author_ip;
+		$data['author_ip']			= $jinput->getString('author_ip');
 		
 		
 		## Recurrence - check option ##

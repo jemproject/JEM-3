@@ -31,7 +31,7 @@ $function = JFactory::getApplication()->input->getCmd('function', 'jSelectVenue'
 
 	<form action="<?php echo JRoute::_('index.php?option=com_jem&view=editevent&layout=choosevenue&tmpl=component&function='.$this->escape($function).'&'.JSession::getFormToken().'=1'); ?>" method="post" name="adminForm" id="adminForm">
 		<div id="jem_filter" class="floattext">
-			<div class="jem_fleft">
+			<div class="pull-left">
 				<?php
 				echo $this->searchfilter.'&nbsp;';
 				?>
@@ -42,7 +42,7 @@ $function = JFactory::getApplication()->input->getCmd('function', 'jSelectVenue'
 					<button type="button" class="btn" onclick="if (window.parent) window.parent.<?php echo $this->escape($function);?>('', '<?php echo JText::_('COM_JEM_SELECT_VENUE') ?>');"><?php echo JText::_('COM_JEM_NOVENUE')?></button>
 				</div>
 			</div>
-			<div class="jem_fright">
+			<div class="pull-right">
 				<?php
 				echo $this->pagination->getLimitBox();
 				?>

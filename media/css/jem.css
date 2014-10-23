@@ -1,5 +1,5 @@
 /**
- * @version 3.0.2
+ * @version 3.0.3
  * @package JEM
  * @copyright (C) 2013-2014 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -396,14 +396,6 @@ div#jem #jem_filter
 	padding: 10px 10px 4px 10px;
 	border:solid 1px #808080;
 	background:#FFA500;
-}
-
-div#jem .jem_fleft {
-	float:left;
-}
-
-div#jem .jem_fright {
-	float:right;
 }
 
 /* -------------------

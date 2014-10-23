@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 3.0.2
+ * @version 3.0.3
  * @package JEM
  * @copyright (C) 2013-2014 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -213,51 +213,19 @@ $slidesOptions = array(
 			<legend>
 				<?php echo empty($this->item->id) ? JText::_('COM_JEM_NEW_VENUE') : JText::sprintf('COM_JEM_VENUE_DETAILS', $this->item->id); ?>
 			</legend>
-
-			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('venue');?></div>
-				<div class="controls"><?php echo $this->form->getInput('venue'); ?></div>
-			</div>
-			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('alias'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('alias'); ?></div>
-			</div>
-			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('street'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('street'); ?></div>
-			</div>
-			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('postalCode'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('postalCode'); ?></div>
-			</div>
-			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('city'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('city'); ?></div>
-			</div>
-			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('state'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('state'); ?></div>
-			</div>
-			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('country'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('country'); ?></div>
-			</div>
-			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('latitude'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('latitude'); ?></div>
-			</div>
-			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('longitude'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('longitude'); ?></div>
-			</div>
-			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('url'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('url'); ?></div>
-			</div>
-			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('map'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('map'); ?></div>
-			</div>
+			<?php 
+				echo $this->form->renderField('venue');
+				echo $this->form->renderField('alias');
+				echo $this->form->renderField('street');
+				echo $this->form->renderField('postalCode');
+				echo $this->form->renderField('city');
+				echo $this->form->renderField('state');
+				echo $this->form->renderField('country');
+				echo $this->form->renderField('latitude');
+				echo $this->form->renderField('longitude');
+				echo $this->form->renderField('url');
+				echo $this->form->renderField('map');
+			?>
 		</fieldset>
 		
 		<fieldset class="form-vertical">
@@ -284,17 +252,10 @@ $slidesOptions = array(
 <!-- Publishing -->
 	<?php echo JHtml::_('bootstrap.addSlide', 'venue-sliders-'.$this->item->id, JText::_('COM_JEM_FIELDSET_PUBLISHING'), 'venue-publishing'); ?>
 		<fieldset class="form-vertical">
-			
-			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('id'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('id'); ?></div>
-			</div>
-
-			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('published'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('published'); ?></div>
-			</div>
-			
+		<?php 
+			echo $this->form->renderField('id');
+			echo $this->form->renderField('published');
+		?>
 		<?php foreach($this->form->getFieldset('publish') as $field): ?>
 			<div class="control-group">
 				<div class="control-label"><?php echo $field->label; ?></div>
@@ -321,10 +282,9 @@ $slidesOptions = array(
 <!-- IMAGE -->
 	<?php echo JHtml::_('bootstrap.addSlide', 'venue-sliders-'.$this->item->id, JText::_('COM_JEM_IMAGE'), 'venue-image'); ?>
 		<fieldset class="form-vertical">
-			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('locimage'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('locimage'); ?></div>
-			</div>
+		<?php 
+			echo $this->form->renderField('locimage');
+		?>
 		</fieldset>
 		<?php echo JHtml::_('bootstrap.endSlide'); ?>
 		

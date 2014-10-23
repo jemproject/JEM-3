@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 3.0.2
+ * @version 3.0.3
  * @package JEM
  * @copyright (C) 2013-2014 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -146,65 +146,32 @@ $params = $params->toArray();
 			<legend>
 				<?php echo empty($this->item->id) ? JText::_('COM_JEM_NEW_EVENT') : JText::sprintf('COM_JEM_EVENT_DETAILS', $this->item->id); ?>
 			</legend>
-
-			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('title');?></div>
-				<div class="controls"><?php echo $this->form->getInput('title'); ?></div>
-			</div>
-			<div class="control-group">	
-				<div class="control-label"><?php echo $this->form->getLabel('alias'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('alias'); ?></div>
-			</div>
-			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('dates'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('dates'); ?></div>
-			</div>
-			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('enddates'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('enddates'); ?></div>
-			</div>
-			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('times'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('times'); ?></div>
-			</div>
-			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('endtimes'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('endtimes'); ?></div>
-			</div>
-			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('cats'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('cats'); ?></div>
-			</div>
+			<?php 
+				echo $this->form->renderField('title');
+				echo $this->form->renderField('alias');
+				echo $this->form->renderField('dates');
+				echo $this->form->renderField('enddates');
+				echo $this->form->renderField('times');
+				echo $this->form->renderField('endtimes');
+				echo $this->form->renderField('cats');
+			?>
 		</fieldset>
 
 		<fieldset class="form-horizontal">
-			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('locid'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('locid'); ?></div>
-			</div>
-			<div class="control-group">	
-				<div class="control-label"><?php echo $this->form->getLabel('contactid'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('contactid'); ?></div>
-			</div>
-			<div class="control-group">	
-				<div class="control-label"><?php echo $this->form->getLabel('published'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('published'); ?></div>
-			</div>
-			<div class="control-group">	
-				<div class="control-label"><?php echo $this->form->getLabel('featured'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('featured'); ?></div>
-			</div>
-			<div class="control-group">	
-				<div class="control-label"><?php echo $this->form->getLabel('access'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('access'); ?></div>
-			</div>
+		<?php 
+			echo $this->form->renderField('locid'); 
+			echo $this->form->renderField('contactid');
+			echo $this->form->renderField('published');
+			echo $this->form->renderField('featured');
+			echo $this->form->renderField('access');
+		?>
 		</fieldset>
 		
-		<fieldset class="adminform">
-			<div class="clr"></div>
-			<?php echo $this->form->getLabel('articletext'); ?>
-			<div class="clr"></div>
-			<?php echo $this->form->getInput('articletext'); ?>
+		<fieldset class="form-vertical">
+			<div class="control-group">
+				<div class="control-label"><?php echo $this->form->getLabel('articletext'); ?></div>
+				<div class="controls"><?php echo $this->form->getInput('articletext'); ?></div>
+			</div>
 		</fieldset>
 	<?php echo JHtml::_('bootstrap.endTab'); ?>
 
@@ -231,30 +198,14 @@ $params = $params->toArray();
 
 		<!-- RETRIEVING OF FIELDSET PUBLISHING -->
 		<fieldset class="form-vertical">
-			<div class="control-group">	
-				<div class="control-label"><?php echo $this->form->getLabel('id'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('id'); ?></div>
-			</div>
-			<div class="control-group">	
-				<div class="control-label"><?php echo $this->form->getLabel('created_by'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('created_by'); ?></div>
-			</div>
-			<div class="control-group">	
-				<div class="control-label"><?php echo $this->form->getLabel('hits'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('hits'); ?></div>
-			</div>
-			<div class="control-group">	
-				<div class="control-label"><?php echo $this->form->getLabel('created'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('created'); ?></div>
-			</div>
-			<div class="control-group">	
-				<div class="control-label"><?php echo $this->form->getLabel('modified'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('modified'); ?></div>
-			</div>
-			<div class="control-group">	
-				<div class="control-label"><?php echo $this->form->getLabel('version'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('version'); ?></div>
-			</div>
+		<?php 
+			echo $this->form->renderField('id');
+			echo $this->form->renderField('created_by');
+			echo $this->form->renderField('hits');
+			echo $this->form->renderField('created');
+			echo $this->form->renderField('modified');
+			echo $this->form->renderField('version');
+		?>
 		</fieldset>
 <?php echo JHtml::_('bootstrap.endSlide'); ?>
 	
@@ -276,18 +227,11 @@ $params = $params->toArray();
 <!-- registra -->	
 	<?php echo JHtml::_('bootstrap.addSlide', 'slide', JText::_('COM_JEM_REGISTRATION'), 'event-registra'); ?>
 		<fieldset class="form-vertical">
-			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('registra'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('registra'); ?></div>
-			</div>
-			<div class="control-group">	
-				<div class="control-label"><?php echo $this->form->getLabel('unregistra'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('unregistra'); ?></div>
-			</div>
-			<div class="control-group">	
-				<div class="control-label"><?php echo $this->form->getLabel('maxplaces'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('maxplaces'); ?></div>
-			</div>
+		<?php 
+			echo $this->form->renderField('registra'); 
+			echo $this->form->renderField('unregistra');
+			echo $this->form->renderField('maxplaces');
+		?>
 			<div class="control-group">	
 				<div class="control-label"><label><?php echo JText::_ ('COM_JEM_BOOKED_PLACES') . ':';?></label></div>
 				<div class="controls"><input id="event-booked" class="readonly" type="text"  value="<?php echo $this->item->booked; ?>" /></div>
@@ -300,10 +244,7 @@ $params = $params->toArray();
 			</div>
 			<?php endif; ?>
 
-			<div class="control-group">	
-				<div class="control-label"><?php echo $this->form->getLabel('waitinglist'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('waitinglist'); ?></div>
-			</div>
+			<?php echo $this->form->renderField('waitinglist'); ?> 
 		</fieldset>
 <?php echo JHtml::_('bootstrap.endSlide'); ?>
 
@@ -311,10 +252,9 @@ $params = $params->toArray();
 <!-- Image -->
 	<?php echo JHtml::_('bootstrap.addSlide', 'slide', JText::_('COM_JEM_IMAGE'), 'event-image'); ?>
 		<fieldset class="form-vertical">
-			<div class="control-group">	
-				<div class="control-label"><?php echo $this->form->getLabel('datimage'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('datimage'); ?></div>
-			</div>
+		<?php 
+			echo $this->form->renderField('datimage'); 
+		?> 
 		</fieldset>
 	<?php echo JHtml::_('bootstrap.endSlide'); ?>
 

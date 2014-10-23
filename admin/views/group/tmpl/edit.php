@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 3.0.2
+ * @version 3.0.3
  * @package JEM
  * @copyright (C) 2013-2014 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -82,18 +82,11 @@ $slidesOptions = array(
 			<legend>
 				<?php echo empty($this->item->id) ? JText::_('COM_JEM_NEW_GROUP') : JText::sprintf('COM_JEM_GROUP_DETAILS', $this->item->id); ?>
 			</legend>
-			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('name');?></div>
-				<div class="controls"><?php echo $this->form->getInput('name'); ?></div>
-			</div>
-			<div class="control-group">	
-				<div class="control-label"><?php echo $this->form->getLabel('id');?></div>
-				<div class="controls"><?php echo $this->form->getInput('id'); ?></div>
-			</div>
-			<div class="control-group">	
-				<div class="control-label"><?php echo $this->form->getLabel('maintainers2');?></div>
-				<div class="controls"><?php echo $this->form->getInput('maintainers2'); ?></div>
-			</div>
+			<?php 
+				echo $this->form->renderField('name');
+				echo $this->form->renderField('id');
+				echo $this->form->renderField('maintainers2');
+			?>
 		</fieldset>
 		<fieldset class="form-horizontal">
 		
@@ -125,10 +118,7 @@ $slidesOptions = array(
 	
 		</fieldset>
 			<fieldset class="form-vertical">
-				<div class="control-group">	
-					<div class="control-label"><?php echo $this->form->getLabel('description'); ?></div>
-					<div class="controls"><?php echo $this->form->getInput('description'); ?></div>
-				</div>
+			<?php echo $this->form->renderField('description');?>
 		</fieldset>
 	
 		<?php echo JHtml::_('bootstrap.endTab'); ?>			
@@ -143,33 +133,16 @@ $slidesOptions = array(
 <!-- Publishing -->
 	<?php echo JHtml::_('bootstrap.addSlide', 'group-sliders-'.$this->item->id, JText::_('COM_JEM_GROUP_PERMISSIONS'), 'slide1'); ?>
 	
-
 		<fieldset class="form-vertical">
-			<div class="control-group">	
-				<div class="control-label"><?php echo $this->form->getLabel('addvenue'); ?></div> 
-				<div class="controls"><?php echo $this->form->getInput('addvenue'); ?></div>
-			</div>
-			<div class="control-group">		
-				<div class="control-label"><?php echo $this->form->getLabel('publishvenue'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('publishvenue'); ?></div>
-			</div>
-			<div class="control-group">		
-				<div class="control-label"><?php echo $this->form->getLabel('editvenue'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('editvenue'); ?></div>
-			</div>
-			<?php echo $this->form->getLabel('spacer'); ?>
-			<div class="control-group">		
-				<div class="control-label"><?php echo $this->form->getLabel('addevent'); ?></div> 
-				<div class="controls"><?php echo $this->form->getInput('addevent'); ?></div>
-			</div>
-			<div class="control-group">		
-				<div class="control-label"><?php echo $this->form->getLabel('publishevent'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('publishevent'); ?></div>
-			</div>
-			<div class="control-group">		
-				<div class="control-label"><?php echo $this->form->getLabel('editevent'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('editevent'); ?></div>
-			</div>
+		<?php 
+			echo $this->form->renderField('addvenue');
+			echo $this->form->renderField('publishvenue');
+			echo $this->form->renderField('editvenue');
+			echo $this->form->getLabel('spacer');
+			echo $this->form->renderField('addevent');
+			echo $this->form->renderField('publishevent');
+			echo $this->form->renderField('editevent');
+		?>
 		</fieldset>
 		<?php echo JHtml::_('bootstrap.endSlide'); ?>
 		<?php echo JHtml::_('bootstrap.endAccordion'); ?>
