@@ -16,7 +16,7 @@ $admin = $this->admin;
 <?php if ($this->settings->get('global_show_filter',1) || $this->settings->get('global_display',1)) : ?>
 <div id="jem_filter" class="floattext">
 		<?php if ($this->settings->get('global_show_filter',1)) : ?>
-			<div class="jem_fleft">
+			<div class="pull-left">
 				<?php
 					echo $this->lists['filter'].'&nbsp;';
 				?>
@@ -28,7 +28,7 @@ $admin = $this->admin;
 			</div>
 		<?php endif; ?>
 		<?php if ($this->settings->get('global_display',1)) : ?>
-			<div class="jem_fright">
+			<div class="pull-right">
 				<?php
 					echo $this->pagination->getLimitBox();
 				?>
@@ -99,7 +99,6 @@ $admin = $this->admin;
 			<?php foreach ($this->rows as $row) : ?>
 			
 			<?php
-			
 			$params		= $row->params;
 			$images 	= json_decode($row->datimage);
 			$canEdit	= $row->params->get('access-edit');
