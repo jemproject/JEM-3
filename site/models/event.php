@@ -158,7 +158,8 @@ class JemModelEvent extends JModelItem
 				}
 
 				if (empty($data)) {
-					return JError::raiseError(404, JText::_('COM_JEM_EVENT_ERROR_EVENT_NOT_FOUND'));
+					//return JError::raiseError(404, JText::_('COM_JEM_EVENT_ERROR_EVENT_NOT_FOUND'));
+					throw new Exception(JText::_('COM_JEM_EVENT_ERROR_EVENT_NOT_FOUND'), 404);
 				}
 
 				// Convert parameter fields to objects.
@@ -223,13 +224,14 @@ class JemModelEvent extends JModelItem
 			}
 			catch (JException $e) {
 				if ($e->getCode() == 404) {
-					// Need to go thru the error handler to allow Redirect to
-					// work.
+					// Need to go thru the error handler to allow Redirect to work.
 					JError::raiseError(404, $e->getMessage());
+					return false;
 				}
 				else {
 					$this->setError($e);
 					$this->_item[$pk] = false;
+					return false;
 				}
 			}
 		}
@@ -455,7 +457,7 @@ class JemModelEvent extends JModelItem
 
 	/**
 	 * Method to check if the user is already registered
-	 * return false if not registered, 1 for registerd, 2 for waiting list
+	 * return false if not registered, 1 for registered, 2 for waiting list
 	 *
 	 * @access public
 	 * @return mixed false if not registered, 1 for registerd, 2 for waiting
@@ -465,17 +467,17 @@ class JemModelEvent extends JModelItem
 	function getUserIsRegistered()
 	{
 		// Initialize variables
-		$user = JFactory::getUser();
+		$user	= JFactory::getUser();
 		$userid = (int) $user->get('id', 0);
 
-		// usercheck
-		$query = 'SELECT waiting+1' . 		// 1 if user is registered, 2 if on waiting
-				// list
-		' FROM #__jem_register'
-		. ' WHERE uid = ' . $userid
-		. ' AND event = ' . $this->getState('event.id');
-		$this->_db->setQuery($query);
-		return $this->_db->loadResult();
+		$db = $this->getDbo();
+		$query = $db->getQuery(true);
+		$query->select(array('waiting+1')); // 1 if user is registered, 2 if on waiting
+		$query->from('#__jem_register');
+		$query->where(array('uid = '.$userid,'event = '. $this->getState('event.id')));
+	
+		$db->setQuery($query);
+		return $db->loadResult();
 	}
 
 	/**
@@ -490,16 +492,15 @@ class JemModelEvent extends JModelItem
 		// Get registered users
 		$db = $this->getDbo();
 		$query = $db->getQuery(true);
-		$query = 'SELECT '
-				. 'u.name,u.username, r.uid'
-				. ' FROM #__jem_register AS r'
-				. ' LEFT JOIN #__users AS u ON u.id = r.uid'
-				. ' WHERE event = '. $event
-				. '   AND waiting = 0 ';
+		
+		$query->select(array('u.name,u.username, r.uid'));
+		$query->from('#__jem_register as r');
+		$query->join('LEFT', '#__users AS u ON u.id = r.uid');
+		$query->where(array('r.event = '.$event,'r.waiting = 0'));
 		$db->setQuery($query);
 
 		$registered = $db->loadObjectList();
-
+		
 		return $registered;
 	}
 
@@ -522,7 +523,7 @@ class JemModelEvent extends JModelItem
 		$user = JFactory::getUser();
 		$jemsettings = JEMHelper::config();
 
-		$event = (int) $this->_registerid;
+		$eventid = (int) $this->_registerid;
 
 		$uid = (int) $user->get('id');
 		$onwaiting = 0;
@@ -532,17 +533,24 @@ class JemModelEvent extends JModelItem
 			JError::raiseError(403, JText::_('COM_JEM_ALERTNOTAUTH'));
 			return;
 		}
+		
+		try {
+			$event = $this->getItem($eventId);
+		}
+		// error handling
+		catch (Exception $e) {
+			$event = false;
+		}
+		if (empty($event)) {
+			$this->setError(JText::_('COM_JEM_EVENT_ERROR_EVENT_NOT_FOUND'));
+			return false;
+		}
 
-		$this->setId($event);
-
-		$event2 = $this->getItem($pk = $this->_registerid);
-
-		if ($event2->maxplaces > 0) 		// there is a max
+		if ($event->maxplaces > 0) 		// there is a max
 		{
 			// check if the user should go on waiting list
-			$attendees = self::getRegisters($event);
-			if (count($attendees) >= $event2->maxplaces) {
-				if (!$event2->waitinglist) {
+			if ($event->booked >= $event->maxplaces) {
+				if (!$event->waitinglist) {
 					$this->setError(JText::_('COM_JEM_ERROR_REGISTER_EVENT_IS_FULL'));
 					return false;
 				}
@@ -554,7 +562,7 @@ class JemModelEvent extends JModelItem
 		$uip = $jemsettings->storeip ? JemHelper::retrieveIP() : false;
 
 		$obj = new stdClass();
-		$obj->event = (int) $event;
+		$obj->event = (int) $eventid;
 		$obj->waiting = $onwaiting;
 		$obj->uid = (int) $uid;
 		$obj->uregdate = gmdate('Y-m-d H:i:s');
@@ -575,7 +583,7 @@ class JemModelEvent extends JModelItem
 	{
 		$user = JFactory::getUser();
 
-		$event = (int) $this->_registerid;
+		$eventid = (int) $this->_registerid;
 		$userid = $user->get('id');
 
 		// Must be logged in
@@ -583,12 +591,17 @@ class JemModelEvent extends JModelItem
 			JError::raiseError(403, JText::_('COM_JEM_ALERTNOTAUTH'));
 			return;
 		}
+		
+		$db 	= JFactory::getDBO();
+		$query	= $db->getQuery(true);
+		
+		$query->delete('#__jem_register');	
+		$query->where(array('event = ' . $eventid,'uid= ' . $userid));
+		
+		$db->SetQuery($query);
 
-		$query = 'DELETE FROM #__jem_register WHERE event = ' . $event . ' AND uid= ' . $userid;
-		$this->_db->SetQuery($query);
-
-		if (!$this->_db->execute()) {
-			JError::raiseError(500, $this->_db->getErrorMsg());
+		if (!$db->execute()) {
+			JError::raiseError(500, $db->getErrorMsg());
 		}
 
 		return true;

@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 3.0.2
+ * @version 3.0.3
  * @package JEM
  * @copyright (C) 2013-2014 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -20,7 +20,7 @@ if ($this->print == 0) {
 
 
 <?php
-if ($this->item->maxplaces && count($this->registers) >= $this->item->maxplaces && !$this->item->waitinglist):
+if ($this->item->maxplaces > 0 && ($this->item->booked >= $this->item->maxplaces) && !$this->item->waitinglist):
 ?>
 
 <!-- Full, not possible to attend -->
@@ -39,7 +39,7 @@ if ($this->item->maxplaces && count($this->registers) >= $this->item->maxplaces 
 <?php else: ?>
 <form id="JEM" action="<?php echo JRoute::_('index.php?option=com_jem&view=event&id='.(int) $this->item->id); ?>"  name="adminForm" id="adminForm" method="post">
 	<p>
-		<?php if ($this->item->maxplaces && count($this->registers) >= $this->item->maxplaces): // full event ?>
+		<?php if ($this->item->maxplaces && ($this->item->booked >= $this->item->maxplaces)): // full event ?>
 		<div class="center">
 		<span class="label label-warning"><?php echo JText::_('COM_JEM_EVENT_STATUS_FULL_WAITINGLIST');?></span>
 		</div>

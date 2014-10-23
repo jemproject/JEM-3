@@ -801,7 +801,7 @@ class JemHelper {
 		$db->setQuery($query);
 
 		$manifest = json_decode($db->loadResult(), true);
-		$result = $manifest[ $setting ];
+		$result = $manifest[$setting];
 
 		if (empty($result)) {
 			$result = 'N/A';
