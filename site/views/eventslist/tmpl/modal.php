@@ -22,8 +22,8 @@ JHtml::_('bootstrap.tooltip');
 JHtml::_('behavior.framework', true);
 
 $function  = $app->input->getCmd('function', 'jSelectEvent');
-$listOrder = $this->escape($this->state->get('list.ordering'));
-$listDirn  = $this->escape($this->state->get('list.direction'));
+//$listOrder = $this->escape($this->state->get('list.ordering'));
+//$listDirn  = $this->escape($this->state->get('list.direction'));
 ?>
 <form action="<?php echo JRoute::_('index.php?option=com_jem&view=eventslist&layout=modal&tmpl=component&function='.$function.'&'.JSession::getFormToken().'=1');?>" method="post" name="adminForm" id="adminForm" class="form-inline">
 	<fieldset class="filter clearfix">
@@ -50,19 +50,19 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
 		<thead>
 			<tr>
 				<th class="title">
-					<?php echo JHtml::_('grid.sort', 'JGLOBAL_TITLE', 'a.title', $listDirn, $listOrder); ?>
+					<?php echo JHtml::_('grid.sort', 'JGLOBAL_TITLE', 'a.title', $this->lists['order_Dir'], $this->lists['order']); ?>
 				</th>
 				<th width="15%" class="center nowrap">
-					<?php echo JHtml::_('grid.sort', 'JGRID_HEADING_ACCESS', 'access_level', $listDirn, $listOrder); ?>
+					<?php echo JHtml::_('grid.sort', 'JGRID_HEADING_ACCESS', 'access_level', $this->lists['order_Dir'], $this->lists['order']); ?>
 				</th>
 				<th width="15%" class="center nowrap">
 					<?php echo JText::_('JCATEGORY'); ?>
 				</th>
 				<th width="5%" class="center nowrap">
-					<?php echo JHtml::_('grid.sort', 'JDATE', 'a.dates', $listDirn, $listOrder); ?>
+					<?php echo JHtml::_('grid.sort', 'JDATE', 'a.dates', $this->lists['order_Dir'], $this->lists['order']); ?>
 				</th>
 				<th width="1%" class="center nowrap">
-					<?php echo JHtml::_('grid.sort', 'JGRID_HEADING_ID', 'a.id', $listDirn, $listOrder); ?>
+					<?php echo JHtml::_('grid.sort', 'JGRID_HEADING_ID', 'a.id', $this->lists['order_Dir'], $this->lists['order']); ?>
 				</th>
 			</tr>
 		</thead>
@@ -133,8 +133,9 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
 	<div>
 		<input type="hidden" name="task" value="" />
 		<input type="hidden" name="boxchecked" value="0" />
-		<input type="hidden" name="filter_order" value="<?php echo $listOrder; ?>" />
-		<input type="hidden" name="filter_order_Dir" value="<?php echo $listDirn; ?>" />
+		<input type="hidden" name="function" value="<?php echo $this->escape($function); ?>" />
+		<input type="hidden" name="filter_order" value="<?php echo $this->lists['order']; ?>" />
+		<input type="hidden" name="filter_order_Dir" value="<?php echo $this->lists['order_Dir']; ?>" />
 		<?php echo JHtml::_('form.token'); ?>
 	</div>
 </form>
