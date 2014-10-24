@@ -43,7 +43,7 @@ $params = $params->toArray();
 		commoff();
 	}
 
-	starter("<?php echo JText::_ ('COM_JEM_META_ERROR'); ?>",$("jform_meta_keywords").value,$("jform_meta_description").value);
+	starter("<?php echo JText::_('COM_JEM_META_ERROR'); ?>",jQuery("#jform_meta_keywords").val(),jQuery("jform_meta_description").val());
 
 	jQuery('#jform_meta_keywords')
 		.focus(function() {
