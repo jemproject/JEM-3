@@ -586,14 +586,7 @@
 				label="COM_JEM_EVENT_FIELD_SHOW_AUTHOR_LABEL"
 				description="COM_JEM_EVENT_FIELD_SHOW_AUTHOR_DESC"
 				class="btn-group btn-group-yesno"
-			>
-				<option	value="0">JNO</option>
-				<option	value="1">JYES</option>
-			</field>
-			<field name="event_link_author" type="radio"
-				label="COM_JEM_EVENT_FIELD_LINK_AUTHOR_LABEL"
-				description="COM_JEM_EVENT_FIELD_LINK_AUTHOR_DESC"
-				class="btn-group btn-group-yesno"
+				default="0"
 			>
 				<option	value="0">JNO</option>
 				<option	value="1">JYES</option>
@@ -602,6 +595,7 @@
 				label="COM_JEM_EVENT_FIELD_SHOW_CONTACT_LABEL"
 				description="COM_JEM_EVENT_FIELD_SHOW_CONTACT_DESC"
 				class="btn-group btn-group-yesno"
+				default="0"
 			>
 				<option	value="0">JNO</option>
 				<option	value="1">JYES</option>

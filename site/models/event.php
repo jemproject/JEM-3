@@ -102,20 +102,6 @@ class JemModelEvent extends JModelItem
 				$query->join('LEFT', '#__jem_cats_event_relations AS rel ON rel.itemid = a.id');
 				$query->join('LEFT', '#__jem_categories AS c ON c.id = rel.catid');
 
-				// Get contact id
-				$subQuery = $db->getQuery(true);
-				$subQuery->select('MAX(contact.id) AS id');
-				$subQuery->from('#__contact_details AS contact');
-				$subQuery->where('contact.published = 1');
-				$subQuery->where('contact.user_id = a.created_by');
-
-				// Filter by language
-				if ($this->getState('filter.language')) {
-					$subQuery->where('(contact.language in (' . $db->quote(JFactory::getLanguage()->getTag()) . ',' . $db->quote('*') . ') OR contact.language IS NULL)');
-				}
-
-				$query->select('(' . $subQuery . ') as contactid2');
-
 				// Filter by language
 				/* commented out yet because it's incomplete
 				if ($this->getState('filter.language')) {
