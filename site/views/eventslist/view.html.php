@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 3.0.2
+ * @version 3.0.3
  * @package JEM
  * @copyright (C) 2013-2014 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -53,10 +53,10 @@ class JemViewEventslist extends JEMView
 			$document->setMetaData('robots', 'noindex, nofollow');
 		}
 		
-		# load JS
+		// load JS
 		JHtml::_('bootstrap.framework');
 		JHtml::_('script', 'com_jem/dropdown.js', false, true);
-
+		
 		// userstate variables
 		$filter_order		= $app->getUserStateFromRequest('com_jem.eventslist.'.$itemid.'.filter_order', 'filter_order', 'a.dates', 'cmd');
 		$filter_order_DirDefault = 'ASC';
