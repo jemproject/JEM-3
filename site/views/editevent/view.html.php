@@ -183,7 +183,6 @@ class JemViewEditevent extends JViewLegacy
 		if ($settings->get('editevent_show_othertab',1)) {
 			JHtml::_('script', 'com_jem/other.js', false, true);
 			JHtml::_('script', 'com_jem/recurrence.js', false, true);
-			JHtml::_('script', 'com_jem/unlimited.js', false, true);
 		}
 		
 		JHtml::_('script', 'com_jem/seo.js', false, true);

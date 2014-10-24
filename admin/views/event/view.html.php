@@ -53,7 +53,6 @@ class JemViewEvent extends JViewLegacy {
 		JHtml::_('behavior.framework','1.4.0.1');
 		JHtml::_('script', 'com_jem/attachments.js', false, true);
 		JHtml::_('script', 'com_jem/recurrence.js', false, true);
-		JHtml::_('script', 'com_jem/unlimited.js', false, true);
 		JHtml::_('script', 'com_jem/seo.js', false, true);
 
 		// JQuery noConflict
