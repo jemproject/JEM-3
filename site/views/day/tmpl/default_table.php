@@ -20,7 +20,7 @@ defined('_JEXEC') or die;
 </script>
 
 <?php if ($this->settings->get('global_show_filter') || $this->settings->get('global_display')) : ?>
-	<div id="jem_filter" class="floattext">
+	<div id="jem_filter" class="clearfix">
 		<?php if ($this->settings->get('global_show_filter')) : ?>
 			<div class="pull-left">
 				<?php

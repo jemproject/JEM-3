@@ -47,7 +47,7 @@ defined('_JEXEC') or die;
 			<?php echo JHtml::_('link', JRoute::_($row->linktarget), $this->escape($row->catname)); ?>
 		</h2>
 
-		<div class="floattext">
+		<div class="clearfix">
 			<?php if ($this->vsettings->get('show_category_image','1')) { ?>
 				<div class="image imagetop">
 					<?php // flyer

@@ -18,7 +18,7 @@ defined('_JEXEC') or die;
 		form.submit(view);
 	}
 </script>
-<div id="jem_filter" class="floattext">
+<div id="jem_filter" class="clearfix">
 	<div class="pull-left">
 		<table>
 		<tr>

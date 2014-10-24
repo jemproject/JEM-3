@@ -52,7 +52,7 @@ $detaillink = JRoute::_(JemHelperRoute::getEventRoute($this->event->id.':'.$this
 <div class="info_container">
 	
 	<?php if ($this->params->get('showintrotext')) : ?>
-	<div class="description no_space floattext">
+	<div class="description no_space clearfix">
 		<?php echo $this->params->get('introtext'); ?>
 	</div>
 	<?php endif; ?>
@@ -73,7 +73,7 @@ $detaillink = JRoute::_(JemHelperRoute::getEventRoute($this->event->id.':'.$this
 		</table>
 		<br />
 
-		<div id="jem_filter" class="floattext">
+		<div id="jem_filter" class="clearfix">
 			<div>
 			<div class="pull-left">
 				<?php echo $this->lists['filter']; ?>
