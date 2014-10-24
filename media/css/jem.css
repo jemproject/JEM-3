@@ -407,15 +407,6 @@ table#el-attachments input{
 	-webkit-box-sizing: border-box;
 }
 
-
-/** recurrence */
-div.jem_editevent form label#recurrence_output {
-	width:auto;
-	float:none;
-	margin:5px 0;
-}
-
-
 table#el-attachments td {
 	padding:5px;
 	border:1px solid #808080;
