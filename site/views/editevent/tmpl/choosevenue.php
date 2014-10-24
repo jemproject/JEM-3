@@ -26,11 +26,8 @@ $function = JFactory::getApplication()->input->getCmd('function', 'jSelectVenue'
 	<h1 class='componentheading'>
 		<?php echo JText::_('COM_JEM_SELECT_VENUE'); ?>
 	</h1>
-
-	<div class="clr"></div>
-
 	<form action="<?php echo JRoute::_('index.php?option=com_jem&view=editevent&layout=choosevenue&tmpl=component&function='.$this->escape($function).'&'.JSession::getFormToken().'=1'); ?>" method="post" name="adminForm" id="adminForm">
-		<div id="jem_filter" class="floattext">
+		<div id="jem_filter" class="clearfix">
 			<div class="pull-left">
 				<?php
 				echo $this->searchfilter.'&nbsp;';

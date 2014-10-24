@@ -111,33 +111,24 @@ $settings	= json_decode($this->item->attribs);
 			<div class="clearfix"></div>
 			
 			<?php if ($this->params->get('showintrotext')) : ?>
-			<div class="description no_space floattext">
+			<div class="description no_space clearfix">
 				<?php echo $this->params->get('introtext'); ?>
 			</div>
 			<?php endif; ?>
 			<p>&nbsp;</p>
 
-<!-- recurrence-message, above the tabs -->		
-			
-	<?php if ($this->item->recurrence_groupcheck) { ?>
-	<fieldset class="form-horizontal alert">
-		
-		<div class="description">
-		<div style="float:left;">
-			<?php echo JemOutput::recurrenceicon($this->item, false, false); ?>
-		</div>
-		<div class="floattext" style="margin-left:36px;">
-			<strong><?php echo JText::_('COM_JEM_EDITEVENT_WARN_RECURRENCE_TITLE'); ?></strong>
-			<br>
-			<?php
-				echo nl2br(JText::_('COM_JEM_EDITEVENT_WARN_RECURRENCE_TEXT'));
-			?>
-			<br><br>
-			<button class="btn" type="button" value="<?php echo JText::_('COM_JEM_EDITEVENT_RECURRENCE_REMOVEFROMSET');?>" onclick="Joomla.submitbutton('editevent.removefromset')"><?php echo JText::_('COM_JEM_EDITEVENT_RECURRENCE_REMOVEFROMSET');?></button>
-		</div>
-		</div>		
-	</fieldset>
-	<?php } ?>			
+
+	
+<!-- recurrence-message, above the tabs -->	
+<?php if ($this->item->recurrence_groupcheck) { ?>	
+<div class="form-horizontal">
+	<div class="span12">
+		<fieldset class="form-horizontal alert">
+			<p><?php echo nl2br(JText::_('COM_JEM_EVENT_WARN_RECURRENCE_TEXT')); ?></p>
+			<button class="btn" type="button" value="<?php echo JText::_('COM_JEM_EVENT_RECURRENCE_REMOVEFROMSET');?>" onclick="Joomla.submitbutton('editevent.removefromset')"><?php echo JText::_('COM_JEM_EVENT_RECURRENCE_REMOVEFROMSET');?></button>	
+		</fieldset>
+</div></div>
+<?php } ?>
 					
 <!-- TABS -->
 <?php echo JHtml::_('bootstrap.startTabSet', 'myTab', array('active' => 'details')); ?>
