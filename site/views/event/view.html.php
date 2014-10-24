@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 3.0.2
+ * @version 3.0.3
  * @package JEM
  * @copyright (C) 2013-2014 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -55,9 +55,9 @@ class JemViewEvent extends JEMView
 		$categories			= $this->get('Categories');
 		$this->categories	= $categories;
 
-		$this->registers	= $model->getRegisters($this->state->get('event.id'));
+		
 		$isregistered		= $this->get('UserIsRegistered');
-
+		
 		// Check for errors.
 		if (count($errors = $this->get('Errors'))) {
 			JError::raiseWarning(500, implode("\n", $errors));
@@ -67,6 +67,8 @@ class JemViewEvent extends JEMView
 		// Create a shortcut for $item and params.
 		$item   = $this->item;
 		$params = $this->params;
+		
+		$this->registers	= $model->getRegisters($this->state->get('event.id'));
 
 		// Decide which parameters should take priority
 		$useMenuItemParams = ($menuitem && $menuitem->query['option'] == 'com_jem'
@@ -382,6 +384,7 @@ class JemViewEvent extends JEMView
 		$app	= JFactory::getApplication();
 		$menus	= $app->getMenu();
 		$pathway = $app->getPathway();
+		$template = $app->getTemplate();
 		$title = null;
 
 		# load CSS

@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 3.0.2
+ * @version 3.0.3
  * @package JEM
  * @copyright (C) 2013-2014 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -78,7 +78,7 @@ class JemViewCalendar extends JViewLegacy
 		$document->setMetaData('title', $pagetitle);
 
 		//init calendar
-		$cal = new JEMCalendar($year, $month, 0, $app->getCfg('offset'));
+		$cal = new JEMCalendar($year, $month, 0);
 		$cal->enableMonthNav('index.php?view=calendar');
 		$cal->setFirstWeekDay($params->get('firstweekday', 1));
 		$cal->enableDayLinks(false);

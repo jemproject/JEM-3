@@ -21,6 +21,8 @@ JHtml::_('behavior.modal', 'a.flyermodal');
 JHtml::_('bootstrap.tooltip');
 JHtml::_('behavior.formvalidation');
 JHtml::_('behavior.keepalive');
+//JHtml::_('formbehavior.chosen', 'select');
+
 
 // Create shortcut to parameters.
 $params = $this->state->get('params');
@@ -31,10 +33,9 @@ $params = $params->toArray();
 	window.addEvent('domready', function(){
 	checkmaxplaces();
 
-	$('jform_attribs_event_comunsolution').addEvent('change', testcomm);
-
-	var commhandler = $("jform_attribs_event_comunsolution");
-	var nrcommhandler = commhandler.options[commhandler.selectedIndex].value;
+	jQuery('#jform_attribs_event_comunsolution').on( "change", testcomm );
+	
+	var nrcommhandler = jQuery('#jform_attribs_event_comunsolution').val();
 
 	if (nrcommhandler == 1) {
 		common();
@@ -44,51 +45,50 @@ $params = $params->toArray();
 
 	starter("<?php echo JText::_ ('COM_JEM_META_ERROR'); ?>",$("jform_meta_keywords").value,$("jform_meta_description").value);
 
-	$('jform_meta_keywords').addEvents({
-	    focus: function(){
-	    	get_inputbox('jform_meta_keywords');
-	    },
-	    blur: function(){
-	        change_metatags;
-	    }
+	jQuery('#jform_meta_keywords')
+		.focus(function() {
+			get_inputbox('jform_meta_keywords');
+		})
+		.blur(function() {
+			change_metatags;
 	});
 
-	$('jform_meta_description').addEvents({
-	    focus: function(){
-	    	get_inputbox('jform_meta_description');
-	    },
-	    blur: function(){
-	        change_metatags;
-	    }
+
+	jQuery('#jform_meta_description')
+		.focus(function() {
+			get_inputbox('jform_meta_description');
+		})
+		.blur(function() {
+			change_metatags;
 	});
-		
+	
 	});
 </script>
 <script type="text/javascript">
 	function checkmaxplaces()
 	{
-		$('jform_maxplaces').addEvent('change', function(){
-			if ($('event-available')) {
-						var val = parseInt($('jform_maxplaces').value);
-						var booked = parseInt($('event-booked').value);
-						$('event-available').value = (val-booked);
-			}
-			});
 
-		$('jform_maxplaces').addEvent('keyup', function(){
-			if ($('event-available')) {
-						var val = parseInt($('jform_maxplaces').value);
-						var booked = parseInt($('event-booked').value);
-						$('event-available').value = (val-booked);
+		jQuery("#jform_maxplaces").on("change", function() {
+			if (jQuery('#event-available')) {
+				var maxplaces = jQuery('#jform_maxplaces').val();
+				var booked = jQuery('#event-booked').val();
+				jQuery('#event-available').val(maxplaces-booked);
 			}
-			});
+		});
+
+		jQuery("#event-booked").on("change", function() {
+			if (jQuery('#event-available')) {
+				var maxplaces = jQuery('#jform_maxplaces').val();
+				var booked = jQuery('#event-booked').val();
+				jQuery('#event-available').val(maxplaces-booked);
+			}
+		});
+
 	}
-
 	
 	function testcomm()
 	{
-		var commhandler = $("jform_attribs_event_comunsolution");
-		var nrcommhandler = commhandler.options[commhandler.selectedIndex].value;
+		var nrcommhandler = jQuery('#jform_attribs_event_comunsolution').val();
 
 		if (nrcommhandler == 1) {
 			common();
@@ -99,12 +99,12 @@ $params = $params->toArray();
 
 	function common()
 	{
-		document.getElementById('comm1').style.display = '';
+		jQuery('#comm1').show();
 	}
 
 	function commoff()
 	{
-		document.getElementById('comm1').style.display = 'none';
+		jQuery('#comm1').hide();
 	}
 </script>
 <script type="text/javascript">
@@ -234,13 +234,13 @@ $params = $params->toArray();
 		?>
 			<div class="control-group">	
 				<div class="control-label"><label><?php echo JText::_ ('COM_JEM_BOOKED_PLACES') . ':';?></label></div>
-				<div class="controls"><input id="event-booked" class="readonly" type="text"  value="<?php echo $this->item->booked; ?>" /></div>
+				<div class="controls"><input id="event-booked" aria-invalid="false" readonly="" class="readonly" type="text"  value="<?php echo $this->item->booked; ?>" /></div>
 			</div>
 			
 			<?php if ($this->item->maxplaces): ?>
 			<div class="control-group">	
 				<div class="control-label"><label><?php echo JText::_ ('COM_JEM_AVAILABLE_PLACES') . ':';?></label></div>
-				<div class="controls"><input id="event-available" class="readonly" type="text"  value="<?php echo ($this->item->maxplaces-$this->item->booked); ?>" /></div>
+				<div class="controls"><input id="event-available" aria-invalid="false" readonly="" class="readonly" type="text"  value="<?php echo ($this->item->maxplaces-$this->item->booked); ?>" /></div>
 			</div>
 			<?php endif; ?>
 

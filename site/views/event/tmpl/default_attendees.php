@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 3.0.2
+ * @version 3.0.3
  * @package JEM
  * @copyright (C) 2013-2014 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -50,9 +50,9 @@ if (!($this->formhandler == 2) && !($this->formhandler == 1)) {
 		<?php } ?>
 		
 		<?php 
-		if (!(empty($this->registers))){ ?>
+		if ($this->item->booked > 0){ ?>
 		<dt class=""><?php echo JText::_('COM_JEM_REGISTERED_USERS').':';?></dt>
-		<dd class=""><?php echo count($this->registers); ?></dd>
+		<dd class=""><?php echo $this->item->booked; ?></dd>
 		<?php } ?>
 	</dl>
 </div><!-- end span7 -->

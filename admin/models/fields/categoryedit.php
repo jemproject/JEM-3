@@ -23,6 +23,68 @@ class JFormFieldCategoryEdit extends JFormFieldList
 	public $type = 'CategoryEdit';
 
 	/**
+	 * Method to get the field input markup for a generic list.
+	 * Use the multiple attribute to enable multiselect.
+	 *
+	 * @return  string  The field input markup.
+	 */
+	protected function getInput()
+	{
+		$html = array();
+		$attr = '';
+	
+		// Initialize some field attributes.
+		$attr .= !empty($this->class) ? ' class="' . $this->class . '"' : '';
+		$attr .= !empty($this->size) ? ' size="' . $this->size . '"' : '';
+		$attr .= $this->multiple ? ' multiple' : '';
+		$attr .= $this->required ? ' required aria-required="true"' : '';
+		$attr .= $this->autofocus ? ' autofocus' : '';
+	
+		// To avoid user's confusion, readonly="true" should imply disabled="true".
+		if ((string) $this->readonly == '1' || (string) $this->readonly == 'true' || (string) $this->disabled == '1'|| (string) $this->disabled == 'true')
+		{
+			$attr .= ' disabled="disabled"';
+		}
+	
+		// Initialize JavaScript field attributes.
+		$attr .= $this->onchange ? ' onchange="' . $this->onchange . '"' : '';
+	
+		// Get the field options.
+		$options = (array) $this->getOptions();
+				
+		if ($this->element['editform'] == true) {
+			$currentid = JFactory::getApplication()->input->getInt('id');
+			$db		= JFactory::getDbo();
+			$query	= $db->getQuery(true);
+			
+			$query->select('DISTINCT catid');
+			$query->from('#__jem_cats_event_relations');
+			$query->where('itemid = '. $db->quote($currentid));
+			
+			$db->setQuery($query);
+			$selectedcats = $db->loadColumn();
+			
+			$value = $selectedcats;
+			
+		} else {
+			$value = $this->value;
+			
+		}
+			
+		// Create a read-only list (no name) with a hidden input to store the value.
+		if ((string) $this->readonly == '1' || (string) $this->readonly == 'true'){
+			$html[] = JHtml::_('select.genericlist', $options, '', trim($attr), 'value', 'text', $value, $this->id);
+			$html[] = '<input type="hidden" name="' . $this->name . '" value="' . htmlspecialchars($value, ENT_COMPAT, 'UTF-8') . '"/>';
+		} else {
+			// Create a regular list.
+			$html[] = JHtml::_('select.genericlist', $options, $this->name, trim($attr), 'value', 'text', $value, $this->id);
+		}
+		
+			
+		return implode($html);
+	}
+	
+	/**
 	 * Method to get a list of categories that respects access controls and can be used for
 	 * either category assignment or parent category assignment in edit screens.
 	 * Use the parent element to indicate that the field will be used for assigning parent categories.
@@ -36,7 +98,7 @@ class JFormFieldCategoryEdit extends JFormFieldList
 		$published = $this->element['published']? $this->element['published'] : array(0,1);
 		$name = (string) $this->element['name'];
 
-		// Let's get the id for the current item, either category or content item.
+		// Let's get the id for the current item, either category or event item.
 		$jinput = JFactory::getApplication()->input;
 		// Load the category options for a given extension.
 
@@ -93,6 +155,10 @@ class JFormFieldCategoryEdit extends JFormFieldList
 			JArrayHelper::toInteger($published);
 			$query->where('a.published IN (' . implode(',', $published) . ')');
 		}
+		
+		if ($this->element['removeroot'] == true) {
+			$query->where('a.catname NOT LIKE "root"');
+		}
 
 		$query->group('a.id, a.catname, a.level, a.lft, a.rgt, a.parent_id, a.published');
 		$query->order('a.lft ASC');
@@ -113,14 +179,18 @@ class JFormFieldCategoryEdit extends JFormFieldList
 			// Pad the option text with spaces using depth level as a multiplier.
 			for ($i = 0, $n = count($options); $i < $n; $i++)
 			{
-				// Translate ROOT
-				if ($this->element['parent'] == true)
+				// remove root
+				if ($this->element['removeroot'] == true)
 				{
-						if ($options[$i]->level == 0)
-						{
-							$options[$i]->text = JText::_('JGLOBAL_ROOT_PARENT');
-						}
+					if ($options[$i]->level == 0)
+					{
+						unset($options[$i]);
+						continue;
+					}
+					
+					$options[$i]->level = $options[$i]->level-1;
 				}
+				
 				if ($options[$i]->published == 1)
 				{
 					$options[$i]->text = str_repeat('- ', $options[$i]->level). $options[$i]->text ;
@@ -129,6 +199,7 @@ class JFormFieldCategoryEdit extends JFormFieldList
 				{
 					$options[$i]->text = str_repeat('- ', $options[$i]->level). '[' .$options[$i]->text . ']';
 				}
+				
 			}
 
 

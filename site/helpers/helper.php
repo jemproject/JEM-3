@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 3.0.2
+ * @version 3.0.3
  * @package JEM
  * @copyright (C) 2013-2014 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -801,7 +801,7 @@ class JemHelper {
 		$db->setQuery($query);
 
 		$manifest = json_decode($db->loadResult(), true);
-		$result = $manifest[ $setting ];
+		$result = $manifest[$setting];
 
 		if (empty($result)) {
 			$result = 'N/A';
