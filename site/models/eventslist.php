@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 3.0.2
+ * @version 3.0.3
  * @package JEM
  * @copyright (C) 2013-2014 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -372,7 +372,8 @@ class JemModelEventslist extends JModelList
 				$query->where('a.dates IS NULL');
 				break;
 		}
-
+		
+		
 		#####################
 		### FILTER - BYCAT ##
 		#####################
@@ -472,6 +473,8 @@ class JemModelEventslist extends JModelList
 		$items	= parent::getItems();
 
 		if ($items) {
+			$app 	= JFactory::getApplication();
+			$params = $app->getParams();
 			$user	= JFactory::getUser();
 			$userId	= $user->get('id');
 			$guest	= $user->get('guest');

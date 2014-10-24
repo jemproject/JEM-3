@@ -529,7 +529,6 @@ class JemModelEvent extends JModelAdmin
 		$cats 						= $data['cats'];
 		$data['author_ip']			= $jinput->getString('author_ip');
 		
-		
 		## Recurrence - check option ##
 		
 		# if the option to hide the recurrence/other tab has been set (front) then

@@ -44,7 +44,7 @@ defined('_JEXEC') or die;
 	<div class="clearfix"></div>
 
 	<?php if ($this->params->get('showintrotext')) : ?>
-		<div class="description no_space floattext">
+		<div class="description no_space clearfix">
 			<?php echo $this->params->get('introtext'); ?>
 		</div>
 	<?php endif; ?>
@@ -61,7 +61,7 @@ defined('_JEXEC') or die;
 	
 <!--footer-->
 	<?php if ($this->params->get('showfootertext')) : ?>
-		<div class="description no_space floattext">
+		<div class="description no_space clearfix">
 			<?php echo $this->params->get('footertext'); ?>
 		</div>
 	<?php endif; ?>

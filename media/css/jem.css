@@ -51,15 +51,6 @@ div#jem .userbox {
         hyphens: auto;
  }
  
- 
- div#jem .floattext:after {
-	content:".";
-	display:block;
-	height:0;
-	clear:both;
-	visibility:hidden;
-}
- 
 div#jem span.legendcolor {
 	/*
 	background-color: #C09853;

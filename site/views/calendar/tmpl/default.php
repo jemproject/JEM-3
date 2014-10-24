@@ -28,7 +28,7 @@ JHtml::_('bootstrap.tooltip');
 
 <!-- introtext -->			
 	<?php if ($this->params->get('showintrotext')) : ?>
-		<div class="description no_space floattext">
+		<div class="description no_space clearfix">
 			<?php echo $this->params->get('introtext'); ?>
 		</div>
 		<p> </p>

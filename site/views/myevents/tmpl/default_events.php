@@ -27,7 +27,7 @@ defined('_JEXEC') or die;
 
 <form action="<?php echo $this->action; ?>" method="post" name="adminForm" id="adminForm">
 <?php if ($this->settings->get('global_show_filter',1) || $this->settings->get('global_display',1)) : ?>
-<div id="jem_filter" class="floattext">
+<div id="jem_filter" class="clearfix">
 	<?php if ($this->settings->get('global_show_filter',1)) : ?>
 	<div class="pull-left">
 		<?php

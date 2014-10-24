@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 3.0.2
+ * @version 3.0.3
  * @package JEM
  * @copyright (C) 2013-2014 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -43,6 +43,7 @@ class JemViewEditevent extends JViewLegacy
 		$menuitem = $menu->getActive();
 		$pathway = $app->getPathway();
 		$url = JUri::root();
+		$template 		= $app->getTemplate();
 		
 		$settings 	= JemHelper::globalattribs();
 		$this->settings = $settings;
@@ -171,7 +172,7 @@ class JemViewEditevent extends JViewLegacy
 		// add css file
 		JemHelper::loadCss('jem');
 		JemHelper::loadCustomCss();
-
+		
 		// Load scripts
 		JHtml::_('behavior.framework','1.4.0.1');
 		
@@ -190,6 +191,7 @@ class JemViewEditevent extends JViewLegacy
 			JHtml::_('script', 'com_jem/antispam.js', false, true);
 		}
 		JHtml::_('behavior.tabstate');
+	
 
 		// Escape strings for HTML output
 		$this->pageclass_sfx = htmlspecialchars($item->params->get('pageclass_sfx'));

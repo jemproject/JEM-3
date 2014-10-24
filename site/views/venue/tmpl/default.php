@@ -160,7 +160,7 @@ $mapType = $this->mapType;
 	          $this->venuedescription != '<br />') : ?>
 
 		<h2 class="description"><?php echo JText::_('COM_JEM_VENUE_DESCRIPTION'); ?></h2>
-		<div class="description no_space floattext" itemprop="description">
+		<div class="description no_space clearfix" itemprop="description">
 			<?php echo $this->venuedescription; ?>
 		</div>
 	<?php endif; ?>
