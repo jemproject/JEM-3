@@ -42,7 +42,8 @@ JHtml::_('bootstrap.tooltip');
 				<li><a href="<?php echo 'components/com_jem/help/'.$this->langTag.'/intro.html'; ?>" target='helpFrame'><?php echo JText::_('COM_JEM_HOME'); ?></a></li>
 				<li><a href="<?php echo 'components/com_jem/help/'.$this->langTag.'/helpsite/gethelp.html'; ?>" target='helpFrame'><?php echo JText::_('COM_JEM_GET_HELP'); ?></a></li>
 				<li><a href="<?php echo 'components/com_jem/help/'.$this->langTag.'/helpsite/givehelp.html'; ?>" target='helpFrame'><?php echo JText::_('COM_JEM_GIVE_HELP'); ?></a></li>
-				<li><a href="<?php echo 'components/com_jem/help/'.$this->langTag.'/helpsite/credits.html'; ?>" target='helpFrame'><?php echo JText::_('COM_JEM_CREDITS'); ?></a></li>
+				<li><a href="<?php echo 'components/com_jem/help/'.$this->langTag.'/helpsite/credits.html'; ?>" target='helpFrame'><?php echo JText::_('COM_JEM_CREDITS_JEM'); ?></a></li>
+				<li><a href="<?php echo 'components/com_jem/help/'.$this->langTag.'/helpsite/creditsel.html'; ?>" target='helpFrame'><?php echo JText::_('COM_JEM_CREDITS_EL'); ?></a></li>
 				<li><?php echo JHtml::_('link', 'http://www.gnu.org/licenses/gpl-2.0.html', JText::_('COM_JEM_LICENSE'), array('target' => 'helpFrame')) ?></li>
 				<hr class="hr-condensed" />
 					<li class="nav-header"><?php echo JText::_('COM_JEM_SCREEN_HELP'); ?></li>
