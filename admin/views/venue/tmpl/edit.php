@@ -41,16 +41,16 @@ $slidesOptions = array(
 	});
 
 	function setAttribute(){
-		document.getElementById("tmp_form_postalCode").setAttribute("geo-data", "postal_code");
-		document.getElementById("tmp_form_city").setAttribute("geo-data", "locality");
-		document.getElementById("tmp_form_state").setAttribute("geo-data", "administrative_area_level_1");
-		document.getElementById("tmp_form_street").setAttribute("geo-data", "street_address");
-		document.getElementById("tmp_form_route").setAttribute("geo-data", "route");
-		document.getElementById("tmp_form_streetnumber").setAttribute("geo-data", "street_number");
-		document.getElementById("tmp_form_country").setAttribute("geo-data", "country_short");
-		document.getElementById("tmp_form_latitude").setAttribute("geo-data", "lat");
-		document.getElementById("tmp_form_longitude").setAttribute("geo-data", "lng");
-		document.getElementById("tmp_form_venue").setAttribute("geo-data", "name");	
+		jQuery("#tmp_form_postalCode").attr("geo-data", "postal_code");
+		jQuery("#tmp_form_city").attr("geo-data", "locality");
+		jQuery("#tmp_form_state").attr("geo-data", "administrative_area_level_1");
+		jQuery("#tmp_form_street").attr("geo-data", "street_address");
+		jQuery("#tmp_form_route").attr("geo-data", "route");
+		jQuery("#tmp_form_streetnumber").attr("geo-data", "street_number");
+		jQuery("#tmp_form_country").attr("geo-data", "country_short");
+		jQuery("#tmp_form_latitude").attr("geo-data", "lat");
+		jQuery("#tmp_form_longitude").attr("geo-data", "lng");
+		jQuery("#tmp_form_venue").attr("geo-data", "name");	
 	}
 
 	function meta(){
@@ -87,19 +87,19 @@ $slidesOptions = array(
 	function addrequired() {
 		var form = document.getElementById('venue-form');
 
-		$(form.jform_street).addClass('required');
-		$(form.jform_postalCode).addClass('required');
-		$(form.jform_city).addClass('required');
-		$(form.jform_country).addClass('required');
+		jQuery(form.jform_street).addClass('required');
+		jQuery(form.jform_postalCode).addClass('required');
+		jQuery(form.jform_city).addClass('required');
+		jQuery(form.jform_country).addClass('required');
 	}
 
 	function removerequired() {
 		var form = document.getElementById('venue-form');
 
-		$(form.jform_street).removeClass('required');
-		$(form.jform_postalCode).removeClass('required');
-		$(form.jform_city).removeClass('required');
-		$(form.jform_country).removeClass('required');
+		jQuery(form.jform_street).removeClass('required');
+		jQuery(form.jform_postalCode).removeClass('required');
+		jQuery(form.jform_city).removeClass('required');
+		jQuery(form.jform_country).removeClass('required');
 	}
 
 	jQuery(function() {
@@ -182,20 +182,9 @@ $slidesOptions = array(
 
 
 		jQuery("#geocode" ).on("click", chkGeocode );
-
-
-		jQuery('#jform_map').on('keyup keypress blur change', function() {
-		    test();
-		});
-
-		jQuery('#jform_latitude').on('keyup keypress blur change', function() {
-		    test();
-		});
-
-		jQuery('#jform_longitude').on('keyup keypress blur change', function() {
-		    test();
-		});
-		
+		jQuery('#jform_map').on('keyup keypress blur change', test);
+		jQuery('#jform_latitude').on('keyup keypress blur change', test);
+		jQuery('#jform_longitude').on('keyup keypress blur change', test);
 	});
 </script>
 
