@@ -22,8 +22,7 @@ $mapType = $this->mapType;
 <?php if ($params->get('access-view')){?>
 
 
-<div id="jem" class="event_id<?php echo $this->item->did; ?> jem_event<?php echo $this->pageclass_sfx;?>"
-	itemscope="itemscope" itemtype="http://schema.org/Event">
+<div id="jem" class="event_id<?php echo $this->item->did; ?> jem_event<?php echo $this->pageclass_sfx;?>" itemscope="itemscope" itemtype="http://schema.org/Event">
 <div class="topbox">	
 	<div class="btn-group pull-right hidden-phone">
 		<?php 
@@ -41,9 +40,9 @@ $mapType = $this->mapType;
 			<li><?php if ($params->get('event_show_print_icon',1)) { echo JemOutput::printbutton($this->print_link, $this->params);}?></li>
 		</ul>
 		<?php }} ?>
-	</div></div>
+	</div>
+</div>
 		
-	<div class="clearfix"> </div>
 <div class="info_container">
 	<?php if ($this->params->get('show_page_heading', 1)) : ?>
 	<div class="page-header">
@@ -53,14 +52,7 @@ $mapType = $this->mapType;
 	</div>
 	<?php endif; ?>
 
-
-<!--------------------- 
-		EVENT-TAB
------------------------>	
-<?php //echo JHtml::_('tabs.start', 'event'.$this->item->id); ?>
-<?php //echo JHtml::_('tabs.panel',JText::_('COM_JEM_EVENT_TAB'), 'event-tab' ); ?>	
-	
-	<!-- Event -->
+<!-- Event -->
 	<h2 class="jem">
 	<?php
 		echo JText::_('COM_JEM_EVENT');
@@ -261,11 +253,6 @@ $mapType = $this->mapType;
 	<?php if ($this->item->locid != 0) : ?>
 	<p></p>
 	
-<!--------------------------- 
-		VENUE-TAB
----------------------------->
-		
-<?php //echo JHtml::_('tabs.panel',JText::_('COM_JEM_VENUE_TAB'), 'venue-tab' ); ?>
 		<div itemprop="location" itemscope="itemscope"
 		itemtype="http://schema.org/Place">
 		<h2 class="location">
@@ -411,14 +398,10 @@ $mapType = $this->mapType;
 ---------------------------->	
 
 	<?php if ($this->item->registra == 1) : ?>
-		<?php //echo JHtml::_('tabs.panel',JText::_('COM_JEM_REGISTRATION_TAB'), 'registration-tab' ); ?>
-	
 		<h2 class="register"><?php echo JText::_('COM_JEM_REGISTRATION'); ?></h2>
 			<?php echo $this->loadTemplate('attendees'); ?>
 	<?php endif; ?>
 
-	<?php //echo JHtml::_('tabs.end'); ?>
-	
 	</div>
 
 <!-- call dispatcher -->

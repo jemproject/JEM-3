@@ -9,7 +9,6 @@
 defined('_JEXEC') or die;
 
 JHtml::_('behavior.keepalive');
-JHtml::_('bootstrap.tooltip');
 JHtml::_('behavior.calendar');
 JHtml::_('behavior.formvalidation');
 JHtml::_('behavior.modal', 'a.flyermodal');
@@ -21,49 +20,46 @@ $settings	= json_decode($this->item->attribs);
 
 <script type="text/javascript">
 	window.addEvent('domready', function(){
-
 		checkmaxplaces();
-		starter("<?php echo JText::_ ('COM_JEM_META_ERROR'); ?>",$("jform_meta_keywords").value,$("jform_meta_description").value);
-		
-		$('jform_meta_keywords').addEvents({
-	    	focus: function(){
-	    		get_inputbox('jform_meta_keywords');
-	    	},
-	    	blur: function(){
-	        	change_metatags;
-	    	}
+
+		starter("<?php echo JText::_('COM_JEM_META_ERROR'); ?>",jQuery("#jform_meta_keywords").val(),jQuery("jform_meta_description").val());
+
+		jQuery('#jform_meta_keywords')
+			.focus(function() {
+				get_inputbox('jform_meta_keywords');
+			})
+			.blur(function() {
+				change_metatags;
 		});
 
-		$('jform_meta_description').addEvents({
-	    	focus: function(){
-	    		get_inputbox('jform_meta_description');
-	    	},
-	    	blur: function(){
-	        	change_metatags;
-	    	}
+		jQuery('#jform_meta_description')
+			.focus(function() {
+				get_inputbox('jform_meta_description');
+			})
+			.blur(function() {
+				change_metatags;
 		});
 	});
 
-	function checkmaxplaces(){
-		var maxplaces = $('jform_maxplaces');
+	function checkmaxplaces()
+	{
 
-		if (maxplaces != null){
-			$('jform_maxplaces').addEvent('change', function(){
-				if ($('event-available')) {
-					var val = parseInt($('jform_maxplaces').value);
-					var booked = parseInt($('event-booked').value);
-					$('event-available').value = (val-booked);
-				}
-			});
+		jQuery("#jform_maxplaces").on("change", function() {
+			if (jQuery('#event-available')) {
+				var maxplaces = jQuery('#jform_maxplaces').val();
+				var booked = jQuery('#event-booked').val();
+				jQuery('#event-available').val(maxplaces-booked);
+			}
+		});
 
-			$('jform_maxplaces').addEvent('keyup', function(){
-				if ($('event-available')) {
-					var val = parseInt($('jform_maxplaces').value);
-					var booked = parseInt($('event-booked').value);
-					$('event-available').value = (val-booked);
-				}
-			});
-		}
+		jQuery("#event-booked").on("change", function() {
+			if (jQuery('#event-available')) {
+				var maxplaces = jQuery('#jform_maxplaces').val();
+				var booked = jQuery('#event-booked').val();
+				jQuery('#event-available').val(maxplaces-booked);
+			}
+		});
+
 	}
 </script>
 <script type="text/javascript">
