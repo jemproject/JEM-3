@@ -48,13 +48,12 @@ class JemModelMyevents extends JModelLegacy
 		$jinput 	 = JFactory::getApplication()->input;
 		$itemid		 = $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
 
-		//get the number of events from database
-		$limit		= $app->getUserStateFromRequest('com_jem.myevents.'.$itemid.'.limit', 'limit', $jemsettings->display_num, 'int');
-		$limitstart = $app->getUserStateFromRequest('com_jem.myevents.'.$itemid.'.limitstart', 'limitstart', 0, 'int');
-		$limitstart = $limit ? (int)(floor($limitstart / $limit) * $limit) : 0;
-
+		$limit		= $app->getUserStateFromRequest('com_jem.myeventst.'.$itemid.'.limit', 'limit', $jemsettings->display_num, 'uint');
 		$this->setState('limit', $limit);
+		
+		$limitstart = $app->input->get('limitstart', 0, 'uint');
 		$this->setState('limitstart', $limitstart);
+		
 	}
 
 	/**
