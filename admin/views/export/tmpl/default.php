@@ -7,7 +7,7 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 defined('_JEXEC') or die;
-JHtml::_('bootstrap.tooltip');
+
 ?>
 <script type="text/javascript">
     function selectAll()
@@ -39,7 +39,7 @@ JHtml::_('bootstrap.tooltip');
 			<legend><?php echo JText::_('COM_JEM_EXPORT_LEGEND_SELECTION');?></legend>
 			
 		<div class="control-group">
-			<div class="control-label"><label class="hasTooltip" title="<?php echo JText::_('COM_JEM_EXPORT_ADD_CATEGORYCOLUMN'); ?>::<?php echo JText::_('COM_JEM_EXPORT_ADD_CATEGORYCOLUMN'); ?>">
+			<div class="control-label"><label class="hasTooltip" title="<?php echo JHtml::tooltipText('COM_JEM_EXPORT_ADD_CATEGORYCOLUMN'); ?>">
 		<?php echo JText::_('COM_JEM_EXPORT_ADD_CATEGORYCOLUMN'); ?></label></div>
 		<div class="controls"><?php
 				$categorycolumn = array();
