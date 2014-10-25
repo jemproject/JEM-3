@@ -116,29 +116,29 @@ defined('_JEXEC') or die;
 	</colgroup>
 	<thead>
 		<tr>
-				<th id="jem_date" class="sectiontableheader" align="left"><?php echo JHtml::_('grid.sort', 'COM_JEM_TABLE_DATE', 'a.dates', $this->lists['order_Dir'], $this->lists['order']); ?></th>
+				<th id="jem_date" class="sectiontableheader"><?php echo JHtml::_('grid.sort', 'COM_JEM_TABLE_DATE', 'a.dates', $this->lists['order_Dir'], $this->lists['order']); ?></th>
 			<?php if ($this->jemsettings->showtitle == 1) : ?>
-				<th id="jem_title" class="sectiontableheader" align="left"><?php echo JHtml::_('grid.sort', 'COM_JEM_TABLE_TITLE', 'a.title', $this->lists['order_Dir'], $this->lists['order']); ?></th>
+				<th id="jem_title" class="sectiontableheader"><?php echo JHtml::_('grid.sort', 'COM_JEM_TABLE_TITLE', 'a.title', $this->lists['order_Dir'], $this->lists['order']); ?></th>
 			<?php endif; ?>
 			<?php if ($this->jemsettings->showlocate == 1) : ?>
-				<th id="jem_location" class="sectiontableheader" align="left"><?php echo JHtml::_('grid.sort', 'COM_JEM_TABLE_LOCATION', 'l.venue', $this->lists['order_Dir'], $this->lists['order']); ?></th>
+				<th id="jem_location" class="sectiontableheader"><?php echo JHtml::_('grid.sort', 'COM_JEM_TABLE_LOCATION', 'l.venue', $this->lists['order_Dir'], $this->lists['order']); ?></th>
 			<?php endif; ?>
 			<?php if ($this->jemsettings->showcity == 1) : ?>
-				<th id="jem_city" class="sectiontableheader" align="left"><?php echo JHtml::_('grid.sort', 'COM_JEM_TABLE_CITY', 'l.city', $this->lists['order_Dir'], $this->lists['order']); ?></th>
+				<th id="jem_city" class="sectiontableheader"><?php echo JHtml::_('grid.sort', 'COM_JEM_TABLE_CITY', 'l.city', $this->lists['order_Dir'], $this->lists['order']); ?></th>
 			<?php endif; ?>
 			<?php if ($this->jemsettings->showcat == 1) : ?>
-				<th id="jem_category" class="sectiontableheader" align="left"><?php echo JHtml::_('grid.sort', 'COM_JEM_TABLE_CATEGORY', 'c.catname', $this->lists['order_Dir'], $this->lists['order']); ?></th>
+				<th id="jem_category" class="sectiontableheader"><?php echo JHtml::_('grid.sort', 'COM_JEM_TABLE_CATEGORY', 'c.catname', $this->lists['order_Dir'], $this->lists['order']); ?></th>
 			<?php endif; ?>
 		</tr>
 	</thead>
 	<tbody>
 	<?php if ($this->noevents == 1) : ?>
-		<tr align="center"><td colspan="0"><?php echo JText::_('COM_JEM_NO_EVENTS'); ?></td></tr>
+		<tr class="noevents"><td colspan="20"><?php echo JText::_('COM_JEM_NO_EVENTS'); ?></td></tr>
 	<?php else : ?>
 		<?php $this->rows = $this->getRows(); ?>
 		<?php foreach ($this->rows as $row) : ?>
 			<tr class="sectiontableentry<?php echo ($row->odd +1) . $this->params->get('pageclass_sfx'); ?>">
-				<td class="jem_date" align="left">
+				<td class="jem_date">
 					<?php
 						echo JemOutput::formatShortDateTime($row->dates, $row->times,
 							$row->enddates, $row->endtimes);
@@ -147,20 +147,20 @@ defined('_JEXEC') or die;
 					?>
 				</td>
 				<?php if (($this->jemsettings->showtitle == 1) && ($this->jemsettings->showdetails == 1)) : ?>
-					<td class="jem_title" align="left" valign="top">
+					<td class="jem_title">
 						<a href="<?php echo JRoute::_(JemHelperRoute::getEventRoute($row->slug)); ?>" itemprop="url">
 							<span itemprop="name"><?php echo $this->escape($row->title); ?></span>
 						</a>
 					</td>
 				<?php endif; ?>
 				<?php if (($this->jemsettings->showtitle == 1) && ($this->jemsettings->showdetails == 0)) : ?>
-					<td class="jem_title" align="left" valign="top" itemprop="name">
+					<td class="jem_title" itemprop="name">
 						<?php echo $this->escape($row->title); ?>
 					</td>
 				<?php endif; ?>
 
 				<?php if ($this->jemsettings->showlocate == 1) : ?>
-					<td class="jem_location" align="left" valign="top">
+					<td class="jem_location">
 						<?php if ($this->jemsettings->showlinkvenue == 1) : ?>
 							<?php echo $row->locid != 0 ? "<a href='".JRoute::_(JemHelperRoute::getVenueRoute($row->venueslug))."'>".$this->escape($row->venue)."</a>" : '-'; ?>
 						<?php else : ?>
@@ -169,10 +169,10 @@ defined('_JEXEC') or die;
 					</td>
 				<?php endif; ?>
 				<?php if ($this->jemsettings->showcity == 1) : ?>
-					<td class="jem_city" align="left" valign="top"><?php echo $row->city ? $this->escape($row->city) : '-'; ?></td>
+					<td class="jem_city"><?php echo $row->city ? $this->escape($row->city) : '-'; ?></td>
 				<?php endif; ?>
 				<?php if ($this->jemsettings->showcat == 1) : ?>
-					<td class="jem_category" align="left" valign="top">
+					<td class="jem_category">
 					<?php echo implode(", ",
 							JemOutput::getCategoryList($row->categories, $this->jemsettings->catlinklist)); ?>
 					</td>

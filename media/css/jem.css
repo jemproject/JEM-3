@@ -6,6 +6,15 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
  
+ 
+div#jem td.attendees {
+	text-align: center;
+}
+ 
+div#jem .noevents {
+	text-align: center;
+}
+
 div#jem .topbox {
 	min-height:60px;
 }

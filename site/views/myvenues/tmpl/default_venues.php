@@ -54,23 +54,23 @@ defined('_JEXEC') or die;
 	<thead>
 		<tr>
 			<?php if ($this->jemsettings->showlocate == 1) : ?>
-			<th id="jem_location" class="sectiontableheader" align="left"><?php echo JHtml::_('grid.sort', 'COM_JEM_TABLE_LOCATION', 'l.venue', $this->lists['order_Dir'], $this->lists['order']); ?></th>
+			<th id="jem_location" class="sectiontableheader"><?php echo JHtml::_('grid.sort', 'COM_JEM_TABLE_LOCATION', 'l.venue', $this->lists['order_Dir'], $this->lists['order']); ?></th>
 			<?php endif; ?>
 			<?php if ($this->jemsettings->showcity == 1) : ?>
-			<th id="jem_city" class="sectiontableheader" align="left"><?php echo JHtml::_('grid.sort', 'COM_JEM_TABLE_CITY', 'l.city', $this->lists['order_Dir'], $this->lists['order']); ?></th>
+			<th id="jem_city" class="sectiontableheader"><?php echo JHtml::_('grid.sort', 'COM_JEM_TABLE_CITY', 'l.city', $this->lists['order_Dir'], $this->lists['order']); ?></th>
 			<?php endif; ?>
 			<th width="1%" class="center" nowrap="nowrap"><?php echo JText::_('JSTATUS'); ?></th>
 		</tr>
 	</thead>
 	<tbody>
 	<?php if (count((array)$this->venues) == 0) : ?>
-		<tr align="center"><td colspan="0"><?php echo JText::_('COM_JEM_NO_VENUES'); ?></td></tr>
+		<tr class="noevents"><td colspan="20"><?php echo JText::_('COM_JEM_NO_VENUES'); ?></td></tr>
 	<?php else :?>
 		<?php foreach ($this->venues as $i => $row) : ?>
 			<tr class="row<?php echo $i % 2; ?>">
 
 				<?php if ($this->jemsettings->showlocate == 1) : ?>
-					<td class="jem_location" align="left" valign="top">
+					<td class="jem_location">
 						<?php if ($this->jemsettings->showlinkvenue == 1) : ?>
 							<?php echo $row->id != 0 ? "<a href='".JRoute::_(JemHelperRoute::getVenueRoute($row->venueslug))."'>".$this->escape($row->venue)."</a>" : '-'; ?>
 						<?php else : ?>
@@ -80,7 +80,7 @@ defined('_JEXEC') or die;
 				<?php endif; ?>
 
 				<?php if ($this->jemsettings->showcity == 1) : ?>
-					<td class="jem_city" align="left" valign="top"><?php echo $row->city ? $this->escape($row->city) : '-'; ?></td>
+					<td class="jem_city"><?php echo $row->city ? $this->escape($row->city) : '-'; ?></td>
 				<?php endif; ?>
 				<td class="center"><?php echo JHtml::_('jgrid.published', $row->published, $i,'myvenues.',false); ?></td>
 			</tr>

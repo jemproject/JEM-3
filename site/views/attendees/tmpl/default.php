@@ -47,7 +47,7 @@ $detaillink = JRoute::_(JemHelperRoute::getEventRoute($this->event->id.':'.$this
 	</h1>
 	<?php endif; ?>
 
-	<div class="clearfix"></div>
+	
 <br>
 <div class="info_container">
 	
@@ -59,7 +59,7 @@ $detaillink = JRoute::_(JemHelperRoute::getEventRoute($this->event->id.':'.$this
 
 	<h2><?php echo $this->escape($this->event->title); ?></h2>
 
-	<form action="<?php echo $this->action; ?>"  method="post" name="adminForm" id="adminForm">
+	<form action="<?php echo $this->action; ?>" method="post" name="adminForm" id="adminForm">
 		<table class="adminlist">
 			<tr>
 				<td width="80%">
