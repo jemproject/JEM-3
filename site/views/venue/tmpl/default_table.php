@@ -64,24 +64,24 @@ defined('_JEXEC') or die;
 	<thead>
 		<tr>
 			<?php if ($this->jemsettings->showeventimage == 1) : ?>
-				<th id="jem_eventimage" class="sectiontableheader" align="left"><?php echo JText::_('COM_JEM_TABLE_EVENTIMAGE'); ?></th>
+				<th id="jem_eventimage" class="sectiontableheader"><?php echo JText::_('COM_JEM_TABLE_EVENTIMAGE'); ?></th>
 			<?php endif; ?>
-				<th id="jem_date" class="sectiontableheader" align="left"><?php echo JHtml::_('grid.sort', 'COM_JEM_TABLE_DATE', 'a.dates', $this->lists['order_Dir'], $this->lists['order']); ?></th>
+				<th id="jem_date" class="sectiontableheader"><?php echo JHtml::_('grid.sort', 'COM_JEM_TABLE_DATE', 'a.dates', $this->lists['order_Dir'], $this->lists['order']); ?></th>
 			<?php if ($this->jemsettings->showtitle == 1) : ?>
-				<th id="jem_title" class="sectiontableheader" align="left"><?php echo JHtml::_('grid.sort', 'COM_JEM_TABLE_TITLE', 'a.title', $this->lists['order_Dir'], $this->lists['order']); ?></th>
+				<th id="jem_title" class="sectiontableheader"><?php echo JHtml::_('grid.sort', 'COM_JEM_TABLE_TITLE', 'a.title', $this->lists['order_Dir'], $this->lists['order']); ?></th>
 			<?php endif; ?>
 			<?php if ($this->jemsettings->showcat == 1) : ?>
-				<th id="jem_category" class="sectiontableheader" align="left"><?php echo JHtml::_('grid.sort', 'COM_JEM_TABLE_CATEGORY', 'c.catname', $this->lists['order_Dir'], $this->lists['order']); ?></th>
+				<th id="jem_category" class="sectiontableheader"><?php echo JHtml::_('grid.sort', 'COM_JEM_TABLE_CATEGORY', 'c.catname', $this->lists['order_Dir'], $this->lists['order']); ?></th>
 			<?php endif; ?>
 			<?php if ($this->jemsettings->showatte == 1) : ?>
-				<th id="jem_attendees" class="sectiontableheader" align="center"><?php echo JText::_('COM_JEM_TABLE_ATTENDEES'); ?></th>
+				<th id="jem_attendees" class="sectiontableheader"><?php echo JText::_('COM_JEM_TABLE_ATTENDEES'); ?></th>
 			<?php endif; ?>
 		</tr>
 	</thead>
 
 	<tbody>
 	<?php if ($this->noevents == 1) : ?>
-		<tr align="center"><td colspan="20"><?php echo JText::_('COM_JEM_NO_EVENTS'); ?></td></tr>
+		<tr class="noevents"><td colspan="20"><?php echo JText::_('COM_JEM_NO_EVENTS'); ?></td></tr>
 	<?php else : ?>		
 		<?php $this->rows = $this->getRows(); ?>
 		<?php foreach ($this->rows as $row) : ?>
@@ -92,7 +92,7 @@ defined('_JEXEC') or die;
         <?php endif; ?>		
         
         <?php if ($this->jemsettings->showeventimage == 1) : ?>
-					<td class="jem_eventimage" align="left" valign="top">
+					<td class="jem_eventimage">
 						<?php if (!empty($row->datimage)) : ?>
 							<?php
 							$dimage = JemImage::flyercreator($row->datimage, 'event');
@@ -102,7 +102,7 @@ defined('_JEXEC') or die;
 					</td>
 				<?php endif; ?>
        
-				<td class="jem_date" align="left">
+				<td class="jem_date">
 					<?php
 						echo JemOutput::formatShortDateTime($row->dates, $row->times,
 							$row->enddates, $row->endtimes);
@@ -111,7 +111,7 @@ defined('_JEXEC') or die;
 					?>
 				</td>
 				<?php if (($this->jemsettings->showtitle == 1) && ($this->jemsettings->showdetails == 1)) : ?>
-					<td class="jem_title" align="left" valign="top">
+					<td class="jem_title">
 						<a href="<?php echo JRoute::_(JemHelperRoute::getEventRoute($row->slug)); ?>" itemprop="url">
 							<span itemprop="name"><?php echo $this->escape($row->title); ?></span>
 						</a>
@@ -119,20 +119,20 @@ defined('_JEXEC') or die;
 				<?php endif; ?>
 
 				<?php if (($this->jemsettings->showtitle == 1) && ($this->jemsettings->showdetails == 0)) : ?>
-					<td class="jem_title" align="left" valign="top" itemprop="name">
+					<td class="jem_title" itemprop="name">
 						<?php echo $this->escape($row->title); ?>
 					</td>
 				<?php endif; ?>
 
 				<?php if ($this->jemsettings->showcat == 1) : ?>
-					<td class="jem_category" align="left" valign="top">
+					<td class="jem_category">
 					<?php echo implode(", ",
 							JemOutput::getCategoryList($row->categories, $this->jemsettings->catlinklist)); ?>
 					</td>
 				<?php endif; ?>
 				
 				<?php if ($this->jemsettings->showatte == 1) : ?>
-					<td class="jem_attendees" align="left" valign="top">
+					<td class="jem_attendees">
 						<?php echo !empty($row->regCount) ? $this->escape($row->regCount) : '-'; ?>
 					</td>
 				<?php endif; ?>

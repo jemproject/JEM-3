@@ -26,20 +26,21 @@ defined('_JEXEC') or die; ?>
 <br />
 <table class="adminlist">
 	<tr>
-		<td align="left"><b><?php echo JText::_( 'COM_JEM_TITLE' ).':'; ?> </b>&nbsp;<?php echo $this->escape($this->event->title); ?><br />
-			<b><?php echo JText::_( 'COM_JEM_DATE' ).':'; ?> </b>&nbsp;<?php echo JEMOutput::formatLongDateTime($this->event->dates, $this->event->times,
-					$this->event->enddates, $this->event->endtimes); ?></td>
+		<td>
+			<b><?php echo JText::_('COM_JEM_TITLE').':'; ?></b>&nbsp;<?php echo $this->escape($this->event->title); ?><br />
+			<b><?php echo JText::_('COM_JEM_DATE').':'; ?></b>&nbsp;<?php echo JEMOutput::formatLongDateTime($this->event->dates, $this->event->times,$this->event->enddates, $this->event->endtimes); ?>
+		</td>
 	</tr>
 </table>
 <br />
 <table class="table table-striped" id="eventList">
 	<thead>
 		<tr>
-			<th class="title"><?php echo JText::_( 'COM_JEM_USERNAME' ); ?></th>
-			<th class="title"><?php echo JText::_( 'COM_JEM_REGDATE' ); ?></th>
+			<th class="title"><?php echo JText::_('COM_JEM_USERNAME'); ?></th>
+			<th class="title"><?php echo JText::_('COM_JEM_REGDATE'); ?></th>
 
 			<?php if ($this->enableemailaddress == 1) : ?>
-			<th class="title"><?php echo JText::_( 'COM_JEM_EMAIL' ); ?></th>
+			<th class="title"><?php echo JText::_('COM_JEM_EMAIL'); ?></th>
 			<?php endif; ?>
 		</tr>
 	</thead>
