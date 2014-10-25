@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS `#__jem_events` (
   `metadata` text NOT NULL,
   `featured` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `attribs` varchar(5120) NOT NULL,
-  `language` char(7) NOT NULL,
+  `language` char(7) NOT NULL DEFAULT '*',
   `recurrence_group` varchar(20) NOT NULL,
   `recurrence_until` varchar(20) NOT NULL,
   `recurrence_freq` varchar(20) NOT NULL,

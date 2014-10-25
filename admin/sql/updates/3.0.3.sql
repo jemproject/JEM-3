@@ -28,4 +28,6 @@ ALTER TABLE `#__jem_settings`
 ALTER TABLE `#__jem_events`
 	ADD startDateTime varchar(100) NOT NULL DEFAULT '',
 	ADD endDateTime varchar(100) NOT NULL DEFAULT '',
-	ADD note varchar(100) NOT NULL DEFAULT '';
+	ADD note varchar(100) NOT NULL DEFAULT '',
+	CHANGE `language` `language` CHAR( 7 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '*';
+	
