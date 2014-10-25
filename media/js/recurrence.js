@@ -40,6 +40,7 @@ jQuery(document).ready(function() {
 			        untilgroup.show();
 			        wkgroup.hide();
 					wkstartgroup.hide();
+					wkgroup.show();
 			        break;
 			    case 2: // weekly
 			    	countgroup.hide();
@@ -48,6 +49,7 @@ jQuery(document).ready(function() {
 			    	untilgroup.show();
 			    	wkgroup.hide();
 			    	wkstartgroup.hide();
+			    	wkgroup.show();
 			        break;
 			    case 3: // monthly
 			    	countgroup.hide();
@@ -56,6 +58,7 @@ jQuery(document).ready(function() {
 			    	untilgroup.show();
 			    	wkgroup.hide();
 			    	wkstartgroup.hide();
+			    	wkgroup.show();
 			        break; 
 			    case 4: // yearly
 			    	countgroup.hide();
@@ -64,15 +67,8 @@ jQuery(document).ready(function() {
 			    	untilgroup.show();
 			    	wkgroup.hide();
 			    	wkstartgroup.hide();
-			        break; 
-			    case 5: // weekday
-			    	countgroup.hide();
-			    	exdatesgroup.show();
-			    	intgroup.show();
 			    	wkgroup.show();
-			    	untilgroup.show();
-			    	wkstartgroup.hide();
-			        break;      
+			        break; 
 			    default:
 				    count.val('');
 			    	exdates.val('');

@@ -1032,27 +1032,17 @@ class JemHelper {
 			case "4":
 				$freq = 'YEARLY';
 				break;
-			case "5":
-				$freq = 'WEEKDAY';
-				break;
 			default:
 				$freq = '';
 		}		
 		
 		
-		if ($recurrence_freq == 5) {
-			# we're in the weekly freq
-			
-			# let's check if the user did select a weekday
-			if ($recurrence_weekday) {
-				$rrule = 'FREQ='.$freq.';INTERVAL='.$recurrence_interval.';UNTIL='.$limit_date2.';BYDAY='.$recurrence_weekday;
-			} else {
-				$rrule = 'FREQ='.$freq.';INTERVAL='.$recurrence_interval.';UNTIL='.$limit_date2;
-			}
+		# let's check if the user did select a weekday
+		if ($recurrence_weekday) {
+			$rrule = 'FREQ='.$freq.';INTERVAL='.$recurrence_interval.';UNTIL='.$limit_date2.';BYDAY='.$recurrence_weekday;
 		} else {
 			$rrule = 'FREQ='.$freq.';INTERVAL='.$recurrence_interval.';UNTIL='.$limit_date2;
 		}
-		
 		
 		# Get new dates
 		$timezone    = JemHelper::getTimeZoneName();
