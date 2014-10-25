@@ -20,6 +20,11 @@
 		</field>
 		<field name="access" type="accesslevel" label="JFIELD_ACCESS_LABEL"
 			description="JFIELD_ACCESS_DESC" class="inputbox" size="1" />
+		<field name="language" type="language" label="JFIELD_LANGUAGE_LABEL"
+			description="COM_JEM_EVENT_FIELD_LANGUAGE_DESC"
+		>
+			<option value="*">JALL</option>
+		</field>
 		<field name="title" type="text"
 			class="inputbox"
 			size="40"
@@ -273,6 +278,7 @@
 			class="inputbox"
 			label="COM_JEM_BOOKED_PLACES"
 			description="COM_JEM_BOOKED_PLACES_DESC"
+			disabled="true"
 		/>
 		<field name="avplaces" type="text"
 			size="4"
@@ -303,7 +309,6 @@
 			<option value="2">COM_JEM_WEEKLY</option>
 			<option value="3">COM_JEM_MONTHLY</option>
 			<option value="4">COM_JEM_YEARLY</option>
-			<option value="5">COM_JEM_WEEKDAY</option>
 		</field>
 		<field name="recurrence_interval" type="text"
 			default="1"
