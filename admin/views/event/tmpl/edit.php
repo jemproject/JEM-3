@@ -163,6 +163,7 @@ $params = $params->toArray();
 			echo $this->form->renderField('published');
 			echo $this->form->renderField('featured');
 			echo $this->form->renderField('access');
+			echo $this->form->renderField('language');
 		?>
 		</fieldset>
 		
