@@ -308,7 +308,6 @@
 			<option value="2">COM_JEM_WEEKLY</option>
 			<option value="3">COM_JEM_MONTHLY</option>
 			<option value="4">COM_JEM_YEARLY</option>
-			<option value="5">COM_JEM_WEEKDAY</option>
 		</field>
 		<field name="recurrence_interval" type="text"
 			default="1"
