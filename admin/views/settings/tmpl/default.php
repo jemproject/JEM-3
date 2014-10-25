@@ -10,9 +10,7 @@
  */
 defined('_JEXEC') or die;
 
-
 JHtml::_('behavior.formvalidation');
-JHtml::_('bootstrap.tooltip');
 JHtml::_('behavior.modal', 'a.flyermodal');
 jimport( 'joomla.html.html.tabs' );
 

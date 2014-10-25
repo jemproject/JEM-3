@@ -29,11 +29,6 @@ div#jem .userbox {
 	border:1px solid #D3D3D3;
 }
 
-
-/*---------------------
-		BREAK
----------------------*/
-
  div#jem td.jem_city {
  	word-wrap: break-word;
  }
@@ -72,10 +67,7 @@ div#jem .inputbox {
 	cursor:pointer;
 }
 
-div#jem .inputbox:hover {
-	background-color:#DDE084;
-}
-
+div#jem .inputbox:hover,
 div#jem .inputbox:focus {
 	background-color:#DDE084;
 }
@@ -129,8 +121,6 @@ div#jem h1{
 div#jem h2 {
 	font-size:normal;
 	font-weight:normal;
-	/*margin-top:1em;*/
-	/*margin-bottom:1em;*/
 	padding:0.3em 0.3em;
 	margin:normal;
 	background:none repeat scroll 0% 0% #D4D6B2;
@@ -537,11 +527,23 @@ div#jem .nav-tabs > .active > a:focus {
    /* color: #BD362F;*/
 }
 
-.icon-publish:before, .icon-save:before, .icon-ok:before, .icon-save-new:before, .icon-save-copy:before, .btn-toolbar .icon-copy:before {
+.icon-publish:before, 
+.icon-save:before, 
+.icon-ok:before, 
+.icon-save-new:before, 
+.icon-save-copy:before, 
+.btn-toolbar 
+.icon-copy:before {
     color: #51A351;
 }
 
-.icon-unpublish:before, .icon-not-ok:before, .icon-eye-close:before, .icon-ban-circle:before, .icon-minus-sign:before, .btn-toolbar .icon-cancel:before {
+.icon-unpublish:before, 
+.icon-not-ok:before, 
+.icon-eye-close:before, 
+.icon-ban-circle:before, 
+.icon-minus-sign:before, 
+.btn-toolbar 
+.icon-cancel:before {
     color: #BD362F;
 }
 
