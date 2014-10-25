@@ -121,14 +121,18 @@ class JemModelEvents extends JModelList
 		);
 		$query->from($db->quoteName('#__jem_events').' AS a');
 
-		// Join over the users for the checked out user.
+		// Join over venue data.
 		$query->select('loc.venue, loc.city, loc.state, loc.checked_out AS vchecked_out');
 		$query->join('LEFT', '#__jem_venues AS loc ON loc.id = a.locid');
 
 		// Join over the users for the checked out user.
 		$query->select('uc.name AS editor');
 		$query->join('LEFT', '#__users AS uc ON uc.id = a.checked_out');
-
+		
+		// Join over the asset groups.
+		$query->select('ag.title AS access_level')
+		->join('LEFT', '#__viewlevels AS ag ON ag.id = a.access');
+		
 		// Join over the user who modified the event.
 		$query->select('um.name AS modified_by');
 		$query->join('LEFT', '#__users AS um ON um.id = a.modified_by');
