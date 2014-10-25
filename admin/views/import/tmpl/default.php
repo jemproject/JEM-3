@@ -7,7 +7,7 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 defined('_JEXEC') or die;
-JHtml::_('bootstrap.tooltip');
+
 ?>
 <!-- Meta-refresh -->
 <!-- EL-Import progress -->

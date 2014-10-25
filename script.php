@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 3.0.2
+ * @version 3.0.3
  * @package JEM
  * @copyright (C) 2013-2014 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -427,7 +427,8 @@ class com_jemInstallerScript
 			'/components/com_jem/layouts/searchtools/default/filters.php',
 			'/components/com_jem/layouts/searchtools/default/list.php',
 			'/components/com_jem/layouts/searchtools/grid/sort.php',
-			'/media/com_jem/js/settings.js'
+			'/media/com_jem/js/settings.js',
+			'/media/com_jem/js/unlimited.js'
 		);
 		$folders = array();
 

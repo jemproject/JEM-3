@@ -56,8 +56,8 @@ class JEMViewSettings extends JViewLegacy {
 		}
 
 		// Load Script
-		$document->addScript(JUri::root().'media/com_jem/js/colorpicker.js');
-
+		JHtml::_('script', 'com_jem/colorpicker.js', false, true);
+		
 		JHtml::_('behavior.framework');
 		
 		$app = JFactory::getApplication();

@@ -26,6 +26,9 @@
 .icon-48-housekeeping		{ background-image: url(../images/icon-48-housekeeping.png); }
 .icon-48-plugins			{ background-image: url(../images/icon-48-plugins.png); }
 
+input.required {
+	
+}
 
 .btn-small.icon_print {
 	padding-bottom: 4px;
@@ -406,15 +409,6 @@ input#sqlexport{
 .icon-inline {
 	height: 1.2em;
 	margin-left: 0.3em;
-}
-
-/* prevent problem with Bluestork */
-#recurrence_output select,
-select#jform_recurrence_type {
-	float: none;
-}
-input#jform_recurrence_limit_date {
-	margin-left: 0;
 }
 
 fieldset.alert {

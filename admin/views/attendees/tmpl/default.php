@@ -8,12 +8,8 @@
  */
 defined('_JEXEC') or die;
 
-JHtml::_('bootstrap.tooltip');
-$colspan = ($this->event->waitinglist ? 10 : 9);
-
 $listOrder	= $this->escape($this->state->get('list.ordering'));
 $listDirn	= $this->escape($this->state->get('list.direction'));
-
 ?>
 <script type="text/javascript">
 	Joomla.orderTable = function()

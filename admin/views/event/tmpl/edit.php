@@ -18,7 +18,6 @@ $slidesOptions = array();
 
 JHtml::_('behavior.framework');
 JHtml::_('behavior.modal', 'a.flyermodal');
-JHtml::_('bootstrap.tooltip');
 JHtml::_('behavior.formvalidation');
 JHtml::_('behavior.keepalive');
 //JHtml::_('formbehavior.chosen', 'select');

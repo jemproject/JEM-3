@@ -47,12 +47,7 @@ defined('_JEXEC') or die;
 		// Load css
 		JHtml::_('stylesheet', 'com_jem/backend.css', array(), true);
 
-		// Load Scripts
-		//JHtml::_('bootstrap.framework');
-		
-		$document->addScript('http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js');
-
-		//assign data to template
+		// assign data to template
 		$this->user			= $user;
 		$this->jemsettings  = $jemsettings;
 		$this->settings		= $settings;
