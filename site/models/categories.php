@@ -97,10 +97,9 @@ class JemModelCategories extends JModelLegacy
 		$this->_showemptysubcats = (bool)$params->get('showemptychilds', 1);
 
 		//get the number of events from database
-		$limit		= $app->getUserStateFromRequest('com_jem.categories.'.$itemid.'.limit','limit',$params->get('cat_num'),'int');
-		$limitstart = $app->getUserStateFromRequest('com_jem.categories.'.$itemid.'.limitstart','limitstart',0,'int');
-		$limitstart = $limit ? (int)(floor($limitstart / $limit) * $limit) : 0;
-
+		$limit		= $app->getUserStateFromRequest('com_jem.categories.'.$itemid.'.limit','limit',$params->get('cat_num'),'uint');
+		$limitstart = $app->input->get('limitstart', 0, 'uint');
+		
 		$this->setState('limit', $limit);
 		$this->setState('limitstart', $limitstart);
 	}

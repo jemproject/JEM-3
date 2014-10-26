@@ -111,7 +111,7 @@ class JemModelDay extends JemModelEventslist
 		}
 
 		# limit/start
-		$limit		= $app->getUserStateFromRequest('com_jem.day.'.$itemid.'.limit', 'limit', $jemsettings->display_num, 'int');
+		$limit		= $app->getUserStateFromRequest('com_jem.day.'.$itemid.'.limit', 'limit', $jemsettings->display_num, 'uint');
 		$this->setState('list.limit', $limit);
 		
 		$limitstart = $app->input->get('limitstart', 0, 'uint');

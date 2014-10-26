@@ -49,14 +49,12 @@ class JemModelSearch extends JModelLegacy
 		$itemid			= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
 
 		//get the number of events from database
-		$limit		= $app->getUserStateFromRequest('com_jem.search.'.$itemid.'.limit', 'limit', $jemsettings->display_num, 'int');
-		$limitstart = $app->getUserStateFromRequest('com_jem.search.'.$itemid.'.limitstart', 'limitstart', 0, 'int');
-		$limitstart	= $jinput->getInt('limitstart', 0);
-		$limitstart = $limit ? (int)(floor($limitstart / $limit) * $limit) : 0;
-
+		$limit		= $app->getUserStateFromRequest('com_jem.search.'.$itemid.'.limit', 'limit', $jemsettings->display_num, 'uint');
+		$limitstart = $app->input->get('limitstart', 0, 'uint');
+		
 		$this->setState('limit', $limit);
 		$this->setState('limitstart', $limitstart);
-
+		
 		// Get the filter request variables
 		$filter_order = $jinput->getCmd('filter_order', 'a.dates');
 		$this->setState('filter_order', $filter_order);
