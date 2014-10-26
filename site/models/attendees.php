@@ -65,13 +65,12 @@ class JemModelAttendees extends JModelLegacy
 		$id = $jinput->getInt('id');
 		$this->setId($id);
 
-		$limit		= $app->getUserStateFromRequest('com_jem.attendees.'.$itemid.'.limit', 'limit', $jemsettings->display_num, 'int');
-		$limitstart = $app->getUserStateFromRequest('com_jem.attendees.'.$itemid.'.limitstart', 'limitstart', 0, 'int');
-		$limitstart = $limit ? (int)(floor($limitstart / $limit) * $limit) : 0;
+		$limit		= $app->getUserStateFromRequest('com_jem.attendees.'.$itemid.'.limit', 'limit', $jemsettings->display_num, 'uint');
+		$limitstart = $app->input->get('limitstart', 0, 'uint');
 
 		$this->setState('limit', $limit);
 		$this->setState('limitstart', $limitstart);
-
+		
 		//set unlimited if export or print action | task=export or task=print
 		$this->setState('unlimited', $jinput->getCmd('task'));
 

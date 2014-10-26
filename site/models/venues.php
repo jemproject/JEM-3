@@ -31,7 +31,7 @@ class JemModelVenues extends JemModelEventslist
 		$task           = $jinput->getCmd('task');
 
 		// List state information
-		$limit		= $app->getUserStateFromRequest('com_jem.venues.'.$itemid.'.limit', 'limit', $params->get('display_venues_num'), 'int');
+		$limit		= $app->getUserStateFromRequest('com_jem.venues.'.$itemid.'.limit', 'limit', $params->get('display_venues_num'), 'uint');
 		$this->setState('list.limit', $limit);
 		
 		$limitstart = $app->input->get('limitstart', 0, 'uint');

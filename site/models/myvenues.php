@@ -29,10 +29,9 @@ class JemModelMyvenues extends JModelLegacy
 		$jinput		 = JFactory::getApplication()->input;
 		$itemid		 = $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
 
-		$limit		= $app->getUserStateFromRequest('com_jem.myvenues.'.$itemid.'.limit', 'limit', $jemsettings->display_num, 'int');
-		$limitstart = $app->getUserStateFromRequest('com_jem.myvenues.'.$itemid.'.limitstart', 'limitstart', 0, 'int');
-		$limitstart = $limit ? (int)(floor($limitstart / $limit) * $limit) : 0;
-
+		$limit		= $app->getUserStateFromRequest('com_jem.myvenues.'.$itemid.'.limit', 'limit', $jemsettings->display_num, 'uint');
+		$limitstart = $app->input->get('limitstart', 0, 'uint');
+		
 		$this->setState('limit', $limit);
 		$this->setState('limitstart', $limitstart);
 	}

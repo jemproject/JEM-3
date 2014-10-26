@@ -336,10 +336,9 @@ class JemModelEditevent extends JEMModelEvent
 		$jinput 			= $app->input;
 		$itemid				= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
 		
-		$limit 				= $app->getUserStateFromRequest('com_jem.selectvenue.'.$itemid.'.limit', 'limit', $jemsettings->display_num, 'int');
-		$limitstart 		= $app->getUserStateFromRequest('com_jem.selectvenue.'.$itemid.'.limitstart', 'limitstart', 0, 'int');
-		$limitstart 		= $limit ? (int)(floor($limitstart / $limit) * $limit) : 0;
-
+		$limit 				= $app->getUserStateFromRequest('com_jem.selectvenue.'.$itemid.'.limit', 'limit', $jemsettings->display_num, 'uint');
+		$limitstart 		= $app->input->get('limitstart', 0, 'uint');
+		
 		$query = $this->buildQueryVenues();
 		$total = $this->_getListCount($query);
 
@@ -379,10 +378,9 @@ class JemModelEditevent extends JEMModelEvent
 		$jinput 			= $app->input;
 		$itemid				= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
 		
-		$limit 				= $app->getUserStateFromRequest('com_jem.selectcontact.'.$itemid.'.limit', 'limit', $jemsettings->display_num, 'int');
-		$limitstart 		= $app->getUserStateFromRequest('com_jem.selectcontact.'.$itemid.'.limitstart', 'limitstart', 0, 'int');
-		$limitstart 		= $limit ? (int)(floor($limitstart / $limit) * $limit) : 0;
-
+		$limit 				= $app->getUserStateFromRequest('com_jem.selectcontact.'.$itemid.'.limit', 'limit', $jemsettings->display_num, 'uint');
+		$limitstart 		= $app->input->get('limitstart', 0, 'uint');
+		
 		$query = $this->buildQueryContacts();
 		$total = $this->_getListCount($query);
 

@@ -124,7 +124,7 @@ class JemModelCategory extends JemModelEventslist
 		$groups	= implode(',', $user->getAuthorisedViewLevels());
 
 		# limit/start
-		$limit	= $app->getUserStateFromRequest('com_jem.category.'.$itemid.'.limit', 'limit', $jemsettings->display_num, 'int');
+		$limit	= $app->getUserStateFromRequest('com_jem.category.'.$itemid.'.limit', 'limit', $jemsettings->display_num, 'uint');
 		$this->setState('list.limit', $limit);
 
 		$limitstart = $app->input->get('limitstart', 0, 'uint');
