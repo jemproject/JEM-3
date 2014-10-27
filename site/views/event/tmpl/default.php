@@ -20,8 +20,6 @@ JHtml::_('behavior.modal', 'a.flyermodal');
 $mapType = $this->mapType;
 ?>
 <?php if ($params->get('access-view')){?>
-
-
 <div id="jem" class="event_id<?php echo $this->item->did; ?> jem_event<?php echo $this->pageclass_sfx;?>" itemscope itemtype="http://schema.org/Event">
 <div class="topbox">	
 	<div class="btn-group pull-right hidden-phone">
@@ -253,7 +251,7 @@ $mapType = $this->mapType;
 	<?php if ($this->item->locid != 0) : ?>
 	<p></p>
 	
-		<div itemscope itemtype="http://schema.org/Place">
+		<div>
 		<h2 class="location">
 			<?php
 			echo JText::_('COM_JEM_VENUE') ;
@@ -277,7 +275,7 @@ $mapType = $this->mapType;
 		<div class="span12 row">
 			<div class="span7 col-md-7">	
 <?php } ?>
-		<dl class="location_dl" itemscope itemtype="http://schema.org/PostalAddress">
+		<dl class="location_dl" itemprop="location" itemscope itemtype="http://schema.org/PostalAddress">
 			<dt class="venue"><?php echo JText::_('COM_JEM_LOCATION').':'; ?></dt>
 			<dd class="venue">
 			<?php echo "<a href='".JRoute::_(JemHelperRoute::getVenueRoute($this->item->venueslug))."'>".$this->escape($this->item->venue)."</a>"; ?>
@@ -392,9 +390,6 @@ $mapType = $this->mapType;
 	<?php endif; ?>
 
 	
-<!--------------------------- 
-		Registration-TAB
----------------------------->	
 
 	<?php if ($this->item->registra == 1) : ?>
 		<h2 class="register"><?php echo JText::_('COM_JEM_REGISTRATION'); ?></h2>
