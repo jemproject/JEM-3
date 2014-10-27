@@ -56,10 +56,6 @@ class JemViewDay extends JEMView
 		JemHelper::loadCustomCss();
 		JemHelper::loadCustomTag();
 		
-		# load JS
-		JHtml::_('bootstrap.framework');
-		JHtml::_('script', 'com_jem/dropdown.js', false, true);
-
 		// get variables
 		$itemid 			= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
 		$filter_order		= $app->getUserStateFromRequest('com_jem.day.'.$itemid.'.filter_order', 'filter_order', 	'a.dates', 'cmd');
@@ -109,7 +105,6 @@ class JemViewDay extends JEMView
 			$noevents = 0;
 		}
 
-		
 		if ($print) {
 			JemHelper::loadCss('print');
 			$document->setMetaData('robots', 'noindex, nofollow');

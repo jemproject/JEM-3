@@ -39,9 +39,6 @@ class JemViewSearch extends JEMView
 		$useMenuItemParams = ($menuitem && $menuitem->query['option'] == 'com_jem'
 		                                && $menuitem->query['view'] == 'search');
 
-		// add javascript
-		JHtml::_('behavior.framework');
-
 		// Load css
 		JemHelper::loadCss('jem');
 		JemHelper::loadCustomCss();

@@ -20,6 +20,9 @@ $settings	= json_decode($this->item->attribs);
 
 <script type="text/javascript">
 	window.addEvent('domready', function(){
+		startattachment();	
+		startother();
+		startrecurrence();	
 		checkmaxplaces();
 
 		starter("<?php echo JText::_('COM_JEM_META_ERROR'); ?>",jQuery("#jform_meta_keywords").val(),jQuery("jform_meta_description").val());

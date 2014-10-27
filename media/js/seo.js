@@ -32,7 +32,7 @@ function switchstart() {	// Diese Funktion uebergibt alle relevanten Feldern ein
 	try {
 		if ($keyword.length > 0) {
 			for (var i=0; i < $keyword.length; i++) {
-				$($keyword[i]).onchange = seo_switch;
+				jQuery($keyword[i]).onchange = seo_switch;
 			}
 		}
 		if ($description_vars.length > 0) {

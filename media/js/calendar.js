@@ -6,7 +6,7 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
-jQuery(document).ready(function() {
+function calendar() {
 	
 	/* define background */
 	var bgoption	= jQuery('#usebgcatcolor').val();
@@ -37,7 +37,7 @@ jQuery(document).ready(function() {
 		// attach click Event to the category-button
 		jQuery(this).on("click", function(){
 			
-			$(this).toggleClass('catoff');
+			jQuery(this).toggleClass('catoff');
 					
 			var catid = jQuery(this).attr('id');
 		
@@ -150,7 +150,7 @@ jQuery(document).ready(function() {
 	jQuery('#buttonshowall').on('click', function() {
 		// event-class
 		jQuery(".jlcalendar .eventcontent").each(function(index, element ) {
-			$(this).show();
+			jQuery(this).show();
 			
 			// we have to clear the attribute of the child to none, this a we want to display all events. 
 			jQuery(this).children("div").each(function() {
@@ -160,7 +160,7 @@ jQuery(document).ready(function() {
 		
 		// category-class
 		jQuery("#jlcalendarlegend .eventCat").each(function(index, element ) {
-			$(this).removeClass('catoff'); 
+			jQuery(this).removeClass('catoff'); 
 		});
 		
 	});
@@ -171,7 +171,7 @@ jQuery(document).ready(function() {
 		
 		// event-class
 		jQuery(".jlcalendar .eventcontent").each(function(index, element ) {
-			$(this).hide();
+			jQuery(this).hide();
 			
 			// we want to hide all events and this case we're filling the hidecat attribute with data of the class attribute. 
 			jQuery(this).children("div").each(function() {
@@ -187,7 +187,7 @@ jQuery(document).ready(function() {
 		
 		// category-class
 		jQuery("#jlcalendarlegend .eventCat").each(function(index, element ) {
-			$(this).addClass('catoff');
+			jQuery(this).addClass('catoff');
 		});
 	});
-});
+};

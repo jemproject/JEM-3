@@ -43,9 +43,6 @@ defined('_JEXEC') or die;
 		// Load css
 		JHtml::_('stylesheet', 'com_jem/backend.css', array(), true);
 
-		// Add Scripts
-		$document->addScript('http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js');
-
 		$this->user = $user;
 
 		# add toolbar

@@ -54,7 +54,7 @@ class JEMOutput {
 
 			# check for icon-setting
 			if ($settings->get('global_show_icons',1)) {
-				$text = JHtml::_('image', 'com_jem/submitevent.png', JText::_('COM_JEM_DELIVER_NEW_EVENT'), NULL, true).' '.JText::_('COM_JEM_DELIVER_NEW_EVENT');;
+				$text = JHtml::_('image', 'com_jem/submitevent.png', JText::_('COM_JEM_DELIVER_NEW_EVENT'), NULL, true);
 			} else {
 				$text = JText::_('COM_JEM_DELIVER_NEW_EVENT');
 			}
@@ -102,7 +102,7 @@ class JEMOutput {
 
 			# check for icons
 			if ($settings->get('global_show_icons',1)) {
-				$text = JHtml::_('image', 'com_jem/addvenue.png', JText::_('COM_JEM_DELIVER_NEW_VENUE'), NULL, true).' '.JText::_('COM_JEM_DELIVER_NEW_VENUE');
+				$text = JHtml::_('image', 'com_jem/addvenue.png', JText::_('COM_JEM_DELIVER_NEW_VENUE'), NULL, true);
 			} else {
 				$text = JText::_('COM_JEM_DELIVER_NEW_VENUE');
 			}
@@ -154,7 +154,7 @@ class JEMOutput {
 
 			if ($task == 'archive') {
 				if ($settings->get('global_show_icons',1)) {
-					$text = JHtml::_('image', 'com_jem/el.png', JText::_('COM_JEM_SHOW_EVENTS'), NULL, true).' '.JText::_('COM_JEM_SHOW_EVENTS');
+					$text = JHtml::_('image', 'com_jem/el.png', JText::_('COM_JEM_SHOW_EVENTS'), NULL, true);
 				} else {
 					$text = JText::_('COM_JEM_SHOW_EVENTS');
 				}
@@ -170,7 +170,7 @@ class JEMOutput {
 				# here we're not in the archive-task
 
 				if ($settings->get('global_show_icons',1)) {
-					$text = JHtml::_('image', 'com_jem/archive_front.png', JText::_('COM_JEM_SHOW_ARCHIVE'), NULL, true).' '.JText::_('COM_JEM_SHOW_ARCHIVE');
+					$text = JHtml::_('image', 'com_jem/archive_front.png', JText::_('COM_JEM_SHOW_ARCHIVE'), NULL, true);
 				} else {
 					$text = JText::_('COM_JEM_SHOW_ARCHIVE');
 				}
@@ -346,7 +346,7 @@ class JEMOutput {
 
 			# check for icon setting
 			if ($settings->get('global_show_icons',1)) {
-				$text = JHtml::_('image','system/printButton.png', JText::_('JGLOBAL_PRINT'), NULL, true).' '.JText::_('JGLOBAL_PRINT');
+				$text = JHtml::_('image','system/printButton.png', JText::_('JGLOBAL_PRINT'), NULL, true);
 			} else {
 				$text = JText::_('JGLOBAL_PRINT');
 			}
@@ -416,7 +416,7 @@ class JEMOutput {
 
 			# check for icon-setting
 			if ($settings->get('global_show_icons')) {
-				$text = JHtml::_('image','system/emailButton.png', JText::_('JGLOBAL_EMAIL'), NULL, true).' '.JText::_('JGLOBAL_EMAIL');
+				$text = JHtml::_('image','system/emailButton.png', JText::_('JGLOBAL_EMAIL'), NULL, true);
 			} else {
 				$text = JText::_('JGLOBAL_EMAIL');
 			}

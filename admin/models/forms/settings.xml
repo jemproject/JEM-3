@@ -699,15 +699,6 @@
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
-			<field name="show_dropwdownbutton" type="radio"
-				label="COM_JEM_SETTINGS_FIELD_SHOW_DROPDOWN_BUTTON"
-				description="COM_JEM_SETTINGS_FIELD_SHOW_DROPDOWN_BUTTON_DESC"
-				class="btn-group btn-group-yesno"
-				default="1"
-			>
-			<option value="0">JNO</option>
-			<option value="1">JYES</option>
-			</field>
 			<field type="spacer"></field>
 			<field name="global_show_icons" type="radio"
 				label="COM_JEM_SHOW_ICONS"

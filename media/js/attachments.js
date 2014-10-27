@@ -9,34 +9,33 @@
 /**
  * this file manages the js script for adding/removing attachements in event
  */
-window.addEvent('domready', function() {
+function startattachment() {
 
-	$$('.attach-field').addEvent('change', addattach);
-	$$('.clear-attach-field').addEvent('click', clearattach);
+	jQuery('.attach-field').change(addattach);
+	jQuery('.clear-attach-field').click(clearattach);
 
-	$$('.attach-remove').addEvent('click', function(event){
+	jQuery('.attach-remove').click(function(event){
 		var event = event || window.event;
-		$(event.target).style.cursor = 'wait'; /* indicate server request */
+		jQuery(event.target).css('cursor','wait'); /* indicate server request */
 
 		var id = event.target.id.substr(13);
 		var url = 'index.php?option=com_jem&task=ajaxattachremove&format=raw&id='+id;
-		var theAjax = new Request( {
-			url : url,
-			method: 'post',
-			postBody : ''
-			});
+		
+		jQuery.ajax({
+			type: "POST",
+			url: url
+			})
+			.done(function( msg ) {
+				// server sends 1 on success, 0 on error 
+				if (msg.indexOf('1') > -1) {
+					jQuery(event.target).parent().parent().remove();
+				} else {
+					jQuery(event.target).css('cursor','not-allowed'); // remove failed - how to show?
+				}
 
-		theAjax.addEvent('onSuccess', function(response) {
-			/* server sends 1 on success, 0 on error */
-			if (response.indexOf('1') > -1) {
-				$(event.target).getParent().getParent().dispose();
-			} else {
-				$(event.target).style.cursor = 'not-allowed'; /* remove failed - how to show? */
-			}
-		}.bind(this));
-		theAjax.send();
+			});
 	});
-});
+}
 
 function addattach()
 {
@@ -67,11 +66,11 @@ function addattach()
 function clearattach(event) {
 	var event = event || window.event;
 
-	var grandpa = $(event.target).getParent().getParent();
-	var af = grandpa.getElement('.attach-field');
-	if (af) af.value = '';
-	var an = grandpa.getElement('.attach-name');
-	if (an) an.value = '';
-	var ad = grandpa.getElement('.attach-desc');
-	if (ad) ad.value = '';
+	var grandpa = jQuery(event.target).parent().parent();
+	var af = grandpa.find('.attach-field');
+	if (af) af.val('');
+	var an = grandpa.find('.attach-name');
+	if (an) an.val('');
+	var ad = grandpa.find('.attach-desc');
+	if (ad) ad.val('');
 }

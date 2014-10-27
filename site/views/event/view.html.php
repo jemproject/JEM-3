@@ -397,10 +397,6 @@ class JemViewEvent extends JEMView
 			$this->document->setMetaData('robots', 'noindex, nofollow');
 		}
 		
-		# load JS
-		JHtml::_('bootstrap.framework');
-		JHtml::_('script', 'com_jem/dropdown.js', false, true);
-
 	/*
 		// Because the application sets a default page title,
 		// we need to get it from the menu item itself

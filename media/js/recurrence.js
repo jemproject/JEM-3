@@ -6,7 +6,7 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
-jQuery(document).ready(function() {	
+function startrecurrence() {
 		checkRecurrence();
 		
 		jQuery( "#jform_recurrence_freq" ).change(function() {
@@ -84,4 +84,4 @@ jQuery(document).ready(function() {
 			}
 
 		}
-	});
+}

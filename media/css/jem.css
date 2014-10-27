@@ -457,6 +457,38 @@ div#jem .btn {
 }
 
 
+div#jem .buttons2 {
+	float:right;
+}
+
+div#jem .buttons2 a {
+	border:1px solid #808080;
+}
+
+
+/* Thx to http://www.bloggerswatch.com/internet/css-trick-submit-button-should-look-same-everywhere/ */
+div#jem .button_flyer.icons a {
+	display:block !important;
+	float:left !important;
+	margin:-1px !important;
+	background-color:#F5F5F5;
+	border:1px solid #808080 !important;
+	border-top:1px solid #808080 !important;
+	border-left:1px solid #808080 !important;
+	font-family:"Lucida Grande", Tahoma, Arial, Verdana, sans-serif !important;
+	font-size:12px !important;
+	line-height:130% !important;
+	text-decoration:none !important;
+	font-weight:bold !important;
+	color:#565656 !important;
+	cursor:pointer !important;
+	padding:5px 10px 6px 7px !important; /* Links */
+}
+
+div#jem .button_flyer.icons a:hover {
+	background-color:#DEDEDE;
+}
+
 div#jem p.tab-description {
 	font-size:1.091em;
 	margin-left:0;
