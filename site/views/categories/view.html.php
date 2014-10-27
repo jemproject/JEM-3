@@ -46,10 +46,6 @@ class JemViewCategories extends JEMView
 			$document->setMetaData('robots', 'noindex, nofollow');
 		}
 		
-		# load JS
-		JHtml::_('bootstrap.framework');
-		JHtml::_('script', 'com_jem/dropdown.js', false, true);
-
 		//get menu information
 		$menu		= $app->getMenu();
 		$menuitem	= $menu->getActive();

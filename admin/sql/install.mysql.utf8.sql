@@ -346,6 +346,7 @@ CREATE TABLE IF NOT EXISTS `#__jem_settings` (
   `vvenues` text NOT NULL DEFAULT '',
   `vcategories` text NOT NULL DEFAULT '',
   `vcategory` text NOT NULL DEFAULT '',
+  `vcalendar` text NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE `utf8_general_ci`;
 

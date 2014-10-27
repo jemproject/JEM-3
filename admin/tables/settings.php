@@ -87,6 +87,13 @@ class JEMTableSettings extends JTable
 			$array['vcategory'] = (string) $registry;
 		}
 		
+		if (isset($array['vcalendar']) && is_array($array['vcalendar']))
+		{
+			$registry = new JRegistry;
+			$registry->loadArray($array['vcalendar']);
+			$array['vcalendar'] = (string) $registry;
+		}
+		
 		//don't override without calling base class
 		return parent::bind($array, $ignore);
 	}

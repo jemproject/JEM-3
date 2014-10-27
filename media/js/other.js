@@ -9,14 +9,15 @@
 /**
  * this file manages the js script for adding/removing attachments in event
  */
- window.addEvent('domready', function() {
- 	$$('#userfile-remove').addEvent('click', function(event){
- 			
-		var di = document.getElementById('hide_image');
-		if (di) { di.style.display = 'none'; }
-		var ufr = document.getElementById('userfile-remove');
-		if (ufr) { ufr.style.display = 'none'; }
-		var ri = document.getElementById('removeimage');
-		if (ri) { ri.value = '1'; }
-	});
- }); 
+ function startother() {
+ 	jQuery('#userfile-remove').click(alterdata);
+ }
+ 
+ function alterdata() {
+	var di = jQuery('#hide_image');
+	if (di) { di.hide(); }
+	var ufr = jQuery('#userfile-remove');
+	if (ufr) { ufr.hide(); }
+	var ri = jQuery('#removeimage');
+	if (ri) { ri.val('1'); }
+ }

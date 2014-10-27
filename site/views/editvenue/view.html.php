@@ -158,7 +158,6 @@ class JemViewEditvenue extends JViewLegacy
 		JemHelper::loadCustomTag();
 		
 		// Load script
-		JHtml::_('behavior.framework'); //mootools
 		JHtml::_('script', 'com_jem/attachments.js', false, true);
 		//$document->addScript('http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js');
 		JHtml::_('behavior.tabstate');

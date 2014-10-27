@@ -173,9 +173,7 @@ class JemViewEditevent extends JViewLegacy
 		JemHelper::loadCss('jem');
 		JemHelper::loadCustomCss();
 		
-		// Load scripts
-		JHtml::_('behavior.framework','1.4.0.1');
-		
+		// Load scripts	
 		if ($settings->get('editevent_show_attachmentstab',1)) {
 			JHtml::_('script', 'com_jem/attachments.js', false, true);
 		}

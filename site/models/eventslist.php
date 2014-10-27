@@ -709,22 +709,24 @@ class JemModelEventslist extends JModelList
 			if (!is_null($item->enddates)) {
 				if ($item->enddates != $item->dates) {
 					$day = $item->start_day;
+					$multi = array();
 	
 					for ($counter = 0; $counter <= $item->datesdiff-1; $counter++) {
 						$day++;
 	
 						# next day:
 						$nextday = mktime(0, 0, 0, $item->start_month, $day, $item->start_year);
+						
+						# it's multiday regardless if other days are on next month
+						$item->multi = 'first';
+						$item->multitimes = $item->times;
+						$item->multiname = $item->title;
+						$item->sort = 'zlast';
 	
 						# ensure we only generate days of current month in this loop
 						if (strftime('%m', $this->_date) == strftime('%m', $nextday)) {
 							$multi[$counter] = clone $item;
 							$multi[$counter]->dates = strftime('%Y-%m-%d', $nextday);
-	
-							$item->multi = 'first';
-							$item->multitimes = $item->times;
-							$item->multiname = $item->title;
-							$item->sort = 'zlast';
 	
 							if ($multi[$counter]->dates < $item->enddates) {
 								$multi[$counter]->multi = 'middle';
@@ -748,12 +750,10 @@ class JemModelEventslist extends JModelList
 						}
 					} // for
 	
-					if (isset($multi)) {
-						# add generated days to data
-						$items = array_merge($items, $multi);
-						# unset temp array holding generated days before working on the next multiday event
-                    	unset($multi);
-					}
+					# add generated days to data
+					$items = array_merge($items, $multi);
+					# unset temp array holding generated days before working on the next multiday event
+					unset($multi);
 				}
 			}
 		} // foreach

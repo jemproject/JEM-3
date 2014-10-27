@@ -44,9 +44,9 @@ class JEMViewVenue extends JViewLegacy {
 		JHtml::_('stylesheet', 'com_jem/backend.css', array(), true);
 		
 		# load js
-		JHtml::_('behavior.framework'); //mootools
+		//JHtml::_('behavior.framework'); //mootools
 		JHtml::_('script', 'com_jem/attachments.js', false, true);
-		$document->addScript('http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js');		
+		//$document->addScript('http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js');		
 		
 		$this->access		= JEMHelper::getAccesslevelOptions();
 		
@@ -70,7 +70,7 @@ class JEMViewVenue extends JViewLegacy {
 		}
 		$this->mapType = $type;
 		
-		JHtml::_('jquery.framework');
+		//JHtml::_('jquery.framework');
 		JHtml::_('script', 'com_jem/slider-state.js', false, true);
 		
 		$this->addToolbar();

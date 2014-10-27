@@ -19,17 +19,15 @@ defined('_JEXEC') or die;
 	if ($this->print) { 
 		echo JemOutput::printbutton($this->print_link, $this->params);
 	} else {
-		if ($this->settings->get('show_dropwdownbutton',1)) {
 	?>
-	
-	<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"> <span class="icon-cog"></span> <span class="caret"></span> </a>
-			<ul class="dropdown-menu">
-				<li><?php echo JemOutput::submitbutton($this->dellink, $this->params);?></li>
-				<li><?php echo JemOutput::archivebutton($this->params, $this->task, $this->id);?></li>
-				<li><?php echo JemOutput::printbutton($this->print_link, $this->params);?></li>
-			</ul>
-			
-			<?php }} ?>
+	<div class="button_flyer icons">
+		<?php
+			echo JemOutput::submitbutton($this->dellink, $this->params);
+			echo JemOutput::archivebutton($this->params, $this->task, $this->id);
+			echo JemOutput::printbutton($this->print_link, $this->params);
+		?>
+	</div>
+			<?php } ?>
 		</div>
 	
 	<?php if ($this->params->get('show_page_heading', 1)) : ?>

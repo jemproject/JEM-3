@@ -53,10 +53,6 @@ class JemViewCategory extends JEMView
 			JemHelper::loadCustomCss();
 			JemHelper::loadCustomTag();
 			
-			# load JS
-			JHtml::_('bootstrap.framework');
-			JHtml::_('script', 'com_jem/dropdown.js', false, true);
-
 			//get data from model
 			$state		= $this->get('State');
 			$params		= $state->params;

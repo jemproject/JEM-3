@@ -30,7 +30,8 @@ $params = $params->toArray();
 
 <script type="text/javascript">
 	window.addEvent('domready', function(){
-	checkmaxplaces();
+		startattachment();		
+		checkmaxplaces();
 
 	jQuery('#jform_attribs_event_comunsolution').on( "change", testcomm );
 	

@@ -6,6 +6,11 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
+div#jem .icon-print {
+	height: auto;
+	width: auto;
+}
+
 div#jem table a {
        pointer-events: none;
        cursor: default;

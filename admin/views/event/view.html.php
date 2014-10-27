@@ -50,17 +50,9 @@ class JemViewEvent extends JViewLegacy {
 		JHtml::_('stylesheet', 'com_jem/backend.css', array(), true);
 
 		// Load scripts
-		JHtml::_('behavior.framework','1.4.0.1');
 		JHtml::_('script', 'com_jem/attachments.js', false, true);
 		JHtml::_('script', 'com_jem/recurrence.js', false, true);
 		JHtml::_('script', 'com_jem/seo.js', false, true);
-
-		// JQuery noConflict
-		//$document->addCustomTag('<script type="text/javascript">jQuery.noConflict();</script>');
-		//$document->addScript('http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js');
-		//$document->addScript('http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js');
-		
-		JHtml::_('jquery.framework');
 		JHtml::_('script', 'com_jem/slider-state.js', false, true);
 
 		$this->access		= JemHelper::getAccesslevelOptions();

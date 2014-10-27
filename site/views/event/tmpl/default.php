@@ -20,8 +20,6 @@ JHtml::_('behavior.modal', 'a.flyermodal');
 $mapType = $this->mapType;
 ?>
 <?php if ($params->get('access-view')){?>
-
-
 <div id="jem" class="event_id<?php echo $this->item->did; ?> jem_event<?php echo $this->pageclass_sfx;?>" itemscope itemtype="http://schema.org/Event">
 <div class="topbox">	
 	<div class="btn-group pull-right hidden-phone">
@@ -29,17 +27,16 @@ $mapType = $this->mapType;
 			if ($this->print) { 
 				echo JemOutput::printbutton($this->print_link, $this->params);
 			} else {
-				if ($this->settings->get('show_dropwdownbutton',1)) {
 		?>
-	
-		<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"> <span class="icon-cog"></span> <span class="caret"></span> </a>
-		<ul class="dropdown-menu">
-			<li><?php echo JemOutput::submitbutton($this->addeventlink, $this->params); ?></li>
-			<li><?php echo JemOutput::addvenuebutton($this->addvenuelink, $this->params, $this->jemsettings);?></li>
-			<li><?php if ($params->get('event_show_email_icon',1)) {echo JemOutput::mailbutton($this->item->slug, 'event', $this->params);} ?></li>
-			<li><?php if ($params->get('event_show_print_icon',1)) { echo JemOutput::printbutton($this->print_link, $this->params);}?></li>
-		</ul>
-		<?php }} ?>
+		<div class="button_flyer icons">
+		<?php
+			echo JemOutput::submitbutton($this->addeventlink, $this->params);
+			echo JemOutput::addvenuebutton($this->addvenuelink, $this->params, $this->jemsettings);
+			if ($params->get('event_show_email_icon',1)) {echo JemOutput::mailbutton($this->item->slug, 'event', $this->params);}
+			if ($params->get('event_show_print_icon',1)) { echo JemOutput::printbutton($this->print_link, $this->params);}
+		?>
+		</div>
+		<?php } ?>
 	</div>
 </div>
 		
@@ -253,7 +250,7 @@ $mapType = $this->mapType;
 	<?php if ($this->item->locid != 0) : ?>
 	<p></p>
 	
-		<div itemscope itemtype="http://schema.org/Place">
+		<div>
 		<h2 class="location">
 			<?php
 			echo JText::_('COM_JEM_VENUE') ;
@@ -277,7 +274,7 @@ $mapType = $this->mapType;
 		<div class="span12 row">
 			<div class="span7 col-md-7">	
 <?php } ?>
-		<dl class="location_dl" itemscope itemtype="http://schema.org/PostalAddress">
+		<dl class="location_dl" itemprop="location" itemscope itemtype="http://schema.org/PostalAddress">
 			<dt class="venue"><?php echo JText::_('COM_JEM_LOCATION').':'; ?></dt>
 			<dd class="venue">
 			<?php echo "<a href='".JRoute::_(JemHelperRoute::getVenueRoute($this->item->venueslug))."'>".$this->escape($this->item->venue)."</a>"; ?>
@@ -392,9 +389,6 @@ $mapType = $this->mapType;
 	<?php endif; ?>
 
 	
-<!--------------------------- 
-		Registration-TAB
----------------------------->	
 
 	<?php if ($this->item->registra == 1) : ?>
 		<h2 class="register"><?php echo JText::_('COM_JEM_REGISTRATION'); ?></h2>
