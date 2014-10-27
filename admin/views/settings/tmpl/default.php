@@ -301,6 +301,12 @@ function commoff()
 			
 					
 			<?php echo JHtml::_('tabs.start', 'views', $options); ?>
+			<?php echo JHtml::_('tabs.panel', JText::_('COM_JEM_SETTINGS_TAB_VCALENDAR'), 'vcalendar'); ?>
+			<div class="row-fluid">
+				<div class="span6">
+					<?php echo $this->loadTemplate('vcalendar'); ?>
+				</div>
+			</div>
 			<?php echo JHtml::_('tabs.panel', JText::_('COM_JEM_SETTINGS_TAB_VCATEGORIES'), 'vcategories'); ?>
 			<div class="row-fluid">
 				<div class="span6">
