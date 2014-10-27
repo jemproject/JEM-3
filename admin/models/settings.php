@@ -80,6 +80,11 @@ class JEMModelSettings extends JModelForm
 		$vvenues = new JRegistry;
 		$vvenues->loadString($data->vcategory);
 		$data->vcategory = $vvenues->toArray();
+		
+		# Convert vcategory settings to an array
+		$vcalendar = new JRegistry;
+		$vcalendar->loadString($data->vcalendar);
+		$data->vcalendar = $vcalendar->toArray();
 
 		return $data;
 	}

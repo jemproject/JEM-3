@@ -22,6 +22,7 @@ ALTER TABLE `#__jem_settings`
 	ADD `vevent` text NOT NULL DEFAULT '',
   	ADD `vvenue` text NOT NULL DEFAULT '',
   	ADD `vvenues` text NOT NULL DEFAULT '',
+  	ADD `vcalendar` text NOT NULL DEFAULT '',
   	ADD `vcategories` text NOT NULL DEFAULT '',
   	ADD `vcategory` text NOT NULL DEFAULT '';
 	

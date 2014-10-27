@@ -8,11 +8,12 @@
  */
 defined('_JEXEC') or die;
 
-// Load tooltips behavior
-JHtml::_('bootstrap.tooltip');
-
 ?>
-
+<script>
+jQuery( document ).ready(function( $ ) {
+	calendar();
+});
+</script>
 <div id="jem" class="jlcalendar jem_calendar<?php echo $this->pageclass_sfx;?>">
 
 <div class="topbox"></div>
@@ -37,35 +38,11 @@ JHtml::_('bootstrap.tooltip');
 <!-- calendar -->
 <div class="calendarbox">
 <?php
-
-	# look for specialdays
-	# @todo alter
-	if ($this->special_days) {
-	
-		# Add additional days
-		foreach($this->special_days AS $special_day) {
-			
-			# parse the date value
-			$date = date_parse_from_format("Y-m-d", $special_day['date']);
-	
-			# define array for startdate_org
-			$date = array(
-				'year' => $date['year'],
-				'month' => $date['month'],
-				'day' => $date['day']
-			);
-	
-			$icon = JHtml::_('image', 'com_jem/calculator_error.png', $special_day['calendar_name'], NULL, true).' '.$special_day['calendar_name'];
-			$this->cal->setEventContent($date['year'],$date['month'],$date['day'],$icon);
-		}
-	}
-	
 	# define variables
 	$countcatevents = array ();
 	$countperday	= array();
 	$limit			= $this->params->get('daylimit', 10);
-
-	$catinfo			= array();
+	$catinfo		= array();
 	
 	# loop
 	foreach ($this->rows as $row) :
@@ -94,7 +71,7 @@ JHtml::_('bootstrap.tooltip');
 		//for time in tooltip
 		$timehtml = '';
 
-		if ($this->settings->get('global_show_timedetails','1')) {
+		if ($this->vsettings->get('show_timedetails','1')) {
 			$start = JemOutput::formattime($row->times);
 			$end = JemOutput::formattime($row->endtimes);
 
@@ -176,36 +153,40 @@ JHtml::_('bootstrap.tooltip');
 		# for time in calendar
 		$timetp = '';
 
-		if ($this->settings->get('global_show_timedetails','1')) {
-			$start = JemOutput::formattime($row->times,'',false);
-			$end   = JemOutput::formattime($row->endtimes,'',false);
+		$multi = new stdClass();
+		$multi->row = (isset($row->multi) ? $row->multi : 'na');
+		
+		
+		$start = JemOutput::formattime($row->times,'',false);
+		$end   = JemOutput::formattime($row->endtimes,'',false);
+			
+		if (!$this->vsettings->get('show_timedetails','1')) {
+			$start = '';
+			$end = '';
+		}
 
-			$multi = new stdClass();
-			$multi->row = (isset($row->multi) ? $row->multi : 'na');
-
-			if ($multi->row) {
-				if ($multi->row == 'first') {
-					$timetp .= $image = JHtml::_("image","com_jem/arrow-left.png",'', NULL, true).' '.$start;
-					$timetp .= '<br />';
-				} elseif ($multi->row == 'middle') {
-					$timetp .= JHtml::_("image","com_jem/arrow-middle.png",'', NULL, true);
-					$timetp .= '<br />';
-				} elseif ($multi->row == 'zlast') {
-					$timetp .= JHtml::_("image","com_jem/arrow-right.png",'', NULL, true).' '.$end;
-					$timetp .= '<br />';
-				} elseif ($multi->row == 'na') {
-					if ($start != '') {
-						$timetp .= $start;
-						if ($end != '') {
-							$timetp .= ' - '.$end;
-						}
-						//$timetp .= '<br />';
-						$timetp .= ' ';
+		if ($multi->row) {
+			if ($multi->row == 'first') {
+				$timetp .= $image = JHtml::_("image","com_jem/arrow-left.png",'', NULL, true).' '.$start;
+				$timetp .= '<br />';
+			} elseif ($multi->row == 'middle') {
+				$timetp .= JHtml::_("image","com_jem/arrow-middle.png",'', NULL, true);
+				$timetp .= '<br />';
+			} elseif ($multi->row == 'zlast') {
+				$timetp .= JHtml::_("image","com_jem/arrow-right.png",'', NULL, true).' '.$end;
+				$timetp .= '<br />';
+			} elseif ($multi->row == 'na') {
+				if ($start != '') {
+					$timetp .= $start;
+					if ($end != '') {
+						$timetp .= ' - '.$end;
 					}
+					//$timetp .= '<br />';
+					$timetp .= ' ';
 				}
 			}
 		}
-
+		
 		$catname = '<div class="catname">'.$multicatname.'</div>';
 
 		$eventdate = !empty($row->multistartdate) ? JemOutput::formatdate($row->multistartdate) : JemOutput::formatdate($row->dates);
@@ -217,7 +198,7 @@ JHtml::_('bootstrap.tooltip');
 
 		//venue
 		$venue = '';
-		if ($this->jemsettings->showlocate == 1) {
+		if ($this->vsettings->get('show_venue','1')) {
 			# check if there is a venue and if so display the venue
 			if ($row->locid) {
 				$venue  = '<div class="cal_venue"><span class="text-label">'.JText::_('COM_JEM_VENUE_SHORT').': </span>';

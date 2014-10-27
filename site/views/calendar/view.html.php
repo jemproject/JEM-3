@@ -24,6 +24,7 @@ class JemViewCalendar extends JViewLegacy
 		$menu 		= $app->getMenu();
 		$menuitem	= $menu->getActive();
 		$jemsettings = JemHelper::config();
+		$vsettings	= JemHelper::viewSettings('vcalendar');
 		$params 	= $app->getParams();
 		$settings 	= JemHelper::globalattribs();
 
@@ -47,20 +48,18 @@ class JemViewCalendar extends JViewLegacy
 
 		$document->addStyleDeclaration($style);
 
-		JHtml::_('behavior.framework','1.4.0.1');
 		// add javascript (using full path - see issue #590)
 		JHtml::_('script', 'media/com_jem/js/calendar.js');
 		
-		$year 	= JFactory::getApplication()->input->request->getInt('yearID', strftime("%Y"));
-		$month 	= JFactory::getApplication()->input->request->getInt('monthID', strftime("%m"));
+		$year 	= $app->input->request->getInt('yearID', strftime("%Y"));
+		$month 	= $app->input->request->getInt('monthID', strftime("%m"));
 
 		//get data from model and set the month
 		$model = $this->getModel();
 		$model->setDate(mktime(0, 0, 1, $month, 1, $year));
 
 		$rows			= $this->get('Items');
-		$special_days 	= $this->get('Specialdays');
-
+		
 		//Set Page title
 		$pagetitle   = $params->def('page_title', $menuitem->title);
 		$params->def('page_heading', $pagetitle);
@@ -88,9 +87,9 @@ class JemViewCalendar extends JViewLegacy
 		$this->params		= $params;
 		$this->jemsettings	= $jemsettings;
 		$this->settings		= $settings;
+		$this->vsettings	= $vsettings;
 		$this->cal			= $cal;
 		$this->pageclass_sfx = htmlspecialchars($pageclass_sfx);
-		$this->special_days = $special_days;
 
 		parent::display($tpl);
 	}
