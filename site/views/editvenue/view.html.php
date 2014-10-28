@@ -158,19 +158,8 @@ class JemViewEditvenue extends JViewLegacy
 		JemHelper::loadCustomTag();
 		
 		// Load script
+		JHtml::_('bootstrap.framework');
 		JHtml::_('script', 'com_jem/attachments.js', false, true);
-		//$document->addScript('http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js');
-		JHtml::_('behavior.tabstate');
-		
-		//$document->addScript('http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places&language='.$language);
-		
-		// Noconflict
-		//$document->addCustomTag( '<script type="text/javascript">jQuery.noConflict();</script>' );
-		
-		// JQuery scripts
-		//$document->addScript('http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js');
-		//JHtml::_('script', 'com_jem/jquery.geocomplete.js', false, true);
-		
 		
 		# retrieve mapType setting
 		$settings 		= JemHelper::globalattribs();

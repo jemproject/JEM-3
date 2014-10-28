@@ -9,7 +9,7 @@
 /**
  * this file manages the js script for adding/removing attachements in event
  */
-function startattachment() {
+jQuery(function() {
 
 	jQuery('.attach-field').change(addattach);
 	jQuery('.clear-attach-field').click(clearattach);
@@ -35,7 +35,7 @@ function startattachment() {
 
 			});
 	});
-}
+});
 
 function addattach()
 {

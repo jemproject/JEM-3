@@ -33,17 +33,17 @@ class JemViewEditevent extends JViewLegacy
 
 		// Initialise variables.
 		$jemsettings = JEMHelper::config();
-		$app 	= JFactory::getApplication();
-		$user 	= JFactory::getUser();
+		$app		= JFactory::getApplication();
+		$user		= JFactory::getUser();
 		$valguest	= JEMUser::validate_guest();
 		
-		$document = JFactory::getDocument();
-		$model = $this->getModel();
-		$menu = $app->getMenu();
-		$menuitem = $menu->getActive();
-		$pathway = $app->getPathway();
-		$url = JUri::root();
-		$template 		= $app->getTemplate();
+		$document	= JFactory::getDocument();
+		$model		= $this->getModel();
+		$menu		= $app->getMenu();
+		$menuitem	= $menu->getActive();
+		$pathway	= $app->getPathway();
+		$url		= JUri::root();
+		$template	= $app->getTemplate();
 		
 		$settings 	= JemHelper::globalattribs();
 		$this->settings = $settings;
@@ -173,7 +173,9 @@ class JemViewEditevent extends JViewLegacy
 		JemHelper::loadCss('jem');
 		JemHelper::loadCustomCss();
 		
-		// Load scripts	
+		# Load scripts	
+		JHtml::_('bootstrap.framework');
+		
 		if ($settings->get('editevent_show_attachmentstab',1)) {
 			JHtml::_('script', 'com_jem/attachments.js', false, true);
 		}
