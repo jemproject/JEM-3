@@ -12,6 +12,7 @@ JHtml::_('behavior.keepalive');
 JHtml::_('behavior.calendar');
 JHtml::_('behavior.formvalidation');
 JHtml::_('behavior.modal', 'a.flyermodal');
+JHtml::_('behavior.tabstate');
 
 // Create shortcut to parameters.
 $params		= $this->params;
@@ -20,9 +21,6 @@ $settings	= json_decode($this->item->attribs);
 
 <script type="text/javascript">
 	window.addEvent('domready', function(){
-		startattachment();	
-		startother();
-		startrecurrence();	
 		checkmaxplaces();
 
 		starter("<?php echo JText::_('COM_JEM_META_ERROR'); ?>",jQuery("#jform_meta_keywords").val(),jQuery("jform_meta_description").val());

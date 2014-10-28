@@ -35,7 +35,6 @@ $slidesOptions = array(
 	}
 
 	window.addEvent('domready', function() {
-		startattachment();		
 		setAttribute();
 		test();
 	});

@@ -10,6 +10,7 @@ defined('_JEXEC') or die;
 
 JHtml::_('behavior.formvalidation');
 JHtml::_('behavior.keepalive');
+JHtml::_('behavior.tabstate');
 
 // Create shortcut to parameters.
 $params		= $this->item->params;

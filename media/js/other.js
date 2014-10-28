@@ -9,9 +9,9 @@
 /**
  * this file manages the js script for adding/removing attachments in event
  */
- function startother() {
+ jQuery(function() {
  	jQuery('#userfile-remove').click(alterdata);
- }
+ });
  
  function alterdata() {
 	var di = jQuery('#hide_image');
