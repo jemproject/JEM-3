@@ -30,9 +30,31 @@ $mapType = $this->mapType;
 	}
 </script>
 <script type="text/javascript">
-	window.addEvent('domready', function(){
+jQuery(function() {
 		setAttribute();
 		test();
+
+		jQuery("#inputmeta").click(function() {
+			var city		= jQuery("#jform_city");
+			var venue		= jQuery("#jform_venue");
+			var keywords	= jQuery("#jform_meta_keywords");
+
+			if (keywords.val() != "") {
+				keywords.append(", ");
+			}
+
+			if (venue.val() == "") {
+				keywords.append(venue.val());
+			}
+
+			if (city.val() == "") {
+				keywords.append(venue.val());
+			}
+
+			if (city.val() != "" && venue.val() != "") {
+				keywords.append(venue.val()+', '+city.val());
+			}
+		})
 	});
 
 	function setAttribute(){
@@ -48,14 +70,8 @@ $mapType = $this->mapType;
 		jQuery("#tmp_form_venue").attr("geo-data", "name");	
 	}
 
-	function meta(){
-		var f = jQuery('#venue-form');
-		if(f.jform_meta_keywords.value != "") f.jform_meta_keywords.value += ", ";
-		f.jform_meta_keywords.value += f.jform_venue.value+', ' + f.jform_city.value;
-	}
-
 	function test(){			
-		var form = jQuery('#venue-form');
+		var form 		= document.getElementById('venue-form');
 		var map = jQuery('#jform_map');
 		var streetcheck = jQuery(form.jform_street).hasClass('required');
 
@@ -339,7 +355,7 @@ $mapType = $this->mapType;
 			<!-- META -->
 			<fieldset class="form-horizontal">
 				<legend><?php echo JText::_('COM_JEM_META_HANDLING'); ?></legend>
-					<input type="button" class="btn" value="<?php echo JText::_('COM_JEM_ADD_VENUE_CITY'); ?>" onclick="meta()" />
+					<input id="inputmeta" type="button" class="btn" value="<?php echo JText::_('COM_JEM_ADD_VENUE_CITY'); ?>" />
 					<?php foreach($this->form->getFieldset('meta') as $field): ?>
 					<div class="control-group">
 						<div class="control-label"><?php echo $field->label; ?></div>
