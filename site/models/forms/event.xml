@@ -319,7 +319,6 @@
 			default="1"
 			multiple="true"
 			size="5"
-			class="inputbox"
 			label="COM_JEM_EVENT_FIELD_RECURRENCE_SELECTLIST_WEEKDAY"
 		>
 			<option value="MO">COM_JEM_MONDAY</option>
