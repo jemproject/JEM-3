@@ -134,6 +134,16 @@ class JemHelper {
 	 */
 	static function cleanup($forced = 0)
 	{
+		
+		# run only once (component/modules), non-forced
+		if (!$forced) {
+			static $counter = 0;
+			if ( $counter>0 ) {
+				return;
+			}
+			$counter++;
+		}
+		
 		$jemsettings	= JemHelper::config();
 
 		$now = time();
