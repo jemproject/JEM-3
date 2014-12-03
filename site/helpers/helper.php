@@ -152,7 +152,7 @@ class JemHelper {
 				$query = $db->getQuery(true);
 				$query->update('#__jem_events');
 				$query->set('published = -2');
-				$query->where(array("dates > 0","DATE_SUB(NOW(), INTERVAL '.$jemsettings->minus.' DAY) > (IF (enddates IS NOT NULL, enddates, dates))","published=1"));
+				$query->where(array("dates > 0","DATE_SUB(NOW(), INTERVAL ".$jemsettings->minus." DAY) > (IF (enddates IS NOT NULL, enddates, dates))","published=1"));
 				$db->SetQuery($query);
 				$db->execute();
 			}
@@ -162,7 +162,7 @@ class JemHelper {
 				$query = $db->getQuery(true);
 				$query->update('#__jem_events');
 				$query->set('published = 2');
-				$query->where(array("dates > 0","DATE_SUB(NOW(), INTERVAL '.$jemsettings->minus.' DAY) > (IF (enddates IS NOT NULL, enddates, dates))","published=1"));
+				$query->where(array("dates > 0","DATE_SUB(NOW(), INTERVAL ".$jemsettings->minus." DAY) > (IF (enddates IS NOT NULL, enddates, dates))","published=1"));
 				$db->SetQuery($query);
 				$db->execute();
 			}
