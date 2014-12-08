@@ -355,7 +355,7 @@ class plgFinderJEM extends FinderIndexerAdapter {
 		$sql->select('a.id, a.access, a.title, a.alias, a.dates, a.enddates, a.times, a.endtimes, a.datimage');
 		$sql->select('a.created AS start_date, a.dates AS publish_start_date, a.created_by, a.modified, a.version');
 		$sql->select('a.published AS state');
-		$sql->select('a.introtext AS summary,a.fulltext AS body');
+		$sql->select('a.introtext AS summary, a.fulltext AS body');
 		$sql->select('l.venue, l.city, l.state as loc_state, l.url, l.street');
 		$sql->select('l.published AS loc_published');
 		$sql->select('ct.name AS countryname');

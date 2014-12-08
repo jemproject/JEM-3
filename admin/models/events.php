@@ -262,7 +262,7 @@ class JemModelEvents extends JModelList
 			$item->categories = $this->getCategories($item->id);
 
 			# check if the item-categories is empty
-			# in case of filtering we will unset the items without the reqeusted category
+			# in case of filtering we will unset the items without the requested category
 
 			if($search) {
 				if ($filter == 4) {

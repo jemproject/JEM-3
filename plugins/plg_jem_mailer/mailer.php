@@ -24,7 +24,6 @@ jimport('joomla.event.plugin');
 jimport('joomla.utilities.mail');
 
 
-
 include_once(JPATH_SITE.'/components/com_jem/helpers/route.php');
 include_once(JPATH_SITE.'/components/com_jem/helpers/helper.php');
 
