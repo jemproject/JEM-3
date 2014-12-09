@@ -455,7 +455,7 @@ class com_jemInstallerScript
 		###############################
 		## # update calendar entries ##
 		###############################
-		require_once (JPATH_COMPONENT_SITE.'/classes/categories.class.php');
+		require_once (JPATH_SITE.'/components/com_jem/classes/categories.class.php');
 
 		$types = array('calendar','category','venue');
 
@@ -498,10 +498,15 @@ class com_jemInstallerScript
 			
 				if ($type == 'calendar') {
 					# retrieve value 'top_category'
-					$top_category	= $params['top_category'];
-					$children = JEMCategories::getChilds($top_category);
-					if (count($children)) {
-						$params['catids'] = implode(',', $children);
+					if (isset($params['top_category'])) {
+						$top_category	= $params['top_category'];
+						$children = JEMCategories::getChilds($top_category);
+						if (count($children)) {
+							$params['catids'] = implode(',', $children);
+							$params['catidsfilter'] = 1;
+						}
+					}	else {
+						$params['catids'] = 1;
 						$params['catidsfilter'] = 1;
 					}
 				}
