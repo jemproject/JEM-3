@@ -500,27 +500,39 @@ class com_jemInstallerScript
 					# retrieve value 'top_category'
 					if (isset($params['top_category'])) {
 						$top_category	= $params['top_category'];
-						$children = JEMCategories::getChilds($top_category);
-						if (count($children)) {
-							$params['catids'] = implode(',', $children);
-							$params['catidsfilter'] = 1;
+						$childs = JEMCategories::getChilds($top_category);
+
+						# see if we're dealing with root as first array value
+						# if so then we're taking that value and are hiding it so it will display all other categories
+
+						$first = reset($childs);
+
+						if ($first == 0 || $first == 1) {
+							$params['catids'] = 1;
+							$params['catidsfilter'] = 0;
+						} else {
+							if (count($childs) > 1) {
+								# strip of first value as that one is the category it's retreving childs from
+								$reorder = array_shift($childs);
+								$params['catids'] = $childs;
+								$params['catidsfilter'] = 1;
+							} 
 						}
 					}	else {
 						$params['catids'] = 1;
-						$params['catidsfilter'] = 1;
+						$params['catidsfilter'] = 0;
 					}
 				}
 				
 				# store params + new link value
 				$paramsString = json_encode($params);
-						
+				
 				$query = $db->getQuery(true);
 				$query->update('#__menu')
 				->set(array('params = '.$db->quote($paramsString),'link = '.$db->Quote('index.php?option=com_jem&view=calendar')))
 				->where(array("id = ".$item->id));
 				$db->setQuery($query);
-				$db->query();
-									
+				$db->execute();							
 			endforeach;
 		endforeach;	
 
