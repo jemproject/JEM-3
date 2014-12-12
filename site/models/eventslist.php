@@ -491,7 +491,12 @@ class JemModelEventslist extends JModelList
 				$eventParams = new JRegistry;
 				$eventParams->loadString($item->attribs);
 			
-				$item->params = clone $this->getState('params');
+				if ($this->getState('params')) {
+					$item->params = clone $this->getState('params'); 
+				} else {
+					$params = new JRegistry;
+					$item->params = $params;
+				}
 				$item->params->merge($eventParams);
 			
 				# access permissions.
