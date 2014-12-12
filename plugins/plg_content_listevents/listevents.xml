@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="3.1" type="plugin" group="content" method="upgrade">
+	<name>plg_content_listevents</name>
+	<creationDate>December 2014</creationDate>
+	<author>JEM Community</author>
+	<authorEmail>info@joomlaeventmanager.net</authorEmail>
+	<authorUrl>www.joomlaeventmanager.net</authorUrl>
+	<copyright>copyright (C) 2013-2014 joomlaeventmanager.net</copyright>
+	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+	<version>3.0.3</version>
+	<description>PLG_CONTENT_LISTEVENTS_XML_DESCRIPTION</description>
+
+	<files>
+		<filename plugin="listevents">listevents.php</filename>
+		<filename>index.html</filename>
+		<folder>language</folder>
+	</files>
+	
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+			
+		<field name="type" type="list" size= "1" default="current" label="TYPE LABEL" description="TYPE DESCRIPTION">
+			<option value="current">PLG_CONTENT_LISTEVENTS_CURRENT</option>
+			<option value="next">PLG_CONTENT_LISTEVENTS_NEXT</option>
+			<option value="prev">PLG_CONTENT_LISTEVENTS_PREVIOUS</option>
+			<option value="regnext">PLG_CONTENT_LISTEVENTS_REG_NEXT</option>
+			<option value="regprev">PLG_CONTENT_LISTEVENTS_REG_PREV</option>
+			<option value="new">PLG_CONTENT_LISTEVENTS_NEW</option>
+		</field>
+		<field name="title" type="list" size= "1" default="on" label="TITLE LABEL" description="TITLE DESCRIPTION">
+			<option value="on">PLG_CONTENT_LISTEVENTS_ON</option>
+			<option value="link">PLG_CONTENT_LISTEVENTS_LINK</option>
+			<option value="off">PLG_CONTENT_LISTEVENTS_OFF</option>
+		</field>
+		<field name="date" type="list" size= "1" default="on" label="DATE LABEL" description="DATE DESCRIPTION">
+			<option value="on">PLG_CONTENT_LISTEVENTS_ON</option>
+			<option value="link">PLG_CONTENT_LISTEVENTS_LINK</option>
+			<option value="off">PLG_CONTENT_LISTEVENTS_OFF</option>
+		</field>
+		<field name="time" type="radio" size= "1" default="off" label="TIME LABEL" description="TIME DESCRIPTION" class="btn-group btn-group-yesno">
+			<option value="on">PLG_CONTENT_LISTEVENTS_ON</option>
+			<option value="off">PLG_CONTENT_LISTEVENTS_OFF</option>
+		</field>		
+		<field name="catid" type="text" size= "10" default="" label="CATEGORIES LABEL" description="CATEGORIES DESCRIPTION"  />
+		<field name="category" type="list" size= "1" default="off" label="CATEGORY LABEL" description="CATEGORY DESCRIPTION">
+			<option value="on">PLG_CONTENT_LISTEVENTS_ON</option>
+			<option value="link">PLG_CONTENT_LISTEVENTS_LINK</option>
+			<option value="off">PLG_CONTENT_LISTEVENTS_OFF</option>
+		</field>
+		<field name="venueid" type="text" size= "10" default="" label="VENUES LABEL" description="VENUES DESCRIPTION" />
+		<field name="venue" type="list" size= "1" default="off" label="VENUE LABEL" description="VENUE DESCRIPTION">
+			<option value="on">PLG_CONTENT_LISTEVENTS_ON</option>
+			<option value="link">PLG_CONTENT_LISTEVENTS_LINK</option>			
+			<option value="off">PLG_CONTENT_LISTEVENTS_OFF</option>
+		</field>
+		<field name="max" type="text" size= "10" default="5" label="MAXIMUM LABEL" description="MAXIMUM DESCRIPTION" />
+		<field name="noeventsmsg" type="text" size= "70" default="" label="NO EVENTS MESSAGE LABEL" description="NO EVENTS MESSAGE DESCRIPTION" />
+	</fieldset></fields></config>
+</extension>
