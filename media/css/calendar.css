@@ -484,3 +484,23 @@ div#jem .calendarButton:hover {
 }
 div#jem .calendarButton:active {
 }
+div#jem table td {
+	padding:0px;
+}
+div#jem table tr:hover td {
+	background-color: initial;
+}
+div#jem table.month td.monthnavigation,
+div#jem table.month td.monthname {
+	vertical-align: baseline;
+	padding-top:5px;
+}
+div#jem tr.daynamesRow td {
+  text-align:center;
+}
+div#jem .icon-arrow-first:before {
+    content: "\e003";
+}
+div#jem .icon-arrow-last:before {
+    content: "\e004";
+}
