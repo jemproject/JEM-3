@@ -286,24 +286,6 @@ div#jem div.pagination ul li {
 	/* padding:0 5px 0 5px; */
 }
 
-/**
- * @section Categoryview
- */
-div#jem .catimg {
-	margin:0 0.5em 0.5em 0;
-	float:left;
-	position:relative;
-}
-
-div#jem .catimg p {
-	font-size:0.9em;
-	line-height:180%;
-	margin:0 0 0.5em 0;
-}
-
-div#jem .cat-children ul li {
-	list-style: none;
-}
 
 /* -------------------
 	TABLE
@@ -390,6 +372,13 @@ div#jem .pointer {
  --------------- */
  div#jem .btn_chkbox{
 	padding-bottom:7px;
+}
+
+/* ---------------------
+	CATEGORY-VIEW
+-------------------- */
+div#jem .cat-children ul li {
+	list-style: none;
 }
 
 
@@ -508,70 +497,6 @@ div#jem dl.tabs dt h3 a {
 div#jem td.center,th.center,.center {
 	text-align:center;
 	float:none;
-}
-
-/* -- JGRID STYLES ----------------------------- */
-/* grid table elements */
-div#jem a.jgrid:hover {
-	text-decoration:none;
-}
-div#jem .jgrid span.state {
-	display:inline-block;
-	height:16px;
-	width:16px;
-}
-div#jem .jgrid span.text {
-	display:none;
-}
-div#jem .jgrid span.publish {
-	background-image:url(../images/tick.png);
-}
-div#jem .jgrid span.unpublish {
-	background-image:url(../images/publish_x.png);
-}
-div#jem .jgrid span.archive {
-	background-image:url(../images/menu/icon-16-archive.png);
-}
-div#jem .jgrid span.trash {
-	background-image:url(../images/icon-16-trash.png);
-}
-div#jem .jgrid span.default {
-	background-image:url(../images/menu/icon-16-default.png);
-}
-div#jem .jgrid span.notdefault {
-	background-image:url(../images/menu/icon-16-notdefault.png);
-}
-div#jem .jgrid span.checkedout {
-	background-image:url(../images/admin/checked_out.png);
-}
-div#jem .jgrid span.downarrow {
-	background-image:url(../images/admin/downarrow.png);
-}
-div#jem .jgrid span.downarrow_disabled {
-	background-image:url(../images/admin/downarrow0.png);
-	background-position:0 -12px;
-}
-div#jem .jgrid span.uparrow {
-	background-image:url(../images/admin/uparrow.png);
-}
-div#jem .jgrid span.uparrow_disabled {
-	background-image:url(../images/admin/uparrow0.png);
-	background-position:0 -12px;
-}
-div#jem .jgrid span.published {
-	background-image:url(../images/admin/publish_g.png);
-}
-div#jem .jgrid span.expired {
-	background-image:url(../images/admin/publish_r.png);
-}
-div#jem .jgrid span.pending {
-	background-image:url(../images/admin/publish_y.png);
-}
-div#jem .jgrid span.warning {
-	background-image:url(../images/admin/publish_y.png);
-}
-div#jem .jgrid span.protected {
-	background-image:url(../images/admin/icon-16-protected.png);
 }
 
 
@@ -861,6 +786,10 @@ div#jem table td {
 	font-style: normal;
 }
 
+div#jem .icon-unpublish:before, 
+div#jem .icon-cancel:before {
+    color: #BD362F;
+}
 
 div#jem .icon-publish:before, 
 div#jem .icon-save:before, 
