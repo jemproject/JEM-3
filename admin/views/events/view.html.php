@@ -82,24 +82,11 @@ defined('_JEXEC') or die;
 
 		/* state */
 		if ($canDo->get('core.edit.state')) {
-			if ($this->state->get('filter.published') != 2) {
-				JToolBarHelper::publishList('events.publish', 'JTOOLBAR_PUBLISH', true);
-				JToolBarHelper::unpublishList('events.unpublish', 'JTOOLBAR_UNPUBLISH', true);
-				JToolBarHelper::custom('events.featured', 'featured.png', 'featured_f2.png', 'JFEATURED', true);
-			}
-
-			if ($this->state->get('filter.published') != -1) {
-				JToolBarHelper::divider();
-				if ($this->state->get('filter_state') != 2) {
-					JToolBarHelper::archiveList('events.archive');
-				} elseif ($this->state->get('filter_state') == 2) {
-					JToolBarHelper::unarchiveList('events.publish');
-				}
-			}
-		}
-
-		if ($canDo->get('core.edit.state')) {
-			JToolBarHelper::checkin('events.checkin');
+			JToolBarHelper::publishList('events.publish', 'JTOOLBAR_PUBLISH', true);
+			JToolBarHelper::unpublishList('events.unpublish', 'JTOOLBAR_UNPUBLISH', true);
+			JToolBarHelper::custom('events.featured', 'featured.png', 'featured_f2.png', 'JFEATURED', true);
+			JToolBarHelper::archiveList('events.archive');
+			JToolBarHelper::checkin('events.checkin');	
 		}
 
 		if ($this->state->get('filter.published') == -2 && $canDo->get('core.delete')) {
