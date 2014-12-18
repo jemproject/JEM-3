@@ -90,7 +90,6 @@ $detaillink = JRoute::_(JemHelperRoute::getEventRoute($this->event->id.':'.$this
 			?>
 			</div>
 			</div>
-			<div class="clearfix"></div>
 			<div>
 			
 			<br>
