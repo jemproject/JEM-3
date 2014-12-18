@@ -120,7 +120,7 @@ div#jem .selectedday .daynum {
 }
 
 div#jem .nomonthday {
-  background-color:#EEEEEE;
+  background-color:#EEEEEE !important;
   height:88px;
 }
 
@@ -164,6 +164,7 @@ div#jem div[id^=catz] {
 
 div#jem div[id^=catz] a {
   color: #333;
+  background-color:yellow;
   /* text-decoration:none; */
 }
 
@@ -330,34 +331,22 @@ div#jem #jlcalendarlegend .eventCat.catoff {
 
 div#jem div#buttonshowall,
 div#jem div#buttonhideall {
-  float: left !important;
-  padding-top:3px !important;
-  padding-left:4px !important;
-  padding-right:4px !important;
-  margin-right: 6px !important;
-  cursor: pointer !important;
-  border:1px solid black !important;
-  width: auto !important;
-  font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+  float: left;
+  padding-top:3px;
+  padding-left:4px;
+  padding-right:4px;
+  margin-right: 6px;
+  cursor: pointer;
+  border:1px solid black;
+  font-family:Arial,sans-serif;
   line-height:18px;
-  vertical-align:middle;
-  
-  /*
-  background-attachment: scroll;
-  background-clip:border-box;
-  background-color:transparent;
-  background-origin:padding-box;
-  background-position: 0% 0%;
-  background-size:auto auto;
-  background-repeat:repeat;
-  */
-  
+  vertical-align:middle;  
 }
 
 div#jem .daynum a {
-  color: #FBFCEF !important;
+  color: #FBFCEF;
   text-decoration:none;
-  background-color:inherit !important;
+  background-color:inherit;
 }
 
 div#jem .today .daynum a {
@@ -415,8 +404,8 @@ div#jem .monthday {
   width:90px;
 }
 
-div#jem .saturday, 
-div#jem .sunday {
+div#jem td.saturday, 
+div#jem td.sunday {
   text-align: center;
   vertical-align: top;
   font-size: 11px;
@@ -429,8 +418,9 @@ div#jem .sunday {
 
 div#jem .sunday a, 
 div#jem .saturday a {
-  color: #667171;
+  color: #ffffff;
 }
+
 
 div#jem .today {
   text-align: center;
@@ -472,8 +462,8 @@ div#jem .calendarButton {
    -webkit-border-radius: 6px;
       -moz-border-radius: 6px;
            border-radius: 6px;
-   width: 48px;
-   height: 20px;
+   /* width: 48px;*/
+   /* height: 20px;*/
    margin: 1px;
    padding: 1px;
    display: inline-block;
@@ -490,6 +480,7 @@ div#jem table td {
 div#jem table tr:hover td {
 	background-color: initial;
 }
+
 div#jem table.month td.monthnavigation,
 div#jem table.month td.monthname {
 	vertical-align: baseline;
@@ -498,6 +489,11 @@ div#jem table.month td.monthname {
 div#jem tr.daynamesRow td {
   text-align:center;
 }
+
+div#jem tr.daynamesRow {
+	height: 24px;
+}
+
 div#jem .icon-arrow-first:before {
     content: "\e003";
 }

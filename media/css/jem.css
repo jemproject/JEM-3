@@ -24,9 +24,7 @@ div#jem .icon-recurrence {
 	width:16px;
 } 
  
-div#jem .btn_chkbox{
-	padding-bottom:7px;
-}
+
 
 div#jem .btn_button{
 	padding-top:7px;
@@ -55,14 +53,6 @@ div#jem .userbox {
         hyphens: auto;
  }
  
-div#jem span.legendcolor {
-	/*
-	background-color: #C09853;
-	padding: 0px 4px 0px 4px;
-	border: 1px solid black;
-	border-radius: 4px;
-	*/
-}
  
 div#jem hr {
 	border:1px solid black;
@@ -93,20 +83,8 @@ div#jem {
 	padding:10px;
 }
 
-div#jem .clear {
-	border:0;
-	clear:both;
-	float:none;
-	height:1px;
-	line-height:1px;
-}
-
-div#jem div.clr {
-	clear:both;
-}
-
-div#jem .pointer {
-	cursor:pointer;
+div#jem a {
+	background:transparent;
 }
 
 div#jem .poweredby {
@@ -117,21 +95,31 @@ div#jem .poweredby {
 	float:none;
 }
 
+div#jem #jem_filter
+ {
+	margin:1em 0 0.5em 0;
+	padding: 10px 10px 4px 10px;
+	border:solid 1px #808080;
+	background:#FFA500;
+}
+
 /** -------------- 
 	HEADERS 
 ------------------- **/
 
 
 div#jem h1{
- margin-bottom:6px;
- margin-top: 6px;
+	font-size: 26px;
+	line-height:28px;
+	margin:12px 0px;
 }
 
 div#jem h2 {
-	font-size:normal;
+	font-size:22px;
+	line-height:24px;
 	font-weight:normal;
 	padding:0.3em 0.3em;
-	margin:normal;
+	margin:12px 0px;
 	background:none repeat scroll 0% 0% #D4D6B2;
 	border:1px solid #808080;
 }
@@ -139,7 +127,8 @@ div#jem h2 {
 div#jem h2 img {
 	border:none;
 	margin-left:0.3em;
-	margin-bottom:0.2em;
+	vertical-align:baseline;
+	margin-bottom: 0px;
 }
 
 div#jc h4 {
@@ -147,9 +136,9 @@ div#jc h4 {
 }
 
 
-/**  ------------ 
+/* ---------------------- 
 	definitionlist 
----------------- **/
+--------------------- */
  
 div#jem dl dt {
 	margin:0;
@@ -386,16 +375,23 @@ div#jem table.eventtable tr.featured td{
 	background-color: #B6B6B4;
 }
 
-/* -------------------
-	FILTER
---------------------- */
-div#jem #jem_filter
- {
-	margin:1em 0 0.5em 0;
-	padding: 10px 10px 4px 10px;
-	border:solid 1px #808080;
-	background:#FFA500;
+
+
+/* ---------------------
+	EDITEVENT-PAGE
+-------------------- */
+div#jem .pointer {
+	cursor:pointer;
 }
+
+
+/* -----------------
+ 	EVENT-PAGE
+ --------------- */
+ div#jem .btn_chkbox{
+	padding-bottom:7px;
+}
+
 
 /* -------------------
 	EDIT FORM
@@ -405,8 +401,7 @@ div#jem.jem_editevent input.required,
 div#jem.jem_editvenue input.required {
 	background-color:#D5EEFF;
 }
-
-table#el-attachments input{
+div#jem table#el-attachments input{
 	width: 100%;
 	margin: 0px 0px 0.5em;
 	padding: 0.2em;
@@ -414,30 +409,25 @@ table#el-attachments input{
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 }
-
-table#el-attachments td {
+div#jem table#el-attachments td {
 	padding:5px;
 	border:1px solid #808080;
 }
-
-table#search td {
+div#jem table#search td {
 	border:none !important;
 }
-
-table#search tr {
+div#jem table#search tr {
 	border:none !important;
 	padding:20px !important;
 }
-
-table#el-attachments th {
+div#jem table#el-attachments th {
 	background:#366999;
 	color:#FFFFFF;
 	line-height:22px;
 	border:1px solid #000000;
 }
-
 /** googlemap **/
-#googlemap {
+div#jem #googlemap {
 	margin:20px 0px 20px 20px;
 }
 
@@ -446,14 +436,14 @@ table#el-attachments th {
 /*-----------------------
 	BUTTONS
 ------------------------*/
-.button_flyer {
+div#jem .button_flyer {
 	float: right;
 }
 
-.button_flyer .buttons {
+div#jem .button_flyer .buttons {
 }
 
-.button_flyer .buttons img {
+div#jem .button_flyer .buttons img {
 	background-color:#EBE8E9;
 	margin:2px;	
 	padding:6px;
@@ -464,16 +454,6 @@ table#el-attachments th {
 div#jem .btn {
 	border-color: grey grey grey;
 }
-
-
-div#jem .buttons2 {
-	float:right;
-}
-
-div#jem .buttons2 a {
-	border:1px solid #808080;
-}
-
 
 /* Thx to http://www.bloggerswatch.com/internet/css-trick-submit-button-should-look-same-everywhere/ */
 div#jem .button_flyer.icons a {
@@ -525,118 +505,72 @@ div#jem dl.tabs dt h3 a {
 	background:none;
 }
 
-td.center,th.center,.center {
+div#jem td.center,th.center,.center {
 	text-align:center;
 	float:none;
 }
 
-
-
-
-.icon-cancel:before {
-   /* color: #BD362F;*/
-}
-
-.icon-publish:before, 
-.icon-save:before, 
-.icon-ok:before, 
-.icon-save-new:before, 
-.icon-save-copy:before, 
-.btn-toolbar 
-.icon-copy:before {
-    color: #51A351;
-}
-
-.icon-unpublish:before, 
-.icon-not-ok:before, 
-.icon-eye-close:before, 
-.icon-ban-circle:before, 
-.icon-minus-sign:before, 
-.btn-toolbar 
-.icon-cancel:before {
-    color: #BD362F;
-}
-
-
 /* -- JGRID STYLES ----------------------------- */
 /* grid table elements */
-a.jgrid:hover {
+div#jem a.jgrid:hover {
 	text-decoration:none;
 }
-
-.jgrid span.state {
+div#jem .jgrid span.state {
 	display:inline-block;
 	height:16px;
 	width:16px;
 }
-
-.jgrid span.text {
+div#jem .jgrid span.text {
 	display:none;
 }
-
-.jgrid span.publish {
+div#jem .jgrid span.publish {
 	background-image:url(../images/tick.png);
 }
-
-.jgrid span.unpublish {
+div#jem .jgrid span.unpublish {
 	background-image:url(../images/publish_x.png);
 }
-
-.jgrid span.archive {
+div#jem .jgrid span.archive {
 	background-image:url(../images/menu/icon-16-archive.png);
 }
-
-.jgrid span.trash {
+div#jem .jgrid span.trash {
 	background-image:url(../images/icon-16-trash.png);
 }
-
-.jgrid span.default {
+div#jem .jgrid span.default {
 	background-image:url(../images/menu/icon-16-default.png);
 }
-
-.jgrid span.notdefault {
+div#jem .jgrid span.notdefault {
 	background-image:url(../images/menu/icon-16-notdefault.png);
 }
-
-.jgrid span.checkedout {
+div#jem .jgrid span.checkedout {
 	background-image:url(../images/admin/checked_out.png);
 }
-
-.jgrid span.downarrow {
+div#jem .jgrid span.downarrow {
 	background-image:url(../images/admin/downarrow.png);
 }
-
-.jgrid span.downarrow_disabled {
+div#jem .jgrid span.downarrow_disabled {
 	background-image:url(../images/admin/downarrow0.png);
 	background-position:0 -12px;
 }
-
-.jgrid span.uparrow {
+div#jem .jgrid span.uparrow {
 	background-image:url(../images/admin/uparrow.png);
 }
-
-.jgrid span.uparrow_disabled {
+div#jem .jgrid span.uparrow_disabled {
 	background-image:url(../images/admin/uparrow0.png);
 	background-position:0 -12px;
 }
-
-.jgrid span.published {
+div#jem .jgrid span.published {
 	background-image:url(../images/admin/publish_g.png);
 }
-
-.jgrid span.expired {
+div#jem .jgrid span.expired {
 	background-image:url(../images/admin/publish_r.png);
 }
-
-.jgrid span.pending {
+div#jem .jgrid span.pending {
 	background-image:url(../images/admin/publish_y.png);
 }
-
-.jgrid span.warning {
+div#jem .jgrid span.warning {
 	background-image:url(../images/admin/publish_y.png);
 }
-
-.jgrid span.protected {
+div#jem .jgrid span.protected {
 	background-image:url(../images/admin/icon-16-protected.png);
 }
 
@@ -653,54 +587,36 @@ div#jem a.file-name:visited
 	color: #000000;
 	background-color:transparent;
 }
-
 div#jem .file td{
 	padding:3px;
 }
-
 div#jem div.iCal {
 	margin-top:8px;
 }
-
 div#jem div.info_container {
 	background-color:white;
 	padding: 10px;
 	border:1px solid grey;
 }
-
-
-fieldset.alert {
+div#jem fieldset.alert {
 	border:1px solid grey;
 }	
-
-
 div#jem .edit_imageflyer {
 	width: 200px;
 	height:150px;
 	margin-left:auto;
 	margin-right:auto;
 }
-
 div#jem .resize_tipicon {
 	padding: 4px 10px 6px 10px;
 }
-
-
-@CHARSET "ISO-8859-1";
-
-
-
-
- 
 div#jem .label-warning, 
 div#jem .badge-warning {
     background-color: #F89406;
 } 
- 
 div#jem .label {
     border-radius: 3px;
 }
- 
 div#jem .label, 
 div#jem .badge {
     display: inline-block;
@@ -714,14 +630,10 @@ div#jem .badge {
     text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.25);
     /*background-color: #999;*/
 } 
-
 div#jem .label-info, 
 div#jem .badge-info {
     background-color: #3A87AD;
 }
- 
-
-
 div#jem .input-append {
     display: inline-block;
     font-size: 0px;
@@ -760,7 +672,6 @@ div#jem .btn {
     border-radius: 4px;
     box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.2) inset, 0px 1px 2px rgba(0, 0, 0, 0.05);
 }
-
 div#jem .btn:hover,
 div#jem .btn:focus {
 	color: #333;
@@ -771,20 +682,6 @@ div#jem .btn:focus {
 	-o-transition: background-position .1s linear;
 	transition: background-position .1s linear;
 }
-
-/*
-div#jem input[type="text"] {
-	display: inline-block;
-	height: 18px;
-	padding: 4px 6px;
-	margin-bottom: 9px;
-	font-size: 13px;
-	line-height: 18px;
-	color: #555;
-	border-radius: 3px;
-	vertical-align: middle;
-}
-*/
 div#jem .input-medium {
     width: 150px;
 }
@@ -797,7 +694,6 @@ div#jem .clearfix:after {
     content: "";
     line-height: 0;
 } 
-
 div#jem .pagination ul {
     display: inline-block;
     margin-left: 0px;
@@ -805,7 +701,6 @@ div#jem .pagination ul {
     border-radius: 4px;
     box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
 }
-
 div#jem .btn_chkbox {
 	padding-right: 4px;
 	padding-bottom: 4px;
@@ -813,10 +708,6 @@ div#jem .btn_chkbox {
 div#jem .button_flyer.icons a {
 	padding: 5px 9px 4px 7px !important;
 }
-div#jem h2 img {
-	margin-bottom: 0px;
-}
-
 div#jem .flyermodal.btn {
 	height: 18px;
 	box-sizing: content-box;
@@ -838,12 +729,9 @@ div#jem {
 	text-align: left;
 	box-sizing: inherit !important;
 }
-
 div#jem a {
     color: #095197;
 }
-
-
 div#jem form {
 	margin: 0px 0px 18px;
 	padding:0px;
@@ -852,7 +740,6 @@ div#jem form {
 	vertical-align: baseline;
 	background: none repeat scroll 0% 0% transparent;
 }
-
 div#jem input[type="text"],
 div#jem input[type="password"],
 div#jem input[type="datetime"],
@@ -883,7 +770,6 @@ div#jem .inputbox {
  	-moz-box-sizing: content-box !important;    /* Firefox, other Gecko */
 	box-sizing: content-box !important;
 }
-
 div#jem select.inputbox {
 	height:auto;
 }
@@ -893,11 +779,9 @@ div#jem textarea.inputbox {
 div#jem select[multiple] {
 	height: auto;
 }
-
 div#jem select {
 	font-weight: 400;
 }
-
 div#jem input {
 	font: 12px Arial, sans-serif;
 	border: 1px solid #666;
@@ -916,7 +800,14 @@ div#jem label {
     cursor: pointer;
 }
 
-label, select, button, input[type="button"], input[type="reset"], input[type="submit"], input[type="radio"], input[type="checkbox"] {
+label, 
+select, 
+button, 
+input[type="button"], 
+input[type="reset"], 
+input[type="submit"], 
+input[type="radio"], 
+input[type="checkbox"] {
     cursor: pointer;
 }
 
@@ -968,6 +859,26 @@ div#jem table td {
 	src: url('../../../media/jui/fonts/IcoMoon.eot?#iefix') format('embedded-opentype'), url('../../../media/jui/fonts/IcoMoon.woff') format('woff'), url('../../../media/jui/fonts/IcoMoon.ttf') format('truetype'), url('../../../media/jui/fonts/IcoMoon.svg#IcoMoon') format('svg');
 	font-weight: normal;
 	font-style: normal;
+}
+
+
+div#jem .icon-publish:before, 
+div#jem .icon-save:before, 
+div#jem .icon-ok:before, 
+div#jem .icon-save-new:before, 
+div#jem .icon-save-copy:before, 
+div#jem .btn-toolbar 
+div#jem .icon-copy:before {
+    color: #51A351;
+}
+div#jem .icon-unpublish:before, 
+div#jem .icon-not-ok:before, 
+div#jem .icon-eye-close:before, 
+div#jem .icon-ban-circle:before, 
+div#jem .icon-minus-sign:before, 
+div#jem .btn-toolbar 
+div#jem .icon-cancel:before {
+    color: #BD362F;
 }
 
 div#jem .icon-cancel:before {
@@ -1111,66 +1022,11 @@ div#jem div .container-fluid {
     padding-left: 20px;
     padding-right: 20px;
 }
-
-/*
-
-.clearfix:after, 
-.container:after, 
-.container-fluid:after, 
-.row:after, 
-.form-horizontal 
-.form-group:after, 
-.btn-toolbar:after, 
-.btn-group-vertical > .btn-group:after, 
-.nav:after, 
-.navbar:after, 
-.navbar-header:after, 
-.navbar-collapse:after, 
-.pager:after, 
-.panel-body:after, 
-.modal-footer:after {
-    clear: both;
-}
-
-.clearfix:before, 
-.clearfix:after, 
-.container:before, 
-.container:after, 
-.container-fluid:before, 
-.container-fluid:after, 
-.row:before, .row:after, 
-.form-horizontal .form-group:before, 
-.form-horizontal .form-group:after, 
-.btn-toolbar:before, 
-.btn-toolbar:after, 
-.btn-group-vertical > .btn-group:before, 
-.btn-group-vertical > .btn-group:after, 
-.nav:before, .nav:after, 
-.navbar:before, 
-.navbar:after, 
-.navbar-header:before, 
-.navbar-header:after, 
-.navbar-collapse:before, 
-.navbar-collapse:after, 
-.pager:before, .pager:after, 
-.panel-body:before, 
-.panel-body:after, 
-.modal-footer:before, 
-.modal-footer:after {
-    content: " ";
-    display: table;
-}
-*/
-
-	
 div#jem .container-fluid [class*="span"] {
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 }	
-	
-	
-
 div#jem div .col-md-7,
 div#jem div .col-md-5
  {
@@ -1179,22 +1035,17 @@ div#jem div .col-md-5
 	padding-left: 20px;
 	padding-right: 20px;
 }
-
 div#jem div .row {
   margin-left: -20px;
   margin-right: -20px;
 }
-
 div#jem .input-mini {
     width: 40px;
 }
-
-
 div#jem .input-append {
 	margin-bottom: 0px;
 	vertical-align: baseline;
 }
-
 div#jem .input-append .add-on, 
 div#jem .input-prepend .add-on {
     display: inline-block;
@@ -1272,9 +1123,9 @@ div#jem .input-append .btn-group {
 
 
 
-/* -------------
-	EDITOR
------------- */
+/* -----------------
+	EDIT-FORMS
+---------------- */
 
 div#jem #myTabContent {
 	background-color:white;
@@ -1665,4 +1516,58 @@ div#jem .toggle-editor {
 div#jem textarea#jform_meta_keywords,
 div#jem label#jform_meta_keywords-lbl {
 	margin-top:20px;
+}
+div#jem.jem_editevent select {
+	width: 206px;
+}
+
+div#jem div {
+	margin: 0px;
+}
+
+div#jem .clearfix:after, 
+div#jem .container:after, 
+div#jem .container-fluid:after, 
+div#jem .row:after, 
+div#jem .form-horizontal 
+div#jem .form-group:after, 
+div#jem .btn-toolbar:after, 
+div#jem .btn-group-vertical > .btn-group:after, 
+div#jem .nav:after, 
+div#jem .navbar:after, 
+div#jem .navbar-header:after, 
+div#jem .navbar-collapse:after, 
+div#jem .pager:after, 
+div#jem .panel-body:after, 
+div#jem .modal-footer:after {
+    clear: both;
+}
+
+div#jem .clearfix:before, 
+div#jem .clearfix:after, 
+div#jem .container:before, 
+div#jem .container:after, 
+div#jem .container-fluid:before, 
+div#jem .container-fluid:after, 
+div#jem .row:before, .row:after, 
+div#jem .form-horizontal .form-group:before, 
+div#jem .form-horizontal .form-group:after, 
+div#jem .btn-toolbar:before, 
+div#jem .btn-toolbar:after, 
+div#jem .btn-group-vertical > .btn-group:before, 
+div#jem .btn-group-vertical > .btn-group:after, 
+div#jem .nav:before, .nav:after, 
+div#jem .navbar:before, 
+div#jem .navbar:after, 
+div#jem .navbar-header:before, 
+div#jem .navbar-header:after, 
+div#jem .navbar-collapse:before, 
+div#jem .navbar-collapse:after, 
+div#jem .pager:before, .pager:after, 
+div#jem .panel-body:before, 
+div#jem .panel-body:after, 
+div#jem .modal-footer:before, 
+div#jem .modal-footer:after {
+    content: " ";
+    display: table;
 }
