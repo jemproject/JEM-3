@@ -40,14 +40,14 @@ class JemViewCalendar extends JViewLegacy
 		$eventandmorecolor = $params->get('eventandmorecolor');
 
 		$style = '
-		div[id^=\'catz\'] a {color:' . $evlinkcolor . ';}
-		div[id^=\'catz\'] {background-color:'.$evbackgroundcolor .';}
-		.eventcontent {background-color:'.$evbackgroundcolor .';}
-		.eventandmore {background-color:'.$eventandmorecolor .';}
-		.today .daynum {background-color:'.$currentdaycolor.';}';
+		div#jem div[id^=\'catz\'] a {color:' . $evlinkcolor . ' !important;}
+		div#jem div[id^=\'catz\'] {background-color:'.$evbackgroundcolor .';}
+		div#jem .eventcontent {background-color:'.$evbackgroundcolor .'; !important}
+		div#jem .eventandmore {background-color:'.$eventandmorecolor .' !important;}
+		div#jem .today .daynum {background-color:'.$currentdaycolor.' !important;}';
 
 		$document->addStyleDeclaration($style);
-
+		
 		// add javascript (using full path - see issue #590)
 		JHtml::_('script', 'media/com_jem/js/calendar.js');
 		
