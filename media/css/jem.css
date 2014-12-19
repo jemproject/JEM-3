@@ -7,6 +7,8 @@
  */
  
 
+
+
 div#jem td.attendees {
 	text-align: center;
 }
@@ -1460,6 +1462,11 @@ div#jem div {
 	margin: 0px;
 }
 
+div#jem input[type="submit"] {
+    height: 29px;
+    width: 145px;
+}
+
 div#jem .clearfix:after, 
 div#jem .container:after, 
 div#jem .container-fluid:after, 
@@ -1507,3 +1514,14 @@ div#jem .modal-footer:after {
     display: table;
 }
 
+div#jem input[type="checkbox"] {
+	margin: 3px 0px;
+	margin-right: 10px;
+	display: inline;
+}
+
+
+div#jem .btn[disabled] {
+	border:1px solid #666666;
+	opacity: 1;
+}
