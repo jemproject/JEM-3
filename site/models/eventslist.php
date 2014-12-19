@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 3.0.3
+ * @version 3.0.4
  * @package JEM
  * @copyright (C) 2013-2014 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -491,7 +491,12 @@ class JemModelEventslist extends JModelList
 				$eventParams = new JRegistry;
 				$eventParams->loadString($item->attribs);
 			
-				$item->params = clone $this->getState('params');
+				if ($this->getState('params')) {
+					$item->params = clone $this->getState('params'); 
+				} else {
+					$params = new JRegistry;
+					$item->params = $params;
+				}
 				$item->params->merge($eventParams);
 			
 				# access permissions.

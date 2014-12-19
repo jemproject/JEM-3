@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 3.0.3
+ * @version 3.0.4
  * @package JEM
  * @copyright (C) 2013-2014 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -396,6 +396,7 @@ class JemViewEvent extends JEMView
 			JemHelper::loadCss('print');
 			$this->document->setMetaData('robots', 'noindex, nofollow');
 		}
+		
 		
 	/*
 		// Because the application sets a default page title,

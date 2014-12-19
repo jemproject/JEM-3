@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 3.0.3
+ * @version 3.0.4
  * @package JEM
  * @copyright (C) 2013-2014 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -77,7 +77,6 @@ $settings	= json_decode($this->item->attribs);
 <!-- container -->
 <div id="jem" class="jem_editevent<?php echo $this->pageclass_sfx; ?>">
 
-	<div class="span12">
 <!-- start form -->
 		<form enctype="multipart/form-data" action="<?php echo JRoute::_('index.php?option=com_jem&a_id='.(int) $this->item->id); ?>" method="post" name="adminForm" id="adminForm" class="form-validate">
 			
@@ -222,5 +221,4 @@ $settings	= json_decode($this->item->attribs);
 			<?php echo $this->form->renderField('timeout'); ?>
 			<?php echo JHtml::_('form.token'); ?>
 		</form>
-	</div>
 </div>

@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 3.0.3
+ * @version 3.0.4
  * @package JEM
  * @subpackage JEM Teaser Module
  * @copyright (C) 2013-2014 joomlaeventmanager.net
@@ -197,16 +197,16 @@ abstract class modJEMteaserHelper
 			$lists[$i]->time 			= $row->times ? modJEMteaserHelper::_format_time($row->dates, $row->times, $params) : '' ;
 
 			if ($dimage == null) {
-				$lists[$i]->eventimage		= JURI::base(true).'/media/system/images/blank.png';
-				$lists[$i]->eventimageorig	= JURI::base(true).'/media/system/images/blank.png';
+				$lists[$i]->eventimage		= '';
+				$lists[$i]->eventimageorig	= '';
 			} else {
 				$lists[$i]->eventimage		= JURI::base(true).'/'.$dimage['thumb'];
 				$lists[$i]->eventimageorig	= JURI::base(true).'/'.$dimage['original'];
 			}
 
 			if ($limage == null) {
-				$lists[$i]->venueimage		= JURI::base(true).'/media/system/images/blank.png';
-				$lists[$i]->venueimageorig	= JURI::base(true).'/media/system/images/blank.png';
+				$lists[$i]->venueimage 		= '';
+				$lists[$i]->venueimageorig 	= '';
 			} else {
 				$lists[$i]->venueimage		= JURI::base(true).'/'.$limage['thumb'];
 				$lists[$i]->venueimageorig	= JURI::base(true).'/'.$limage['original'];

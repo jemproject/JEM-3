@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 3.0.3
+ * @version 3.0.4
  * @package JEM
  * @copyright (C) 2013-2014 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -246,7 +246,7 @@ class com_jemInstallerScript
 	 * @return void
 	 */
 	function postflight($type, $parent)
-	{
+	{	
 		// $type is the type of change (install, update or discover_install)
 		echo '<p>' . JText::_('COM_JEM_POSTFLIGHT_' . $type . '_TEXT') . '</p>';
 
@@ -428,7 +428,9 @@ class com_jemInstallerScript
 			'/components/com_jem/layouts/searchtools/default/list.php',
 			'/components/com_jem/layouts/searchtools/grid/sort.php',
 			'/media/com_jem/js/settings.js',
-			'/media/com_jem/js/unlimited.js'
+			'/media/com_jem/js/unlimited.js',
+			# 3.0.3 -> 3.0.4
+			'/media/com_jem/js/dropdown.js'
 		);
 		$folders = array();
 

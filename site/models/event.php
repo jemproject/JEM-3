@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 3.0.3
+ * @version 3.0.4
  * @package JEM
  * @copyright (C) 2013-2014 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -144,7 +144,6 @@ class JemModelEvent extends JModelItem
 				}
 
 				if (empty($data)) {
-					//return JError::raiseError(404, JText::_('COM_JEM_EVENT_ERROR_EVENT_NOT_FOUND'));
 					throw new Exception(JText::_('COM_JEM_EVENT_ERROR_EVENT_NOT_FOUND'), 404);
 				}
 
@@ -521,7 +520,7 @@ class JemModelEvent extends JModelItem
 		}
 		
 		try {
-			$event = $this->getItem($eventId);
+			$event = $this->getItem($eventid);
 		}
 		// error handling
 		catch (Exception $e) {

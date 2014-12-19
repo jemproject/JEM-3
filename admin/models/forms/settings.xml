@@ -77,6 +77,7 @@
 		>
 			<option value="0">COM_JEM_EVENT_OFF</option>
 			<option value="1">COM_JEM_LINK_ON_TITLE</option>
+			<option value="2">COM_JEM_SETTINGS_FIELD_LINKTITLE_WHENDESC</option>
 		</field>
 		<field name="formatdate" type="text"
 			label="COM_JEM_SETTINGS_DATE_FORMAT"
