@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 3.0.3
+ * @version 3.0.4
  * @package JEM
  * @subpackage JEM Listevents Plugin
  * @copyright (C) 2013-2014 joomlaeventmanager.net
@@ -393,8 +393,6 @@ class plgContentListevents extends JPlugin
 		$html_list .= '</ul>';
 		$html_list .= '</div>';
 		
-		var_dump($event);
-
 		return $html_list;
 	}
 }
