@@ -128,7 +128,19 @@ defined('_JEXEC') or die;
 							$row->enddates, $row->endtimes);
 					?>
 				</td>
-
+				<?php if (($this->jemsettings->showtitle == 1) && ($this->jemsettings->showdetails == 2)) : ?>
+				<?php if ($this->escape($row->introtext) != "" ) { ?>
+					<td class="jem_title">
+						<a href="<?php echo JRoute::_(JemHelperRoute::getEventRoute($row->slug)); ?>" itemprop="url">
+							<span itemprop="name"><?php echo $this->escape($row->title); ?></span>
+						</a>
+					</td>
+				<?php } else { ?>
+				<td class="jem_title" itemprop="name">
+						<?php echo $this->escape($row->title); ?>
+					</td>
+				<?php } ?>
+				<?php endif; ?>
 				<?php if (($this->jemsettings->showtitle == 1) && ($this->jemsettings->showdetails == 1)) : ?>
 					<td class="jem_title">
 						<a href="<?php echo JRoute::_(JemHelperRoute::getEventRoute($row->slug)); ?>" itemprop="url">

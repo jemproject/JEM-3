@@ -137,7 +137,7 @@ class JemModelSearch extends JModelLegacy
 			$orderby	= $this->_buildOrderBy();
 
 			//Get Events from Database
-			$this->_query = 'SELECT a.id, a.dates, a.enddates, a.times, a.endtimes, a.title, a.created, a.locid,'
+			$this->_query = 'SELECT a.id, a.dates, a.enddates, a.introtext, a.times, a.endtimes, a.title, a.created, a.locid,'
 					. ' a.recurrence_type, a.recurrence_first_id,'
 					. ' l.venue, l.city, l.state, l.url,'
 					. ' CASE WHEN CHAR_LENGTH(a.alias) THEN CONCAT_WS(\':\', a.id, a.alias) ELSE a.id END as slug,'
