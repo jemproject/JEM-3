@@ -767,9 +767,15 @@ div#jem table {
 	border-collapse: collapse;
 	border-spacing: 0px;
 }
-
 div#jem table td {
 	line-height: 20px;	
+}
+div#jem table tr:hover td {
+	background: transparent;
+}
+div#jem tr.odd,
+div#jem tr.cat-list-row1 {
+	background: transparent;
 }
 
 
@@ -1500,3 +1506,4 @@ div#jem .modal-footer:after {
     content: " ";
     display: table;
 }
+
