@@ -164,7 +164,7 @@ div#jem div[id^=catz] {
 
 div#jem div[id^=catz] a {
   color: #333;
-  background-color:yellow;
+  /*background-color:yellow;*/
   /* text-decoration:none; */
 }
 
