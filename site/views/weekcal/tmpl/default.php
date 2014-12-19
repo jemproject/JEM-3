@@ -11,7 +11,11 @@ defined('_JEXEC') or die;
 // Load tooltips behavior
 JHtml::_('bootstrap.tooltip');
 ?>
-
+<script>
+jQuery( document ).ready(function( $ ) {
+	calendar();
+});
+</script>
 <div id="jem" class="jlcalendar jem_calendar<?php echo $this->pageclass_sfx;?>">
 	<?php if ($this->params->get('show_page_heading', 1)): ?>
 		<h1>
