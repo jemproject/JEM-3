@@ -88,8 +88,8 @@ if ($type_attendee == 2) {
 if ( $check || JFactory::getUser()->authorise('core.manage')) :
 ?>
 
-<div class="row-fluid">
-<div class="span12 userbox">
+<div class="container-fluid">
+<div class="row userbox">
 
 <!-- output names -->
 	<span class="register label label-info"><?php echo JText::_('COM_JEM_REGISTERED_USERS'); ?></span>
@@ -211,8 +211,8 @@ endforeach;
 <div class="clearfix"></div>
 
 
-<div class="row-fluid">
-		<div class="span12">
+<div class="container-fluid">
+		<div class="row">
 		<?php
 if ($this->print == 0) {
 switch ($this->formhandler) {
