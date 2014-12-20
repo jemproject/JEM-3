@@ -57,10 +57,10 @@ $mapType = $this->mapType;
 		<div class="image imagetop"><?php echo JemOutput::flyer($this->venue, $this->limage, 'venue'); ?></div>
 	<?php } ?>
 
-	<div class="row-fluid">
-	<div class="span12">
+	<div class="container-fluid">
+	<div class="row">
 	
-	<div class="span7">	
+	<div class="col-md-7">	
 		<dl class="location" itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
 	<?php if (($this->vsettings->get('show_detlinkvenue',1)) && (!empty($this->venue->url))) : ?>
 			<dt class="venue"><?php echo JText::_('COM_JEM_WEBSITE').':'; ?></dt>
@@ -130,7 +130,7 @@ $mapType = $this->mapType;
 		</dl>
 	</div>
 	
-	<div class="span5">
+	<div class="col-md-5">
 		
 	</div> 	   
 	 	   

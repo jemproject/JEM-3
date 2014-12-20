@@ -19,9 +19,9 @@ $params		= $this->item->params;
 if (!($this->formhandler == 2) && !($this->formhandler == 1)) { 
 ?>
 
-<div class="row-fluid">
-<div class="span12">
-<div class="span7">
+<div class="container-fluid">
+<div class="row">
+<div class="col-md-7">
 	<dl>
 		<?php 
 		if ($this->item->maxplaces > 0 ) {?>
@@ -55,14 +55,12 @@ if (!($this->formhandler == 2) && !($this->formhandler == 1)) {
 		<dd class=""><?php echo $this->item->booked; ?></dd>
 		<?php } ?>
 	</dl>
-</div><!-- end span7 -->
-
-
-<div class="span5">
+</div>
+<div class="col-md-5">
 </div>
 
-</div><!-- end span 12 -->
-</div><!-- end span row-fluid -->
+</div>
+</div><!-- end container-fluid -->
 <?php } ?>
 
 <!-- Attending users -->
