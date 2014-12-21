@@ -392,6 +392,7 @@ abstract class modJEMteaserHelper
 				$result = JText::sprintf('MOD_JEM_TEASER_UNTIL', $result);
 			}
 		}
+
 		return $result;
 	}
 
