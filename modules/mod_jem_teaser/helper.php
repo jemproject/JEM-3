@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 3.0.4
+ * @version 3.0.5
  * @package JEM
  * @subpackage JEM Teaser Module
  * @copyright (C) 2013-2014 joomlaeventmanager.net
@@ -392,6 +392,7 @@ abstract class modJEMteaserHelper
 				$result = JText::sprintf('MOD_JEM_TEASER_UNTIL', $result);
 			}
 		}
+
 		return $result;
 	}
 

@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 3.0.4
+ * @version 3.0.5
  * @package JEM
  * @copyright (C) 2013-2014 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -614,8 +614,7 @@ class JEMModelImport extends JModelLegacy {
 				$el10x = false;
 				JError::$legacy = $legacyValue;
 			}
-				
-				
+								
 			if ($el10x == false) {
 			
 				##################
@@ -623,10 +622,10 @@ class JEMModelImport extends JModelLegacy {
 				###################
 			
 				# now we'll check if it's v1.1
+				
 				$db = $this->_db;
 				$query = $db->getQuery(true);
-				$query->select('ownedvenuesonly');
-				$query->from($this->prefix.'eventlist_settings');
+				$query = 'SHOW COLUMNS FROM '.$this->prefix.'eventlist_settings LIKE "ownedvenuesonly"';
 				$db->setQuery($query);
 					
 				# Set legacy to false to be able to catch DB errors.
@@ -981,7 +980,7 @@ class JEMModelImport extends JModelLegacy {
 	 *
 	 * @todo: increment catid when catid=1 exists.
 	 */
-	public function transformEventlistData($tablename, &$data) {
+	public function transformEventlistData($tablename, &$data,$version) {
 		
 		# in here we will pass the field-data of the table
 		# and rearrange it a bit
@@ -1007,21 +1006,35 @@ class JEMModelImport extends JModelLegacy {
 		
 		# cats_event_relations
 		if($tablename == "eventlist_cats_event_relations") {
-			$dataNew = array();
-			foreach($data as $row) {
-				// Category-event relations is now stored in seperate table
-				$rowNew = new stdClass();
-				$rowNew->catid = $row->catsid;
-				$rowNew->itemid = $row->id;
-				$rowNew->ordering = 0;
-
-				// JEM now has a root category, so we shift IDs by 1
-				$rowNew->catid++;
-
-				$dataNew[] = $rowNew;
+			
+			# check version
+			if ($version == '1.1.x') {
+				$dataNew = array();
+				foreach($data as $row) {
+					// JEM now has a root category, so we shift IDs by 1
+					$rowNew = new stdClass();
+					$rowNew->catid = $row->catid;
+					$rowNew->itemid = $row->itemid;
+					$rowNew->catid++;
+					$dataNew[] = $rowNew;
+				}
+				return $dataNew;
+			} else {
+				$dataNew = array();
+				foreach($data as $row) {
+					// Category-event relations is now stored in seperate table
+					$rowNew = new stdClass();
+					$rowNew->catid = $row->catsid;
+					$rowNew->itemid = $row->id;
+					$rowNew->ordering = 0;
+				
+					// JEM now has a root category, so we shift IDs by 1
+					$rowNew->catid++;
+				
+					$dataNew[] = $rowNew;
+				}
+				return $dataNew;
 			}
-
-			return $dataNew;
 		}
 
 		# events
@@ -1050,7 +1063,8 @@ class JEMModelImport extends JModelLegacy {
 				}
 			}
 		}
-
+		
+	
 		# groupmembers
 		# groups
 

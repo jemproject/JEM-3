@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 3.0.4
+ * @version 3.0.5
  * @package JEM
  * @copyright (C) 2013-2014 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -44,10 +44,5 @@ $group = 'globalattribs';
 		<div id="lb1" style="display:none" class="control-group">
 			<div class="control-label"><?php echo $this->form->getLabel('lightbox'); ?></div>
 			<div class="controls"><?php echo $this->form->getInput('lightbox'); ?></div>
-		</div>
-		
-		<div class="control-group">
-			<div class="control-label"><?php echo $this->form->getLabel('img_position',$group); ?></div>
-			<div class="controls"><?php echo $this->form->getInput('img_position',$group); ?></div>
 		</div>
 </fieldset>

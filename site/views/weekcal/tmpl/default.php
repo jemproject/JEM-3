@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 3.0.4
+ * @version 3.0.5
  * @package JEM
  * @copyright (C) 2013-2014 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -11,7 +11,11 @@ defined('_JEXEC') or die;
 // Load tooltips behavior
 JHtml::_('bootstrap.tooltip');
 ?>
-
+<script>
+jQuery( document ).ready(function( $ ) {
+	calendar();
+});
+</script>
 <div id="jem" class="jlcalendar jem_calendar<?php echo $this->pageclass_sfx;?>">
 	<?php if ($this->params->get('show_page_heading', 1)): ?>
 		<h1>

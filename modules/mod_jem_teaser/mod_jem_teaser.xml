@@ -138,7 +138,7 @@
 					label="MOD_JEM_TEASER_SHOW_DATE_OR_DAY_DIFFERENCE"
 					description="MOD_JEM_TEASER_SHOW_DATE_OR_DAY_DIFFERENCE_DESC"
 				>
-					<option value="1">MOD_JEM_TEASER_SHOW_DATE</option>
+					<option value="1">MOD_JEM_TEASER_SHOW_TIME</option>
 					<option value="2">MOD_JEM_TEASER_SHOW_DAY_DIFFERENCE</option>
 				</field>
 				<field name="moduleclass_sfx" type="text"

@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 3.0.4
+ * @version 3.0.5
  * @package JEM
  * @copyright (C) 2013-2014 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -67,9 +67,9 @@ $mapType = $this->mapType;
 
 <!-- EVENT-INFO -->	
 <?php if ($this->img_position == 1) { ?>
-<div class="row-fluid container-fluid">
-	<div class="span12 row">
-		<div class="span7 col-md-7">	
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-7">	
 <?php } ?>
 
 	<dl class="event_info">
@@ -162,7 +162,7 @@ $mapType = $this->mapType;
 		</dl>
 		
 		<?php if ($this->img_position == 1) { ?>
-		</div><div class="span5 col-md-5">
+		</div><div class="col-md-5">
 			<?php if ($this->dimage) { ?>
 			<div class="image imageright">
 				<?php echo JemOutput::flyer($this->item, $this->dimage, 'event'); ?>
@@ -270,9 +270,9 @@ $mapType = $this->mapType;
 
 <!-- VENUE-INFO -->
 <?php if ($this->img_position == 1) { ?>
-	<div class="row-fluid container-fluid">
-		<div class="span12 row">
-			<div class="span7 col-md-7">	
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-7">	
 <?php } ?>
 		<dl class="location_dl" itemprop="location" itemscope itemtype="http://schema.org/PostalAddress">
 			<dt class="venue"><?php echo JText::_('COM_JEM_LOCATION').':'; ?></dt>
@@ -344,7 +344,7 @@ $mapType = $this->mapType;
 		</dl>
 		
 	<?php if ($this->img_position == 1) { ?>
-	</div><div class="span5 col-md-5">
+	</div><div class="col-md-5">
 <!-- image -->
 	<?php if ($this->limage) { ?>
 		<div class="image imageright">

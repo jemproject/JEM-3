@@ -1,11 +1,13 @@
 /**
- * @version 3.0.4
+ * @version 3.0.5
  * @package JEM
  * @copyright (C) 2013-2014 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
  
+
+
 
 div#jem td.attendees {
 	text-align: center;
@@ -82,6 +84,24 @@ div#jem {
 	border-radius:5px;
 	padding:10px;
 }
+
+
+div#jem .container-fluid .row *,
+div#jem .container-fluid .row *:before,
+div#jem .container-fluid .row *:after {
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+div#jem .jem_editevent *,
+div#jem .jem_editevent *:before,
+div#jem .jem_editevent *:after {
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
 
 div#jem a {
 	background:transparent;
@@ -525,6 +545,12 @@ div#jem div.info_container {
 }
 div#jem fieldset.alert {
 	border:1px solid grey;
+	color: #C09853;
+	padding: 8px 35px 8px 14px;
+	margin-bottom: 18px;
+	text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.5);
+	background-color: #FCF8E3;
+	border-radius: 4px;
 }	
 div#jem .edit_imageflyer {
 	width: 200px;
@@ -652,7 +678,6 @@ div#jem {
 	line-height: 20px;
 	font-family: arial,sans-serif;
 	text-align: left;
-	box-sizing: inherit !important;
 }
 div#jem a {
     color: #095197;
@@ -967,8 +992,8 @@ div#jem div .col-md-5
  {
 	position: relative;
 	min-height: 1px;
-	padding-left: 20px;
-	padding-right: 20px;
+	padding-left: 10px;
+	padding-right: 10px;
 }
 div#jem div .row {
   margin-left: -20px;
@@ -1460,6 +1485,10 @@ div#jem div {
 	margin: 0px;
 }
 
+div#jem input[type="submit"] {
+    height: 29px;
+}
+
 div#jem .clearfix:after, 
 div#jem .container:after, 
 div#jem .container-fluid:after, 
@@ -1507,3 +1536,14 @@ div#jem .modal-footer:after {
     display: table;
 }
 
+div#jem input[type="checkbox"] {
+	margin: 3px 0px;
+	margin-right: 10px;
+	display: inline;
+}
+
+
+div#jem .btn[disabled] {
+	border:1px solid #666666;
+	opacity: 1;
+}

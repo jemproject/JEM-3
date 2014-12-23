@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 3.0.4
+ * @version 3.0.5
  * @package JEM
  * @copyright (C) 2013-2014 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -19,9 +19,9 @@ $params		= $this->item->params;
 if (!($this->formhandler == 2) && !($this->formhandler == 1)) { 
 ?>
 
-<div class="row-fluid">
-<div class="span12">
-<div class="span7">
+<div class="container-fluid">
+<div class="row">
+<div class="col-md-7">
 	<dl>
 		<?php 
 		if ($this->item->maxplaces > 0 ) {?>
@@ -55,14 +55,12 @@ if (!($this->formhandler == 2) && !($this->formhandler == 1)) {
 		<dd class=""><?php echo $this->item->booked; ?></dd>
 		<?php } ?>
 	</dl>
-</div><!-- end span7 -->
-
-
-<div class="span5">
+</div>
+<div class="col-md-5">
 </div>
 
-</div><!-- end span 12 -->
-</div><!-- end span row-fluid -->
+</div>
+</div><!-- end container-fluid -->
 <?php } ?>
 
 <!-- Attending users -->
@@ -88,8 +86,8 @@ if ($type_attendee == 2) {
 if ( $check || JFactory::getUser()->authorise('core.manage')) :
 ?>
 
-<div class="row-fluid">
-<div class="span12 userbox">
+<div class="container-fluid">
+<div class="row userbox">
 
 <!-- output names -->
 	<span class="register label label-info"><?php echo JText::_('COM_JEM_REGISTERED_USERS'); ?></span>
@@ -211,8 +209,8 @@ endforeach;
 <div class="clearfix"></div>
 
 
-<div class="row-fluid">
-		<div class="span12">
+<div class="container-fluid">
+		<div class="row">
 		<?php
 if ($this->print == 0) {
 switch ($this->formhandler) {

@@ -1,5 +1,5 @@
 /**
- * @version 3.0.4
+ * @version 3.0.5
  * @package JEM
  * @subpackage JEM Teaser Module
  * @copyright (C) 2013-2014 joomlaeventmanager.net
@@ -10,85 +10,70 @@
 div#jemmoduleteaser {
 	width: 100%;
 }
-
-
 div#jemmoduleteaser .teaser-jem a,
-div#jemmoduleteaser .venue-title a
- {
- background-color: transparent;
- color:#095197;
+div#jemmoduleteaser .venue-title a{
+	background-color: transparent;
+	color:#095197;
 }
-
 #jemmoduleteaser .calendar {
-
-background-repeat: no-repeat;
-width: 82px;
-height: 84px;
-font-family: 'Lucida Grande',Geneva,Arial,Verdana,sans-serif;
-text-align: center;
-padding: 5px 0 0 0;
-float:left;
-margin-right:10px;
+	background-repeat: no-repeat;
+	width: 82px;
+	height: 84px;
+	font-family: 'Lucida Grande',Geneva,Arial,Verdana,sans-serif;
+	text-align: center;
+	padding: 5px 0 0 0;
+	float:left;
+	margin-right:10px;
 } 
 #jemmoduleteaser span.share{
-margin-left:95px;
+	margin-left:95px;
 }
-
 #jemmoduleteaser .calendar .yearteaser{
-font-size: 6px;
-height:5px;
-color: #e1e1e1;
+	font-size: 6px;
+	height:5px;
+	color: #e1e1e1;
 }
-
 #jemmoduleteaser .calendar .monthteaser {
-font-size: 8px;
-color: white;
-text-transform:uppercase;
-font-weight:bold;
-text-shadow: #666 1px 1px 1px;
-height:20px;
+	font-size: 8px;
+	color: white;
+	text-transform:uppercase;
+	font-weight:bold;
+	text-shadow: #666 1px 1px 1px;
+	height:20px;
 }
-
 #jemmoduleteaser .calendar .dayteaser{
-font-weight:bold;
-font-size: 12px;
-padding-top:3px;
-color: #333;
+	font-weight:bold;
+	font-size: 12px;
+	padding-top:3px;
+	color: #333;
 }
-
 #jemmoduleteaser .calendar .daynumteaser{
-font-size: 29px;
-font-weight:bold;
-color: #FF6400;
-text-shadow: #000 1px 1px 1px;
+	font-size: 29px;
+	font-weight:bold;
+	color: #FF6400;
+	text-shadow: #000 1px 1px 1px;
 }
-
-
 div#jemmoduleteaser .eventset {
 	width: 100%;
 	margin-bottom: 10px;
 	padding: 5px;
 	border-bottom: 1px dotted silver;
     text-align: left;
-	
 }
-
 div#jemmoduleteaser .event-title {
 	padding-left: 21px;
 //	background: url(img/flag_red.png) no-repeat;
 	font-size: medium;
 }
 
-div#jemmoduleteaser .time {
+div#jemmoduleteaser div.time {
 	padding-left: 20px;
 	background: url(img/time.png) no-repeat;
-	padding-top: 2px;
 }
 
 div#jemmoduleteaser div.date {
-	padding-left: 0px;
 //	background: url(img/date.png) no-repeat;
-	padding-top: 2px;
+	text-align: center;
 }
 
 div#jemmoduleteaser .category {

@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 3.0.4
+ * @version 3.0.5
  * @package JEM
  * @copyright (C) 2013-2014 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -177,6 +177,7 @@ class com_jemInstallerScript
 		$this->getHeader(); ?>
 		<h2><?php echo JText::_('COM_JEM_UPDATE_STATUS'); ?>:</h2>
 		<p><?php echo JText::sprintf('COM_JEM_UPDATE_TEXT', $parent->get('manifest')->version); ?></p>;
+		
 		<?php
 	}
 
