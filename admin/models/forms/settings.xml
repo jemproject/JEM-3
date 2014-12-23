@@ -975,6 +975,15 @@
 				<option	value="1">COM_JEM_GLOBAL_FIELD_REGISTERED</option>
 				<option	value="2">COM_JEM_GLOBAL_FIELD_BOTH</option>
 			</field>
+			<field name="img_position" type="list"
+			label="COM_JEM_SETTINGS_FIELD_IMAGE_POSITION"
+			description="COM_JEM_SETTINGS_FIELD_IMAGE_POSITION_DESC"
+			default="0"
+			required="false"
+		>
+			<option value="0">COM_JEM_SETTINGS_FIELD_IMAGE_POSITION_TOP</option>
+			<option value="1">COM_JEM_SETTINGS_FIELD_IMAGE_POSITION_RGHTSD</option>
+		</field>
 		</fieldset>
 
 		<fieldset name="evvenues"
@@ -1059,15 +1068,6 @@
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
-			<field name="img_position" type="list"
-			label="COM_JEM_SETTINGS_FIELD_IMAGE_POSITION"
-			description="COM_JEM_SETTINGS_FIELD_IMAGE_POSITION_DESC"
-			default="0"
-			required="false"
-		>
-			<option value="0">COM_JEM_SETTINGS_FIELD_IMAGE_POSITION_TOP</option>
-			<option value="1">COM_JEM_SETTINGS_FIELD_IMAGE_POSITION_RGHTSD</option>
-		</field>
 		</fieldset>
 		
 		<fieldset name="usercontrolaceventguest"
