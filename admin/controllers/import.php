@@ -262,11 +262,10 @@ class JemControllerImport extends JControllerLegacy {
 						$data = $model->getEventlistData("eventlist_events", $current, $size);
 						
 						# transform eventlist-data to jem-data
-						$data = $model->transformEventlistData("eventlist_cats_event_relations", $data);
+						$data = $model->transformEventlistData("eventlist_cats_event_relations", $data,$version);
 					
 						# EL-data is transformed, now we'll store it in the jem-table
 						$model->storeTableData($tables->imptables[$table], $data);
-						
 					} else {
 						// This helps to prevent special cases in the following code
 						$total = 0;
@@ -299,7 +298,7 @@ class JemControllerImport extends JControllerLegacy {
 						$data = $model->getEventlistData("eventlist_events", $current, $size);
 						
 						# transform eventlist-data to jem-data
-						$data = $model->transformEventlistData("eventlist_cats_event_relations", $data);
+						$data = $model->transformEventlistData("eventlist_cats_event_relations", $data,$version);
 						
 						# EL-data is transformed, now we'll store it in the jem-table
 						$model->storeTableData("eventlist_cats_event_relations", $data);
@@ -310,7 +309,7 @@ class JemControllerImport extends JControllerLegacy {
 					$data = $model->getEventlistData("eventlist_categories", $current, $size);
 					
 					# transform eventlist-data to jem-data
-					$data = $model->transformEventlistData("eventlist_categories", $data);
+					$data = $model->transformEventlistData("eventlist_categories", $data,$version);
 					
 					# EL-data is transformed, now we'll store it in the jem-table
 					$model->storeTableData("eventlist_categories", $data);
@@ -320,7 +319,7 @@ class JemControllerImport extends JControllerLegacy {
 						$data = $model->getEventlistData($tables->imptables[$table], $current, $size);
 				
 						# transform eventlist-data to jem-data
-						$data = $model->transformEventlistData($tables->imptables[$table], $data);
+						$data = $model->transformEventlistData($tables->imptables[$table], $data,$version);
 				
 						# EL-data is transformed, now we'll store it in the jem-tables 
 						$model->storeTableData($tables->imptables[$table], $data);
