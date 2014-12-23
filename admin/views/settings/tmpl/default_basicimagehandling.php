@@ -45,9 +45,4 @@ $group = 'globalattribs';
 			<div class="control-label"><?php echo $this->form->getLabel('lightbox'); ?></div>
 			<div class="controls"><?php echo $this->form->getInput('lightbox'); ?></div>
 		</div>
-		
-		<div class="control-group">
-			<div class="control-label"><?php echo $this->form->getLabel('img_position',$group); ?></div>
-			<div class="controls"><?php echo $this->form->getInput('img_position',$group); ?></div>
-		</div>
 </fieldset>
