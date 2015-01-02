@@ -883,56 +883,6 @@
 				<option value="2">COM_JEM_GOOGLE_MAP_DISP</option>
 				<option value="3">COM_JEM_GOOGLE_MAP_DISP_API</option>
 			</field>
-			<field name="global_show_ownedvenuesonly" type="list"
-				label="COM_JEM_SETTINGS_FIELD_SHOW_OWNEDVENUESONLY"
-				description="COM_JEM_SETTINGS_FIELD_SHOW_OWNEDVENUESONLY_DESC"
-				class="inputbox"
-				default="0"
-				required="false"
-			>
-				<option value="0">JNO</option>
-				<option value="1">JYES</option>
-			</field>
-			<field name="editevent_show_attachmentstab" type="list"
-				label="COM_JEM_SETTINGS_FIELD_EDITEVENT_SHOW_ATTACHMENTSTAB"
-				description="COM_JEM_SETTINGS_FIELD_EDITEVENT_SHOW_ATTACHMENTSTAB_DESC"
-				class="inputbox"
-				default="0"
-				required="false"
-			>
-				<option value="0">JNO</option>
-				<option value="1">JYES</option>
-			</field>
-			<field name="editevent_show_othertab" type="list"
-				label="COM_JEM_SETTINGS_FIELD_EDITEVENT_SHOW_OTHERTAB"
-				description="COM_JEM_SETTINGS_FIELD_EDITEVENT_SHOW_OTHERTAB_DESC"
-				class="inputbox"
-				default="0"
-				required="false"
-			>
-				<option value="0">JNO</option>
-				<option value="1">JYES</option>
-			</field>
-			<field name="editevent_show_featured" type="list"
-				label="COM_JEM_SETTINGS_FIELD_EDITEVENT_SHOW_FEATURED"
-				description="COM_JEM_SETTINGS_FIELD_EDITEVENT_SHOW_FEATURED_DESC"
-				class="inputbox"
-				default="0"
-				required="false"
-			>
-				<option value="0">JNO</option>
-				<option value="1">JYES</option>
-			</field>
-			<field name="editevent_show_published" type="list"
-				label="COM_JEM_SETTINGS_FIELD_EDITEVENT_SHOW_PUBLISHED"
-				description="COM_JEM_SETTINGS_FIELD_EDITEVENT_SHOW_PUBLISHED_DESC"
-				class="inputbox"
-				default="0"
-				required="false"
-			>
-				<option value="0">JNO</option>
-				<option value="1">JYES</option>
-			</field>
 		</fieldset>
 
 		<fieldset name="evevents"
@@ -1069,7 +1019,7 @@
 				<option value="1">JYES</option>
 			</field>
 		</fieldset>
-		
+
 		<fieldset name="usercontrolaceventguest"
 		label="COM_JEM_SETTINGS_FIELDSET_GUEST_AC_EVENTS"
 	>
@@ -1473,6 +1423,61 @@
 		description="COM_JEM_SETTINGS_FIELD_VIEW_CALENDAR_SHOW_VENUE_DESC"
 		class="btn-group btn-group-yesno"
 		default="0"
+		required="false"
+		>
+		<option value="0">JNO</option>
+		<option value="1">JYES</option>
+	</field>
+</fieldset>
+</fields>
+<!-- settings for Editevent-view -->
+<fields name="veditevent">
+<fieldset name="veditevent">
+	<field name="global_show_ownedvenuesonly" type="radio"
+		label="COM_JEM_SETTINGS_FIELD_SHOW_OWNEDVENUESONLY"
+		description="COM_JEM_SETTINGS_FIELD_SHOW_OWNEDVENUESONLY_DESC"
+		class="btn-group btn-group-yesno"
+		default="1"
+		required="false"
+		>
+		<option value="0">JNO</option>
+		<option value="1">JYES</option>
+	</field>
+	<field name="editevent_show_attachmentstab" type="radio"
+		label="COM_JEM_SETTINGS_FIELD_EDITEVENT_SHOW_ATTACHMENTSTAB"
+		description="COM_JEM_SETTINGS_FIELD_EDITEVENT_SHOW_ATTACHMENTSTAB_DESC"
+		class="btn-group btn-group-yesno"
+		default="1"
+		required="false"
+		>
+		<option value="0">JNO</option>
+		<option value="1">JYES</option>
+	</field>
+	<field name="editevent_show_othertab" type="radio"
+		label="COM_JEM_SETTINGS_FIELD_EDITEVENT_SHOW_OTHERTAB"
+		description="COM_JEM_SETTINGS_FIELD_EDITEVENT_SHOW_OTHERTAB_DESC"
+		class="btn-group btn-group-yesno"
+		default="1"
+		required="false"
+		>
+		<option value="0">JNO</option>
+		<option value="1">JYES</option>
+	</field>
+	<field name="editevent_show_featured" type="radio"
+		label="COM_JEM_SETTINGS_FIELD_EDITEVENT_SHOW_FEATURED"
+		description="COM_JEM_SETTINGS_FIELD_EDITEVENT_SHOW_FEATURED_DESC"
+		class="btn-group btn-group-yesno"
+		default="1"
+		required="false"
+		>
+		<option value="0">JNO</option>
+		<option value="1">JYES</option>
+	</field>
+	<field name="editevent_show_published" type="radio"
+		label="COM_JEM_SETTINGS_FIELD_EDITEVENT_SHOW_PUBLISHED"
+		description="COM_JEM_SETTINGS_FIELD_EDITEVENT_SHOW_PUBLISHED_DESC"
+		class="btn-group btn-group-yesno"
+		default="1"
 		required="false"
 		>
 		<option value="0">JNO</option>

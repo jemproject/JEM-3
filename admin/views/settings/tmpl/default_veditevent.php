@@ -7,6 +7,7 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 defined('_JEXEC') or die;
+$group = 'veditevent';
 ?>
 <fieldset class="form-horizontal">
 	<legend><?php echo JText::_('COM_JEM_SETTINGS_LEGEND_VEDITEVENT'); ?></legend>

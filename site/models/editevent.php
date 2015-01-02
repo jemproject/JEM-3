@@ -188,11 +188,11 @@ class JemModelEditevent extends JEMModelEvent
 				$value->catid = $catId;
 			}
 			else {
-				
+
 				$access_change = $user->authorise('core.edit.state', 'com_jem');
-				
+
 				$value->params->set('access-change', $access_change);
-				
+
 			}
 		}
 
@@ -266,6 +266,7 @@ class JemModelEditevent extends JEMModelEvent
 	{
 		$app 				= JFactory::getApplication();
 		$params		 		= JemHelper::globalattribs();
+		$vsettings			= JemHelper::viewSettings('veditevent');
 		$jinput				= $app->input;
 		$itemid				= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
 
@@ -303,7 +304,7 @@ class JemModelEditevent extends JEMModelEvent
 			}
 		}
 
-		if ($params->get('global_show_ownedvenuesonly')) {
+		if ($vsettings->get('global_show_ownedvenuesonly',1)) {
 			$user = JFactory::getUser();
 			$userid = $user->get('id');
 			$where[] = ' created_by = ' . (int) $userid;
@@ -335,10 +336,10 @@ class JemModelEditevent extends JEMModelEvent
 		$app 				= JFactory::getApplication();
 		$jinput 			= $app->input;
 		$itemid				= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
-		
+
 		$limit 				= $app->getUserStateFromRequest('com_jem.selectvenue.'.$itemid.'.limit', 'limit', $jemsettings->display_num, 'uint');
 		$limitstart 		= $app->input->get('limitstart', 0, 'uint');
-		
+
 		$query = $this->buildQueryVenues();
 		$total = $this->_getListCount($query);
 
@@ -377,10 +378,10 @@ class JemModelEditevent extends JEMModelEvent
 		$app 				= JFactory::getApplication();
 		$jinput 			= $app->input;
 		$itemid				= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
-		
+
 		$limit 				= $app->getUserStateFromRequest('com_jem.selectcontact.'.$itemid.'.limit', 'limit', $jemsettings->display_num, 'uint');
 		$limitstart 		= $app->input->get('limitstart', 0, 'uint');
-		
+
 		$query = $this->buildQueryContacts();
 		$total = $this->_getListCount($query);
 

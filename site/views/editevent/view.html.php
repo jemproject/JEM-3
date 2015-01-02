@@ -20,7 +20,7 @@ class JemViewEditevent extends JViewLegacy
 
 	public function display($tpl = null)
 	{
-	
+
 		if ($this->getLayout() == 'choosevenue') {
 			$this->_displaychoosevenue($tpl);
 			return;
@@ -36,7 +36,7 @@ class JemViewEditevent extends JViewLegacy
 		$app		= JFactory::getApplication();
 		$user		= JFactory::getUser();
 		$valguest	= JEMUser::validate_guest();
-		
+
 		$document	= JFactory::getDocument();
 		$model		= $this->getModel();
 		$menu		= $app->getMenu();
@@ -44,8 +44,11 @@ class JemViewEditevent extends JViewLegacy
 		$pathway	= $app->getPathway();
 		$url		= JUri::root();
 		$template	= $app->getTemplate();
-		
+
 		$settings 	= JemHelper::globalattribs();
+		$vsettings	= JemHelper::viewSettings('veditevent');
+
+		$this->vsettings = $vsettings;
 		$this->settings = $settings;
 		$this->valguest	= $valguest;
 
@@ -172,25 +175,25 @@ class JemViewEditevent extends JViewLegacy
 		// add css file
 		JemHelper::loadCss('jem');
 		JemHelper::loadCustomCss();
-		
-		# Load scripts	
+
+		# Load scripts
 		JHtml::_('bootstrap.framework');
-		
-		if ($settings->get('editevent_show_attachmentstab',1)) {
+
+		if ($vsettings->get('editevent_show_attachmentstab',1)) {
 			JHtml::_('script', 'com_jem/attachments.js', false, true);
 		}
-		
-		if ($settings->get('editevent_show_othertab',1)) {
+
+		if ($vsettings->get('editevent_show_othertab',1)) {
 			JHtml::_('script', 'com_jem/other.js', false, true);
 			JHtml::_('script', 'com_jem/recurrence.js', false, true);
 		}
-		
+
 		JHtml::_('script', 'com_jem/seo.js', false, true);
 		if (JEMUser::validate_guest()) {
 			JHtml::_('script', 'com_jem/antispam.js', false, true);
 		}
 		JHtml::_('behavior.tabstate');
-	
+
 
 		// Escape strings for HTML output
 		$this->pageclass_sfx = htmlspecialchars($item->params->get('pageclass_sfx'));
@@ -260,7 +263,7 @@ class JemViewEditevent extends JViewLegacy
 		$filter_state     = $app->getUserStateFromRequest('com_jem.selectvenue.'.$itemid.'.filter_state', 'filter_state', '*', 'word');
 		$search           = $app->getUserStateFromRequest('com_jem.selectvenue.'.$itemid.'.filter_search', 'filter_search', '', 'string');
 		$search           = $db->escape(trim(JString::strtolower($search)));
-		
+
 		// Get/Create the model
 		$rows  		= $this->get('Venues');
 		$pagination = $this->get('VenuesPagination');
@@ -310,7 +313,7 @@ class JemViewEditevent extends JViewLegacy
 		$filter_type      = $app->getUserStateFromRequest('com_jem.selectcontact.'.$itemid.'.filter_type', 'filter_type', '', 'int');
 		$search           = $app->getUserStateFromRequest('com_jem.selectcontact.'.$itemid.'.filter_search', 'filter_search', '', 'string');
 		$search           = $db->escape(trim(JString::strtolower($search)));
-		
+
 		// Load css
 		JemHelper::loadCss('jem');
 

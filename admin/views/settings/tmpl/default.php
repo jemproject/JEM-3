@@ -80,7 +80,7 @@ window.addEvent('domready', function(){
 		lbon();
 	}
 
-	
+
 	$("jform_oldevent").addEvent('change', testevhandler);
 
 	var evhandler = $("jform_oldevent");
@@ -280,11 +280,11 @@ function commoff()
 		<div class="span12">
 			<!-- Tabs -->
 			<?php echo JHtml::_('bootstrap.startTabSet', 'myTab', array('active' => 'settings-basic')); ?>
-			
-			
-			
+
+
+
 			<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'settings-basic', JText::_('COM_JEM_BASIC_SETTINGS', true)); ?>
-			<div class="row-fluid">	
+			<div class="row-fluid">
 				<div class="span6">
 					<?php echo $this->loadTemplate('basicdisplay'); ?>
 					<?php echo $this->loadTemplate('basiceventhandling'); ?>
@@ -294,12 +294,12 @@ function commoff()
 				</div>
 			</div>
 			<?php echo JHtml::_('bootstrap.endTab'); ?>
-			
-			
+
+
 			<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'settings-views', JText::_('COM_JEM_SETTINGS_TAB_VIEWS', true)); ?>
 <!-- # we're in tab view -->
-			
-					
+
+
 			<?php echo JHtml::_('tabs.start', 'views', $options); ?>
 			<?php echo JHtml::_('tabs.panel', JText::_('COM_JEM_SETTINGS_TAB_VCALENDAR'), 'vcalendar'); ?>
 			<div class="row-fluid">
@@ -319,12 +319,16 @@ function commoff()
 					<?php echo $this->loadTemplate('vcategory'); ?>
 				</div>
 			</div>
-					
+
 			<?php echo JHtml::_('tabs.panel', JText::_('COM_JEM_SETTINGS_TAB_VEVENT'), 'vevent'); ?>
 			<div class="row-fluid">
 					<?php echo $this->loadTemplate('vevent'); ?>
 			</div>
-			
+			<?php echo JHtml::_('tabs.panel', JText::_('COM_JEM_SETTINGS_TAB_VEDITEVENT'), 'veditevent'); ?>
+			<div class="row-fluid">
+					<?php echo $this->loadTemplate('veditevent'); ?>
+			</div>
+
 			<?php echo JHtml::_('tabs.panel', JText::_('COM_JEM_SETTINGS_TAB_VVENUE'), 'vvenue'); ?>
 			<div class="row-fluid">
 				<div class="span6">
@@ -338,46 +342,46 @@ function commoff()
 				</div>
 			</div>
 			<?php echo JHtml::_('tabs.end'); ?>
-			
-			
-		
+
+
+
 			<?php echo JHtml::_('bootstrap.endTab'); ?>
-			
-			
+
+
 			<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'settings-layout', JText::_('COM_JEM_LAYOUT', true)); ?>
 			<div class="row-fluid">
 				<?php echo $this->loadTemplate('layout'); ?>
 			</div>
 			<?php echo JHtml::_('bootstrap.endTab'); ?>
-			
-			
-			
+
+
+
 			<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'settings-params', JText::_('COM_JEM_GLOBAL_PARAMETERS', true)); ?>
 				<?php echo $this->loadTemplate('parameters'); ?>
 			<?php echo JHtml::_('bootstrap.endTab'); ?>
-			
-			
-			
+
+
+
 			<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'settings-usercontrol', JText::_('COM_JEM_USER_CONTROL', true)); ?>
 			<div class="row-fluid">
 				<?php echo $this->loadTemplate('usercontrol'); ?>
 			</div>
 			<?php echo JHtml::_('bootstrap.endTab'); ?>
-			
-			
-			
+
+
+
 			<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'settings-configinfo', JText::_('COM_JEM_SETTINGS_TAB_CONFIGINFO', true)); ?>
 			<div class="row-fluid">
 				<?php echo $this->loadTemplate('configinfo'); ?>
 			</div>
-			<?php echo JHtml::_('bootstrap.endTab'); ?>	
-				
-				
-				
-			<?php echo JHtml::_('bootstrap.endTabSet'); ?>	
+			<?php echo JHtml::_('bootstrap.endTab'); ?>
+
+
+
+			<?php echo JHtml::_('bootstrap.endTabSet'); ?>
 		</div>
 	</div>
-	
+
 	<!-- Hidden fields -->
 	<input type="hidden" name="task" value="">
 	<input type="hidden" name="id" value="1">
