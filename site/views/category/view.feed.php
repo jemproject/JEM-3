@@ -51,24 +51,48 @@ class JemViewCategory extends JViewLegacy
 			$displaydate = JemOutput::formatLongDateTime($row->dates, $row->times,$row->enddates, $row->endtimes);
 
 			// url link to event
-			$link = JRoute::_(JemHelperRoute::getEventRoute($row->id));
+			$link = JRoute::_(JemHelperRoute::getEventRoute($row->slug));
 
-			// feed item description text
+			// Venue
+			$venue = "";
+
+			if ($row->venue && $row->city) {
+				$venue .= $row->venue.' / '.$row->city;
+			}
+
+			if ($row->venue && !($row->city)) {
+				$venue .= $row->venue;
+			}
+
+			if (!$row->venue && $row->city) {
+				$venue .= $row->city;
+			}
+
+			if (!$row->venue && !$row->city) {
+				$venue .= "";
+			}
+
+			// combine description variable
 			$description  = JText::_('COM_JEM_TITLE').': '.$title.'<br />';
-			$description .= JText::_('COM_JEM_VENUE').': '.$row->venue.' / '.$row->city.'<br />';
+			if ($venue) {
+				$description .= JText::_('COM_JEM_VENUE').': '.$venue.'<br />';
+			}
 			$description .= JText::_('COM_JEM_CATEGORY').': '.$category.'<br />';
 			$description .= JText::_('COM_JEM_DATE').': '.$displaydate.'<br />';
-			$description .= JText::_('COM_JEM_DESCRIPTION').': '.$row->fulltext;
+			$description .= JText::_('COM_JEM_DESCRIPTION').': '.$row->introtext.$row->fulltext;
 
-			$created = ($row->created ? date('r', strtotime($row->created)) : '');
+			# define pubdate
+			$date = false;
 
 			// load individual item creator class
 			$item = new JFeedItem();
 			$item->title 		= $title;
 			$item->link 		= $link;
 			$item->description 	= $description;
-			$item->date 		= $created;
 			$item->category 	= $category;
+			if ($date) {
+				$item->date			= $date;
+			}
 
 			// loads item info into rss array
 			$doc->addItem($item);

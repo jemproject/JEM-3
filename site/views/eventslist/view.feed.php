@@ -71,18 +71,17 @@ class JemViewEventslist extends JViewLegacy
 				$venue .= "";
 			}
 
-			// feed item description text
+			// combine description variable
 			$description  = JText::_('COM_JEM_TITLE').': '.$title.'<br />';
 			if ($venue) {
-				$description .= JText::_('COM_JEM_VENUE').': '.$venue.'<BR />';
+				$description .= JText::_('COM_JEM_VENUE').': '.$venue.'<br />';
 			}
 			$description .= JText::_('COM_JEM_CATEGORY').': '.$category.'<br />';
 			$description .= JText::_('COM_JEM_DATE').': '.$displaydate.'<br />';
 			$description .= JText::_('COM_JEM_DESCRIPTION').': '.$row->introtext.$row->fulltext;
 
-			// date
-			# if we want to show the created time we can uncheck this line
-			/* $created = ($row->created ? date('r', strtotime($row->created)) : ''); */
+			# define pubdate
+			$date = false;
 
 			// load individual item creator class
 			$item = new JFeedItem();
@@ -90,24 +89,13 @@ class JemViewEventslist extends JViewLegacy
 			$item->link 		= $link;
 			$item->description 	= $description;
 			$item->category 	= $category;
+			if ($date) {
+				$item->date			= $date;
+			}
 
 			// loads item info into rss array
 			$doc->addItem($item);
 		}
-
-		# do we want an image on top of the feed?
-		/*
-		$image = new JFeedImage();
-		$image->url		= JHtml::_('image', 'com_jem/feed.png', null, null, true, true);
-		$image->link	= JUri::base();
-		$image->title	= 'Home';
-		$image->height	= '120';
-		$image->width	= '120';
-
-		# assign image to the document
-		$this->document->image = $image;
-		*/
-
 	}
 }
 ?>
