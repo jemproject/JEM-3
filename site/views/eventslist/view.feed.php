@@ -50,28 +50,64 @@ class JemViewEventslist extends JViewLegacy
 			$displaydate = JemOutput::formatLongDateTime($row->dates, $row->times,$row->enddates, $row->endtimes);
 
 			// url link to event
-			$link = JRoute::_(JemHelperRoute::getEventRoute($row->id));
+			$link = JRoute::_(JemHelperRoute::getEventRoute($row->slug));
+
+			// Venue
+			$venue = "";
+
+			if ($row->venue && $row->city) {
+				$venue .= $row->venue.' / '.$row->city;
+			}
+
+			if ($row->venue && !($row->city)) {
+				$venue .= $row->venue;
+			}
+
+			if (!$row->venue && $row->city) {
+				$venue .= $row->city;
+			}
+
+			if (!$row->venue && !$row->city) {
+				$venue .= "";
+			}
 
 			// feed item description text
 			$description  = JText::_('COM_JEM_TITLE').': '.$title.'<br />';
-			$description .= JText::_('COM_JEM_VENUE').': '.$row->venue.' / '.$row->city.'<br />';
+			if ($venue) {
+				$description .= JText::_('COM_JEM_VENUE').': '.$venue.'<BR />';
+			}
 			$description .= JText::_('COM_JEM_CATEGORY').': '.$category.'<br />';
 			$description .= JText::_('COM_JEM_DATE').': '.$displaydate.'<br />';
-			$description .= JText::_('COM_JEM_DESCRIPTION').': '.$row->fulltext;
+			$description .= JText::_('COM_JEM_DESCRIPTION').': '.$row->introtext.$row->fulltext;
 
-			$created = ($row->created ? date('r', strtotime($row->created)) : '');
+			// date
+			# if we want to show the created time we can uncheck this line
+			/* $created = ($row->created ? date('r', strtotime($row->created)) : ''); */
 
 			// load individual item creator class
 			$item = new JFeedItem();
 			$item->title 		= $title;
 			$item->link 		= $link;
 			$item->description 	= $description;
-			$item->date 		= $created;
 			$item->category 	= $category;
 
 			// loads item info into rss array
 			$doc->addItem($item);
 		}
+
+		# do we want an image on top of the feed?
+		/*
+		$image = new JFeedImage();
+		$image->url		= JHtml::_('image', 'com_jem/feed.png', null, null, true, true);
+		$image->link	= JUri::base();
+		$image->title	= 'Home';
+		$image->height	= '120';
+		$image->width	= '120';
+
+		# assign image to the document
+		$this->document->image = $image;
+		*/
+
 	}
 }
 ?>
