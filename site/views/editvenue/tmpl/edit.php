@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 3.0.5
+ * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2014 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -254,11 +254,21 @@ jQuery(function() {
 					 echo $this->form->renderField('country');
 					 echo $this->form->renderField('latitude');
 					 echo $this->form->renderField('longitude');
-					 echo $this->form->renderField('url');
 					 echo $this->form->renderField('published');
 					 echo $this->form->renderField('map');
 					 ?>
 			</fieldset>
+			
+			<!-- CONTACT DETAILS -->
+			<fieldset class="form-horizontal">
+				<legend><span class="legendcolor"><?php echo JText::_('COM_JEM_CONTACT_DETAILS'); ?></span></legend>
+				<?php foreach($this->form->getFieldset('contact') as $field): ?>
+				<div class="control-group">
+					<div class="control-label"><?php echo $field->label; ?></div>
+					<div class="controls"><?php echo $field->input; ?></div>
+				</div>
+				<?php endforeach; ?>
+			</fieldset>			
 			
 			<fieldset class="form-vertical">
 			<div class="clr"></div>
