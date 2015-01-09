@@ -16,6 +16,10 @@ defined ( '_JEXEC' ) or die ();
  * JEM package installer script.
  */
 class Pkg_JemInstallerScript {
+
+	private $oldRelease = "";
+	private $newRelease = "";
+	
 	/**
 	 * List of supported versions. Newest version first!
 	 * @var array
@@ -69,6 +73,21 @@ class Pkg_JemInstallerScript {
 		// Prevent installation if requirements are not met.
 		if (!$this->checkRequirements($manifest->version)) return false;
 
+		// abort if the release being installed is not newer than the currently installed version
+		if ($type == 'update') {
+			// Installed component version
+			$this->oldRelease = $this->getParam('version');
+
+			// Installing component version as per Manifest file
+			$this->newRelease = $parent->get('manifest')->version;
+
+			if ($this->oldRelease < 2.1.0) {
+				Jerror::raiseNotice(100,JText::sprintf('COM_JEM_PREFLIGHT_PREVENTINSTALL',$this->oldRelease));	
+				return false;	
+			}
+			
+		}
+		
 		return true;
 	}
 
@@ -182,5 +201,21 @@ class Pkg_JemInstallerScript {
 		<h1><?php echo JText::_('PKG_JEM'); ?></h1>
 		<p class="small"><?php echo JText::_('PKG_JEM_INSTALLATION_HEADER'); ?></p>
 		<?php
+	}
+	
+	/**
+	 * Get a parameter from the manifest file (actually, from the manifest cache).
+	 *
+	 * @param $name  The name of the parameter
+	 *
+	 * @return The parameter
+	 */
+	private function getParam($name) {
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('manifest_cache')->from('#__extensions')->where(array("type = 'package'", "element = 'pkg_jem'"));
+		$db->setQuery($query);
+		$manifest = json_decode($db->loadResult(), true);
+		return $manifest[$name];
 	}
 }
