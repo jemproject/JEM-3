@@ -1,12 +1,9 @@
 <?php
 /*
- * 
- * 
  * @package My Events
  * @version 1.9.1
  * @author JEM Community
- * @copyright (C) 2013-2013 joomlaeventmanager.net
- * 
+ * @copyright (C) 2013-2015 joomlaeventmanager.net
  * 
  * Former info:
  * @copyright Copyright (C) 2006 -2010 Tekdi Web Solutions . All rights reserved.

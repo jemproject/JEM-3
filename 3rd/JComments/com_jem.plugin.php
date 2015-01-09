@@ -2,9 +2,9 @@
 /**
  * JComments plugin for JEM
  * 
- * @version 3.0.5
+ * @version 3.0.6
  * @package JEM
- * @copyright (C) 2013-2014 joomlaeventmanager.net
+ * @copyright (C) 2013-2015 joomlaeventmanager.net
  * 
  * @author Sergey M. Litvinov (smart@joomlatune.ru)
  * @copyright (C) 2006-2013 by Sergey M. Litvinov (http://www.joomlatune.ru)

@@ -3,7 +3,7 @@
  * @package My Events
  * @version JEM v1.9.1 & CB 1.9
  * @author JEM Community
- * @copyright (C) 2013-2013 joomlaeventmanager.net
+ * @copyright (C) 2013-2015 joomlaeventmanager.net
  *
  * Just a note:
  * Keep the query code inline with my-attending view

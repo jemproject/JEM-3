@@ -3,7 +3,7 @@
  * @package My Attending
  * @version 1.9.1
  * @author JEM Community
- * @copyright (C) 2013-2013 joomlaeventmanager.net
+ * @copyright (C) 2013-2015 joomlaeventmanager.net
  * 
  * Former info:
  * english.php 2nd November 2007 Himangi Chhatre (Tekdi Eco Services pvt ltd)
