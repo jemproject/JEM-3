@@ -102,6 +102,9 @@ CREATE TABLE IF NOT EXISTS `#__jem_venues` (
   `custom9` varchar(100) NOT NULL DEFAULT '',
   `custom10` varchar(100) NOT NULL DEFAULT '',
   `timezone` varchar(100) NOT NULL DEFAULT '',
+  `phone` varchar(100) NOT NULL DEFAULT '',
+  `fax` varchar(100) NOT NULL DEFAULT '',
+  `email` varchar(100) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM CHARACTER SET `utf8` COLLATE `utf8_general_ci`;
 
@@ -340,13 +343,14 @@ CREATE TABLE IF NOT EXISTS `#__jem_settings` (
   `defaultCountry` varchar(10) NOT NULL,
   `globalattribs` varchar(5120) NOT NULL,
   `css` varchar (5120) NOT NULL DEFAULT '',
-  `version` varchar (20) NOT NULL DEFAULT '3.0.5',
+  `version` varchar (20) NOT NULL DEFAULT '3.0.6',
   `vevent` text NOT NULL DEFAULT '',
   `vvenue` text NOT NULL DEFAULT '',
   `vvenues` text NOT NULL DEFAULT '',
   `vcategories` text NOT NULL DEFAULT '',
   `vcategory` text NOT NULL DEFAULT '',
   `vcalendar` text NOT NULL DEFAULT '',
+  `veditevent` text NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE `utf8_general_ci`;
 
