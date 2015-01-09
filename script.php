@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 3.0.5
+ * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2014 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -253,9 +253,9 @@ class com_jemInstallerScript
 
 		if ($type == 'update') {
 
-			// Changes between 3.0.2 -> 3.0.3
-			if (version_compare($this->oldRelease, '3.0.3', 'lt') && version_compare($this->newRelease, '3.0.2', 'gt')) {
-				$this->update303();
+			#  changes between 3.0.3 -> 3.0.6
+			if (version_compare($this->newRelease, '3.0.5', '>') && version_compare($this->oldRelease, '3.0.6', '<')) {
+				$this->update306();
 			}
 
 		}
@@ -538,20 +538,25 @@ class com_jemInstallerScript
 				$db->execute();							
 			endforeach;
 		endforeach;	
-
-		
+	}
+	
+	/**
+	 * Updating files: 305->306
+	 */
+	private function update306(){
+	
 		##############################
 		## Removal of version field ##
 		##############################
 		
-		$query = $db->getQuery(true);
+		$db		= JFactory::getDbo();
 		$settings_result = array();
 			
 		try
 		{
 			$db->setQuery('SHOW FULL COLUMNS FROM #__jem_settings');
 			$fields = $db->loadObjectList();
-				
+		
 			foreach ($fields as $field){
 				$settings_result[$field->Field] = preg_replace("/[(0-9)]/", '', $field->Type);
 			}
@@ -565,13 +570,23 @@ class com_jemInstallerScript
 		
 		if ($settings_result) {
 			if (in_array('version',$settings_result)) {
-				# the version was not added in the update.sql of JEM 3.0.2 but it was in the install.sql
-				# as the field can be removed we've to check if the field is there and if so then fire up an action
-				# to remove the field
+				
 				$query = $db->getQuery(true);
-				$db->setQuery('alter table #__jem_settings drop column version');
-				$db->query();
-			} 
+				$columns = array('version');
+				$values = array('3.0.6');
+ 
+				$query
+					->insert($db->quoteName('#__jem_settings'))
+					->columns($db->quoteName($columns))
+					->values(implode(',', $values));
+ 
+				$db->setQuery($query);
+				$db->execute();
+			} else {
+				$db->getQuery(true);
+				$db->setQuery('alter table #__jem_settings add column version varchar (20) NOT NULL DEFAULT "3.0.6"');
+				$db->execute();
+			}
 		}
 	}
 }
