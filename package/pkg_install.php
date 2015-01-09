@@ -3,7 +3,7 @@
  * JEM Package
  * @package JEM.Package
  *
- * @copyright (C) 2013-2014 joomlaeventmanager.net
+ * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  *
  * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
