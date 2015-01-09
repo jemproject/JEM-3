@@ -701,9 +701,12 @@ class com_jemInstallerScript
 		                '#__jem_categories',
 		                '#__jem_cats_event_relations',
 		                '#__jem_countries',
+						'#__jem_dates',
 		                '#__jem_events',
 		                '#__jem_groupmembers',
 		                '#__jem_groups',
+						'#__jem_recurrence',
+						'#__jem_recurrence_master',
 		                '#__jem_register',
 		                '#__jem_settings',
 		                '#__jem_venues');
