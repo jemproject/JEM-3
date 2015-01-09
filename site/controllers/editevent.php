@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 3.0.5
+ * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2014 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -507,32 +507,6 @@ class JEMControllerEditevent extends JControllerForm
 	}
 
 
-
-	/**
-	 * Method to save a record.
-	 *
-	 * @param	string	$key	The name of the primary key of the URL variable.
-	 * @param	string	$urlVar	The name of the URL variable if different from the primary key (sometimes required to avoid router collisions).
-	 *
-	 * @return	Boolean	True if successful, false otherwise.
-	 */
-	public function savex($key = null, $urlVar = 'a_id')
-	{
-		// Load the backend helper for filtering.
-		//require_once JPATH_ADMINISTRATOR.'/components/com_jem/helpers/helper.php';
-
-		$result = parent::save($key, $urlVar);
-
-		//parent::save($key, $urlVar);
-
-		// If ok, redirect to the return page.
-		if ($result) {
-			$this->setRedirect($this->getReturnPage());
-		}
-
-		return $result;
-	}
-
 	/**
 	 * Saves the registration to the database
 	 */
@@ -644,10 +618,7 @@ class JEMControllerEditevent extends JControllerForm
 		$recurrence_table->groupid_ref = "";
 		$recurrence_table->store();
 
-		# redirect back
-		//$this->setRedirect(JRoute::_('index.php?option=' . $this->option . '&view=' . $this->view_item. $this->getRedirectToItemAppend($recordId, $urlVar), false));
-
-		// Redirect back to the edit screen.
+		# Redirect back to the edit screen.
 		$this->setRedirect(
 				JRoute::_(
 						'index.php?option=' . $this->option . '&view=' . $this->view_item
