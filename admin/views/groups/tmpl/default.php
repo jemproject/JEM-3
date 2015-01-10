@@ -62,7 +62,7 @@ $params		= (isset($this->state->params)) ? $this->state->params : new JObject();
 		<thead>
 			<tr>
 			<th width="5" class="center"><?php echo JText::_( 'COM_JEM_NUM' ); ?></th>
-			<th width="1%" class="center hidden-phone"><?php echo JHtml::_('grid.checkall'); ?></th>
+			<th width="1%" class="center"><?php echo JHtml::_('grid.checkall'); ?></th>
 			<th width="30%" class="title"><?php echo JHtml::_('grid.sort', 'COM_JEM_GROUP_NAME', 'name', $listDirn, $listOrder ); ?></th>
 			<th><?php echo JText::_( 'COM_JEM_DESCRIPTION' ); ?></th>
 			</tr>
@@ -88,7 +88,7 @@ $params		= (isset($this->state->params)) ? $this->state->params : new JObject();
 			?>
 			<tr class="row<?php echo $i % 2; ?>">
 				<td class="center"><?php echo $this->pagination->getRowOffset( $i ); ?></td>
-				<td class="center hidden-phone"><?php echo JHtml::_('grid.id', $i, $row->id); ?></td>
+				<td class="center"><?php echo JHtml::_('grid.id', $i, $row->id); ?></td>
 				<td>
 					<?php if ($row->checked_out) : ?>
 						<?php echo JHtml::_('jgrid.checkedout', $i, $row->editor, $row->checked_out_time, 'groups.', $canCheckin); ?>

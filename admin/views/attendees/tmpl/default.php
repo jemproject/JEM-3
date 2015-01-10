@@ -90,7 +90,7 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 		<thead>
 			<tr>
 				<th width="1%" class="center"><?php echo JText::_('COM_JEM_NUM'); ?></th>
-				<th width="1%" class="center hidden-phone"><?php echo JHtml::_('grid.checkall'); ?></th>
+				<th width="1%" class="center"><?php echo JHtml::_('grid.checkall'); ?></th>
 				<th class="title"><?php echo JHtml::_('searchtools.sort', 'COM_JEM_NAME', 'u.name', $listDirn, $listOrder); ?></th>
 				<th class="title"><?php echo JHtml::_('searchtools.sort', 'COM_JEM_USERNAME', 'u.username', $listDirn, $listOrder); ?></th>
 				<th class="title"><?php echo JText::_('COM_JEM_EMAIL'); ?></th>
@@ -114,7 +114,7 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 			?>
 			<tr class="row<?php echo $i % 2; ?>">
 				<td class="center"><?php echo $this->pagination->getRowOffset( $i ); ?></td>
-				<td class="center hidden-phone"><?php echo JHtml::_('grid.id', $i, $row->id); ?></td>
+				<td class="center"><?php echo JHtml::_('grid.id', $i, $row->id); ?></td>
 				<td><a href="<?php echo JRoute::_('index.php?option=com_jem&task=attendee.edit&id='.(int)$row->id.'&eid='.$this->eventid); ?>"><?php echo $row->name; ?></a></td>
 				<td>
 					<a href="<?php echo JRoute::_('index.php?option=com_users&task=user.edit&id='.(int)$row->uid); ?>"><?php echo $row->username; ?></a>

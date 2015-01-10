@@ -65,7 +65,7 @@ $settings	= $this->settings;
 		<thead>
 			<tr>
 				<th width="1%" class="center"><?php echo JText::_('COM_JEM_NUM'); ?></th>
-				<th width="1%" class="center hidden-phone"><?php echo JHtml::_('grid.checkall'); ?></th>
+				<th width="1%" class="center"><?php echo JHtml::_('grid.checkall'); ?></th>
 				<th class="nowrap"><?php echo JHtml::_('searchtools.sort', 'COM_JEM_DATE', 'a.dates', $listDirn, $listOrder ); ?></th>
 				<th><?php echo JText::_('COM_JEM_EVENT_TIME'); ?></th>
 				<th class="nowrap"><?php echo JHtml::_('searchtools.sort', 'COM_JEM_EVENT_TITLE', 'a.title', $listDirn, $listOrder ); ?></th>
@@ -119,7 +119,7 @@ $settings	= $this->settings;
 			?>
 			<tr class="row<?php echo $i % 2; ?>">
 				<td class="center"><?php echo $this->pagination->getRowOffset( $i ); ?></td>
-				<td class="center hidden-phone"><?php echo JHtml::_('grid.id', $i, $row->id); ?></td>
+				<td class="center"><?php echo JHtml::_('grid.id', $i, $row->id); ?></td>
 				<td>
 					<?php if ($row->checked_out) : ?>
 						<?php echo JHtml::_('jgrid.checkedout', $i, $row->editor, $row->checked_out_time, 'events.', $canCheckin); ?>

@@ -59,7 +59,7 @@ $sortFields = $this->getSortFields();
 	<table class="table table-striped" id="eventList">
 		<thead>
 			<tr>
-				<th width="1%" class="hidden-phone">
+				<th width="1%" class="">
 					<?php echo JHtml::_('grid.checkall'); ?>
 				</th>
 				<th>
@@ -139,7 +139,7 @@ $sortFields = $this->getSortFields();
 				*/
 			?>
 				<tr class="row<?php echo $i % 2; ?>" sortable-group-id="<?php echo $item->parent_id; ?>" item-id="<?php echo $item->id ?>" parents="<?php echo $parentsStr ?>" level="<?php echo $item->level ?>">
-					<td class="center hidden-phone">
+					<td class="center">
 						<?php echo JHtml::_('grid.id', $i, $item->id); ?>
 					</td>
 					<td>			
@@ -181,7 +181,7 @@ $sortFields = $this->getSortFields();
 					<td class="center">
 						<?php echo JHtml::_('jgrid.published', $item->published, $i, 'categories.', $canChange);?>
 					</td>
-					<td class="order">
+					<td class="order hidden-phone">
 						<?php
 								$iconClass = '';
 								if (!$canChange)

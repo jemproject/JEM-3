@@ -63,7 +63,7 @@ $settings	= $this->settings;
 	<thead>
 		<tr>
 			<th width="1%" class="center"><?php echo JText::_('COM_JEM_NUM'); ?></th>
-			<th width="1%" class="center hidden-phone"><?php echo JHtml::_('grid.checkall'); ?></th>
+			<th width="1%" class="center"><?php echo JHtml::_('grid.checkall'); ?></th>
 			<th class="title"><?php echo JHtml::_('searchtools.sort', 'COM_JEM_VENUE', 'a.venue', $listDirn, $listOrder ); ?></th>
 			<th width="20%"><?php echo JHtml::_('searchtools.sort', 'COM_JEM_ALIAS', 'a.alias', $listDirn, $listOrder ); ?></th>
 			<th><?php echo JText::_('COM_JEM_WEBSITE'); ?></th>
@@ -102,7 +102,7 @@ $settings	= $this->settings;
 			?>
 			<tr class="row<?php echo $i % 2; ?>">
 				<td class="center"><?php echo $this->pagination->getRowOffset( $i ); ?></td>
-				<td class="center hidden-phone"><?php echo JHtml::_('grid.id', $i, $row->id); ?></td>
+				<td class="center"><?php echo JHtml::_('grid.id', $i, $row->id); ?></td>
 				<td align="left" class="venue">
 					<?php if ($row->checked_out) : ?>
 						<?php echo JHtml::_('jgrid.checkedout', $i, $row->editor, $row->checked_out_time, 'venues.', $canCheckin); ?>
