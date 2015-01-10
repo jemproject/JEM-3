@@ -168,8 +168,9 @@ class com_jemInstallerScript
 		<?php
 		
 		$globalParams = $this->getGlobalParams();
+		$cleanup = $globalParams->get('global_cleanup_db_on_uninstall', 0);
 		$this->disableJemMenuItems();
-		if ($globalParams->get('global_cleanup_db_on_uninstall', 0)) {
+		if (!empty($cleanup)) {
 			// user decided to fully remove JEM - so do it!
 			$this->removeJemMenuItems();
 			$this->removeAllJemTables();
