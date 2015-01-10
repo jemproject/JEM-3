@@ -139,7 +139,7 @@ $sortFields = $this->getSortFields();
 				*/
 			?>
 				<tr class="row<?php echo $i % 2; ?>" sortable-group-id="<?php echo $item->parent_id; ?>" item-id="<?php echo $item->id ?>" parents="<?php echo $parentsStr ?>" level="<?php echo $item->level ?>">
-					<td class="center">
+					<td class="center hidden-phone">
 						<?php echo JHtml::_('grid.id', $i, $item->id); ?>
 					</td>
 					<td>			

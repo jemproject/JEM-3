@@ -119,7 +119,7 @@ $settings	= $this->settings;
 			?>
 			<tr class="row<?php echo $i % 2; ?>">
 				<td class="center"><?php echo $this->pagination->getRowOffset( $i ); ?></td>
-				<td class="center"><?php echo JHtml::_('grid.id', $i, $row->id); ?></td>
+				<td class="center hidden-phone"><?php echo JHtml::_('grid.id', $i, $row->id); ?></td>
 				<td>
 					<?php if ($row->checked_out) : ?>
 						<?php echo JHtml::_('jgrid.checkedout', $i, $row->editor, $row->checked_out_time, 'events.', $canCheckin); ?>
