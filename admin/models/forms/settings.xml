@@ -839,7 +839,7 @@
 			<field name="global_cleanup_db_on_uninstall" type="radio"
 				label="COM_JEM_SETTINGS_FIELD_CLEANUP_DB_ON_UNINSTALL"
 				description="COM_JEM_SETTINGS_FIELD_CLEANUP_DB_ON_UNINSTALL_DESC"
-				class="inputbox"
+				class="btn-group btn-group-yesno"
 				default="0"
 				required="false"
 			>
