@@ -211,7 +211,6 @@ $slidesOptions = array(
 				echo $this->form->renderField('country');
 				echo $this->form->renderField('latitude');
 				echo $this->form->renderField('longitude');
-				echo $this->form->renderField('url');
 				echo $this->form->renderField('map');
 			?>
 		</fieldset>
@@ -375,7 +374,18 @@ $slidesOptions = array(
 				<input id="cp-latlong" class="btn" type="button" value="<?php echo JText::_('COM_JEM_VENUE_COPY_COORDINATES'); ?>" />
 			</div>
 		</fieldset>
-	
+		<?php echo JHtml::_('bootstrap.endSlide'); ?>
+		
+		<!-- CONTACT DETAILS -->
+		<?php echo JHtml::_('bootstrap.addSlide', 'venue-sliders-'.$this->item->id, JText::_('COM_JEM_GLOBAL_CONTACT_DETAILS_SLIDE'), 'venue-contact'); ?>
+		<fieldset class="form-vertical">
+				<?php foreach($this->form->getFieldset('contact') as $field): ?>
+					<div class="control-group">
+						<div class="control-label"><?php echo $field->label; ?></div>
+						<div class="controls"><?php echo $field->input; ?></div>
+					</div>
+				<?php endforeach; ?>
+		</fieldset>
 		<?php echo JHtml::_('bootstrap.endSlide'); ?>
 		<?php echo JHtml::_('bootstrap.endAccordion'); ?>
 	
