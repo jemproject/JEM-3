@@ -240,13 +240,14 @@ class JEMModelImport extends JModelLegacy {
 
 		// parse each row
 		foreach ($data as $row) {
+				
 			$values = array();
 			
 			// parse each specified field and retrieve corresponding value for the record
 			foreach ($fieldsname as $k => $field) {
 				$values[$field] = $row[$k];
 			}
-			
+
 			// retrieve the specified table
 			$object = JTable::getInstance($tablename, $prefix);
 			$objectname = get_class($object);
@@ -333,11 +334,10 @@ class JEMModelImport extends JModelLegacy {
 			} else {
 
 				// Check/Store of tables other then Category
-
+				
 				// Make sure the data is valid
 				if (!$object->check()) {
 					$this->setError($object->getError());
-					echo JText::_('COM_JEM_IMPORT_ERROR_CHECK') . $object->getError() . "\n";
 					continue;
 				}
 
@@ -375,6 +375,7 @@ class JEMModelImport extends JModelLegacy {
 						$events[$object->id][$cat] = 0;
 					}
 				}
+				
 			}
 		} // foreach
 
