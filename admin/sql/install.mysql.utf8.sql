@@ -59,6 +59,8 @@ CREATE TABLE IF NOT EXISTS `#__jem_events` (
   `startDateTime` varchar(100) NOT NULL,
   `endDateTime` varchar(100) NOT NULL,
   `note` varchar(100) NOT NULL,
+  `mailing` TEXT NOT NULL,
+  `opendate` INT NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM CHARACTER SET `utf8` COLLATE `utf8_general_ci`;
 
