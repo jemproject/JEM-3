@@ -39,6 +39,15 @@
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
 				</field>
+				<field type="radio" name="reg_mail_creator"
+					label="PLG_JEM_MAILER_GLOBAL_FIELD_CREATOR_LABEL"
+					default="0"
+					description="PLG_JEM_MAILER_FIELD_REGNOTE_REGISTRATION_CREATOR_DESC"
+					class="btn-group btn-group-yesno"
+				>
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
 
 				<field type="spacer"/>
 				<field type="spacer" label="PLG_JEM_MAILER_WAITINGLIST"></field>
@@ -56,6 +65,15 @@
 					label="PLG_JEM_MAILER_GLOBAL_FIELD_ADMIN_LABEL"
 					default="0"
 					description="PLG_JEM_MAILER_SETTINGS_ADMIN_REG_ONOFF_DESC"
+					class="btn-group btn-group-yesno"
+				>
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field type="radio" name="reg_mail_creator_onoff"
+					label="PLG_JEM_MAILER_GLOBAL_FIELD_CREATOR_LABEL"
+					default="0"
+					description="PLG_JEM_MAILER_SETTINGS_CREATOR_REG_ONOFF_DESC"
 					class="btn-group btn-group-yesno"
 				>
 					<option value="0">JNO</option>
@@ -83,15 +101,24 @@
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
 				</field>
+				<field type="radio" name="unreg_mail_creator"
+					label="PLG_JEM_MAILER_GLOBAL_FIELD_CREATOR_LABEL"
+					default="0"
+					description="PLG_JEM_MAILER_CREATOR_UNREG_DESC"
+					class="btn-group btn-group-yesno"
+				>
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
 			</fieldset>
 
 			<fieldset name="event_notifications" label="PLG_JEM_MAILER_EVENT_NOTIFICATIONS">
 				<field type="spacer" label="PLG_JEM_MAILER_NEW_EVENT_TITLE"></field>
 
-				<field type="radio" name="newevent_mail_user"
-					label="PLG_JEM_MAILER_GLOBAL_FIELD_USER_LABEL"
+				<field type="radio" name="newevent_mail_creator"
+					label="PLG_JEM_MAILER_GLOBAL_FIELD_CREATOR_LABEL"
 					default="0"
-					description="PLG_JEM_MAILER_USER_NEW_EVENT_DESC"
+					description="PLG_JEM_MAILER_CREATOR_NEW_EVENT_DESC"
 					class="btn-group btn-group-yesno"
 				>
 					<option value="0">JNO</option>
@@ -128,10 +155,10 @@
 				<field type="spacer"/>
 				<field type="spacer" label="PLG_JEM_MAILER_EDIT_EVENT_TITLE"></field>
 
-				<field type="radio" name="editevent_mail_user"
-					label="PLG_JEM_MAILER_GLOBAL_FIELD_USER_LABEL"
+				<field type="radio" name="editevent_mail_creator"
+					label="PLG_JEM_MAILER_GLOBAL_FIELD_CREATOR_LABEL"
 					default="0"
-					description="PLG_JEM_MAILER_USER_EDIT_EVENT_DESC"
+					description="PLG_JEM_MAILER_CREATOR_EDIT_EVENT_DESC"
 					class="btn-group btn-group-yesno"
 				>
 					<option value="0">JNO</option>
@@ -169,6 +196,15 @@
 					label="PLG_JEM_MAILER_GROUP_LABEL"
 					default="0"
 					description="PLG_JEM_MAILER_EDIT_EVENT_GROUP"
+					class="btn-group btn-group-yesno"
+				>
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field type="radio" name="editevent_mail_editor"
+					label="PLG_JEM_MAILER_GLOBAL_FIELD_EDITOR_LABEL"
+					default="0"
+					description="PLG_JEM_MAILER_EDITOR_EDIT_EVENT_DESC"
 					class="btn-group btn-group-yesno"
 				>
 					<option value="0">JNO</option>
