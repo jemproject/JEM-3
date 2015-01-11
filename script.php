@@ -270,12 +270,14 @@ class com_jemInstallerScript
 
 		if ($type == 'update') {
 
-			#  changes between 3.0.3 -> 3.0.6
-			if (version_compare($this->newRelease, '3.0.5', '>') && version_compare($this->oldRelease, '3.0.6', '<')) {
-				$this->update306();
+			// Changes between 3.0.2 -> 3.0.3
+			if (version_compare($this->oldRelease, '3.0.3', 'lt') && version_compare($this->newRelease, '3.0.2', 'gt')) {
+				$this->update303();
 			}
 
-		} elseif ($type == 'install') {
+		}
+		
+		if ($type == 'install') {
 			$this->fixJemMenuItems();
 		}
 	}
@@ -637,56 +639,6 @@ class com_jemInstallerScript
 				$db->execute();							
 			endforeach;
 		endforeach;	
-	}
-	
-	/**
-	 * Updating files: 305->306
-	 */
-	private function update306(){
-	
-		##############################
-		## Removal of version field ##
-		##############################
-		
-		$db		= JFactory::getDbo();
-		$settings_result = array();
-			
-		try
-		{
-			$db->setQuery('SHOW FULL COLUMNS FROM #__jem_settings');
-			$fields = $db->loadObjectList();
-		
-			foreach ($fields as $field){
-				$settings_result[$field->Field] = preg_replace("/[(0-9)]/", '', $field->Type);
-			}
-		
-			$settings_result = array_keys($settings_result);
-		}
-		catch (Exception $e)
-		{
-			$settings_result = false;
-		}
-		
-		if ($settings_result) {
-			if (in_array('version',$settings_result)) {
-				
-				$query = $db->getQuery(true);
-				$columns = array('version');
-				$values = array('3.0.6');
- 
-				$query
-					->insert($db->quoteName('#__jem_settings'))
-					->columns($db->quoteName($columns))
-					->values(implode(',', $values));
- 
-				$db->setQuery($query);
-				$db->execute();
-			} else {
-				$db->getQuery(true);
-				$db->setQuery('alter table #__jem_settings add column version varchar (20) NOT NULL DEFAULT "3.0.6"');
-				$db->execute();
-			}
-		}
 	}
 	
 	
