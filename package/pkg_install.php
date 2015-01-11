@@ -81,7 +81,7 @@ class Pkg_JemInstallerScript {
 			// Installing component version as per Manifest file
 			$this->newRelease = $parent->get('manifest')->version;
 
-			if ($this->oldRelease < 2.1.0) {
+			if ($this->oldRelease < 3) {
 				Jerror::raiseNotice(100,JText::sprintf('COM_JEM_PREFLIGHT_PREVENTINSTALL',$this->oldRelease));	
 				return false;	
 			}
