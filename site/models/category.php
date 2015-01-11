@@ -96,27 +96,27 @@ class JemModelCategory extends JemModelEventslist
 		// Initiliase variables.
 		$app			= JFactory::getApplication('site');
 		$jemsettings	= JemHelper::config();
+		$settings		= JemHelper::globalattribs();
 		$jinput         = JFactory::getApplication()->input;
 		$task           = $jinput->getCmd('task');
 		$itemid			= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
 		$pk				= $jinput->getInt('id');
 
 		$this->setState('category.id', $pk);
-
 		$this->setState('filter.req_catid',$pk);
 
-		// Load the parameters. Merge Global and Menu Item params into new object
-		$params = $app->getParams();
-		$menuParams = new JRegistry;
-
-		if ($menu = $app->getMenu()->getActive()) {
-			$menuParams->loadString($menu->params);
+		$global = new JRegistry;
+		$global->loadString($settings);
+		
+		$params = clone $global;
+		$params->merge($global);
+		if ($menu = $app->getMenu()->getActive())
+		{
+			$params->merge($menu->params);
 		}
+		$this->setState('params', $params);
 
-		$mergedParams = clone $menuParams;
-		$mergedParams->merge($params);
-
-		$this->setState('params', $mergedParams);
+		
 		$user		= JFactory::getUser();
 		// Create a new query object.
 		$db		= $this->getDbo();
@@ -141,7 +141,26 @@ class JemModelCategory extends JemModelEventslist
 		if ($task == 'archive') {
 			$this->setState('filter.published',2);
 		} else {
-			$this->setState('filter.published',1);
+			# we've to check if the setting for the filter has been applied
+			if ($params->get('global_show_archive_icon')) {
+				$this->setState('filter.published',1);
+			} else {
+				# retrieve the status to be displayed
+				switch ($params->get('global_show_eventstatus')) {
+					case 0:
+						$status = 1;
+						break;
+					case 1:
+						$status = 2;
+						break;
+					case 2:
+						$status = array(1,2);
+						break;
+					default:
+						$status = 1;
+				}
+				$this->setState('filter.published',$status);
+			}
 		}
 
 		###########

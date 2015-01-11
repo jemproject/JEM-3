@@ -31,6 +31,13 @@ $options = array(
 <script>
 window.addEvent('domready', function(){
 
+	$('jform_globalattribs_global_show_archive_icon0').addEvent('click', showarchiveoff);
+	$('jform_globalattribs_global_show_archive_icon1').addEvent('click', showarchiveon);
+
+	if($('jform_globalattribs_global_show_archive_icon1').checked) {
+		showarchiveon();
+	}
+
 	$('jform_showcity0').addEvent('click', cityoff);
 	$('jform_showcity1').addEvent('click', cityon);
 
@@ -144,8 +151,6 @@ function testcomm()
 	}
 }
 
-
-
 function testevhandler()
 {
 	var evhandler = $("jform_oldevent");
@@ -156,6 +161,18 @@ function testevhandler()
 	} else {
 		evhandleroff();
 	}
+}
+
+function showarchiveon()
+{
+	var eventstatus = document.getElementById('jform_globalattribs_global_show_eventstatus');
+	document.getElementById('jform_globalattribs_global_show_eventstatus').getParent().getParent().style.display = 'none';
+	eventstatus.value = '0';
+}
+
+function showarchiveoff()
+{
+	document.getElementById('jform_globalattribs_global_show_eventstatus').getParent().getParent().style.display = '';
 }
 
 function cityon()

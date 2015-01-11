@@ -36,7 +36,8 @@ class JemViewVenue extends JEMView {
 			$settings 		= JemHelper::globalattribs();
 			$vsettings		= JemHelper::viewSettings('vvenue');
 			$db 			= JFactory::getDBO();
-			$params 		= $app->getParams('com_jem');
+			$state 			= $this->get('State');
+			$params 		= $state->params;
 			$pathway 		= $app->getPathWay ();
 			$uri 			= JFactory::getURI();
 			$task 			= $jinput->getCmd('task');

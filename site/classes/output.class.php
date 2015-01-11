@@ -139,7 +139,7 @@ class JEMOutput {
 		$settings2	= JemHelper::config();
 		$app		= JFactory::getApplication();
 
-		if ($settings->get('global_show_archive_icon',1)) {
+		if ($params->get('global_show_archive_icon',1)) {
 
 			# check if we're in a print-screen
 			if ($app->input->getInt('print')) {

@@ -731,6 +731,17 @@
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
+			<field name="global_show_eventstatus" type="list"
+				label="COM_JEM_SETTINGS_FIELD_SHOW_EVENTSTATUS"
+				description="COM_JEM_SETTINGS_FIELD_SHOW_EVENTSTATUS_DESC"
+				class="inputbox"
+				default="0"
+				required="false"
+			>
+				<option value="0">JPUBLISHED</option>
+				<option value="1">JARCHIVED</option>
+				<option value="2">COM_JEM_BOTH</option>
+			</field>
 			<field name="global_show_email_icon" type="radio"
 				label="COM_JEM_SETTINGS_FIELD_SHOW_EMAIL_ICON"
 				description="COM_JEM_SETTINGS_FIELD_SHOW_EMAIL_ICON_DESC"

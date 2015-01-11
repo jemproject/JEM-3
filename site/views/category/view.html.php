@@ -40,9 +40,8 @@ class JemViewCategory extends JEMView
 			$db  			= JFactory::getDBO();
 			$user			= JFactory::getUser();
 			$print			= $jinput->getBool('print');
-
-			//get menu information
-			$params 		= $app->getParams();
+			$state 			= $this->get('State');
+			$params 		= $state->params;
 			$uri 			= JFactory::getURI();
 			$pathway 		= $app->getPathWay();
 			$menu			= $app->getMenu();

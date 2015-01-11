@@ -56,13 +56,25 @@ class JemModelEventslist extends JModelList
 	protected function populateState($ordering = null, $direction = null)
 	{
 		$app				= JFactory::getApplication();
-		$jemsettings		= JemHelper::config();
+		$settings			= JemHelper::globalattribs();
+		$settings2			= JemHelper::config();
 		$jinput             = $app->input;
 		$task               = $jinput->getCmd('task');
 		$itemid				= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
-			
+		
+		$global = new JRegistry;
+		$global->loadString($settings);
+		
+		$params = clone $global;
+		$params->merge($global);
+		if ($menu = $app->getMenu()->getActive())
+		{
+			$params->merge($menu->params);
+		}
+		$this->setState('params', $params);
+		
 		# List state information
-		$limit		= $app->getUserStateFromRequest('com_jem.eventslist.'.$itemid.'.limit', 'limit', $jemsettings->display_num, 'uint');
+		$limit		= $app->getUserStateFromRequest('com_jem.eventslist.'.$itemid.'.limit', 'limit', $settings2->display_num, 'uint');
 		$this->setState('list.limit', $limit);
 		
 		$limitstart = $app->input->get('limitstart', 0, 'uint');
@@ -79,12 +91,28 @@ class JemModelEventslist extends JModelList
 		if ($task == 'archive') {
 			$this->setState('filter.published',2);
 		} else {
-			$this->setState('filter.published',1);
+			# we've to check if the setting for the filter has been applied
+			if ($params->get('global_show_archive_icon')) {
+				$this->setState('filter.published',1);
+			} else {
+				# retrieve the status to be displayed
+				switch ($params->get('global_show_eventstatus')) {
+					case 0:
+						$status = 1;
+						break;
+					case 1:
+						$status = 2;
+						break;
+					case 2:
+						$status = array(1,2);
+						break;
+					default:
+						$status = 1;
+				}
+				$this->setState('filter.published',$status);
+			}
 		}
 		
-		$params = $app->getParams();
-		$this->setState('params', $params);
-
 		$user = JFactory::getUser();
 		
 		###############
@@ -474,7 +502,6 @@ class JemModelEventslist extends JModelList
 
 		if ($items) {
 			$app 	= JFactory::getApplication();
-			$params = $app->getParams();
 			$user	= JFactory::getUser();
 			$userId	= $user->get('id');
 			$guest	= $user->get('guest');
@@ -482,9 +509,6 @@ class JemModelEventslist extends JModelList
 			$input	= JFactory::getApplication()->input;
 			
 			$calendarMultiday = $this->getState('filter.calendar_multiday');
-			
-			# Get the global params
-			$globalParams = JComponentHelper::getParams('com_jem', true);
 			
 			# Convert the parameter fields into objects.
 			foreach ($items as $index => $item) :
@@ -571,8 +595,6 @@ class JemModelEventslist extends JModelList
 		$userid			= (int) $user->get('id');
 		$levels 		= $user->getAuthorisedViewLevels();
 		$app 			= JFactory::getApplication();
-		$params 		= $app->getParams();
-		$catswitch 		= $params->get('categoryswitch', '0');
 		$settings 		= JemHelper::globalattribs();
 
 		// Query
@@ -705,6 +727,9 @@ class JemModelEventslist extends JModelList
 	}
 
 	
+	/**
+	 * Multi-day
+	 */
 	function calendarMultiday($items) {
 	
 		$app 			= JFactory::getApplication();

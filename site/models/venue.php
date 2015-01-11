@@ -41,10 +41,22 @@ class JemModelVenue extends JemModelEventslist
 
 		$app 			= JFactory::getApplication();
 		$jemsettings	= JemHelper::config();
+		$settings		= JemHelper::globalattribs();
 		$jinput			= JFactory::getApplication()->input;
 		$itemid 		= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
 		$params 		= $app->getParams();
 		$task           = $jinput->getCmd('task');
+		
+		$global = new JRegistry;
+		$global->loadString($settings);
+		
+		$params = clone $global;
+		$params->merge($global);
+		if ($menu = $app->getMenu()->getActive())
+		{
+			$params->merge($menu->params);
+		}
+		$this->setState('params', $params);
 
 		# limit
 		$limit		= $app->getUserStateFromRequest('com_jem.venue.'.$itemid.'.limit', 'limit', $jemsettings->display_num, 'uint');
@@ -76,13 +88,30 @@ class JemModelVenue extends JemModelEventslist
 		}
 		$this->setState('filter.orderby', $orderby);
 
-		# params
-		$this->setState('params', $params);
-
+		# publish state
 		if ($task == 'archive') {
 			$this->setState('filter.published',2);
 		} else {
-			$this->setState('filter.published',1);
+			# we've to check if the setting for the filter has been applied
+			if ($params->get('global_show_archive_icon')) {
+				$this->setState('filter.published',1);
+			} else {
+				# retrieve the status to be displayed
+				switch ($params->get('global_show_eventstatus')) {
+					case 0:
+						$status = 1;
+						break;
+					case 1:
+						$status = 2;
+						break;
+					case 2:
+						$status = array(1,2);
+						break;
+					default:
+						$status = 1;
+				}
+				$this->setState('filter.published',$status);
+			}
 		}
 
 		$this->setState('filter.access', true);
