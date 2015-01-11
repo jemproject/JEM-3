@@ -160,7 +160,7 @@ class JemTableEvents extends JTable
 			if ($endTime != '00:00:00') {
 				$this->endDateTime		= $startDate.' '.$endTime;
 			} else {
-				$this->endDateTime		= $startDate.' '.$endTime;
+				$this->endDateTime		= $startDate.' '.$startTime;
 			}
 		} else {
 			$this->endDateTime		= $endDate.' '.$endTime;
@@ -168,16 +168,9 @@ class JemTableEvents extends JTable
 		
 		// check if endDateTime is before startDateTime
 		if ($startDate != '0000-00-00') {
-			
-			/*
-			# we have a startdate but do we have an enddate?
-			if ($this->enddates) {
-				# we do have a enddate +
-				if ($this->startDateTime > $this->endDateTime) {
-					$this->setError(JText::_('COM_JEM_EVENT_ERROR_END_BEFORE_START'));
-				}
+			if ($this->startDateTime > $this->endDateTime) {
+				$this->setError(JText::_('COM_JEM_EVENT_ERROR_END_BEFORE_START'));
 			}
-			*/
 		}
 		
 		if (!$this->getErrors()) {
