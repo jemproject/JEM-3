@@ -31,6 +31,20 @@ class JemModelCategory extends JemModelEventslist
 	 */
 	public function __construct()
 	{
+		if (empty($config['filter_fields']))
+		{
+			$config['filter_fields'] = array(
+					'id', 'a.id',
+					'title', 'a.title',
+					'dates', 'a.dates',
+					'times', 'a.times',
+					'alias', 'a.alias',
+					'venue', 'l.venue','venue_title',
+					'city', 'l.city', 'venue_city',
+			);
+		}
+		
+		
 		$app			= JFactory::getApplication();
 		$jinput 		= JFactory::getApplication()->input;
 		$jemsettings	= JEMHelper::config();
@@ -162,20 +176,49 @@ class JemModelCategory extends JemModelEventslist
 				$this->setState('filter.published',$status);
 			}
 		}
+		
+		
+		###############
+		## opendates ##
+		###############
+		
+		$this->setState('filter.opendates', $params->get('showopendates', 0));
 
 		###########
 		## ORDER ##
 		###########
+		
+		# retrieve default sortDirection + sortColumn
+		$sortDir		= strtoupper($params->get('sortDirection'));
+		$sortDirArchive	= strtoupper($params->get('sortDirectionArchive'));
+		$sortCol		= $params->get('sortColumn');
+				
+		$direction	= array('DESC', 'ASC');
+		
+		if (!in_array($sortCol, $this->filter_fields))
+		{
+			$sortCol = 'a.dates';
+		}
+		
+		if (!in_array($sortDir, $direction))
+		{
+			$sortDir = 'ASC';
+		}
+		
+		if (!in_array($sortDirArchive, $direction))
+		{
+			$sortDirArchive = 'DESC';
+		}
 
-		$filter_order		= $app->getUserStateFromRequest('com_jem.category.'.$itemid.'.filter_order', 'filter_order', 'a.dates', 'cmd');
-		$filter_order_DirDefault = 'ASC';
+		$filter_order		= $app->getUserStateFromRequest('com_jem.category.'.$itemid.'.filter_order', 'filter_order', $sortCol, 'cmd');
+		$filter_order_DirDefault = $sortDir;
 		// Reverse default order for dates in archive mode
 		if($task == 'archive' && $filter_order == 'a.dates') {
-			$filter_order_DirDefault = 'DESC';
+			$filter_order_DirDefault = $sortDirArchive;
 		}
 		$filter_order_Dir	= $app->getUserStateFromRequest('com_jem.category.'.$itemid.'.filter_order_Dir', 'filter_order_Dir', $filter_order_DirDefault, 'word');
-		$filter_order		= JFilterInput::getInstance()->clean($filter_order, 'cmd');
-		$filter_order_Dir	= JFilterInput::getInstance()->clean($filter_order_Dir, 'word');
+		$filter_order		= JFilterInput::getInstance()->clean($filter_order, 'string');
+		$filter_order_Dir	= JFilterInput::getInstance()->clean($filter_order_Dir, 'string');
 
 		if ($filter_order == 'a.dates') {
 			$orderby = array('a.dates '.$filter_order_Dir,'a.times '.$filter_order_Dir);
