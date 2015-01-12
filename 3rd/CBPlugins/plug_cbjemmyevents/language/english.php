@@ -1,10 +1,10 @@
 <?php
 /*
  * @package My Events
- * @version 1.9.1
+ * @version 3.0.6
  * @author JEM Community
- * @copyright (C) 2013-2015 joomlaeventmanager.net
- * 
+ * @copyright (C) 2013-2014 joomlaeventmanager.net
+ *  
  * Former info:
  * @copyright Copyright (C) 2006 -2010 Tekdi Web Solutions . All rights reserved.
  * @license GNU GPLv2 <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html>
