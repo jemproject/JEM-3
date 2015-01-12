@@ -83,7 +83,7 @@ if ($type_attendee == 2) {
 }
 
 
-if ( $check || JFactory::getUser()->authorise('core.manage')) :
+if ( $check && $this->registers|| JFactory::getUser()->authorise('core.manage') && $this->registers) :
 ?>
 
 <div class="container-fluid">
