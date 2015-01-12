@@ -167,7 +167,7 @@ foreach ($this->registers as $register) :
 	
 		# name with avatar + link
 		if ($this->settings->get('event_comunoption','0')==1) {
-			$cbUser = CBuser::getInstance($user->id);
+			$cbUser = CBuser::getInstance($register->uid);
 			if (!$cbUser) {
 				$cbUser = CBuser::getInstance(null);
 			}
@@ -183,7 +183,7 @@ foreach ($this->registers as $register) :
 
 	# Kunena
 	if ($this->settings->get('event_comunsolution','0')==2) {
-		$user	= KunenaFactory::getUser(JFactory::getUser()->id);
+		$user	= KunenaFactory::getUser($register->uid);
 		$avatar = $user->getAvatarImage('', '', '');
 		
 		# name with avatar + link
