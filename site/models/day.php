@@ -125,21 +125,23 @@ class JemModelDay extends JemModelEventslist
 		$filtertype = $app->getUserStateFromRequest('com_jem.day.'.$itemid.'.filter_type', 'filter_type', '', 'int');
 		$this->setState('filter.filter_type', $filtertype);
 
-		# filter_order
-		$orderCol = $app->getUserStateFromRequest('com_jem.day.'.$itemid.'.filter_order', 'filter_order', 'a.dates', 'cmd');
-		$this->setState('filter.filter_ordering', $orderCol);
 
-		# filter_direction
-		$listOrder = $app->getUserStateFromRequest('com_jem.day.'.$itemid.'.filter_order_Dir', 'filter_order_Dir', 'ASC', 'word');
-		$this->setState('filter.filter_direction', $listOrder);
-
-		if ($orderCol == 'a.dates') {
-			$orderby = array('a.dates ' . $listOrder, 'a.times ' . $listOrder);
+		###########
+		## ORDER ##
+		###########
+		$filter_order 		= $app->getUserStateFromRequest('com_jem.day.'.$itemid.'.filter_order', 'filter_order', 'a.dates', 'cmd');
+		$filter_order_Dir	= $app->getUserStateFromRequest('com_jem.day.'.$itemid.'.filter_order_Dir', 'filter_order_Dir', 'ASC', 'string');
+		$filter_order		= JFilterInput::getInstance()->clean($filter_order, 'string');
+		$filter_order_Dir	= JFilterInput::getInstance()->clean($filter_order_Dir, 'string');
+		
+		if ($filter_order == 'a.dates') {
+			$orderby = array('a.dates '.$filter_order_Dir,'a.times '.$filter_order_Dir);
 		} else {
-			$orderby = $orderCol . ' ' . $listOrder;
+			$orderby = $filter_order . ' ' . $filter_order_Dir;
 		}
-		$this->setState('filter.orderby', $orderby);
-
+		
+		$this->setState('filter.orderby',$orderby);
+		
 		# params
 		$this->setState('params', $params);
 
