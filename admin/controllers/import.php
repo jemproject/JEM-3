@@ -52,6 +52,7 @@ class JemControllerImport extends JControllerLegacy {
 
 		if($type == 'events') {
 			// add additional fields
+			// @todo alter
 			$object_fields['categories'] = '';
 		}
 
@@ -179,7 +180,7 @@ class JemControllerImport extends JControllerLegacy {
 			case 'dates':
 			case 'enddates':
 			case 'recurrence_limit_date':
-				if($value != '' && strtoupper($value) != 'NULL') {
+				if($value != '' && strtoupper($value) != 'NULL' && $value != '0000-00-00') {
 					$date = strtotime($value);
 					$field = strftime('%Y-%m-%d', $date);
 				} else {

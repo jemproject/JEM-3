@@ -368,6 +368,7 @@ class JEMModelImport extends JModelLegacy {
 			if ($objectname == "JemTableEvents") {
 				// we need to update the categories-events table too
 				// store cat relations
+				// @todo alter
 				if (isset($values['categories'])) {
 					$cats = explode(',', $values['categories']);
 					foreach ($cats as $cat) {
@@ -379,8 +380,9 @@ class JEMModelImport extends JModelLegacy {
 			}
 		} // foreach
 
-		
-		// Specific actions outside the foreach loop
+		##################################
+		## actions outside foreach loop ##
+		##################################
 
 		if ($objectname == "JEMTableCategories") {
 			$object->rebuild();
@@ -1198,7 +1200,7 @@ class JEMModelImport extends JModelLegacy {
 					$rec['added']++;
 				}
 			}
-		}
+		}		
 	}
 
 	/**
