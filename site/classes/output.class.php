@@ -1150,33 +1150,37 @@ class JEMOutput {
 	}
 
 	static function eventDateTime($row, $dateStart = false, $timeStart = false, $dateEnd = false, $timeEnd = false) {
+		# @todo add support for suffix time
+		# @todo replace strftime by date
 
 		if (!$row) {
 			return false;
 		}
 
-		if (!$row->dates) {
-			# for the date function we need at least a startdate
-			$result = "";
-			return $result;
+		if (!JemHelper::isValidDate($row->dates)) {
+			# for the date function we need at least a valid startdate
+			return false;
 		}
 
-		$result = "";
-
+		$result 	= "";
 		$settings 	= JemHelper::config();
 
 		$timeFormat = $settings->formattime;
+		$dateFormat = $settings->formatdate;
+
+
 		if ($timeFormat) {
-			# temporary mapping of time values;
+			# mapping of time values
+			# incoming values are in strftime format
+			# output is in date format
 			$timeFormat = str_replace('%H','H',$timeFormat);
 			$timeFormat = str_replace('%M','i',$timeFormat);
 			$timeFormat = str_replace('%p','A',$timeFormat);
 			$timeFormat = str_replace('%P','a',$timeFormat);
 		} else {
-			$timeFormat	= "H:i A";
+			$timeFormat	= "H:i";
 		}
 
-		$dateFormat = $settings->formatdate;
 		if (!($dateFormat)) {
 			$dateFormat = "D, M. j, Y";
 		}
@@ -1199,15 +1203,17 @@ class JEMOutput {
 		}
 
 		$datetimeStart	= new JDate($row->dates.' '.$row->times);
-		$otimeStart		= $datetimeStart->format($timeFormat);
+		$otimeStart		= $datetimeStart->format('H:i');
 		$odateStart		= $datetimeStart->format($dateFormat);
 
-		if ($otimeStart == '00.00') {
+		if ($otimeStart == '00.00' || $otimeStart == '00:00') {
 			if ($rowtime == null) {
 				$otimeStart = "";
 			} else {
-				$otimeStart = '00.00';
+				$otimeStart = $datetimeStart->format($timeFormat);
 			}
+		} else {
+			$otimeStart = $datetimeStart->format($timeFormat);
 		}
 
 		# -- date/time End --
@@ -1227,14 +1233,16 @@ class JEMOutput {
 			# we have a enddate
 			$datetimeEnd	= new JDate($row->enddates.' '.$row->endtimes);
 			$odateEnd		= $datetimeEnd->format($dateFormat);
-			$otimeEnd		= $datetimeEnd->format($timeFormat);
+			$otimeEnd		= $datetimeEnd->format('H:i');
 
-			if ($otimeEnd == '00.00') {
+			if ($otimeEnd == '00.00' || $otimeEnd == '00:00') {
 				if ($rowendtime == null) {
 					$otimeEnd = "";
 				} else {
-					$otimeEnd = '00.00';
+					$otimeEnd = $datetimeEnd->format($timeFormat);
 				}
+			} else {
+				$otimeEnd	= $datetimeEnd->format($timeFormat);
 			}
 		}
 
@@ -1255,15 +1263,18 @@ class JEMOutput {
 		}
 
 		# outputting
-
 		$result = array();
 
 		if ($dateStart) {
 			$result['dateStart']	= $odateStart;
 		}
 		if ($timeStart) {
+			$lang = JFactory::getLanguage();
+			if ($lang->getTag() == 'zh-TW') {
+			}
 			$result['timeStart']	= $otimeStart;
 		}
+
 		if ($dateStart && $timeStart) {
 			# we like to output both values so let's combine the values
 
@@ -1286,6 +1297,9 @@ class JEMOutput {
 			$result['dateEnd']	= $odateEnd;
 		}
 		if ($timeEnd) {
+			$lang = JFactory::getLanguage();
+			if ($lang->getTag() == 'zh-TW') {
+			}
 			$result['timeEnd']	= $otimeEnd;
 		}
 		if ($dateEnd && $timeEnd) {
@@ -1312,16 +1326,12 @@ class JEMOutput {
 			$result['endDateTime'] = $value;
 		}
 
-
 		if ($result['startDateTime'] && $result['endDateTime']) {
 			# check if the dates are the same
 			# if so we will define a new value called "combinedDateTime"
 
-			$start		= new JDate($result['startDateTime']);
-			$start_day	= $start->format('m-d-Y');
-
-			$end		= new JDate($result['endDateTime']);
-			$end_day	= $end->format('m-d-Y');
+			$start_day	= $datetimeStart->format('m-d-Y');
+			$end_day	= $datetimeEnd->format('m-d-Y');
 
 			if ($start_day == $end_day) {
 
