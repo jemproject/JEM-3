@@ -82,7 +82,7 @@ class Pkg_JemInstallerScript {
 			$this->newRelease = $parent->get('manifest')->version;
 
 			if ($this->oldRelease < 3) {
-				Jerror::raiseNotice(100,JText::sprintf('COM_JEM_PREFLIGHT_PREVENTINSTALL',$this->oldRelease));	
+				Jerror::raiseNotice(100,JText::sprintf('PKG_JEM_INSTALLATION_PREVENTINSTALL',$this->oldRelease));	
 				return false;	
 			}
 			
