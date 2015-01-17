@@ -24,7 +24,9 @@ defined('_JEXEC') or die;
 	<fieldset class="form-horizontal">
 	<legend><span class="legendcolor"><?php echo JText::_('COM_JEM_IMAGE'); ?></span></legend>
 	<?php 
+	if (JFactory::getUser()->authorise('core.manage', 'com_jem')) {
 		echo $this->form->renderField('locimage');
+	}
 	?>
 		<?php
 		if ($this->item->locimage) :
