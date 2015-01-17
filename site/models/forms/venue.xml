@@ -180,6 +180,7 @@
 			size="40"
 			label="COM_JEM_EDITEVENT_FIELD_IMAGESELECT"
 			description="COM_JEM_EDITEVENT_FIELD_IMAGESELECT_DESC"
+			directory="jem/venues"
 		/>
 	</fieldset>
 
