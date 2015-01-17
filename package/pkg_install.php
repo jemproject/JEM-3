@@ -49,7 +49,7 @@ class Pkg_JemInstallerScript {
 		);
 
 	public function install($parent) {
-		// $this->getHeader();
+			//$this->getHeader();
 		return true;
 	}
 
@@ -58,7 +58,7 @@ class Pkg_JemInstallerScript {
 	}
 
 	public function update($parent) {
-		// $this->getHeader();
+			//$this->getHeader();
 		return self::install($parent);
 	}
 
@@ -85,9 +85,7 @@ class Pkg_JemInstallerScript {
 				Jerror::raiseNotice(100,JText::sprintf('PKG_JEM_INSTALLATION_PREVENTINSTALL',$this->oldRelease));	
 				return false;	
 			}
-			
 		}
-		
 		return true;
 	}
 
@@ -107,11 +105,15 @@ class Pkg_JemInstallerScript {
 		}
 
 		if ($type == 'uninstall') return true;
-
+		
+		if ($type == 'install' || $type == 'update') {
+			/* $parent->getParent()->setRedirectURL(JRoute::_('index.php?option=com_jem&view=main', false)); */
+		}
+		
 		$this->enablePlugin('content', 'jem');
 	//	$this->enablePlugin('search', 'jem');
 	//	$this->enablePlugin('jem', 'mailer');
-
+	
 		return true;
 	}
 
