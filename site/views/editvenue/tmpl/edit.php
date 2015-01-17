@@ -204,16 +204,13 @@ jQuery(function() {
 		<form action="<?php echo JRoute::_('index.php?option=com_jem&a_id='.(int) $this->item->id); ?>" class="form-validate" method="post" name="adminForm" id="venue-form" enctype="multipart/form-data">
 			
 <div class="topbox">
-<div class="btn-group pull-left">
-<?php echo JEMOutput::statuslabel($this->item->published); ?>
-</div>
 	<div class="button_flyer">
 		<div class="btn-toolbar">	
 			<?php if (JFactory::getUser()->authorise('core.manage', 'com_jem')) { ?>
 				<button type="button" class="btn btn-small btn-success" onclick="Joomla.submitbutton('editvenue.apply')"><span class="icon-apply icon-white"></span><?php echo ' '.JText::_('JSAVE') ?></button>
 				<button type="button" class="btn btn-small" onclick="Joomla.submitbutton('editvenue.save')"><span class="icon-save"></span><?php echo ' '.JText::_('Save & Close') ?></button>
 			<?php } else { ?>
-				<button type="button" class="btn btn-small btn-success" onclick="Joomla.submitbutton('editvenue.save')"><span class="icon-save"></span><?php echo ' '.JText::_('JSAVE') ?></button>
+				<button type="button" class="btn btn-small btn-success" onclick="Joomla.submitbutton('editvenue.save')"><span class="icon-apply icon-white"></span><?php echo ' '.JText::_('JSAVE') ?></button>
 			<?php } ?>
 			<button type="button" class="btn btn-small" onclick="Joomla.submitbutton('editvenue.cancel')"><span class="icon-cancel icon-red"></span><?php echo ' '.JText::_('JCANCEL') ?></button>
 		</div>
