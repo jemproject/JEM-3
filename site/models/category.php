@@ -1,8 +1,8 @@
 <?php
 /**
- * @version 3.0.5
+ * @version 3.0.6
  * @package JEM
- * @copyright (C) 2013-2014 joomlaeventmanager.net
+ * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
@@ -31,6 +31,20 @@ class JemModelCategory extends JemModelEventslist
 	 */
 	public function __construct()
 	{
+		if (empty($config['filter_fields']))
+		{
+			$config['filter_fields'] = array(
+					'id', 'a.id',
+					'title', 'a.title',
+					'dates', 'a.dates',
+					'times', 'a.times',
+					'alias', 'a.alias',
+					'venue', 'l.venue','venue_title',
+					'city', 'l.city', 'venue_city',
+			);
+		}
+		
+		
 		$app			= JFactory::getApplication();
 		$jinput 		= JFactory::getApplication()->input;
 		$jemsettings	= JEMHelper::config();
@@ -96,27 +110,27 @@ class JemModelCategory extends JemModelEventslist
 		// Initiliase variables.
 		$app			= JFactory::getApplication('site');
 		$jemsettings	= JemHelper::config();
+		$settings		= JemHelper::globalattribs();
 		$jinput         = JFactory::getApplication()->input;
 		$task           = $jinput->getCmd('task');
 		$itemid			= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
 		$pk				= $jinput->getInt('id');
 
 		$this->setState('category.id', $pk);
-
 		$this->setState('filter.req_catid',$pk);
 
-		// Load the parameters. Merge Global and Menu Item params into new object
-		$params = $app->getParams();
-		$menuParams = new JRegistry;
-
-		if ($menu = $app->getMenu()->getActive()) {
-			$menuParams->loadString($menu->params);
+		$global = new JRegistry;
+		$global->loadString($settings);
+		
+		$params = clone $global;
+		$params->merge($global);
+		if ($menu = $app->getMenu()->getActive())
+		{
+			$params->merge($menu->params);
 		}
+		$this->setState('params', $params);
 
-		$mergedParams = clone $menuParams;
-		$mergedParams->merge($params);
-
-		$this->setState('params', $mergedParams);
+		
 		$user		= JFactory::getUser();
 		// Create a new query object.
 		$db		= $this->getDbo();
@@ -141,22 +155,70 @@ class JemModelCategory extends JemModelEventslist
 		if ($task == 'archive') {
 			$this->setState('filter.published',2);
 		} else {
-			$this->setState('filter.published',1);
+			# we've to check if the setting for the filter has been applied
+			if ($params->get('global_show_archive_icon')) {
+				$this->setState('filter.published',1);
+			} else {
+				# retrieve the status to be displayed
+				switch ($params->get('global_show_eventstatus')) {
+					case 0:
+						$status = 1;
+						break;
+					case 1:
+						$status = 2;
+						break;
+					case 2:
+						$status = array(1,2);
+						break;
+					default:
+						$status = 1;
+				}
+				$this->setState('filter.published',$status);
+			}
 		}
+		
+		
+		###############
+		## opendates ##
+		###############
+		
+		$this->setState('filter.opendates', $params->get('showopendates', 0));
 
 		###########
 		## ORDER ##
 		###########
+		
+		# retrieve default sortDirection + sortColumn
+		$sortDir		= strtoupper($params->get('sortDirection'));
+		$sortDirArchive	= strtoupper($params->get('sortDirectionArchive'));
+		$sortCol		= $params->get('sortColumn');
+				
+		$direction	= array('DESC', 'ASC');
+		
+		if (!in_array($sortCol, $this->filter_fields))
+		{
+			$sortCol = 'a.dates';
+		}
+		
+		if (!in_array($sortDir, $direction))
+		{
+			$sortDir = 'ASC';
+		}
+		
+		if (!in_array($sortDirArchive, $direction))
+		{
+			$sortDirArchive = 'DESC';
+		}
 
-		$filter_order		= $app->getUserStateFromRequest('com_jem.category.'.$itemid.'.filter_order', 'filter_order', 'a.dates', 'cmd');
-		$filter_order_DirDefault = 'ASC';
+		$filter_order		= $app->getUserStateFromRequest('com_jem.category.'.$itemid.'.filter_order', 'filter_order', $sortCol, 'cmd');
+		$filter_order_DirDefault = $sortDir;
 		// Reverse default order for dates in archive mode
 		if($task == 'archive' && $filter_order == 'a.dates') {
-			$filter_order_DirDefault = 'DESC';
+			$filter_order_DirDefault = $sortDirArchive;
 		}
 		$filter_order_Dir	= $app->getUserStateFromRequest('com_jem.category.'.$itemid.'.filter_order_Dir', 'filter_order_Dir', $filter_order_DirDefault, 'word');
-		$filter_order		= JFilterInput::getInstance()->clean($filter_order, 'cmd');
-		$filter_order_Dir	= JFilterInput::getInstance()->clean($filter_order_Dir, 'word');
+		$filter_order		= JFilterInput::getInstance()->clean($filter_order, 'string');
+		$filter_order_Dir	= JFilterInput::getInstance()->clean($filter_order_Dir, 'string');
 
 		if ($filter_order == 'a.dates') {
 			$orderby = array('a.dates '.$filter_order_Dir,'a.times '.$filter_order_Dir);

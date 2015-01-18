@@ -1,8 +1,8 @@
 <?php
 /**
- * @version 3.0.5
+ * @version 3.0.6
  * @package JEM
- * @copyright (C) 2013-2014 joomlaeventmanager.net
+ * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
@@ -22,7 +22,7 @@ class JemViewCategories extends JEMView
 	{
 		$app = JFactory::getApplication();
 		$jinput = JFactory::getApplication()->input;
-
+		$settings		= JemHelper::globalattribs();
 		$document 		= JFactory::getDocument();
 		$jemsettings 	= JemHelper::config();
 		$vsettings		= JemHelper::viewSettings('vcategories');
@@ -49,7 +49,16 @@ class JemViewCategories extends JEMView
 		//get menu information
 		$menu		= $app->getMenu();
 		$menuitem	= $menu->getActive();
-		$params 	= $app->getParams('com_jem');
+		
+		$global = new JRegistry;
+		$global->loadString($settings);
+		
+		$params = clone $global;
+		$params->merge($global);
+		if ($menu = $app->getMenu()->getActive())
+		{
+			$params->merge($menu->params);
+		}
 
 		$pagetitle		= $params->def('page_title', $menuitem->title);
 		$pageheading	= $params->def('page_heading', $params->get('page_title'));

@@ -1,8 +1,8 @@
 <?php
 /**
- * @version 3.0.5
+ * @version 3.0.6
  * @package JEM
- * @copyright (C) 2013-2014 joomlaeventmanager.net
+ * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
@@ -56,13 +56,25 @@ class JemModelEventslist extends JModelList
 	protected function populateState($ordering = null, $direction = null)
 	{
 		$app				= JFactory::getApplication();
-		$jemsettings		= JemHelper::config();
+		$settings			= JemHelper::globalattribs();
+		$settings2			= JemHelper::config();
 		$jinput             = $app->input;
 		$task               = $jinput->getCmd('task');
 		$itemid				= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
-			
+		
+		$global = new JRegistry;
+		$global->loadString($settings);
+		
+		$params = clone $global;
+		$params->merge($global);
+		if ($menu = $app->getMenu()->getActive())
+		{
+			$params->merge($menu->params);
+		}
+		$this->setState('params', $params);
+		
 		# List state information
-		$limit		= $app->getUserStateFromRequest('com_jem.eventslist.'.$itemid.'.limit', 'limit', $jemsettings->display_num, 'uint');
+		$limit		= $app->getUserStateFromRequest('com_jem.eventslist.'.$itemid.'.limit', 'limit', $settings2->display_num, 'uint');
 		$this->setState('list.limit', $limit);
 		
 		$limitstart = $app->input->get('limitstart', 0, 'uint');
@@ -79,12 +91,28 @@ class JemModelEventslist extends JModelList
 		if ($task == 'archive') {
 			$this->setState('filter.published',2);
 		} else {
-			$this->setState('filter.published',1);
+			# we've to check if the setting for the filter has been applied
+			if ($params->get('global_show_archive_icon')) {
+				$this->setState('filter.published',1);
+			} else {
+				# retrieve the status to be displayed
+				switch ($params->get('global_show_eventstatus')) {
+					case 0:
+						$status = 1;
+						break;
+					case 1:
+						$status = 2;
+						break;
+					case 2:
+						$status = array(1,2);
+						break;
+					default:
+						$status = 1;
+				}
+				$this->setState('filter.published',$status);
+			}
 		}
 		
-		$params = $app->getParams();
-		$this->setState('params', $params);
-
 		$user = JFactory::getUser();
 		
 		###############
@@ -250,7 +278,7 @@ class JemModelEventslist extends JModelList
 		# venue
 		$query->select(array('l.alias AS l_alias','l.author_ip AS l_authorip','l.checked_out AS l_checked_out','l.checked_out_time AS l_checked_out_time','l.city','l.country','l.created AS l_created','l.created_by AS l_createdby'));
 		$query->select(array('l.custom1 AS l_custom1','l.custom2 AS l_custom2','l.custom3 AS l_custom3','l.custom4 AS l_custom4','l.custom5 AS l_custom5','l.custom6 AS l_custom6','l.custom7 AS l_custom7','l.custom8 AS l_custom8','l.custom9 AS l_custom9','l.custom10 AS l_custom10'));
-		$query->select(array('l.id AS l_id','l.latitude','l.locdescription','l.locimage','l.longitude','l.map','l.meta_description','l.meta_keywords','l.modified AS l_modified','l.modified_by AS l_modified_by','l.ordering','l.postalCode','l.publish_up','l.publish_down','l.published AS l_published','l.state','l.street','l.url','l.venue','l.version AS l_version','l.timezone'));
+		$query->select(array('l.id AS l_id','l.latitude','l.locdescription','l.locimage','l.longitude','l.map','l.meta_description','l.meta_keywords','l.modified AS l_modified','l.modified_by AS l_modified_by','l.ordering','l.postalCode','l.phone','l.fax','l.email','l.publish_up','l.publish_down','l.published AS l_published','l.state','l.street','l.url','l.venue','l.version AS l_version','l.timezone'));
 		$query->join('LEFT', '#__jem_venues AS l ON l.id = a.locid');
 
 		# country
@@ -474,7 +502,6 @@ class JemModelEventslist extends JModelList
 
 		if ($items) {
 			$app 	= JFactory::getApplication();
-			$params = $app->getParams();
 			$user	= JFactory::getUser();
 			$userId	= $user->get('id');
 			$guest	= $user->get('guest');
@@ -482,9 +509,6 @@ class JemModelEventslist extends JModelList
 			$input	= JFactory::getApplication()->input;
 			
 			$calendarMultiday = $this->getState('filter.calendar_multiday');
-			
-			# Get the global params
-			$globalParams = JComponentHelper::getParams('com_jem', true);
 			
 			# Convert the parameter fields into objects.
 			foreach ($items as $index => $item) :
@@ -571,8 +595,6 @@ class JemModelEventslist extends JModelList
 		$userid			= (int) $user->get('id');
 		$levels 		= $user->getAuthorisedViewLevels();
 		$app 			= JFactory::getApplication();
-		$params 		= $app->getParams();
-		$catswitch 		= $params->get('categoryswitch', '0');
 		$settings 		= JemHelper::globalattribs();
 
 		// Query
@@ -705,6 +727,9 @@ class JemModelEventslist extends JModelList
 	}
 
 	
+	/**
+	 * Multi-day
+	 */
 	function calendarMultiday($items) {
 	
 		$app 			= JFactory::getApplication();

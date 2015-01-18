@@ -1,8 +1,8 @@
 <?php
 /**
- * @version 3.0.5
+ * @version 3.0.6
  * @package JEM
- * @copyright (C) 2013-2014 joomlaeventmanager.net
+ * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
@@ -99,60 +99,84 @@ class JemTableEvents extends JTable
 		}
 
 
+		###############
+		## DATE-TIME ##
+		###############
+		
+		// default empty values to null
+		# user didn't select a value for it
+		
 		if (empty($this->times)) {
 			$this->times = null;
 		}
-
 		if (empty($this->endtimes)) {
 			$this->endtimes = null;
 		}
-
-
-		// Dates
-		if (empty($this->enddates)) {
-			$this->enddates = null;
-		}
-
-		if (empty($this->dates)) {
+		if (empty($this->dates) || $this->enddates == '0000-00-00') {
 			$this->dates = null;
 		}
-
-		// check startDate
-		if ($this->dates == NULL) {
-			$this->times = NULL;
-			$this->enddates = NULL;
-			$this->endtimes = NULL;
+		if (empty($this->enddates) || $this->enddates == '0000-00-00') {
+			$this->enddates = null;
 		}
-
-		// Check begin date is before end date
-
-		// Check if end date is set
-		if($this->enddates == null) {
-			// Check if end time is set
-			if($this->endtimes == null) {
-				$date1 = new DateTime('00:00');
-				$date2 = new DateTime('00:00');
+		
+		// opendate
+		# do we have a startdate?
+		# if no then we consider it an "open date"
+		$this->opendate = 0;
+		if ($this->dates == null) {
+			$this->times 	= null;
+			$this->enddates = null;
+			$this->endtimes = null;
+				
+			$this->opendate = 1;
+		}
+		
+		// combine DateTime
+		# startDateTime
+		if ($this->dates == null) {
+			$startDate = '0000-00-00';
+		} else {
+			$startDate = $this->dates;
+		}
+		if ($this->times == null) {
+			$startTime = '00:00:00';
+		} else {
+			$startTime = $this->times.':00';
+		}
+		$this->startDateTime	= $startDate.' '.$startTime;
+		
+		# endDateTime
+		if ($this->enddates == null) {
+			$endDate = '0000-00-00';
+		} else {
+			$endDate = $this->enddates;
+		}
+		if ($this->endtimes == null) {
+			$endTime = '00:00:00';
+		} else {
+			$endTime = $this->endtimes.':00';
+		}
+		if ($endDate == '0000-00-00') {
+			if ($endTime != '00:00:00') {
+				$this->endDateTime		= $startDate.' '.$endTime;
 			} else {
-				$date1 = new DateTime($this->times);
-				$date2 = new DateTime($this->endtimes);
+				$this->endDateTime		= $startDate.' '.$startTime;
 			}
 		} else {
-			// Check if end time is set
-			if($this->endtimes == null) {
-				$date1 = new DateTime($this->dates);
-				$date2 = new DateTime($this->enddates);
-			} else {
-				$date1 = new DateTime($this->dates.' '.$this->times);
-				$date2 = new DateTime($this->enddates.' '.$this->endtimes);
+			$this->endDateTime		= $endDate.' '.$endTime;
+		}
+		
+		// check if endDateTime is before startDateTime
+		if ($startDate != '0000-00-00') {
+			if ($this->startDateTime > $this->endDateTime) {
+				$this->setError(JText::_('COM_JEM_EVENT_ERROR_END_BEFORE_START'));
 			}
 		}
-
-		if($date1 > $date2) {
-			$this->setError(JText::_('COM_JEM_EVENT_ERROR_END_BEFORE_START'));
-			return false;
+		
+		if (!$this->getErrors()) {
+			return true;
 		}
-
-		return true;
+		
 	}
 
 	/**

@@ -1,8 +1,8 @@
 <?php
 /**
- * @version 3.0.5
+ * @version 3.0.6
  * @package JEM
- * @copyright (C) 2013-2014 joomlaeventmanager.net
+ * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
@@ -79,7 +79,7 @@ $settings	= json_decode($this->item->attribs);
 
 <!-- start form -->
 		<form enctype="multipart/form-data" action="<?php echo JRoute::_('index.php?option=com_jem&a_id='.(int) $this->item->id); ?>" method="post" name="adminForm" id="adminForm" class="form-validate">
-			
+
 
 <!-- Buttons -->
 <div class="topbox">
@@ -103,9 +103,9 @@ $settings	= json_decode($this->item->attribs);
 			<?php echo $this->escape($params->get('page_heading')); ?>
 		</h1>
 		<?php endif; ?>
-			
+
 			<div class="clearfix"></div>
-			
+
 			<?php if ($this->params->get('showintrotext')) : ?>
 			<div class="description no_space clearfix">
 				<?php echo $this->params->get('introtext'); ?>
@@ -114,21 +114,21 @@ $settings	= json_decode($this->item->attribs);
 			<p>&nbsp;</p>
 
 
-	
-<!-- recurrence-message, above the tabs -->	
-<?php if ($this->item->recurrence_groupcheck) { ?>	
+
+<!-- recurrence-message, above the tabs -->
+<?php if ($this->item->recurrence_groupcheck) { ?>
 <div class="form-horizontal">
 	<div>
 		<fieldset class="form-horizontal alert">
 			<p><?php echo nl2br(JText::_('COM_JEM_EVENT_WARN_RECURRENCE_TEXT')); ?></p>
-			<button class="btn" type="button" value="<?php echo JText::_('COM_JEM_EVENT_RECURRENCE_REMOVEFROMSET');?>" onclick="Joomla.submitbutton('editevent.removefromset')"><?php echo JText::_('COM_JEM_EVENT_RECURRENCE_REMOVEFROMSET');?></button>	
+			<button class="btn" type="button" value="<?php echo JText::_('COM_JEM_EVENT_RECURRENCE_REMOVEFROMSET');?>" onclick="Joomla.submitbutton('editevent.removefromset')"><?php echo JText::_('COM_JEM_EVENT_RECURRENCE_REMOVEFROMSET');?></button>
 		</fieldset>
 </div></div>
 <?php } ?>
-					
+
 <!-- TABS -->
 <?php echo JHtml::_('bootstrap.startTabSet', 'myTab', array('active' => 'details')); ?>
-<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'details', JText::_('COM_JEM_EDITEVENT_INFO_TAB', true)); ?>	
+<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'details', JText::_('COM_JEM_EDITEVENT_INFO_TAB', true)); ?>
 
 			<fieldset class="form-horizontal">
 				<legend><span class="legendcolor"><?php echo JText::_('COM_JEM_EDITEVENT_DETAILS_LEGEND'); ?></span></legend>
@@ -136,29 +136,29 @@ $settings	= json_decode($this->item->attribs);
 						echo $this->form->renderField('title');
 						if (is_null($this->item->id)):
 							echo $this->form->renderField('alias');
-					 	endif; 
+					 	endif;
 						echo $this->form->renderField('dates');
 						echo $this->form->renderField('enddates');
 						echo $this->form->renderField('times');
 						echo $this->form->renderField('endtimes');
 						echo $this->form->renderField('cats');
-						if ($this->settings->get('editevent_show_featured',1) && !($this->valguest)) { 
+						if ($this->vsettings->get('editevent_show_featured',1) && !($this->valguest)) {
 							echo $this->form->renderField('featured');
 						}
-						if ($this->settings->get('editevent_show_published',1) && !($this->valguest)) { 
+						if ($this->vsettings->get('editevent_show_published',1) && !($this->valguest)) {
 							echo $this->form->renderField('published');
 						}
 						echo $this->form->renderField('locid');
-						if (!$this->valguest) { 
-							 echo $this->form->renderField('contactid'); 
-						} 
-						echo $this->form->renderField('captcha'); 
-						echo $this->form->renderField('mathquiz'); 
-						echo $this->form->renderField('mathquiz_answer'); 
+						if (!$this->valguest) {
+							 echo $this->form->renderField('contactid');
+						}
+						echo $this->form->renderField('captcha');
+						echo $this->form->renderField('mathquiz');
+						echo $this->form->renderField('mathquiz_answer');
 					?>
 			</fieldset>
-			
-			
+
+
 			<fieldset class="form-vertical">
 				<div class="control-group">
 					<div class="control-label"><?php echo $this->form->getLabel('articletext'); ?></div>
@@ -166,7 +166,7 @@ $settings	= json_decode($this->item->attribs);
 					<div class="controls"><?php echo $this->form->getInput('articletext'); ?></div>
 				</div>
 			</fieldset>
-			
+
 
 			<!-- START META FIELDSET -->
 			<fieldset class="form-horizontal">
@@ -185,30 +185,30 @@ $settings	= json_decode($this->item->attribs);
 			</fieldset>
 			<!--  END META FIELDSET -->
 
-			
+
 			<?php echo JHtml::_('bootstrap.endTab'); ?>
-			
-			<?php 
-			if ($this->settings->get('editevent_show_attachmentstab',1) && !($this->valguest)) {
-				echo JHtml::_('bootstrap.addTab', 'myTab', 'attachments', JText::_('COM_JEM_EVENT_ATTACHMENTS_TAB', true));
-				echo $this->loadTemplate('attachments'); 
-				echo JHtml::_('bootstrap.endTab');
-			}
-			?>
-		
+
 			<?php
-			if ($this->settings->get('editevent_show_othertab',1) && !($this->valguest)) { 
-				echo JHtml::_('bootstrap.addTab', 'myTab', 'other', JText::_('COM_JEM_EVENT_OTHER_TAB', true)); 
-				echo $this->loadTemplate('other'); 
+			if ($this->vsettings->get('editevent_show_attachmentstab',1) && !($this->valguest)) {
+				echo JHtml::_('bootstrap.addTab', 'myTab', 'attachments', JText::_('COM_JEM_EVENT_ATTACHMENTS_TAB', true));
+				echo $this->loadTemplate('attachments');
 				echo JHtml::_('bootstrap.endTab');
 			}
-			?>
-		
-			<?php 
-			echo JHtml::_('bootstrap.endTabSet'); 
 			?>
 
-					
+			<?php
+			if ($this->vsettings->get('editevent_show_othertab',1) && !($this->valguest)) {
+				echo JHtml::_('bootstrap.addTab', 'myTab', 'other', JText::_('COM_JEM_EVENT_OTHER_TAB', true));
+				echo $this->loadTemplate('other');
+				echo JHtml::_('bootstrap.endTab');
+			}
+			?>
+
+			<?php
+			echo JHtml::_('bootstrap.endTabSet');
+			?>
+
+
 			<input type="hidden" name="task" value="" />
 			<input type="hidden" name="return" value="<?php echo $this->return_page;?>" />
 			<input type="hidden" name="author_ip" value="<?php echo $this->item->author_ip; ?>" />

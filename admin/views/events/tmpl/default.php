@@ -1,8 +1,8 @@
 <?php
 /**
- * @version 3.0.5
+ * @version 3.0.6
  * @package JEM
- * @copyright (C) 2013-2014 joomlaeventmanager.net
+ * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
@@ -65,7 +65,7 @@ $settings	= $this->settings;
 		<thead>
 			<tr>
 				<th width="1%" class="center"><?php echo JText::_('COM_JEM_NUM'); ?></th>
-				<th width="1%" class="center hidden-phone"><?php echo JHtml::_('grid.checkall'); ?></th>
+				<th width="1%" class="center"><?php echo JHtml::_('grid.checkall'); ?></th>
 				<th class="nowrap"><?php echo JHtml::_('searchtools.sort', 'COM_JEM_DATE', 'a.dates', $listDirn, $listOrder ); ?></th>
 				<th><?php echo JText::_('COM_JEM_EVENT_TIME'); ?></th>
 				<th class="nowrap"><?php echo JHtml::_('searchtools.sort', 'COM_JEM_EVENT_TITLE', 'a.title', $listDirn, $listOrder ); ?></th>

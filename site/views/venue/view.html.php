@@ -1,8 +1,8 @@
 <?php
 /**
- * @version 3.0.5
+ * @version 3.0.6
  * @package JEM
- * @copyright (C) 2013-2014 joomlaeventmanager.net
+ * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
@@ -36,7 +36,8 @@ class JemViewVenue extends JEMView {
 			$settings 		= JemHelper::globalattribs();
 			$vsettings		= JemHelper::viewSettings('vvenue');
 			$db 			= JFactory::getDBO();
-			$params 		= $app->getParams('com_jem');
+			$state 			= $this->get('State');
+			$params 		= $state->params;
 			$pathway 		= $app->getPathWay ();
 			$uri 			= JFactory::getURI();
 			$task 			= $jinput->getCmd('task');

@@ -1,8 +1,8 @@
 <?php
 /**
- * @version 3.0.5
+ * @version 3.0.6
  * @package JEM
- * @copyright (C) 2013-2014 joomlaeventmanager.net
+ * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
@@ -148,7 +148,8 @@ class com_jemInstallerScript
 				"global_show_detlinkvenue"=>"1",
 				"global_show_mapserv"=>"0",
 				"global_tld"=>"",
-				"global_lg"=>""
+				"global_lg"=>"",
+				"global_cleanup_db_on_uninstall"=>"0"
 		);
 
 		$this->setGlobalAttribs($param_array);
@@ -165,6 +166,22 @@ class com_jemInstallerScript
 		<h2><?php echo JText::_('COM_JEM_UNINSTALL_STATUS'); ?>:</h2>
 		<p><?php echo JText::_('COM_JEM_UNINSTALL_TEXT'); ?></p>
 		<?php
+		
+		$globalParams = $this->getGlobalParams();
+		$cleanup = $globalParams->get('global_cleanup_db_on_uninstall', 0);
+		$this->disableJemMenuItems();
+		if (!empty($cleanup)) {
+			// user decided to fully remove JEM - so do it!
+			$this->removeJemMenuItems();
+			$this->removeAllJemTables();
+			$imageDir = JPATH_SITE.'/images/jem';
+			if (JFolder::exists($imageDir)) {
+				JFolder::delete($imageDir);
+			}
+		} else {
+			// prevent dead links on frontend
+			$this->disableJemMenuItems();
+		}
 	}
 
 	/**
@@ -259,6 +276,10 @@ class com_jemInstallerScript
 			}
 
 		}
+		
+		if ($type == 'install') {
+			$this->fixJemMenuItems();
+		}
 	}
 
 	/**
@@ -305,6 +326,25 @@ class com_jemInstallerScript
 			$db->setQuery($query);
 			$db->execute();
 		}
+	}
+	
+	/**
+	 * Gets globalattrib values from the settings table
+	 *
+	 * @return JRegistry object
+	 */
+	private function getGlobalParams()
+	{
+		$registry = new JRegistry;
+		try {
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$query->select('globalattribs')->from('#__jem_settings')->where('id=1');
+			$db->setQuery($query);
+			$registry->loadString($db->loadResult());
+		} catch (Exception $ex) {
+		}
+		return $registry;
 	}
 
 	/**
@@ -385,7 +425,68 @@ class com_jemInstallerScript
 		$db->setQuery($query);
 		$db->execute();
 	}
+	
+	
+	/**
+	 * Remove all JEM menu items.
+	 *
+	 * @return void
+	 */
+	private function removeJemMenuItems()
+	{
+		// remove all "com_jem..." frontend entries
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->delete('#__menu');
+		$query->where(array('client_id = 0', 'published > 0', 'link LIKE "index.php?option=com_jem%"'));
+		$db->setQuery($query);
+		$db->execute();
+	}
 
+	/**
+	 * Disable all JEM menu items.
+	 * (usefull on uninstall to prevent dead links)
+	 *
+	 * @return void
+	 */
+	private function disableJemMenuItems()
+	{
+		// unpublish all "com_jem..." frontend entries
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->update('#__menu');
+		$query->set('published = 0');
+		$query->where(array('client_id = 0', 'published > 0', 'link LIKE "index.php?option=com_jem%"'));
+		$db->setQuery($query);
+		$db->execute();
+	}
+	
+	/**
+	 * Fix all JEM menu items by setting new extension id.
+	 * (usefull on install to let menu items from older installation refer new extension id)
+	 *
+	 * @return void
+	 */
+	private function fixJemMenuItems()
+	{
+		// Get (new) extension ID of JEM
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('extension_id')->from('#__extensions')->where(array("type='component'", "element='com_jem'"));
+		$db->setQuery($query);
+		$newId = $db->loadResult();
+
+		if($newId) {
+			// set compponent id on all "com_jem..." frontend entries
+			$query = $db->getQuery(true);
+			$query->update('#__menu');
+			$query->set('component_id = ' . $db->quote($newId));
+			$query->where(array('client_id = 0', 'link LIKE "index.php?option=com_jem%"'));
+			$db->setQuery($query);
+			$db->execute();
+		}
+	}
+	
 	/**
 	 * Remove all obsolete files and folders of previous versions.
 	 *
@@ -538,40 +639,39 @@ class com_jemInstallerScript
 				$db->execute();							
 			endforeach;
 		endforeach;	
-
-		
-		##############################
-		## Removal of version field ##
-		##############################
-		
-		$query = $db->getQuery(true);
-		$settings_result = array();
-			
-		try
-		{
-			$db->setQuery('SHOW FULL COLUMNS FROM #__jem_settings');
-			$fields = $db->loadObjectList();
-				
-			foreach ($fields as $field){
-				$settings_result[$field->Field] = preg_replace("/[(0-9)]/", '', $field->Type);
+	}
+	
+	
+	/**
+	 * Deletes all JEM tables on database if option says so.
+	 *
+	 * @return void
+	 */
+	private function removeAllJemTables()
+	{
+		$db = JFactory::getDbo();
+		$tables = array('#__jem_attachments',
+		                '#__jem_categories',
+		                '#__jem_cats_event_relations',
+		                '#__jem_countries',
+						'#__jem_dates',
+		                '#__jem_events',
+		                '#__jem_groupmembers',
+		                '#__jem_groups',
+						'#__jem_recurrence',
+						'#__jem_recurrence_master',
+		                '#__jem_register',
+		                '#__jem_settings',
+		                '#__jem_venues');
+		foreach ($tables AS $table) {
+			try {
+				$db->dropTable($table);
+			} catch (Exception $ex) {
+				// simply continue with next table
 			}
-		
-			$settings_result = array_keys($settings_result);
-		}
-		catch (Exception $e)
-		{
-			$settings_result = false;
-		}
-		
-		if ($settings_result) {
-			if (in_array('version',$settings_result)) {
-				# the version was not added in the update.sql of JEM 3.0.2 but it was in the install.sql
-				# as the field can be removed we've to check if the field is there and if so then fire up an action
-				# to remove the field
-				$query = $db->getQuery(true);
-				$db->setQuery('alter table #__jem_settings drop column version');
-				$db->query();
-			} 
 		}
 	}
+	
+	
+	
 }

@@ -1,8 +1,8 @@
 <?php
 /**
- * @version 3.0.5
+ * @version 3.0.6
  * @package JEM
- * @copyright (C) 2013-2014 joomlaeventmanager.net
+ * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
@@ -41,10 +41,22 @@ class JemModelVenue extends JemModelEventslist
 
 		$app 			= JFactory::getApplication();
 		$jemsettings	= JemHelper::config();
+		$settings		= JemHelper::globalattribs();
 		$jinput			= JFactory::getApplication()->input;
 		$itemid 		= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
 		$params 		= $app->getParams();
 		$task           = $jinput->getCmd('task');
+		
+		$global = new JRegistry;
+		$global->loadString($settings);
+		
+		$params = clone $global;
+		$params->merge($global);
+		if ($menu = $app->getMenu()->getActive())
+		{
+			$params->merge($menu->params);
+		}
+		$this->setState('params', $params);
 
 		# limit
 		$limit		= $app->getUserStateFromRequest('com_jem.venue.'.$itemid.'.limit', 'limit', $jemsettings->display_num, 'uint');
@@ -76,13 +88,30 @@ class JemModelVenue extends JemModelEventslist
 		}
 		$this->setState('filter.orderby', $orderby);
 
-		# params
-		$this->setState('params', $params);
-
+		# publish state
 		if ($task == 'archive') {
 			$this->setState('filter.published',2);
 		} else {
-			$this->setState('filter.published',1);
+			# we've to check if the setting for the filter has been applied
+			if ($params->get('global_show_archive_icon')) {
+				$this->setState('filter.published',1);
+			} else {
+				# retrieve the status to be displayed
+				switch ($params->get('global_show_eventstatus')) {
+					case 0:
+						$status = 1;
+						break;
+					case 1:
+						$status = 2;
+						break;
+					case 2:
+						$status = array(1,2);
+						break;
+					default:
+						$status = 1;
+				}
+				$this->setState('filter.published',$status);
+			}
 		}
 
 		$this->setState('filter.access', true);
@@ -154,7 +183,7 @@ class JemModelVenue extends JemModelEventslist
 		$_venue = array();
 
 		$query->select('id, venue, published, city, state, url, street, custom1, custom2, custom3, custom4, custom5, '.
-				' custom6, custom7, custom8, custom9, custom10, locimage, meta_keywords, meta_description, '.
+				' custom6, custom7, custom8, custom9, custom10, phone, fax, email, locimage, meta_keywords, meta_description, '.
 				' created, locdescription, country, map, latitude, longitude, postalCode, checked_out AS vChecked_out, checked_out_time AS vChecked_out_time, '.
 				' CASE WHEN CHAR_LENGTH(alias) THEN CONCAT_WS(\':\', id, alias) ELSE id END as slug');
 		$query->from($db->quoteName('#__jem_venues'));

@@ -1,8 +1,8 @@
 <?php
 /**
- * @version 3.0.5
+ * @version 3.0.6
  * @package JEM
- * @copyright (C) 2013-2014 joomlaeventmanager.net
+ * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  * 
@@ -83,7 +83,7 @@ if ($type_attendee == 2) {
 }
 
 
-if ( $check || JFactory::getUser()->authorise('core.manage')) :
+if ( $check && $this->registers|| JFactory::getUser()->authorise('core.manage') && $this->registers) :
 ?>
 
 <div class="container-fluid">
@@ -167,7 +167,7 @@ foreach ($this->registers as $register) :
 	
 		# name with avatar + link
 		if ($this->settings->get('event_comunoption','0')==1) {
-			$cbUser = CBuser::getInstance($user->id);
+			$cbUser = CBuser::getInstance($register->uid);
 			if (!$cbUser) {
 				$cbUser = CBuser::getInstance(null);
 			}
@@ -183,7 +183,7 @@ foreach ($this->registers as $register) :
 
 	# Kunena
 	if ($this->settings->get('event_comunsolution','0')==2) {
-		$user	= KunenaFactory::getUser(JFactory::getUser()->id);
+		$user	= KunenaFactory::getUser($register->uid);
 		$avatar = $user->getAvatarImage('', '', '');
 		
 		# name with avatar + link

@@ -1,8 +1,8 @@
 <?php
 /**
- * @version 3.0.5
+ * @version 3.0.6
  * @package JEM
- * @copyright (C) 2013-2014 joomlaeventmanager.net
+ * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
@@ -15,6 +15,10 @@ require JPATH_COMPONENT_SITE.'/classes/view.class.php';
 */
 class JemViewEventslist extends JEMView
 {
+	
+	protected $state = null;
+	protected $pagination = null;
+	
 	function __construct($config = array()) {
 		parent::__construct($config);
 	}
@@ -25,6 +29,7 @@ class JemViewEventslist extends JEMView
 	function display( $tpl = null )
 	{
 		// initialize variables
+		$state 			= $this->get('State');
 		$document 		= JFactory::getDocument();
 		$app 			= JFactory::getApplication();
 		$jinput 		= $app->input;
@@ -32,9 +37,8 @@ class JemViewEventslist extends JEMView
 		$settings 		= JemHelper::globalattribs();
 		$menu			= $app->getMenu();
 		$menuitem		= $menu->getActive();
-		$params 		= $app->getParams();
+		$params 		= $state->params;
 		$uri 			= JFactory::getURI();
-		$pathway 		= $app->getPathWay();
 		$db 			= JFactory::getDBO();
 		$user			= JFactory::getUser();
 		$itemid 		= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
@@ -78,38 +82,13 @@ class JemViewEventslist extends JEMView
 		} else {
 			$noevents = 0;
 		}
-
-		// params
-		$pagetitle		= $params->def('page_title', $menuitem ? $menuitem->title : JText::_('COM_JEM_EVENTS'));
-		$pageheading 	= $params->def('page_heading', $params->get('page_title'));
-		$pageclass_sfx	= $params->get('pageclass_sfx');
-
-		// pathway
-		if ($menuitem) {
-			$pathway->setItemName(1, $menuitem->title);
-		}
-
+		
+		# print-link
 		if ($task == 'archive') {
-			$pathway->addItem(JText::_('COM_JEM_ARCHIVE'), JRoute::_('index.php?view=eventslist&task=archive') );
 			$print_link = JRoute::_('index.php?view=eventslist&task=archive&tmpl=component&print=1');
-			$pagetitle   .= ' - ' . JText::_('COM_JEM_ARCHIVE');
-			$pageheading .= ' - ' . JText::_('COM_JEM_ARCHIVE');
-			$params->set('page_heading', $pageheading);
 		} else {
 			$print_link = JRoute::_('index.php?view=eventslist&tmpl=component&print=1');
 		}
-
-		// Add site name to title if param is set
-		if ($app->getCfg('sitename_pagetitles', 0) == 1) {
-			$pagetitle = JText::sprintf('JPAGETITLE', $app->getCfg('sitename'), $pagetitle);
-		}
-		elseif ($app->getCfg('sitename_pagetitles', 0) == 2) {
-			$pagetitle = JText::sprintf('JPAGETITLE', $pagetitle, $app->getCfg('sitename'));
-		}
-
-		// Set Page title
-		$document->setTitle($pagetitle);
-		$document->setMetaData('title' , $pagetitle);
 
 		// Check if the user has access to the form
 		$maintainer = JemUser::ismaintainer('add');
@@ -130,13 +109,6 @@ class JemViewEventslist extends JEMView
 			$addvenuelink = 0;
 		}
 
-		// add alternate feed link
-		$link	= 'index.php?option=com_jem&view=eventslist&format=feed';
-		$attribs = array('type' => 'application/rss+xml', 'title' => 'RSS 2.0');
-		$document->addHeadLink(JRoute::_($link.'&type=rss'), 'alternate', 'rel', $attribs);
-		$attribs = array('type' => 'application/atom+xml', 'title' => 'Atom 1.0');
-		$document->addHeadLink(JRoute::_($link.'&type=atom'), 'alternate', 'rel', $attribs);
-
 		// search filter
 		$filters = array();
 		$filters[] = JHtml::_('select.option', '0', '&mdash; '.JText::_('COM_JEM_GLOBAL_SELECT_FILTER').' &mdash;');
@@ -155,23 +127,22 @@ class JemViewEventslist extends JEMView
 		$lists['filter'] = JHtml::_('select.genericlist', $filters, 'filter_type', array('size'=>'1','class'=>'inputbox input-medium'), 'value', 'text', $filter_type );
 		$lists['search']= $search;
 
-		// Create the pagination object
-		$this->pagination 		= $this->get('Pagination');
 		
+		
+		$this->pageclass_sfx 	= htmlspecialchars($params->get('pageclass_sfx'));
+		$this->pagination 		= $this->get('Pagination');
 		$this->lists			= $lists;
 		$this->action			= $uri->toString();
 		$this->rows				= $rows;
 		$this->task				= $task;
 		$this->noevents			= $noevents;
-		$this->print_link		= $print_link;
 		$this->params			= $params;
 		$this->addvenuelink		= $addvenuelink;
 		$this->dellink			= $dellink;
 		$this->jemsettings		= $jemsettings;
 		$this->settings			= $settings;
-		$this->pagetitle		= $pagetitle;
-		$this->pageclass_sfx	= htmlspecialchars($pageclass_sfx);
 		$this->print			= $print;
+		$this->print_link		= $print_link;
 		$this->admin			= $admin;
 
 		$this->_prepareDocument();
@@ -183,26 +154,80 @@ class JemViewEventslist extends JEMView
 	 */
 	protected function _prepareDocument()
 	{
-		// TODO: Refactor with parent _prepareDocument() function
-
-		$app	= JFactory::getApplication();
-		$menus	= $app->getMenu();
-		$title	= null;
-
+		$app   = JFactory::getApplication();
+		$jinput = $app->input;
+		$menus = $app->getMenu();
+		$title 	= null;
+		$task 	= $jinput->getCmd('task');
+		$pathway = $app->getPathWay();
+		$menu = $menus->getActive();
+		
+		
+		// add feed link
+		$link	= 'index.php?option=com_jem&view=eventslist&format=feed';
+		$attribs = array('type' => 'application/rss+xml', 'title' => 'RSS 2.0');
+		$this->document->addHeadLink(JRoute::_($link.'&type=rss'), 'alternate', 'rel', $attribs);
+		$attribs = array('type' => 'application/atom+xml', 'title' => 'Atom 1.0');
+		$this->document->addHeadLink(JRoute::_($link.'&type=atom'), 'alternate', 'rel', $attribs);
+		
+		// PATH-WAY
+		if ($task == 'archive') {
+			$pathway->addItem(JText::_('COM_JEM_ARCHIVE'), JRoute::_('index.php?view=eventslist&task=archive') );
+		}
+		
+		// PAGE-HEADING
+		if ($menu)
+		{
+			$this->params->def('page_heading', $this->params->get('page_title', $menu->title));
+		}
+		else
+		{
+			$this->params->def('page_heading', JText::_('COM_JEM_EVENTS'));
+		}
+		
+		// PAGE-TITLE
+		$title = $this->params->get('page_title', '');
+		if (empty($title))
+		{
+			$title = $app->get('sitename');
+		} 
+		
+		if ($title) {
+			if ($task == 'archive') {
+				$title = $title.' - ' . JText::_('COM_JEM_ARCHIVE');
+			}
+			if ($app->get('sitename_pagetitles', 0) == 0)
+			{
+				$title = JText::sprintf('JPAGETITLE', $app->get('sitename'), $title);
+			}
+			elseif ($app->get('sitename_pagetitles', 0) == 1)
+			{
+				$title = JText::sprintf('JPAGETITLE', $app->get('sitename'), $title);
+			}
+			elseif ($app->get('sitename_pagetitles', 0) == 2)
+			{
+				$title = JText::sprintf('JPAGETITLE', $title, $app->get('sitename'));
+			}
+		}
+		$this->document->setTitle($title);
+		
+		
+		// META
 		if ($this->params->get('menu-meta_description'))
 		{
 			$this->document->setDescription($this->params->get('menu-meta_description'));
 		}
-
 		if ($this->params->get('menu-meta_keywords'))
 		{
 			$this->document->setMetadata('keywords', $this->params->get('menu-meta_keywords'));
 		}
-
+	
+		// ROBOTS
 		if ($this->params->get('robots'))
 		{
 			$this->document->setMetadata('robots', $this->params->get('robots'));
 		}
+		
 	}
 }
 ?>

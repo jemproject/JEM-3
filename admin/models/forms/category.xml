@@ -138,6 +138,7 @@
 			size="40"
 			label="COM_JEM_GLOBAL_FIELD_SELECT_IMAGE"
 			description="COM_JEM_GLOBAL_FIELD_SELECT_IMAGE_DESC"
+			directory="jem/categories"
 		/>
 	</fieldset>
 

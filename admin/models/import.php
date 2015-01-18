@@ -1,8 +1,8 @@
 <?php
 /**
- * @version 3.0.5
+ * @version 3.0.6
  * @package JEM
- * @copyright (C) 2013-2014 joomlaeventmanager.net
+ * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
@@ -240,13 +240,14 @@ class JEMModelImport extends JModelLegacy {
 
 		// parse each row
 		foreach ($data as $row) {
+				
 			$values = array();
 			
 			// parse each specified field and retrieve corresponding value for the record
 			foreach ($fieldsname as $k => $field) {
 				$values[$field] = $row[$k];
 			}
-			
+
 			// retrieve the specified table
 			$object = JTable::getInstance($tablename, $prefix);
 			$objectname = get_class($object);
@@ -333,11 +334,10 @@ class JEMModelImport extends JModelLegacy {
 			} else {
 
 				// Check/Store of tables other then Category
-
+				
 				// Make sure the data is valid
 				if (!$object->check()) {
 					$this->setError($object->getError());
-					echo JText::_('COM_JEM_IMPORT_ERROR_CHECK') . $object->getError() . "\n";
 					continue;
 				}
 
@@ -368,6 +368,7 @@ class JEMModelImport extends JModelLegacy {
 			if ($objectname == "JemTableEvents") {
 				// we need to update the categories-events table too
 				// store cat relations
+				// @todo alter
 				if (isset($values['categories'])) {
 					$cats = explode(',', $values['categories']);
 					foreach ($cats as $cat) {
@@ -375,11 +376,13 @@ class JEMModelImport extends JModelLegacy {
 						$events[$object->id][$cat] = 0;
 					}
 				}
+				
 			}
 		} // foreach
 
-		
-		// Specific actions outside the foreach loop
+		##################################
+		## actions outside foreach loop ##
+		##################################
 
 		if ($objectname == "JEMTableCategories") {
 			$object->rebuild();
@@ -1197,7 +1200,7 @@ class JEMModelImport extends JModelLegacy {
 					$rec['added']++;
 				}
 			}
-		}
+		}		
 	}
 
 	/**

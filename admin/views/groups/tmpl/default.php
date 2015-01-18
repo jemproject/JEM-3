@@ -1,8 +1,8 @@
 <?php
 /**
- * @version 3.0.5
+ * @version 3.0.6
  * @package JEM
- * @copyright (C) 2013-2014 joomlaeventmanager.net
+ * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
@@ -62,7 +62,7 @@ $params		= (isset($this->state->params)) ? $this->state->params : new JObject();
 		<thead>
 			<tr>
 			<th width="5" class="center"><?php echo JText::_( 'COM_JEM_NUM' ); ?></th>
-			<th width="1%" class="center hidden-phone"><?php echo JHtml::_('grid.checkall'); ?></th>
+			<th width="1%" class="center"><?php echo JHtml::_('grid.checkall'); ?></th>
 			<th width="30%" class="title"><?php echo JHtml::_('grid.sort', 'COM_JEM_GROUP_NAME', 'name', $listDirn, $listOrder ); ?></th>
 			<th><?php echo JText::_( 'COM_JEM_DESCRIPTION' ); ?></th>
 			</tr>

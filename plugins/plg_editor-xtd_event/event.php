@@ -1,9 +1,9 @@
 <?php
 /**
- * @version 3.0.5
+ * @version 3.0.6
  * @package JEM
  * @subpackage JEM editors-xtd plugin (event)
- * @copyright (C) 2013-2014 joomlaeventmanager.net
+ * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 defined('_JEXEC') or die;

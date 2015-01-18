@@ -18,4 +18,54 @@
 			/>
 		</fieldset>
 	</fields>
+	
+	<fields name="params">
+		<fieldset name="basic" addfieldpath="/administrator/components/com_jem/models/fields">
+			 <field name="global_show_archive_icon" type="list"
+				label="COM_JEM_SETTINGS_FIELD_SHOW_ARCHIVE_ICON"
+				description="COM_JEM_SETTINGS_FIELD_SHOW_ARCHIVE_ICON_DESC"
+				class="btn-group btn-group-yesno"
+				required="false"
+			>
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field name="global_show_eventstatus" type="list"
+				label="COM_JEM_GLOBAL_FIELD_SHOW_EVENTSTATUS"
+				description="COM_JEM_GLOBAL_FIELD_SHOW_EVENTSTATUS_DESC"
+				class="inputbox"
+				required="false"
+			>
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="0">JPUBLISHED</option>
+				<option value="1">JARCHIVED</option>
+				<option value="2">COM_JEM_BOTH</option>
+			</field>
+			<field name="sortDirection" type="text"
+				default="ASC"
+				label="COM_JEM_GLOBAL_FIELD_SORT_DIRECTION"
+				description="COM_JEM_GLOBAL_FIELD_SORT_DIRECTION_DESC"
+			/>
+			<field name="sortDirectionArchive" type="text"
+				default="DESC"
+				label="COM_JEM_GLOBAL_FIELD_SORT_DIRECTION_ARCHIVE"
+				description="COM_JEM_GLOBAL_FIELD_SORT_DIRECTION_ARCHIVE_DESC"
+			/>
+			<field name="sortColumn" type="text"
+				default="a.dates"
+				label="COM_JEM_GLOBAL_FIELD_SORT_COLUMN"
+				description="COM_JEM_GLOBAL_FIELD_SORT_COLUMN_DESC"
+			/>
+			<field name="showopendates" type="list"
+				default="0"
+				label="COM_JEM_GLOBAL_FIELD_SHOW_OPENDATES"
+				description="COM_JEM_GLOBAL_FIELD_SHOW_OPENDATES_DESC"
+			>
+				<option value="0">JNO</option>
+				<option value="1">COM_JEM_SHOW_OPENDATES_TOO</option>
+				<option value="2">COM_JEM_SHOW_OPENDATES_ONLY</option>
+			 </field>
+		</fieldset>
+	</fields>
 </metadata>

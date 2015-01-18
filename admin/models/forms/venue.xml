@@ -23,14 +23,6 @@
 			label="COM_JEM_ALIAS"
 			description="COM_JEM_ALIAS"
 		/>
-		<field name="url" type="url"
-			class="inputbox"
-			size="40"
-			label="COM_JEM_WEBSITE"
-			description="COM_JEM_WEBSITE_DESC"
-			validate="url"
-			scheme="http,https"
-		/>
 		<field name="street" type="text"
 			id="street"
 			class="inputbox"
@@ -94,6 +86,7 @@
 			size="40"
 			label="COM_JEM_GLOBAL_FIELD_SELECT_IMAGE"
 			description="COM_JEM_GLOBAL_FIELD_SELECT_IMAGE_DESC"
+			directory="jem/venues"
 		/>
 		<field name="published" type="list"
 			label="JSTATUS"
@@ -239,6 +232,37 @@
 			rows="3" cols="30"
 			label="JFIELD_META_DESCRIPTION_LABEL"
 			description="COM_JEM_FIELD_METADESCRIPTION_DESC"
+		/>
+	</fieldset>
+	<fieldset name="contact">
+		<field name="phone" type="text"
+			size="20"
+			class="inputbox"
+			label="COM_JEM_VENUE_FIELD_PHONE"
+			description="COM_JEM_VENUE_FIELD_PHONE_DESC"
+		/>
+		<field name="fax" type="text"
+			size="20"
+			readonly="false"
+			class="inputbox"
+			label="COM_JEM_VENUE_FIELD_FAX"
+			description="COM_JEM_VENUE_FIELD_FAX_DESC"
+		/>
+		<field name="email" type="email"
+			size="20"
+			readonly="false"
+			class="inputbox"
+			label="JGLOBAL_EMAIL"
+			description="COM_JEM_VENUE_FIELD_EMAIL"
+			validate="email"
+		/>
+		<field name="url" type="url"
+			class="inputbox"
+			size="40"
+			label="COM_JEM_WEBSITE"
+			description="COM_JEM_WEBSITE_DESC"
+			validate="url"
+			scheme="http,https"
 		/>
 	</fieldset>
 </form>

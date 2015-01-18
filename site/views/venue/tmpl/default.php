@@ -1,8 +1,8 @@
 <?php
 /**
- * @version 3.0.5
+ * @version 3.0.6
  * @package JEM
- * @copyright (C) 2013-2014 joomlaeventmanager.net
+ * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
@@ -105,7 +105,27 @@ $mapType = $this->mapType;
 			</dd>
 			<?php endif; ?>
 
-
+		<div id="venue_contactdetails">
+			<?php if ($this->venue->phone) : ?>
+			<dt class="venue_phone"><?php echo JText::_('COM_JEM_PHONE').':'; ?></dt>
+			<dd class="venue_phone">
+				<?php echo $this->escape($this->venue->phone); ?>
+			</dd>
+			<?php endif; ?>
+			<?php if ($this->venue->fax) : ?>
+			<dt class="venue_fax"><?php echo JText::_('COM_JEM_FAX').':'; ?></dt>
+			<dd class="venue_fax">
+				<?php echo $this->escape($this->venue->fax); ?>
+			</dd>
+			<?php endif; ?>
+			<?php if ($this->venue->email) : ?>
+			<dt class="venue_email"><?php echo JText::_('COM_JEM_EMAIL').':'; ?></dt>
+			<dd class="venue_email">
+				<?php echo $this->escape($this->venue->email); ?>
+			</dd>
+			<?php endif; ?>
+		</div>
+		
 			<?php
 			for($cr = 1; $cr <= 10; $cr++) {
 				$currentRow = $this->venue->{'custom'.$cr};

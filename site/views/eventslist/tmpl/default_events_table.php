@@ -1,8 +1,8 @@
 <?php
 /**
- * @version 3.0.5
+ * @version 3.0.6
  * @package JEM
- * @copyright (C) 2013-2014 joomlaeventmanager.net
+ * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
@@ -97,7 +97,7 @@ $admin = $this->admin;
 		<?php else : ?>
 			<?php $this->rows = $this->getRows(); ?>
 			<?php foreach ($this->rows as $row) : ?>
-			
+
 			<?php
 			$params		= $row->params;
 			$images 	= json_decode($row->datimage);
@@ -105,7 +105,7 @@ $admin = $this->admin;
 			$user		= JFactory::getUser();
 			$attribs 	= json_decode($row->attribs);
 			?>
-			
+
 				<?php if (!empty($row->featured)) :   ?>
 				<tr class="featured featured<?php echo $row->id.$this->params->get('pageclass_sfx'); ?>" itemscope="itemscope" itemtype="http://schema.org/Event" >
 				<?php else : ?>

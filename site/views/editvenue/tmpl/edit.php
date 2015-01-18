@@ -1,8 +1,8 @@
 <?php
 /**
- * @version 3.0.5
+ * @version 3.0.6
  * @package JEM
- * @copyright (C) 2013-2014 joomlaeventmanager.net
+ * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
@@ -204,16 +204,13 @@ jQuery(function() {
 		<form action="<?php echo JRoute::_('index.php?option=com_jem&a_id='.(int) $this->item->id); ?>" class="form-validate" method="post" name="adminForm" id="venue-form" enctype="multipart/form-data">
 			
 <div class="topbox">
-<div class="btn-group pull-left">
-<?php echo JEMOutput::statuslabel($this->item->published); ?>
-</div>
 	<div class="button_flyer">
 		<div class="btn-toolbar">	
 			<?php if (JFactory::getUser()->authorise('core.manage', 'com_jem')) { ?>
 				<button type="button" class="btn btn-small btn-success" onclick="Joomla.submitbutton('editvenue.apply')"><span class="icon-apply icon-white"></span><?php echo ' '.JText::_('JSAVE') ?></button>
 				<button type="button" class="btn btn-small" onclick="Joomla.submitbutton('editvenue.save')"><span class="icon-save"></span><?php echo ' '.JText::_('Save & Close') ?></button>
 			<?php } else { ?>
-				<button type="button" class="btn btn-small btn-success" onclick="Joomla.submitbutton('editvenue.save')"><span class="icon-save"></span><?php echo ' '.JText::_('JSAVE') ?></button>
+				<button type="button" class="btn btn-small btn-success" onclick="Joomla.submitbutton('editvenue.save')"><span class="icon-apply icon-white"></span><?php echo ' '.JText::_('JSAVE') ?></button>
 			<?php } ?>
 			<button type="button" class="btn btn-small" onclick="Joomla.submitbutton('editvenue.cancel')"><span class="icon-cancel icon-red"></span><?php echo ' '.JText::_('JCANCEL') ?></button>
 		</div>
@@ -254,11 +251,21 @@ jQuery(function() {
 					 echo $this->form->renderField('country');
 					 echo $this->form->renderField('latitude');
 					 echo $this->form->renderField('longitude');
-					 echo $this->form->renderField('url');
 					 echo $this->form->renderField('published');
 					 echo $this->form->renderField('map');
 					 ?>
 			</fieldset>
+			
+			<!-- CONTACT DETAILS -->
+			<fieldset class="form-horizontal">
+				<legend><span class="legendcolor"><?php echo JText::_('COM_JEM_CONTACT_DETAILS'); ?></span></legend>
+				<?php foreach($this->form->getFieldset('contact') as $field): ?>
+				<div class="control-group">
+					<div class="control-label"><?php echo $field->label; ?></div>
+					<div class="controls"><?php echo $field->input; ?></div>
+				</div>
+				<?php endforeach; ?>
+			</fieldset>			
 			
 			<fieldset class="form-vertical">
 			<div class="clr"></div>

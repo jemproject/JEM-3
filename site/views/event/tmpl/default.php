@@ -1,8 +1,8 @@
 <?php
 /**
- * @version 3.0.5
+ * @version 3.0.6
  * @package JEM
- * @copyright (C) 2013-2014 joomlaeventmanager.net
+ * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
@@ -21,10 +21,10 @@ $mapType = $this->mapType;
 ?>
 <?php if ($params->get('access-view')){?>
 <div id="jem" class="event_id<?php echo $this->item->did; ?> jem_event<?php echo $this->pageclass_sfx;?>" itemscope itemtype="http://schema.org/Event">
-<div class="topbox">	
+<div class="topbox">
 	<div class="btn-group pull-right hidden-phone">
-		<?php 
-			if ($this->print) { 
+		<?php
+			if ($this->print) {
 				echo JemOutput::printbutton($this->print_link, $this->params);
 			} else {
 		?>
@@ -39,7 +39,7 @@ $mapType = $this->mapType;
 		<?php } ?>
 	</div>
 </div>
-		
+
 <div class="info_container">
 	<?php if ($this->params->get('show_page_heading', 1)) : ?>
 	<div class="page-header">
@@ -56,7 +56,7 @@ $mapType = $this->mapType;
 		echo JemOutput::editbutton($this->item, $params, $attribs, $this->allowedtoeditevent, 'editevent');
 		?>
 	</h2>
-	
+
 	<?php if ($this->img_position == 0) { ?>
 		<?php if ($this->dimage) { ?>
 		<div class="image imagetop">
@@ -65,11 +65,11 @@ $mapType = $this->mapType;
 		<?php } ?>
 	<?php } ?>
 
-<!-- EVENT-INFO -->	
+<!-- EVENT-INFO -->
 <?php if ($this->img_position == 1) { ?>
 <div class="container-fluid">
 	<div class="row">
-		<div class="col-md-7">	
+		<div class="col-md-7">
 <?php } ?>
 
 	<dl class="event_info">
@@ -79,13 +79,72 @@ $mapType = $this->mapType;
 		<?php
 		endif;
 		?>
-		<dt class="when"><?php echo JText::_('COM_JEM_WHEN').':'; ?></dt>
+
+		<?php
+		$date = JemOutput::eventDateTime($this->item,true,true,true,true);
+
+		$startDateTime	= false;
+		$endDateTime	= false;
+		$combinedDateTime = false;
+
+		if (isset($date['startDateTime'])) {
+			$startDateTime = $date['startDateTime'];
+		}
+		if (isset($date['endDateTime'])) {
+			$endDateTime	= $date['endDateTime'];
+		}
+		if (isset($date['combinedDateTime'])) {
+			$combinedDateTime	= $date['combinedDateTime'];
+		}
+
+		echo JemOutput::formatSchemaOrgDateTime($this->item->dates, $this->item->times,$this->item->enddates, $this->item->endtimes);
+
+		if ($startDateTime && $endDateTime && !$combinedDateTime) {
+		?>
+
+		<dt class="when"><?php echo JText::_('COM_JEM_DATE_START').':'; ?></dt>
 		<dd class="when">
 			<?php
-				echo JemOutput::formatLongDateTime($this->item->dates, $this->item->times,$this->item->enddates, $this->item->endtimes);
-				echo JemOutput::formatSchemaOrgDateTime($this->item->dates, $this->item->times,$this->item->enddates, $this->item->endtimes);
+				echo $startDateTime;
 			?>
 		</dd>
+		<dt class="when"><?php echo JText::_('COM_JEM_DATE_END').':'; ?></dt>
+		<dd class="when">
+			<?php
+				echo $endDateTime;
+			?>
+		</dd>
+		<?php } ?>
+
+
+		<?php
+		if (!$startDateTime && $endDateTime) {
+		?>
+		<dt class="when"><?php echo JText::_('COM_JEM_DATE_END').':'; ?></dt>
+		<dd class="when">
+			<?php
+				echo $endDateTime;
+			?>
+		</dd>
+		<?php } ?>
+
+		<?php
+		if (($startDateTime && !$endDateTime) || $combinedDateTime) {
+		?>
+
+		<dt class="when"><?php echo JText::_('COM_JEM_DATE').':'; ?></dt>
+		<dd class="when">
+			<?php
+			if ($combinedDateTime) {
+				echo $combinedDateTime;
+			} else {
+				echo $startDateTime;
+			}
+			?>
+		</dd>
+		<?php } ?>
+
+
 		<?php if ($this->item->locid != 0) : ?>
 			<dt class="where"><?php echo JText::_('COM_JEM_WHERE').':'; ?></dt>
 		<dd class="where">
@@ -100,7 +159,7 @@ $mapType = $this->mapType;
 
 				if ($this->item->city && $this->item->state) {
 					echo $this->escape($this->item->city).', '.$this->escape($this->item->state);
-				} else { 
+				} else {
 					if ($this->item->city) {
 						echo $this->escape($this->item->city);
 					}
@@ -160,7 +219,7 @@ $mapType = $this->mapType;
 		</dd>
 		<?php endif; ?>
 		</dl>
-		
+
 		<?php if ($this->img_position == 1) { ?>
 		</div><div class="col-md-5">
 			<?php if ($this->dimage) { ?>
@@ -249,7 +308,7 @@ $mapType = $this->mapType;
 	<!--  	Venue  -->
 	<?php if ($this->item->locid != 0) : ?>
 	<p></p>
-	
+
 		<div>
 		<h2 class="location">
 			<?php
@@ -258,9 +317,9 @@ $mapType = $this->mapType;
 			echo JemOutput::editbutton($this->item, $params, $attribs, $this->allowedtoeditvenue, 'editvenue');
 			?>
 		</h2>
-	
+
 <!-- image -->
-		<?php if ($this->img_position == 0) { ?>	
+		<?php if ($this->img_position == 0) { ?>
 			<?php if ($this->limage) { ?>
 			<div class="image imagetop">
 				<?php echo JemOutput::flyer($this->item, $this->limage, 'venue'); ?>
@@ -272,7 +331,7 @@ $mapType = $this->mapType;
 <?php if ($this->img_position == 1) { ?>
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-md-7">	
+			<div class="col-md-7">
 <?php } ?>
 		<dl class="location_dl" itemprop="location" itemscope itemtype="http://schema.org/PostalAddress">
 			<dt class="venue"><?php echo JText::_('COM_JEM_LOCATION').':'; ?></dt>
@@ -322,6 +381,26 @@ $mapType = $this->mapType;
 			</dd>
 				<?php endif; ?>
 
+				<div id="venue_contactdetails">
+			<?php if ($this->item->phone) : ?>
+			<dt class="venue_phone"><?php echo JText::_('COM_JEM_PHONE').':'; ?></dt>
+			<dd class="venue_phone">
+				<?php echo $this->escape($this->item->phone); ?>
+			</dd>
+			<?php endif; ?>
+			<?php if ($this->item->fax) : ?>
+			<dt class="venue_fax"><?php echo JText::_('COM_JEM_FAX').':'; ?></dt>
+			<dd class="venue_fax">
+				<?php echo $this->escape($this->item->fax); ?>
+			</dd>
+			<?php endif; ?>
+			<?php if ($this->item->email) : ?>
+			<dt class="venue_email"><?php echo JText::_('COM_JEM_EMAIL').':'; ?></dt>
+			<dd class="venue_email">
+				<?php echo $this->escape($this->item->email); ?>
+			</dd>
+			<?php endif; ?>
+		</div>
 
 				<?php
 		for($cr = 1; $cr <= 10; $cr++) {
@@ -342,7 +421,7 @@ $mapType = $this->mapType;
 				<?php endif; ?>
 			<?php endif; ?>
 		</dl>
-		
+
 	<?php if ($this->img_position == 1) { ?>
 	</div><div class="col-md-5">
 <!-- image -->
@@ -352,7 +431,7 @@ $mapType = $this->mapType;
 	</div>
 	<?php } ?>
 	</div></div></div>
-	<?php } ?>	
+	<?php } ?>
 			<?php if ($params->get('event_show_mapserv')== 2) : ?>
 				<?php echo JemOutput::mapicon($this->item,'event',$params); ?>
 			<?php endif; ?>
@@ -388,7 +467,7 @@ $mapType = $this->mapType;
 		</div>
 	<?php endif; ?>
 
-	
+
 
 	<?php if ($this->item->registra == 1) : ?>
 		<h2 class="register"><?php echo JText::_('COM_JEM_REGISTRATION'); ?></h2>

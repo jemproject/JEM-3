@@ -1,8 +1,8 @@
 <?php
 /**
- * @version 3.0.5
+ * @version 3.0.6
  * @package JEM
- * @copyright (C) 2013-2014 joomlaeventmanager.net
+ * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
@@ -50,24 +50,48 @@ class JemViewDay extends JViewLegacy
 			$displaydate = JemOutput::formatLongDateTime($row->dates, $row->times,$row->enddates, $row->endtimes);
 
 			// url link to event
-			$link = JRoute::_(JemHelperRoute::getEventRoute($row->id));
+			$link = JRoute::_(JemHelperRoute::getEventRoute($row->slug));
+
+			// Venue
+			$venue = "";
+
+			if ($row->venue && $row->city) {
+				$venue .= $row->venue.' / '.$row->city;
+			}
+
+			if ($row->venue && !($row->city)) {
+				$venue .= $row->venue;
+			}
+
+			if (!$row->venue && $row->city) {
+				$venue .= $row->city;
+			}
+
+			if (!$row->venue && !$row->city) {
+				$venue .= "";
+			}
 
 			// feed item description text
 			$description  = JText::_('COM_JEM_TITLE').': '.$title.'<br />';
-			$description .= JText::_('COM_JEM_VENUE').': '.$row->venue.' / '.$row->city.'<br />';
+			if ($venue) {
+				$description .= JText::_('COM_JEM_VENUE').': '.$venue.'<br />';
+			}
 			$description .= JText::_('COM_JEM_CATEGORY').': '.$category.'<br />';
 			$description .= JText::_('COM_JEM_DATE').': '.$displaydate.'<br />';
-			$description .= JText::_('COM_JEM_DESCRIPTION').': '.$row->fulltext;
+			$description .= JText::_('COM_JEM_DESCRIPTION').': '.$row->introtext.$row->fulltext;
 
-			$created = ($row->created ? date('r', strtotime($row->created)) : '');
+			# define pubdate
+			$date = false;
 
 			// load individual item creator class
 			$item = new JFeedItem();
 			$item->title 		= $title;
 			$item->link 		= $link;
 			$item->description 	= $description;
-			$item->date 		= $created;
 			$item->category 	= $category;
+			if ($date) {
+				$item->date			= $date;
+			}
 
 			// loads item info into rss array
 			$doc->addItem($item);
