@@ -1,7 +1,7 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
+ * @version 3.0.6
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
@@ -86,7 +86,7 @@ jQuery( document ).ready(function( $ ) {
 		$ix = 0;
 		$content = '';
 		$contentend = '';
-		
+
 		$catz = array();
 
 		//walk through categories assigned to an event
@@ -121,13 +121,13 @@ jQuery( document ).ready(function( $ ) {
 					$countcatevents[$category->id]++;
 				}
 			}
-			
+
 			$catinfo[] = array('catid' => $category->id,'color' => $category->color);
 		}
-		
+
 		// end of category-loop
 		$catz = implode(' ',$catz);
-		
+
 		$content    .= '<div id="catz" hidecat="" class="'.$catz.'">';
 		$contentend .= '</div>';
 
@@ -209,9 +209,9 @@ jQuery( document ).ready(function( $ ) {
 
 		$this->cal->setEventContent($year, $month, $day, $content);
 	endforeach;
-	
+
 	$catinfo	= JemHelper::arrayUnique($catinfo);
-	
+
 	// create hidden input fields
 	foreach ($catinfo as $val) {
 		echo "<input name='category".$val['catid']."' type='hidden' value='".$val['color']."'>";

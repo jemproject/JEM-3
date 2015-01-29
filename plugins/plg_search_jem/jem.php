@@ -1,7 +1,7 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
+ * @version 3.0.6
  * @subpackage JEM Search Plugin
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -14,8 +14,8 @@ jimport('joomla.html.parameter');
 
 class plgSearchJEM extends JPlugin
 {
-	public function __construct(& $subject, $config)
-	{
+    public function __construct(& $subject, $config)
+    {
 		parent::__construct($subject, $config);
 		JPlugin::loadLanguage( 'plg_search_jem', JPATH_ADMINISTRATOR);
 	}

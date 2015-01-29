@@ -1,7 +1,7 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
+ * @version 3.0.6
  * @subpackage JEM editors-xtd plugin (event)
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
@@ -13,13 +13,12 @@ defined('_JEXEC') or die;
  */
 class PlgButtonEvent extends JPlugin
 {
-	/**
-	 * Constructor
+    /**
+     * Constructor
 	 *
 	 * @param   object  &$subject  The object to observe
 	 * @param   array   $config    An array that holds the plugin configuration
-	 *
-	 */
+     */
 	public function __construct(& $subject, $config)
 	{
 		parent::__construct($subject, $config);

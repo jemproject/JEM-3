@@ -1,7 +1,7 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
+ * @version 3.0.6
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
@@ -11,12 +11,12 @@ defined('_JEXEC') or die;
 
 
 <div id="jem" class="jem_eventslist<?php echo $this->pageclass_sfx;?>">
-	
-<div class="topbox">	
+
+<div class="topbox">
 	<div class="btn-group pull-right">
-	
-	<?php 
-	if ($this->print) { 
+
+	<?php
+	if ($this->print) {
 		echo JemOutput::printbutton($this->print_link, $this->params);
 	} else {
 ?>
@@ -33,8 +33,8 @@ defined('_JEXEC') or die;
 <?php } ?>
 	</div>
 </div>
-<!-- info -->	
-<div class="info_container">	
+<!-- info -->
+<div class="info_container">
 	<?php if ($this->params->get('show_page_heading', 1)) : ?>
 		<h1>
 			<?php echo $this->escape($this->params->get('page_heading')); ?>
@@ -50,27 +50,27 @@ defined('_JEXEC') or die;
 	<?php endif; ?>
 
 <!--table-->
-	
+
 		<?php echo $this->loadTemplate('events_table'); ?>
 
-		
+
 
 	<div class="pagination">
 		<?php echo $this->pagination->getPagesLinks(); ?>
 	</div>
-	
+
 <!--footer-->
 	<?php if ($this->params->get('showfootertext')) : ?>
 		<div class="description no_space clearfix">
 			<?php echo $this->params->get('footertext'); ?>
 		</div>
 	<?php endif; ?>
-	
+
 	<br/>
 
-</div>	
+</div>
 
-	
+
 	<div id="iCal" class="iCal">
 			<?php echo JemOutput::icalbutton('', 'eventslist'); ?>
 	</div>

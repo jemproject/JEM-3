@@ -1,7 +1,7 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
+ * @version 3.0.6
  * @subpackage JEM Content Plugin
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -14,7 +14,7 @@ defined('_JEXEC') or die;
  */
 class plgContentJem extends JPlugin
 {
-	/**
+    /**
 	 * Constructor
 	 *
 	 * @param object $subject The object to observe

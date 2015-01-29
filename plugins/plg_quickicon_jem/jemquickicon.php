@@ -1,11 +1,11 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
+ * @version 3.0.6
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
- * 
+ *
  * Plugin based on the Joomla! update notification plugin
  */
 defined('_JEXEC') or die;
@@ -23,15 +23,14 @@ class plgQuickiconJemquickicon extends JPlugin
 
 	public function onGetIcons($context)
 	{
-		
-		if ($context != $this->params->get('context', 'mod_quickicon') || !JFactory::getUser()->authorise('core.manage', 'com_installer'))
-		{
-			return;
+
+		if ($context != $this->params->get('context', 'mod_quickicon') || !JFactory::getUser()->authorise('core.manage', 'com_installer')) {
+            return;
 		}
 
 		JHtml::_('jquery.framework');
-		
-		$text = $this->params->get('displayedtext');
+
+        $text = $this->params->get('displayedtext');
 		if(empty($text)) $text = JText::_('PLG_QUICKICON_JEMQUICKICON_MAIN');
 
 		return array(array(

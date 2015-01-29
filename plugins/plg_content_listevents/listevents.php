@@ -1,7 +1,7 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
+ * @version 3.0.6
  * @subpackage JEM Listevents Plugin
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -19,7 +19,7 @@ if (!JComponentHelper::isEnabled('com_jem', true)) {
 }
 */
 
-# @todo add option to select status of events to be displayed
+// TODO: add option to select status of events to be displayed
 
 // Import library dependencies
 jimport('joomla.plugin.plugin');
@@ -31,7 +31,6 @@ class plgContentListevents extends JPlugin
 	 *
 	 * @param object $subject The object to observe
 	 * @param 	array  $config  An array that holds the plugin configuration
-	 *
 	 */
 	public function __construct(& $subject, $config)
 	{

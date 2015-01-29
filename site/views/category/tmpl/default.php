@@ -1,7 +1,7 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
+ * @version 3.0.6
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
@@ -14,8 +14,8 @@ JHtml::_('behavior.modal','a.flyermodal');
 <div id="jem" class="jem_category<?php echo $this->pageclass_sfx;?>">
 <div class="topbox">
 	<div class="btn-group pull-right hidden-phone">
-		<?php 
-			if ($this->print) { 
+		<?php
+			if ($this->print) {
 				echo JemOutput::printbutton($this->print_link, $this->params);
 			} else {
 		?>
@@ -28,13 +28,13 @@ JHtml::_('behavior.modal','a.flyermodal');
 		echo JemOutput::printbutton($this->print_link, $this->params);
 	?>
 	</div>
-	<?php } ?>			
+	<?php } ?>
 	</div>
 </div>
 <div class="clearfix"></div>
 <!--info-->
-<div class="info_container">	
-	
+<div class="info_container">
+
 	<?php if ($this->params->get('show_page_heading', 1)) : ?>
 	<div class="page-header">
 		<h1>
@@ -42,8 +42,8 @@ JHtml::_('behavior.modal','a.flyermodal');
 		</h1>
 	</div>
 	<?php endif; ?>
-	
-	
+
+
 	<?php if ($this->vsettings->get('show_category_image','1'))  : ?>
 	<h2 class="jem">
 			<?php echo '&nbsp'; ?>
@@ -65,10 +65,10 @@ JHtml::_('behavior.modal','a.flyermodal');
 		</div>
 		<?php endif; ?>
 
-	
+
 		<h2 class="description"><?php echo JText::_('COM_JEM_EVENT_DESCRIPTION'); ?></h2>
 		<p><?php echo $this->description; ?></p>
-	
+
 	<!--subcategories-->
 	<?php
 	if ($this->maxLevel != 0 && !empty($this->category->id) && !empty($this->children[$this->category->id])) {
@@ -82,7 +82,7 @@ JHtml::_('behavior.modal','a.flyermodal');
 		<?php echo $this->loadTemplate('subcategories'); ?>
 		</div>
 		<?php }; ?>
-		
+
 
 
 	<form action="<?php echo $this->action; ?>" method="post" id="adminForm">
@@ -95,7 +95,7 @@ JHtml::_('behavior.modal','a.flyermodal');
 		<input type="hidden" name="task" value="<?php echo $this->task; ?>" />
 		<input type="hidden" name="id" value="<?php echo $this->category->id; ?>" />
 	</form>
-	
+
 </div>
 
 	<!--pagination-->

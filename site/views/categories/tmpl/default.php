@@ -1,7 +1,7 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
+ * @version 3.0.6
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
@@ -11,12 +11,12 @@ defined('_JEXEC') or die;
 
 ?>
 <div id="jem" class="jem_categories<?php echo $this->pageclass_sfx;?>">
-	
-<div class="topbox">	
+
+<div class="topbox">
 	<div class="btn-group pull-right">
-	
-	<?php 
-	if ($this->print) { 
+
+	<?php
+	if ($this->print) {
 		echo JemOutput::printbutton($this->print_link, $this->params);
 	} else {
 	?>
@@ -29,7 +29,7 @@ defined('_JEXEC') or die;
 	</div>
 			<?php } ?>
 		</div>
-	
+
 	<?php if ($this->params->get('show_page_heading', 1)) : ?>
 		<h1>
 		<?php echo $this->escape($this->params->get('page_heading')); ?>
@@ -39,7 +39,7 @@ defined('_JEXEC') or die;
 	<div class="clearfix"></div>
 <!-- info -->
 	<div class="info_container">
-	
+
 	<?php foreach ($this->rows as $row) : ?>
 		<h2 class="jem cat<?php echo $row->id; ?>">
 			<?php echo JHtml::_('link', JRoute::_($row->linktarget), $this->escape($row->catname)); ?>
@@ -95,7 +95,7 @@ defined('_JEXEC') or die;
 	<?php endforeach; ?>
 
 	</div>
-	
+
 	<!--pagination-->
 	<div class="pagination">
 		<?php echo $this->pagination->getPagesLinks(); ?>

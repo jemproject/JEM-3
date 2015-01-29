@@ -1,7 +1,7 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
+ * @version 3.0.6
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
@@ -82,15 +82,15 @@ defined('_JEXEC') or die;
 	<tbody>
 	<?php if ($this->noevents == 1) : ?>
 		<tr class="noevents"><td colspan="20"><?php echo JText::_('COM_JEM_NO_EVENTS'); ?></td></tr>
-	<?php else : ?>		
+	<?php else : ?>
 		<?php $this->rows = $this->getRows(); ?>
 		<?php foreach ($this->rows as $row) : ?>
         <?php if ($row->featured != 0 ) :   ?>
             <tr class="featured featured<?php echo $row->id.$this->params->get( 'pageclass_sfx' ); ?>" itemprop="event" itemscope="itemscope" itemtype="http://schema.org/Event" >
         <?php else : ?>
             <tr class="sectiontableentry<?php echo ($row->odd +1) . $this->params->get('pageclass_sfx'); ?>" itemprop="event" itemscope="itemscope" itemtype="http://schema.org/Event" >
-        <?php endif; ?>		
-        
+        <?php endif; ?>
+
         <?php if ($this->jemsettings->showeventimage == 1) : ?>
 					<td class="jem_eventimage">
 						<?php if (!empty($row->datimage)) : ?>
@@ -101,7 +101,7 @@ defined('_JEXEC') or die;
 						<?php endif; ?>
 					</td>
 				<?php endif; ?>
-       
+
 				<td class="jem_date">
 					<?php
 						echo JemOutput::formatShortDateTime($row->dates, $row->times,
@@ -123,7 +123,7 @@ defined('_JEXEC') or die;
 					</td>
 				<?php } ?>
 				<?php endif; ?>
-				
+
 				<?php if (($this->jemsettings->showtitle == 1) && ($this->jemsettings->showdetails == 1)) : ?>
 					<td class="jem_title">
 						<a href="<?php echo JRoute::_(JemHelperRoute::getEventRoute($row->slug)); ?>" itemprop="url">
@@ -144,13 +144,13 @@ defined('_JEXEC') or die;
 							JemOutput::getCategoryList($row->categories, $this->jemsettings->catlinklist)); ?>
 					</td>
 				<?php endif; ?>
-				
+
 				<?php if ($this->jemsettings->showatte == 1) : ?>
 					<td class="jem_attendees">
 						<?php echo !empty($row->regCount) ? $this->escape($row->regCount) : '-'; ?>
 					</td>
 				<?php endif; ?>
-				
+
 			</tr>
 		<?php endforeach; ?>
 	<?php endif; ?>
