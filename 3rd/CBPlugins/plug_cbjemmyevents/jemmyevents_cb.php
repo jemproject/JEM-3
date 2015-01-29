@@ -1,15 +1,14 @@
 <?php
 /**
- * @package My Events
- * @version JEM v3.0.6 & CB 1.9
+ * @package MyEvents
  * @author JEM Community
+ * @version JEM v3.0.6 & CB 1.9
  * @copyright (C) 2013-2014 joomlaeventmanager.net
  *
  * Just a note:
  * Try to keep the query code inline with my-attending view
  *
  */
-
 if (! (defined('_VALID_CB') || defined('_JEXEC') || defined('_VALID_MOS')))
 {
 	die();

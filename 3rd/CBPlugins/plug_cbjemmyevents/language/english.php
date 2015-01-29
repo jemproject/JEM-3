@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * @package My Events
  * @version 3.0.6
  * @author JEM Community

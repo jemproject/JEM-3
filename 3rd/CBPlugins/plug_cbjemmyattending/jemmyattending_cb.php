@@ -1,15 +1,14 @@
 <?php
 /**
- * @package My Attending
- * @version JEM v2.0 / v2.1 & CB 1.9
+ * @package MyAttending
  * @author JEM Community
+ * @version JEM v2.0 / v2.1 & CB 1.9
  * @copyright (C) 2013-2014 joomlaeventmanager.net
  *
  * Just a note:
  * Keep the query code inline with my-attendances view
  *
  */
-
 if (! (defined('_VALID_CB') || defined('_JEXEC') || defined('_VALID_MOS')))
 {
 	die();
@@ -85,12 +84,14 @@ class jemmyattendingTab extends cbTabHandler {
 		// $user is profile's owner but we need logged-in user here
 		$juser = JFactory::getUser();
 
-		if ($juser->id != $userid) {
+		if ($juser->id != $userid)
+		{
 			// we have to check if foreign announces are allowed to show
 			$permitted = false;
 			$settings = JEMHelper::globalattribs();
 
-			switch ($settings->get('event_show_attendeenames', 2)) {
+			switch ($settings->get('event_show_attendeenames', 2))
+			{
 				case 0: // show to none
 				default:
 					break;
@@ -105,7 +106,8 @@ class jemmyattendingTab extends cbTabHandler {
 					break;
 			}
 
-			if (!$permitted) {
+			if (!$permitted)
+			{
 				return ''; // which will completely hide the tab
 			}
 		}
@@ -121,7 +123,8 @@ class jemmyattendingTab extends cbTabHandler {
 		 * can be filled in the backend, section: Tab management
 		 */
 
-		if (!empty($tab->description)) {
+		if (!empty($tab->description))
+		{
 			// html content is allowed in descriptions
 			$return .= "\t\t<div class=\"tab_Description\">". $tab->description . "</div>\n";
 		}
@@ -150,7 +153,8 @@ class jemmyattendingTab extends cbTabHandler {
 		/*
 		$S_Itemid= $_CB_database->loadResult();
 
-		if(!$S_Itemid) {
+		if(!$S_Itemid)
+		{
 			$S_Itemid = 999999;
 		}
 		*/
