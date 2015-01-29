@@ -192,7 +192,6 @@ abstract class JEMHelperRoute
 		return self::getRouteWithoutId('myvenues');
 	}
 
-
 	/**
 	 * Determines the Itemid
 	 *
@@ -254,12 +253,9 @@ abstract class JEMHelperRoute
 						}
 				}
 			}
-
-
 		}
 
 		// at this point we collected itemid's linking to the component
-
 
 		if ($needles) {
 			foreach ($needles as $view => $ids)
@@ -275,17 +271,9 @@ abstract class JEMHelperRoute
 			}
 		}
 
-
 		if ($defaultItemid) {
 			return $defaultItemid;
 		} else {
-			$active = $menus->getActive();
-
-			if ($active && $active->component == 'com_jem')
-			{
-				return $active->id;
-			}
-
 			$component = JComponentHelper::getComponent('com_jem');
 			$items = $menus->getItems(array('component_id','link'), array($component->id,'index.php?option=com_jem&view=eventslist'),false);
 
@@ -294,5 +282,13 @@ abstract class JEMHelperRoute
 			return !empty($default->id) ? $default->id : null;
 		}
 
+		/*
+		$active = $menus->getActive();
+
+		if ($active && $active->component == 'com_jem')
+		{
+			return $active->id;
+		}
+		*/
 	}
 }

@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * Holds the logic for all output related things
  */
@@ -106,7 +105,6 @@ class JEMOutput {
 			} else {
 				$text = JText::_('COM_JEM_DELIVER_NEW_VENUE');
 			}
-
 
 			$url = 'index.php?option=com_jem&task=editvenue.add&return='.base64_encode(urlencode($uri)).'&a_id=0';
 			$title = JText::_('COM_JEM_DELIVER_NEW_VENUE');
@@ -378,6 +376,7 @@ class JEMOutput {
 
 			return $output;
 		}
+
 		return;
 	}
 
@@ -651,7 +650,6 @@ class JEMOutput {
 	 */
 	static function mapicon($data,$view=false,$params)
 	{
-
 		$global = JemHelper::globalattribs();
 
 		//stop if disabled
@@ -860,7 +858,6 @@ class JEMOutput {
 
 		return $output;
 	}
-
 
 	/**
 	 * Formats date
@@ -1091,9 +1088,9 @@ class JEMOutput {
 	 * @param boolean $doLink Link the categories to the respective Category View
 	 * @return string|multitype:
 	 */
-	static function getCategoryList($categories, $doLink,$backend=false,$FixItemID=false) {
+	static function getCategoryList($categories, $doLink,$backend=false) {
 		$output = array_map(
-			function ($category) use ($doLink,$backend,$FixItemID) {
+			function ($category) use ($doLink,$backend) {
 				if ($doLink) {
 
 					if ($backend) {
@@ -1106,12 +1103,8 @@ class JEMOutput {
 								$category->catname.'</a>';
 						$value .= '</span>';
 					} else {
-
-						if ($FixItemID) {
-							$value = '<a href="'.JRoute::_('index.php?option=com_jem&view=category&id='.$category->catslug.'&Itemid='.$FixItemID).'">'.$category->catname.'</a>';
-						} else {
-							$value = '<a href="'.JRoute::_(JemHelperRoute::getCategoryRoute($category->catslug)).'">'.$category->catname.'</a>';
-						}
+						$value = '<a href="'.JRoute::_(JemHelperRoute::getCategoryRoute($category->catslug)).'">'.
+								$category->catname.'</a>';
 					}
 				} else {
 					$value = $category->catname;
@@ -1122,7 +1115,6 @@ class JEMOutput {
 
 		return $output;
 	}
-
 
 	static function statuslabel($published = false) {
 
@@ -1361,5 +1353,4 @@ class JEMOutput {
 
 		return $result;
 	}
-
-} // end class
+}
