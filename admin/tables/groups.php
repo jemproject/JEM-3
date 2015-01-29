@@ -19,7 +19,6 @@ class JEMTableGroups extends JTable
 		parent::__construct('#__jem_groups', 'id', $db);
 	}
 
-
 	// overloaded check function
 	function check()
 	{
@@ -38,7 +37,6 @@ class JEMTableGroups extends JTable
 		return true;
 	}
 
-
 	/**
 	 * Store.
 	 */
@@ -46,7 +44,6 @@ class JEMTableGroups extends JTable
 	{
 		return parent::store($updateNulls);
 	}
-
 
 	public function bind($array, $ignore = '')
 	{

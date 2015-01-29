@@ -8,13 +8,11 @@
  */
 defined('_JEXEC') or die();
 
-
 /**
  * Model: Category
  */
 class JemModelCategory extends JModelAdmin
 {
-
 	/**
 	 * @var string The prefix to use with controller messages.
 	 */
@@ -107,8 +105,6 @@ class JemModelCategory extends JModelAdmin
 	{
 		return JTable::getInstance($type, $prefix, $config);
 	}
-
-
 
 	/**
 	 * Method to get a category.
@@ -213,7 +209,6 @@ class JemModelCategory extends JModelAdmin
 
 		return $data;
 	}
-
 
 	/**
 	 * Method to save the form data.

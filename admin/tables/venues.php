@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * Table: Venues
  */
@@ -18,7 +17,6 @@ class JEMTableVenues extends JTable
 	public function __construct(&$db) {
 		parent::__construct('#__jem_venues', 'id', $db);
 	}
-
 
 	/**
 	 * Bind
@@ -184,7 +182,6 @@ class JEMTableVenues extends JTable
 		{
 			$this->locimage = '';
 		}
-
 
 		/*
 		if (!$backend) {

@@ -14,7 +14,6 @@ jimport('joomla.filesystem.file');
  */
 class JemModelCssmanager extends JModelLegacy
 {
-
 	/**
 	 * Internal method to get file properties.
 	 *
@@ -43,7 +42,6 @@ class JemModelCssmanager extends JModelLegacy
 
 		return $temp;
 	}
-
 
 	/**
 	 * Internal method to get file properties.
@@ -126,10 +124,8 @@ class JemModelCssmanager extends JModelLegacy
 			}
 
 		}
-
 		return $result;
 	}
-
 
 	/**
 	 * Method to auto-populate the model state.
@@ -146,7 +142,6 @@ class JemModelCssmanager extends JModelLegacy
 		$this->setState('params', $params);
 	}
 
-
 	/**
 	 * Detect if option linenumbers is enabled
 	 * plugin: codemirror
@@ -161,7 +156,6 @@ class JemModelCssmanager extends JModelLegacy
 		$manifest = json_decode($db->loadResult(), true);
 		return $manifest['lineNumbers'];
 	}
-
 
 	/**
 	 * Sets parameter values in the component's row of the extension table

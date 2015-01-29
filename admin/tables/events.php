@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * Table: Events
  */
@@ -73,7 +72,6 @@ class JemTableEvents extends JTable
 		return parent::bind($array, $ignore);
 	}
 
-
 	/**
 	 * overloaded check function
 	 */
@@ -97,7 +95,6 @@ class JemTableEvents extends JTable
 				$this->alias = JFactory::getDate()->format('Y-m-d-H-i-s');
 			}
 		}
-
 
 		###############
 		## DATE-TIME ##
@@ -256,7 +253,6 @@ class JemTableEvents extends JTable
 			$this->datimage = '';
 		}
 
-
 		if (!$backend) {
 			/*	check if the user has the required rank for autopublish	*/
 			$maintainer = JEMUser::ismaintainer('publish');
@@ -280,7 +276,6 @@ class JemTableEvents extends JTable
 
 		if ($rec_groupcheck) {
 			# the check returned true, so it's considered as an edit
-
 
 			# Retrieve id of current event from recurrence_table
 			# as the check was true we can skip the groupid=groupid_ref from the where statement
@@ -327,7 +322,6 @@ class JemTableEvents extends JTable
 		## END RECURRENCE ##
 
 		return parent::store($updateNulls);
-
 	}
 
 	/**

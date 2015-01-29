@@ -10,7 +10,6 @@ defined('JPATH_BASE') or die;
 
 JFormHelper::loadFieldClass('list');
 
-
 /**
  * CatOptions Field class.
  */
@@ -22,46 +21,43 @@ class JFormFieldCatOptions extends JFormFieldList
 	 */
 	protected $type = 'CatOptions';
 
-	
-	
 	protected function getInput()
 	{
 		$html = array();
 		$attr = '';
-	
+
 		// Initialize some field attributes.
 		$attr .= !empty($this->class) ? ' class="' . $this->class . '"' : '';
 		$attr .= !empty($this->size) ? ' size="' . $this->size . '"' : '';
 		$attr .= $this->multiple ? ' multiple' : '';
 		$attr .= $this->required ? ' required aria-required="true"' : '';
 		$attr .= $this->autofocus ? ' autofocus' : '';
-		
+
 		$frontedit = $this->element['frontedit'];
-		
-	
+
 		// To avoid user's confusion, readonly="true" should imply disabled="true".
 		if ((string) $this->readonly == '1' || (string) $this->readonly == 'true' || (string) $this->disabled == '1'|| (string) $this->disabled == 'true')
 		{
 			$attr .= ' disabled="disabled"';
 		}
-	
+
 		// Initialize JavaScript field attributes.
 		$attr .= $this->onchange ? ' onchange="' . $this->onchange . '"' : '';
-	
+
 		// Get the field options.
 		$options = (array) $this->getOptions();
-		
+
 		// Selected Categories
 		$currentid = JFactory::getApplication()->input->getInt('a_id');
 		$categories = self::getCategories($currentid);
-	
+
 		$db		= JFactory::getDbo();
 		$query	= $db->getQuery(true);
 		$query = 'SELECT DISTINCT catid FROM #__jem_cats_event_relations WHERE itemid = '. $db->quote($currentid);
-	
+
 		$db->setQuery($query);
 		$selectedcats = $db->loadColumn();
-	
+
 		// Create a read-only list (no name) with a hidden input to store the value.
 		if ((string) $this->readonly == '1' || (string) $this->readonly == 'true')
 		{
@@ -73,22 +69,20 @@ class JFormFieldCatOptions extends JFormFieldList
 		{
 			$html[] = JHtml::_('select.genericlist', $options, $this->name, trim($attr), 'value', 'text', $selectedcats,$this->id);
 		}
-		
+
 		return implode($html);
 	}
-	
-	
+
 	protected function getOptions() {
-	
+
 		$db			= JFactory::getDbo();
-			
+
 		$frontedit = $this->element['frontedit'];
 		if ($frontedit) {
 			$options	= $this->getCategories();
 		} else {
 			$options	= JEMCategories::getCategoriesTree();
 		}
-		
 
 		try
 		{
@@ -98,14 +92,13 @@ class JFormFieldCatOptions extends JFormFieldList
 		{
 			JError::raiseWarning(500, $e->getMessage);
 		}
-	
+
 		// Merge any additional options in the XML definition.
 		$options = array_merge(parent::getOptions(), $options);
-	
+
 		return $options;
 	}
-	
-	
+
 	/**
 	 * logic to get the categories
 	 *
@@ -121,12 +114,11 @@ class JFormFieldCatOptions extends JFormFieldList
 		$levels 	= $user->getAuthorisedViewLevels();
 		$settings 	= JemHelper::globalattribs();
 		$guestcat	= $settings->get('guest_category','0');
-		
-		
+
 		$valguest	= JEMUser::validate_guest();
 		if (!$valguest) {
 			$where = ' WHERE c.published = 1 AND c.access IN (' . implode(',', $levels) . ')';
-			
+
 			//get the ids of the categories the user maintaines
 			$db		= JFactory::getDbo();
 			$query	= $db->getQuery(true);
@@ -136,8 +128,7 @@ class JFormFieldCatOptions extends JFormFieldList
 					;
 					$db->setQuery($query);
 					$catids = $db->loadColumn();
-						
-						
+
 					$query = 'SELECT gr.id'
 							. ' FROM #__jem_groups AS gr'
 									. ' LEFT JOIN #__jem_groupmembers AS g ON g.group_id = gr.id'
@@ -147,7 +138,7 @@ class JFormFieldCatOptions extends JFormFieldList
 					$db->setQuery($query);
 					$groupnumber = $db->loadColumn();
 					$categories = implode(' OR c.groupid = ', $groupnumber);
-			
+
 					//build ids query
 					if ($categories) {
 						//check if user is allowed to submit events in general, if yes allow to submit into categories
@@ -160,7 +151,7 @@ class JFormFieldCatOptions extends JFormFieldList
 					} else {
 						$where .= ' AND c.groupid = 0';
 					}
-			
+
 					//administrators or superadministrators have access to all categories, also maintained ones
 					if($superuser) {
 						$where = ' WHERE c.published = 1';
@@ -168,9 +159,8 @@ class JFormFieldCatOptions extends JFormFieldList
 		} else {
 			# specified category
 			$where = ' WHERE c.id = '. $guestcat;
-		}	
-		
-		
+		}
+
 		//get the maintained categories and the categories whithout any group
 		//or just get all if somebody have edit rights
 		$db		= JFactory::getDbo();
@@ -181,14 +171,13 @@ class JFormFieldCatOptions extends JFormFieldList
 				. ' ORDER BY c.ordering'
 				;
 		$db->setQuery($query);
-		
 
 		//	$this->_category = array();
 		//	$this->_category[] = JHtml::_('select.option', '0', JText::_( 'COM_JEM_SELECT_CATEGORY' ) );
 		//	$this->_categories = array_merge( $this->_category, $this->_db->loadObjectList() );
-	
+
 		$mitems = $db->loadObjectList();
-		
+
 		// Check for a database error.
 		if ($db->getErrorNum())
 		{
@@ -223,5 +212,5 @@ class JFormFieldCatOptions extends JFormFieldList
 		$list = JEMCategories::treerecurse($parentid, '', array(), $children, 9999, 0, 0);
 
 		return $list;
-	}	
+	}
 }

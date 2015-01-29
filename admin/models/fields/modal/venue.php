@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * Venue Select
  */
@@ -19,7 +18,6 @@ class JFormFieldModal_Venue extends JFormField
 	 * @var string
 	 */
 	protected $type = 'Modal_Venue';
-
 
 	/**
 	 * Method to get the field input markup
@@ -40,7 +38,6 @@ class JFormFieldModal_Venue extends JFormField
 		$script[] = '        SqueezeBox.close();';
 		$script[] = '    }';
 
-
 		// Clear button script
 		static $scriptClear;
 
@@ -58,7 +55,6 @@ class JFormFieldModal_Venue extends JFormField
 			$script[] = '		return false;';
 			$script[] = '	}';
 		}
-
 
 		// Add to document head
 		JFactory::getDocument()->addScriptDeclaration(implode("\n", $script));
@@ -90,7 +86,6 @@ class JFormFieldModal_Venue extends JFormField
 			$venue = JText::_('COM_JEM_SELECT_VENUE');
 		}
 		$venue = htmlspecialchars($venue, ENT_QUOTES, 'UTF-8');
-
 
 		// The active venue id field
 		if (0 == (int)$this->value) {

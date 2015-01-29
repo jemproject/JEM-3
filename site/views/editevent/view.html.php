@@ -244,7 +244,6 @@ class JemViewEditevent extends JViewLegacy
 		}
 	}
 
-
 	/**
 	 * Creates the output for the venue select listing
 	 */
@@ -294,7 +293,6 @@ class JemViewEditevent extends JViewLegacy
 
 		parent::display($tpl);
 	}
-
 
 	/**
 	 * Creates the output for the contact select listing
@@ -347,4 +345,3 @@ class JemViewEditevent extends JViewLegacy
 		parent::display($tpl);
 	}
 }
-?>

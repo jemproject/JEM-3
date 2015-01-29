@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die();
 
-
 /**
  * Category select
  */
@@ -87,7 +86,6 @@ class JFormFieldModal_Categories extends JFormField
 		}
 		$category = htmlspecialchars($category, ENT_QUOTES, 'UTF-8');
 
-
 		# The active category id field
 		if (0 == (int)$this->value) {
 			$value = '';
@@ -95,14 +93,12 @@ class JFormFieldModal_Categories extends JFormField
 			$value = (int)$this->value;
 		}
 
-
 		# The current event input field
 		$html[] = '<span class="input-append">';
 		$html[] = '  <input type="text" class="input-medium" id="'.$this->id.'_name" value="'.$category.'" disabled="disabled" size="35" />';
 		$html[] = '<a class="flyermodal btn" href="'.$link.'&amp;'.JSession::getFormToken().'=1" rel="{handler: \'iframe\', size: {x: 800, y: 450}}"><i class="icon-file"></i> '.JText::_('JSELECT').'</a>';
 		$html[] = '<button id="'.$this->id.'_clear" class="btn'.($value ? '' : ' hidden').'" onclick="return jClear(\''.$this->id.'\')"><span class="icon-remove"></span> ' . JText::_('JCLEAR') . '</button>';
 		$html[] = '</span>';
-
 
 		# class='required' for client side validation
 		$class = '';

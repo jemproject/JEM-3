@@ -8,8 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
-
 /**
  * Model: Eventelement
  */
@@ -78,7 +76,6 @@ class JemModelEventelement extends JModelLegacy
 			}
 		}
 
-
 		if($this->_data)
 		{
 			$count = count($this->_data);
@@ -92,7 +89,6 @@ class JemModelEventelement extends JModelLegacy
 				}
 			}
 		}
-
 
 		return $this->_data;
 	}
@@ -201,7 +197,6 @@ class JemModelEventelement extends JModelLegacy
 		}
 
 		$query->where($where);
-
 		$query->group('a.id');
 
 		$orderby 	= array($filter_order.' '.$filter_order_Dir,'a.dates ASC');
@@ -209,8 +204,6 @@ class JemModelEventelement extends JModelLegacy
 
 		return $query;
 	}
-
-
 
 	function getCategories($id)
 	{

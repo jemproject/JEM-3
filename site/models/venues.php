@@ -33,7 +33,7 @@ class JemModelVenues extends JemModelEventslist
 		// List state information
 		$limit		= $app->getUserStateFromRequest('com_jem.venues.'.$itemid.'.limit', 'limit', $params->get('display_venues_num'), 'uint');
 		$this->setState('list.limit', $limit);
-		
+
 		$limitstart = $app->input->get('limitstart', 0, 'uint');
 		$this->setState('list.start', $limitstart);
 
@@ -44,9 +44,7 @@ class JemModelVenues extends JemModelEventslist
 
 		$this->setState('filter.access', true);
 		$this->setState('filter.groupby',array('l.id','l.venue'));
-
 	}
-
 
 	/**
 	 * Build the query
@@ -91,7 +89,6 @@ class JemModelVenues extends JemModelEventslist
 		return $query;
 	}
 
-
 	/**
 	 * Method to get a list of venues.
 	 */
@@ -99,7 +96,7 @@ class JemModelVenues extends JemModelEventslist
 	{
 		$query = $this->_getListQuery();
 		$items = $this->_getList($query, $this->getStart(), $this->getState('list.limit'));
-		
+
 		$app = JFactory::getApplication();
 		$params = clone $this->getState('params');
 
@@ -109,17 +106,16 @@ class JemModelVenues extends JemModelEventslist
 				//create target link
 				$item->linkEventsArchived = JRoute::_(JEMHelperRoute::getVenueRoute($item->venueslug.'&task=archive'));
 				$item->linkEventsPublished = JRoute::_(JEMHelperRoute::getVenueRoute($item->venueslug));
-				
+
 				$item->EventsPublished = $this->AssignedEvents($item->locid,'1');
 				$item->EventsArchived = $this->AssignedEvents($item->locid,'2');
 			}
-			
+
 			return $items;
 		}
 
 		return array();
 	}
-
 
 	function AssignedEvents($id,$state=1) {
 
@@ -145,7 +141,6 @@ class JemModelVenues extends JemModelEventslist
 		# state
 		$query->where('a.published= '.$state);
 
-
 		#####################
 		### FILTER - BYCAT ##
 		#####################
@@ -166,14 +161,12 @@ class JemModelVenues extends JemModelEventslist
 		return ($nr);
 	}
 
-
-
 	/**
 	 * Retrieve Categories
 	 *
 	 * Due to multi-cat this function is needed
 	 * filter-index (4) is pointing to the cats
-	 * 
+	 *
 	 * @todo: check
 	 */
 
@@ -212,7 +205,6 @@ class JemModelVenues extends JemModelEventslist
 
 		$query->where('c.published = 1');
 
-
 		###################
 		## FILTER-ACCESS ##
 		###################
@@ -220,14 +212,12 @@ class JemModelVenues extends JemModelEventslist
 		# Filter by access level.
 		$access = $this->getState('filter.access');
 
-
 		###################################
 		## FILTER - MAINTAINER/JEM GROUP ##
 		###################################
 
 		# as maintainter someone who is registered can see a category that has special rights
 		# let's see if the user has access to this category.
-
 
 		$query3	= $db->getQuery(true);
 		$query3 = 'SELECT gr.id'
@@ -249,7 +239,6 @@ class JemModelVenues extends JemModelEventslist
 				$query->where('(c.access IN ('.$groups.'))');
 			}
 		}
-
 
 		#######################
 		## FILTER - CATEGORY ##
@@ -312,8 +301,7 @@ class JemModelVenues extends JemModelEventslist
 			return ($cats);
 		} else {
 			$cats = $db->loadObjectList();
-			}
+		}
 			return $cats;
-			}
+	}
 }
-?>

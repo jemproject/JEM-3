@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * Venue-Feed
  */
@@ -98,4 +97,3 @@ class JemViewVenue extends JViewLegacy
 		}
 	}
 }
-?>

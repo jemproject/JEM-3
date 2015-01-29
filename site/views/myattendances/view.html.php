@@ -48,7 +48,7 @@ class JemViewMyattendances extends JEMView
 		JemHelper::loadCss('jem');
 		JemHelper::loadCustomCss();
 		JemHelper::loadCustomTag();
-		
+
 		$this->rows 		= $this->get('Items');
 		$this->pagination 	= $this->get('Pagination');
 
@@ -134,4 +134,3 @@ class JemViewMyattendances extends JEMView
 		parent::display($tpl);
 	}
 }
-?>

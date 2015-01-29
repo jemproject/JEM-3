@@ -33,14 +33,12 @@ class JFormFieldEventoptions extends JFormFieldList
 		// Let's get the id for the current item
 		$jinput = JFactory::getApplication()->input;
 
-
 		// Create SQL
 		$db		= JFactory::getDbo();
 		$query	= $db->getQuery(true);
 
 		$query->select('a.id AS value, a.title AS text, a.published');
 		$query->from('#__jem_events AS a');
-
 
 		// Filter on the published state
 		if (is_numeric($published))
@@ -68,7 +66,6 @@ class JFormFieldEventoptions extends JFormFieldList
 			JError::raiseWarning(500, $e->getMessage);
 		}
 
-
 			// Pad the option text with spaces using depth level as a multiplier.
 			for ($i = 0, $n = count($options); $i < $n; $i++)
 			{
@@ -82,10 +79,8 @@ class JFormFieldEventoptions extends JFormFieldList
 				}
 			}
 
-
 		// Get the current user object.
 		$user = JFactory::getUser();
-
 
 		// Merge any additional options in the XML definition.
 		$options = array_merge(parent::getOptions(), $options);

@@ -9,7 +9,7 @@
 defined('_JEXEC') or die;
 
 /**
- * Venue-Raw 
+ * Venue-Raw
  */
 class JemViewVenue extends JViewLegacy
 {
@@ -46,4 +46,3 @@ class JemViewVenue extends JViewLegacy
 		}
 	}
 }
-?>

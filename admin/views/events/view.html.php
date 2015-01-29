@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * View: Events
  */
@@ -56,8 +55,7 @@ defined('_JEXEC') or die;
 		$this->addToolbar();
 
 		parent::display($tpl);
-		}
-
+	}
 
 	/**
 	 * Add Toolbar

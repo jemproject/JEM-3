@@ -81,7 +81,6 @@ class JemModelDay extends JemModelEventslist
 		return $this->_date;
 	}
 
-
 	/**
 	 * Method to auto-populate the model state.
 	 */
@@ -113,7 +112,7 @@ class JemModelDay extends JemModelEventslist
 		# limit/start
 		$limit		= $app->getUserStateFromRequest('com_jem.day.'.$itemid.'.limit', 'limit', $jemsettings->display_num, 'uint');
 		$this->setState('list.limit', $limit);
-		
+
 		$limitstart = $app->input->get('limitstart', 0, 'uint');
 		$this->setState('list.start', $limitstart);
 
@@ -125,7 +124,6 @@ class JemModelDay extends JemModelEventslist
 		$filtertype = $app->getUserStateFromRequest('com_jem.day.'.$itemid.'.filter_type', 'filter_type', '', 'int');
 		$this->setState('filter.filter_type', $filtertype);
 
-
 		###########
 		## ORDER ##
 		###########
@@ -133,15 +131,15 @@ class JemModelDay extends JemModelEventslist
 		$filter_order_Dir	= $app->getUserStateFromRequest('com_jem.day.'.$itemid.'.filter_order_Dir', 'filter_order_Dir', 'ASC', 'string');
 		$filter_order		= JFilterInput::getInstance()->clean($filter_order, 'string');
 		$filter_order_Dir	= JFilterInput::getInstance()->clean($filter_order_Dir, 'string');
-		
+
 		if ($filter_order == 'a.dates') {
 			$orderby = array('a.dates '.$filter_order_Dir,'a.times '.$filter_order_Dir);
 		} else {
 			$orderby = $filter_order . ' ' . $filter_order_Dir;
 		}
-		
+
 		$this->setState('filter.orderby',$orderby);
-		
+
 		# params
 		$this->setState('params', $params);
 
@@ -207,4 +205,3 @@ class JemModelDay extends JemModelEventslist
 		return $query;
 	}
 }
-?>

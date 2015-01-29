@@ -43,7 +43,6 @@ class JFormFieldEvent extends JFormFieldList
 		$script[] = '        SqueezeBox.close();';
 		$script[] = '    }';
 
-
 		# Clear button script
 		static $scriptClear;
 
@@ -93,14 +92,12 @@ class JFormFieldEvent extends JFormFieldList
 		}
 		$event = htmlspecialchars($event, ENT_QUOTES, 'UTF-8');
 
-
 		# The active event-id field.
 		if (0 == (int)$this->value) {
 			$value = '';
 		} else {
 			$value = (int)$this->value;
 		}
-
 
 		# The current event input field
 		$html[] = '<span class="input-append">';

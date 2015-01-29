@@ -21,7 +21,6 @@ class JemModelEditvenue extends JemModelVenue
 	 */
 	public $typeAlias = 'com_jem.venue';
 
-
 	/**
 	 * Method to auto-populate the model state.
 	 * Note. Calling getState in this method will result in recursion.
@@ -147,5 +146,4 @@ class JemModelEditvenue extends JemModelVenue
 	{
 		return base64_encode(urlencode($this->getState('return_page')));
 	}
-
 }

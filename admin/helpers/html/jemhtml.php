@@ -16,7 +16,6 @@ defined('_JEXEC') or die();
 abstract class JHtmlJemHtml
 {
 	/**
-	 *
 	 * @param int $value state value
 	 * @param int $i
 	 */

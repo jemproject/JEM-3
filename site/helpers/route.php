@@ -73,7 +73,7 @@ abstract class JEMHelperRoute
 	{
 		$settings 		= JEMHelper::globalattribs();
 		$defaultItemid 	= $settings->get('default_Itemid');
-		
+
 		$needles = array(
 			'category' => array((int) $id)
 		);
@@ -92,13 +92,13 @@ abstract class JEMHelperRoute
 		if ($item = self::_findItem($needles)) {
 			$link .= '&Itemid='.$item;
 		}
-		elseif ($item = self::_findItem()) {	
+		elseif ($item = self::_findItem()) {
 			if (isset($defaultItemid))
 				{
 					$link .= '&Itemid='.$defaultItemid;
-				} 
+				}
 		}
-		
+
 		return $link;
 	}
 
@@ -106,7 +106,7 @@ abstract class JEMHelperRoute
 	{
 		$settings 		= JEMHelper::globalattribs();
 		$defaultItemid 	= $settings->get('default_Itemid');
-		
+
 		$needles = array(
 			'event' => array((int) $id)
 		);
@@ -124,10 +124,10 @@ abstract class JEMHelperRoute
 		if ($item = self::_findItem($needles)) {
 			$link .= '&Itemid='.$item;
 		}
-		elseif ($item = self::_findItem()) {	
+		elseif ($item = self::_findItem()) {
 			$link .= '&Itemid='.$item;
 		}
-		
+
 		return $link;
 	}
 
@@ -135,7 +135,7 @@ abstract class JEMHelperRoute
 	{
 		$settings 		= JEMHelper::globalattribs();
 		$defaultItemid 	= $settings->get('default_Itemid');
-		
+
 		$needles = array(
 			'venue' => array((int) $id)
 		);
@@ -149,10 +149,10 @@ abstract class JEMHelperRoute
 		if ($item = self::_findItem($needles)) {
 			$link .= '&Itemid='.$item;
 		}
-		elseif ($item = self::_findItem()) {	
+		elseif ($item = self::_findItem()) {
 			$link .= '&Itemid='.$item;
 		}
-		
+
 		return $link;
 	}
 
@@ -160,7 +160,7 @@ abstract class JEMHelperRoute
 	{
 		$settings 		= JEMHelper::globalattribs();
 		$defaultItemid 	= $settings->get('default_Itemid');
-		
+
 		$needles = array();
 		$needles[$my] = array(self::ARTIFICALID);
 
@@ -170,10 +170,10 @@ abstract class JEMHelperRoute
 		if ($item = self::_findItem($needles)) {
 			$link .= '&Itemid='.$item;
 		}
-		elseif ($item = self::_findItem()) {	
+		elseif ($item = self::_findItem()) {
 			$link .= '&Itemid='.$item;
 		}
-		
+
 		return $link;
 	}
 
@@ -191,7 +191,6 @@ abstract class JEMHelperRoute
 	{
 		return self::getRouteWithoutId('myvenues');
 	}
-
 
 	/**
 	 * Determines the Itemid
@@ -217,7 +216,7 @@ abstract class JEMHelperRoute
 
 			$component = JComponentHelper::getComponent('com_jem');
 			$items = $menus->getItems('component_id', $component->id);
-					
+
 			// loop trough the menu-items of the component
 			if ($items) {
 				foreach ($items as $item)
@@ -225,12 +224,12 @@ abstract class JEMHelperRoute
 					if (isset($item->query) && isset($item->query['view'])) {
 						// skip Calendar-layout
 						if (isset($item->query['layout']) && ($item->query['layout'] == 'calendar')) {
-							continue; 
+							continue;
 						}
-						
+
 						// define $view variable
 						$view = $item->query['view'];
-						
+
 						// skip several views
 						if (isset($item->query['view'])) {
 							if ($view == 'calendar' || $view == 'search' || $view == 'venues') {
@@ -247,19 +246,16 @@ abstract class JEMHelperRoute
 							if (!isset(self::$lookup2[$view][$item->query['id']]))
 							{
 								self::$lookup2[$view][$item->query['id']] = $item->id;
-							} 
-						} else { 
+							}
+						} else {
 							// Some views have no ID, but we have to set one
 							self::$lookup2[$view][self::ARTIFICALID] = $item->id;
 						}
 				}
 			}
-			
-			
 		}
 
 		// at this point we collected itemid's linking to the component
-	
 
 		if ($needles) {
 			foreach ($needles as $view => $ids)
@@ -274,28 +270,25 @@ abstract class JEMHelperRoute
 				}
 			}
 		}
-		
-		
+
 		if ($defaultItemid) {
 			return $defaultItemid;
 		} else {
 			$component = JComponentHelper::getComponent('com_jem');
 			$items = $menus->getItems(array('component_id','link'), array($component->id,'index.php?option=com_jem&view=eventslist'),false);
-			
+
 			$default = reset($items);
-			
+
 			return !empty($default->id) ? $default->id : null;
 		}
-		
+
 		/*
 		$active = $menus->getActive();
-		
+
 		if ($active && $active->component == 'com_jem')
 		{
 			return $active->id;
 		}
 		*/
-		
 	}
 }
-?>

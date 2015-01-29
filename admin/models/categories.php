@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * Model: Categories
  */
@@ -180,7 +179,6 @@ class JemModelCategories extends JModelList
 			$query->where('(a.published IN (0, 1))');
 		}
 
-
 		$query->where('(a.alias NOT LIKE "root")');
 
 		// Filter by search in title
@@ -232,7 +230,6 @@ class JemModelCategories extends JModelList
 
 		return $items;
 	}
-
 
 	private function countCatEvents($id)
 	{

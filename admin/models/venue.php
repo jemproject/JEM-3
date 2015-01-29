@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * Model: Venue
  */
@@ -69,7 +68,6 @@ class JEMModelVenue extends JModelAdmin
 			$item->country = $jemsettings->defaultCountry;
 		}
 
-
 		if (!empty($item->locimage)) {
 			if (strpos($item->locimage,'images/') !== false) {
 				# the image selected contains the images path
@@ -80,10 +78,8 @@ class JEMModelVenue extends JModelAdmin
 			}
 		}
 
-
 		return $item;
 	}
-
 
 	/**
 	 * Method to get the data that should be injected in the form.
@@ -100,7 +96,6 @@ class JEMModelVenue extends JModelAdmin
 		return $data;
 	}
 
-
 	/**
 	 * Prepare and sanitise the table data prior to saving.
 	 *
@@ -114,7 +109,6 @@ class JEMModelVenue extends JModelAdmin
 		// Increment version number.
 		$table->version ++;
 	}
-
 
 	/**
 	 * Method to save the form data.

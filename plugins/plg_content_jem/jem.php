@@ -9,13 +9,11 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * JEM Content Plugin
  */
 class plgContentJem extends JPlugin
 {
-	
 	/**
 	 * Constructor
 	 *
@@ -28,8 +26,7 @@ class plgContentJem extends JPlugin
 		parent::__construct($subject, $config);
 		$this->loadLanguage();
 	}
-	
-	
+
 	/**
 	 * @param	string	The context for the content passed to the plugin.
 	 * @param	object	The data relating to the content that was deleted.

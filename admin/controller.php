@@ -9,7 +9,6 @@
 
 defined('_JEXEC') or die;
 
-
 /**
  * JEM Component Controller
  */
@@ -21,12 +20,10 @@ class JEMController extends JControllerLegacy
 	 */
 	protected $default_view = 'main';
 
-
 	public function __construct()
 	{
 		parent::__construct();
 	}
-
 
 	/**
 	 * Display the view
@@ -42,7 +39,6 @@ class JEMController extends JControllerLegacy
 		parent::display();
 		return $this;
 	}
-
 
 	/**
 	 * Delete attachment
@@ -73,4 +69,3 @@ class JEMController extends JControllerLegacy
 		jexit();
 	}
 }
-?>

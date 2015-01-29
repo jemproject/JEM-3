@@ -55,7 +55,6 @@ class JemModelContactelement extends JModelLegacy
 		$this->setState('limitstart', $limitstart);
 	}
 
-
 	/**
 	 * Method to get data
 	 */
@@ -69,11 +68,9 @@ class JemModelContactelement extends JModelLegacy
 		return $rows;
 	}
 
-
 	/**
 	 * Query
 	 */
-
 	function buildQuery() {
 
 		$app 				= JFactory::getApplication();
@@ -100,7 +97,6 @@ class JemModelContactelement extends JModelLegacy
 		$where = array();
 		$where[] = 'con.published = 1';
 
-
 		// search
 		if ($search) {
 			switch ($filter_type) {
@@ -121,7 +117,6 @@ class JemModelContactelement extends JModelLegacy
 
 		$query->where($where);
 
-
 		// order
 		if ($filter_order != '') {
 			$orderby = $filter_order . ' ' . $filter_order_Dir;
@@ -132,7 +127,6 @@ class JemModelContactelement extends JModelLegacy
 		$query->order($orderby);
 
 		return $query;
-
 	}
 
 	/**

@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * Table: Dates
  */
@@ -27,12 +26,10 @@ class JEMTableDates extends JTable
 		return parent::bind($array, $ignore);
 	}
 
-
 	/**
 	 * Check
 	 */
 	function check() {
-
 
 		return true;
 	}

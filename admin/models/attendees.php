@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * Model: Attendees
  */
@@ -93,7 +92,6 @@ class JemModelAttendees extends JModelList
 		parent::populateState('a.dates', 'asc');
 	}
 
-
 	/**
 	 * Build an SQL query to load the list data.
 	 *
@@ -157,7 +155,6 @@ class JemModelAttendees extends JModelList
 		$query->order($db->escape($orderCol.' '.$orderDirn));
 
 		return $query;
-
 	}
 
 

@@ -19,8 +19,6 @@ class JFormFieldCustomtooltip extends JFormField
 	 */
 	protected $type = 'Customtooltip';
 
-
-
 	/**
 	 * Method to get the field input markup.
 	 */
@@ -75,5 +73,4 @@ class JFormFieldCustomtooltip extends JFormField
 
 		return implode($html);
 	}
-
 }

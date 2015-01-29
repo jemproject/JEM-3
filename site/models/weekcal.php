@@ -100,7 +100,6 @@ class JemModelWeekcal extends JemModelEventslist
 		$where = ' DATEDIFF(a.dates, \''. $filter_date_to .'\') <= 0';
 		$this->setState('filter.calendar_to',$where);
 
-
 		##################
 		## TOP-CATEGORY ##
 		##################
@@ -116,7 +115,6 @@ class JemModelWeekcal extends JemModelEventslist
 		$this->setState('filter.groupby','a.id');
 		$this->setState('filter.calendar_startdayonly',$startdayonly);
 	}
-
 
 	/**
 	 * Method to get a list of events.
@@ -135,7 +133,6 @@ class JemModelWeekcal extends JemModelEventslist
 
 		return array();
 	}
-
 
 	/**
 	 * @return	JDatabaseQuery
@@ -206,10 +203,10 @@ class JemModelWeekcal extends JemModelEventslist
 						}
 
 					} // for
-					
+
 					//add generated days to data
 					$items = array_merge($items, $multi);
-					
+
 					//unset temp array holding generated days before working on the next multiday event
 					unset($multi);
 				}
@@ -295,8 +292,7 @@ class JemModelWeekcal extends JemModelEventslist
 		array_multisort($sort, SORT_ASC, $multitime, $multititle, $time, SORT_ASC, $title, $items);
 
 		return $items;
-
-		}
+	}
 
 
 	/**
@@ -326,4 +322,3 @@ class JemModelWeekcal extends JemModelEventslist
 		return $this->_currentweek;
 	}
 }
-?>

@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * Model: Import
  */
@@ -515,7 +514,6 @@ class JEMModelImport extends JModelLegacy {
 					$tableresult[$field->Field] = preg_replace("/[(0-9)]/", '', $field->Type);
 				}
 
-
 				$result = array_keys($tableresult);
 			}
 			catch (Exception $e)
@@ -529,7 +527,6 @@ class JEMModelImport extends JModelLegacy {
 				$version = null;
 			}
 		}
-
 
 		return $version;
 	}
@@ -581,7 +578,6 @@ class JEMModelImport extends JModelLegacy {
 				$version = $params->get('version', null);
 			}
 		}
-
 
 		if ($otherPrefix == 'true' || $secondCheck) {
 
@@ -680,8 +676,6 @@ class JEMModelImport extends JModelLegacy {
 		return $this->getTablesCount($tables);
 	}
 
-
-
 	/**
 	 * Returns a list of JEM data tables and the number of rows or null if the
 	 * table does not exist
@@ -703,8 +697,6 @@ class JEMModelImport extends JModelLegacy {
 
 		return $this->getTablesCount($tables,$prefix);
 	}
-
-
 
 	/**
 	 * Returns a list of Eventlist data tables and the number of rows or null
@@ -747,7 +739,6 @@ class JEMModelImport extends JModelLegacy {
 				"eventlist_venues" => "");
 		}
 
-
 		if ($imp) {
 
 			$tablecount = $this->getTablesCount($tables,true);
@@ -767,9 +758,7 @@ class JEMModelImport extends JModelLegacy {
 		} else {
 			return $this->getTablesCount($tables,true);
 		}
-
 	}
-
 
 	/**
 	 * Returns a list of JEM data tables and the number of rows or null
@@ -788,7 +777,6 @@ class JEMModelImport extends JModelLegacy {
 			"jem_register" => "",
 			"jem_venues" => ""
 		);
-
 
 		if ($imp) {
 
@@ -810,7 +798,6 @@ class JEMModelImport extends JModelLegacy {
 			return $this->getTablesCount2($tables,true);
 		}
 	}
-
 
 	/**
 	 * Returns a list of tables and the number of rows or null if the
@@ -924,7 +911,6 @@ class JEMModelImport extends JModelLegacy {
 		return $tablesCount[$table];
 	}
 
-
 	/**
 	 * Returns the data of a table
 	 * @param string $tablename  The name of the table without prefix
@@ -949,7 +935,6 @@ class JEMModelImport extends JModelLegacy {
 		return $db->loadObjectList();
 	}
 
-
 	/**
 	 * Returns the data of a table
 	 * @param string $tablename  The name of the table without prefix
@@ -973,7 +958,6 @@ class JEMModelImport extends JModelLegacy {
 
 		return $db->loadObjectList();
 	}
-
 
 	/**
 	 * Changes old Eventlist data to fit the JEM standards
@@ -1005,7 +989,6 @@ class JEMModelImport extends JModelLegacy {
 				}
 			}
 		}
-
 
 		# cats_event_relations
 		if($tablename == "eventlist_cats_event_relations") {
@@ -1066,7 +1049,6 @@ class JEMModelImport extends JModelLegacy {
 				}
 			}
 		}
-
 
 		# groupmembers
 		# groups
@@ -1132,11 +1114,8 @@ class JEMModelImport extends JModelLegacy {
 		# venues
 		if($tablename == "jem_venues") {};
 
-
-
 		return $data;
 	}
-
 
 	/**
 	 * Saves the data to the database
@@ -1249,7 +1228,6 @@ class JEMModelImport extends JModelLegacy {
 		}
 	}
 
-
 	/**
 	 * Get id of root-category
 	 */
@@ -1273,14 +1251,12 @@ class JEMModelImport extends JModelLegacy {
 		}
 	}
 
-
 	/**
 	 * Copies the attachments to JEM folder
 	 */
 	public function copyAttachments() {
 		jimport('joomla.filesystem.file');
 		jimport('joomla.filesystem.folder');
-
 
 		# retrieve all folders
 		$path = JPATH_SITE.'/com_jem/attachments/';
@@ -1323,7 +1299,6 @@ class JEMModelImport extends JModelLegacy {
 				if(!JFile::exists($toFile)) {
 					JFile::copy($fromFile, $toFile);
 				}
-
 			}
 		}
 	}

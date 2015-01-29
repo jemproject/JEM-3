@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * Category-Feed
  */
@@ -99,4 +98,3 @@ class JemViewCategory extends JViewLegacy
 		}
 	}
 }
-?>

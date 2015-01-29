@@ -29,7 +29,6 @@ class plgJEMComments extends JPlugin {
 		$this->loadLanguage();
 	}
 
-
 	/**
 	 * This method handles the supported comment systems
 	 *
@@ -61,4 +60,3 @@ class plgJEMComments extends JPlugin {
 		return $res;
 	}
 }
-?>

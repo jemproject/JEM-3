@@ -702,9 +702,6 @@ class jemmyeventsTab extends cbTabHandler {
 			* There were a lot of "$return ." and all of them will be printed.
 			*/
 			return $return;
-
-
-		} // end or getDisplayTab function
-
+		}
 	}
 }

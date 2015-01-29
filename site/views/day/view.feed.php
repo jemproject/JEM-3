@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * Day-Feed
  */
@@ -98,4 +97,3 @@ class JemViewDay extends JViewLegacy
 		}
 	}
 }
-?>

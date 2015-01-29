@@ -100,6 +100,4 @@ class JemControllerAttendee extends JControllerForm
 
 		return $append;
 	}
-
-
-} // end class
+}

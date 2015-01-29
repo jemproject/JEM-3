@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * Model: Venues
  */
@@ -217,7 +216,6 @@ class JemModelVenues extends JModelList
 			JError::raiseError(500, $db->stderr());
 			return false;
 		}
-
 
 		$err = array();
 		$cid = array();

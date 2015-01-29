@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * MyVenues-View
  */
@@ -47,7 +46,7 @@ class JemViewMyvenues extends JViewLegacy
 		// Load css
 		JemHelper::loadCss('jem');
 		JemHelper::loadCustomTag();
-			
+
 		$venues = $this->get('Venues');
 		$venues_pagination = $this->get('VenuesPagination');
 
@@ -134,4 +133,3 @@ class JemViewMyvenues extends JViewLegacy
 		parent::display($tpl);
 	}
 }
-?>

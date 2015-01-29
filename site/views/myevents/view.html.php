@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * Myevents-View
  */
@@ -48,7 +47,7 @@ class JemViewMyevents extends JViewLegacy
 		JemHelper::loadCss('jem');
 		JemHelper::loadCustomCss();
 		JemHelper::loadCustomTag();
-		
+
 		$events 	= $this->get('Events');
 		$events_pagination 	= $this->get('EventsPagination');
 
@@ -67,7 +66,7 @@ class JemViewMyevents extends JViewLegacy
 		$search 			= $app->getUserStateFromRequest('com_jem.myevents.'.$itemid.'.filter_search', 'filter_search', '', 'string');
 		$search 			= $db->escape(trim(JString::strtolower($search)));
 		$task 				= $jinput->getCmd('task');
-	
+
 		//search filter
 		$filters = array();
 		$filters[] = JHtml::_('select.option', '0', '&mdash; '.JText::_('COM_JEM_GLOBAL_SELECT_FILTER').' &mdash;');
@@ -147,4 +146,3 @@ class JemViewMyevents extends JViewLegacy
 		parent::display($tpl);
 	}
 }
-?>

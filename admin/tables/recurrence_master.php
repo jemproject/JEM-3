@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * Table: Recurrence_master
  */
@@ -22,7 +21,6 @@ class JEMTableRecurrence_master extends JTable
 	 * bind
 	 */
 	public function bind($array, $ignore = ''){
-
 
 		return parent::bind($array, $ignore);
 	}
@@ -45,6 +43,4 @@ class JEMTableRecurrence_master extends JTable
 
 		return parent::store($updateNulls);
 	}
-
-
 }

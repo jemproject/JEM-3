@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * Contact select
  */
@@ -18,7 +17,6 @@ class JFormFieldModal_Contact extends JFormField
 	 * field type
 	 */
 	protected $type = 'Modal_Contact';
-
 
 	/**
 	 * Method to get the field input markup
@@ -39,7 +37,6 @@ class JFormFieldModal_Contact extends JFormField
 		$script[] = '		jQuery("#'.$this->id.'_clear").removeClass("hidden");';
 		$script[] = '        SqueezeBox.close();';
 		$script[] = '    }';
-
 
 		// Clear button script
 		static $scriptClear;
@@ -65,7 +62,6 @@ class JFormFieldModal_Contact extends JFormField
 		// Setup variables for display
 		$html = array();
 		$link = 'index.php?option=com_jem&amp;view=contactelement&amp;tmpl=component&amp;function=jSelectContact_'.$this->id;
-
 
 		if ((int) $this->value > 0)
 		{
@@ -98,7 +94,6 @@ class JFormFieldModal_Contact extends JFormField
 		} else {
 			$value = (int)$this->value;
 		}
-
 
 		// The current contact input field
 		$html[] = '<span class="input-append">';

@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * View: Export
  */
@@ -32,7 +31,6 @@ class JEMViewExport extends JViewLegacy {
 		$categories = JEMCategories::buildcatselect($categories, 'cid[]', null, 0, 'multiple="multiple" size="8 class="inputbox"');
 
 		$this->categories		= $categories;
-
 
 		// add toolbar
 		$this->addToolbar();

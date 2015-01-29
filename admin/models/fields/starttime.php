@@ -14,12 +14,10 @@ defined('JPATH_BASE') or die;
 jimport('joomla.html.html');
 jimport('joomla.form.formfield');
 
-
-
 /**
  * CountryOptions Field class.
  *
- * 
+ *
  */
 class JFormFieldStarttime extends JFormField
 {
@@ -29,18 +27,16 @@ class JFormFieldStarttime extends JFormField
 	 */
 	protected $type = 'Starttime';
 
-	
+
 	public function getInput()
 	{
-	
-		
+
 		$starthours = JEMHelper::buildtimeselect(23, 'starthours', substr( $this->value, 0, 2 ));
 		$startminutes = JEMHelper::buildtimeselect(59, 'startminutes', substr($this->value, 3, 2 ));
-		
+
 		$var2 = $starthours.$startminutes;
-	
+
 		return $var2;
-		
 	}
-	
+
 }

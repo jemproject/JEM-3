@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * Weekcal-View
  */
@@ -87,4 +86,3 @@ class JemViewWeekcal extends JViewLegacy
 		parent::display($tpl);
 	}
 }
-?>

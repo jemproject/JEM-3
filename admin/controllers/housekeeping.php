@@ -81,7 +81,6 @@ class JemControllerHousekeeping extends JControllerLegacy
 		$this->setRedirect($link, $msg);
 	}
 
-
 	/**
 	 * Truncates JEM tables with exception of settings table
 	 */
@@ -94,7 +93,6 @@ class JemControllerHousekeeping extends JControllerLegacy
 
 		$this->setRedirect($link, $msg);
 	}
-
 
 	/**
 	 * Triggerarchive + Recurrences

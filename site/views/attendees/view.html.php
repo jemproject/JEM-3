@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * Attendees-view
  * @todo fix view
@@ -154,7 +153,7 @@ class JemViewAttendees extends JViewLegacy {
 		JemHelper::loadCss('jem');
 		JemHelper::loadCss('print');
 		JemHelper::loadCustomTag();
-		
+
 		$document->setMetaData('robots', 'noindex, nofollow');
 
 		// Emailaddress
@@ -171,4 +170,3 @@ class JemViewAttendees extends JViewLegacy {
 		parent::display($tpl);
 	}
 }
-?>

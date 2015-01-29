@@ -49,9 +49,7 @@ class JFormFieldCustomColor extends JFormField
 		$onclick = ' onclick="openPicker(\''.$this->id.'\', -200, 20)"';
 		$class = $classes ? ' class="' . trim($classes) . '"' : '';
 
-
 		$onclickClr = ' onclick="document.id(\'' . $this->id . '\').value=\'\';"';
-
 
 		$html	= array();
 		$html[] = '<input style="background:'.$this->value.'" type="text" name="' . $this->name . '" id="' . $this->id . '"' . ' value="'

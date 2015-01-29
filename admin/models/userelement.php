@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * Model: Userelement
  */
@@ -113,9 +112,7 @@ class JemModelUserelement extends JModelLegacy
 		$query->order($orderby);
 
 		return $query;
-
 	}
-
 
 	/**
 	 * Method to get a pagination object

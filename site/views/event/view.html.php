@@ -55,9 +55,8 @@ class JemViewEvent extends JEMView
 		$categories			= $this->get('Categories');
 		$this->categories	= $categories;
 
-		
 		$isregistered		= $this->get('UserIsRegistered');
-		
+
 		// Check for errors.
 		if (count($errors = $this->get('Errors'))) {
 			JError::raiseWarning(500, implode("\n", $errors));
@@ -67,7 +66,7 @@ class JemViewEvent extends JEMView
 		// Create a shortcut for $item and params.
 		$item   = $this->item;
 		$params = $this->params;
-		
+
 		$this->registers	= $model->getRegisters($this->state->get('event.id'));
 
 		// Decide which parameters should take priority
@@ -158,32 +157,32 @@ class JemViewEvent extends JEMView
 		$this->print_link = JRoute::_(JemHelperRoute::getRoute($item->slug).'&print=1&tmpl=component');
 
 		//Get images
-		
+
 		if ($item->datimage) {
 			$this->dimage = JemImage::flyercreator($item->datimage, 'event');
 		} else {
 			$this->dimage = false;
 		}
-				
+
 		if ($item->locimage) {
 			$this->limage = JemImage::flyercreator($item->locimage, 'venue');
 		} else {
 			$this->limage = false;
 		}
-			
+
 		$this->img_position = $settings->get('img_position',1);
 
-		
+
 		// Check if the user has access to the add-eventform
 		$maintainer = JemUser::ismaintainer('add');
 		$genaccess = JemUser::validate_user($jemsettings->evdelrec, $jemsettings->delivereventsyes);
-		
+
 		if ($maintainer || $genaccess || $user->authorise('core.create','com_jem')) {
 			$this->addeventlink = 1;
 		} else {
 			$this->addeventlink = 0;
 		}
-		
+
 		// Check if the user has access to the add-venueform
 		$maintainer2 = JemUser::venuegroups('add');
 		$genaccess2 = JemUser::validate_user($jemsettings->locdelrec, $jemsettings->deliverlocsyes);
@@ -192,7 +191,7 @@ class JemViewEvent extends JEMView
 		} else {
 			$this->addvenuelink = 0;
 		}
-		
+
 		// Check if user can edit
 		$maintainer5 = JemUser::ismaintainer('edit',$item->did);
 		$genaccess5  = JemUser::editaccess($jemsettings->eventowner, $item->created_by, $jemsettings->eventeditrec, $jemsettings->eventedit);
@@ -241,7 +240,7 @@ class JemViewEvent extends JEMView
 			$document->addScriptDeclaration($js);
 		}
 		$this->formhandler			= $formhandler;
-		
+
 		// generate Metatags
 		$meta_keywords_content = "";
 		if (!empty($this->item->meta_keywords)) {
@@ -283,11 +282,11 @@ class JemViewEvent extends JEMView
 		}
 
 		$document->setDescription(strip_tags($description_content));
-		
+
 		# retrieve mapType setting
 		$settings 		= JemHelper::globalattribs();
 		$mapType 		= $settings->get('mapType','0');
-		
+
 		switch($mapType) {
 			case '0':
 				$type = 'ROADMAP';
@@ -303,7 +302,6 @@ class JemViewEvent extends JEMView
 				break;
 		}
 		$this->mapType = $type;
-		
 
 		// load dispatcher for JEM plugins (comments)
 		$item->pluginevent = new stdClass();
@@ -375,7 +373,6 @@ class JemViewEvent extends JEMView
 		return $content;
 	}
 
-
 	/**
 	 * Prepares the document
 	 */
@@ -391,13 +388,12 @@ class JemViewEvent extends JEMView
 		JemHelper::loadCss('jem');
 		JemHelper::loadCustomCss();
 		JemHelper::loadCustomTag();
-		
+
 		if ($this->print) {
 			JemHelper::loadCss('print');
 			$this->document->setMetaData('robots', 'noindex, nofollow');
 		}
-		
-		
+
 	/*
 		// Because the application sets a default page title,
 		// we need to get it from the menu item itself
@@ -468,4 +464,3 @@ class JemViewEvent extends JEMView
 		}
 	}
 }
-?>

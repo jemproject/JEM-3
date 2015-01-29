@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * View: Attendee
  */
@@ -46,7 +45,6 @@ class JemViewAttendee extends JViewLegacy {
 
 		parent::display($tpl);
 	}
-
 
 	/**
 	 * Add Toolbar

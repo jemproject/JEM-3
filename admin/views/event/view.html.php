@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * View: Event
  */
@@ -62,7 +61,6 @@ class JemViewEvent extends JViewLegacy {
 		$this->addToolbar();
 		parent::display($tpl);
 	}
-
 
 	/**
 	 * Add the page title and toolbar.

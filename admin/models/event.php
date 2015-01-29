@@ -8,13 +8,11 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * Model: Event
  */
 class JemModelEvent extends JModelAdmin
 {
-
 	/**
 	 * Method to delete one or more records. (override)
 	 *
@@ -82,7 +80,6 @@ class JemModelEvent extends JModelAdmin
 							# and we can also remove the other references linked to the recurrence-set
 							if ($recurrenceid_count == 1) {
 
-
 								# retrieve all id's from recurrence-table that are linked to the recurrence-set
 								$db = JFactory::getDbo();
 								$query = $db->getQuery(true);
@@ -138,8 +135,6 @@ class JemModelEvent extends JModelAdmin
 						}
 					} // close recurrence-check
 
-
-
 					# actual deleting of the event.
 					#
 					# first the removal of the item-id from the catevent-table
@@ -171,7 +166,6 @@ class JemModelEvent extends JModelAdmin
 
 					// Trigger the onContentAfterDelete event.
 					$dispatcher->trigger($this->event_after_delete, array($context, $table));
-
 				}
 				else
 				{
@@ -190,7 +184,6 @@ class JemModelEvent extends JModelAdmin
 						return false;
 					}
 				}
-
 			}
 			else
 			{
@@ -259,7 +252,6 @@ class JemModelEvent extends JModelAdmin
 			$files = JEMAttachment::getAttachments('event'.$item->id);
 			$item->attachments = $files;
 
-
 			################
 			## RECURRENCE ##
 			################
@@ -310,7 +302,6 @@ class JemModelEvent extends JModelAdmin
 				$item->recurrence_country_holidays = false;
 			}
 
-
 			$item->author_ip = $jemsettings->storeip ? JemHelper::retrieveIP() : false;
 
 			if (empty($item->id)){
@@ -327,21 +318,15 @@ class JemModelEvent extends JModelAdmin
 				}
 			}
 
-
 			$admin = JFactory::getUser()->authorise('core.manage', 'com_jem');
 			if ($admin) {
 				$item->admin = true;
 			} else {
 				$item->admin = false;
 			}
-
-
 		}
-
 		return $item;
 	}
-
-
 
 	/**
 	 * Method to get the record form.
@@ -434,8 +419,6 @@ class JemModelEvent extends JModelAdmin
 			$form->removeField('captcha');
 			$form->setFieldAttribute('articletext', 'buttons', 'false');
 		}
-
-
 
 		return $form;
 	}
@@ -542,7 +525,6 @@ class JemModelEvent extends JModelAdmin
 			$hide_othertab = true;
 		}
 
-
 		if ($backend || $hide_othertab == false) {
 
 			##############
@@ -619,7 +601,6 @@ class JemModelEvent extends JModelAdmin
 			if (isset($data['featured'])){
 				$this->featured($pk, $data['featured']);
 			}
-
 
 			$checkAttachName = $jinput->post->get('attach-name','','array');
 
@@ -723,7 +704,6 @@ class JemModelEvent extends JModelAdmin
 					$recurrence_set = false;
 				}
 
-
 				## check values, pass check before we continue to generate additional events ##
 
 				# - do we have an interval?
@@ -731,8 +711,6 @@ class JemModelEvent extends JModelAdmin
 				# - is the event part of a recurrenceset?
 
 				if ($table->recurrence_interval > 0 && !$table->dates == null && $recurrence_set == null){
-
-
 
 					# recurrence_interval is bigger then 0
 					# we do have a startdate
@@ -749,7 +727,6 @@ class JemModelEvent extends JModelAdmin
 					}
 				}
 			}
-
 
 			return true;
 		}

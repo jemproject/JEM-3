@@ -21,7 +21,6 @@ class JemControllerExport extends JControllerAdmin {
 	{
 		parent::__construct();
 
-
 		$jinput 	= JFactory::getApplication()->input;
 		$task 		= $jinput->getCmd('task');
 
@@ -33,7 +32,6 @@ class JemControllerExport extends JControllerAdmin {
 			} else {
 				$this->registerTask($task,'export_table');
 			}
-
 		}
 	}
 

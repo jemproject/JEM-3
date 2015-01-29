@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * View: Venue
  */
@@ -42,18 +41,18 @@ class JEMViewVenue extends JViewLegacy {
 
 		# load css
 		JHtml::_('stylesheet', 'com_jem/backend.css', array(), true);
-		
+
 		# load js
 		//JHtml::_('behavior.framework'); //mootools
 		JHtml::_('script', 'com_jem/attachments.js', false, true);
-		//$document->addScript('http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js');		
-		
+		//$document->addScript('http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js');
+
 		$this->access		= JEMHelper::getAccesslevelOptions();
-		
+
 		# retrieve mapType setting
 		$settings 		= JemHelper::globalattribs();
 		$mapType		= $settings->get('mapType','0');
-		
+
 		switch($mapType) {
 			case '0':
 				$type = '"roadmap"';
@@ -69,14 +68,13 @@ class JEMViewVenue extends JViewLegacy {
 				break;
 		}
 		$this->mapType = $type;
-		
+
 		//JHtml::_('jquery.framework');
 		JHtml::_('script', 'com_jem/slider-state.js', false, true);
-		
+
 		$this->addToolbar();
 		parent::display($tpl);
 	}
-
 
 	/**
 	 * Add the page title and toolbar.
@@ -117,4 +115,3 @@ class JEMViewVenue extends JViewLegacy {
 		JToolBarHelper::help('editvenues', true);
 	}
 }
-?>

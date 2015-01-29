@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * Eventslist-Feed
  */
@@ -98,4 +97,3 @@ class JemViewEventslist extends JViewLegacy
 		}
 	}
 }
-?>

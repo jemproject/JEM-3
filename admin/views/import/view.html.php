@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * View: Import
  */
@@ -38,12 +37,10 @@ class JEMViewImport extends JViewLegacy {
 		$this->eventlistVersion		= $this->get('EventlistVersion');
 		$this->jemVersion 			= $this->get('JEMVersion');
 
-
 		$this->eventlistTables		= $model->eventlistTables($this->get('EventlistVersion'));
 		$this->detectedJEMTables	= $model->detectedJEMTables($this->get('JEMVersion'));
 		$this->jemTables 			= $this->get('JemTablesCount');
 		$this->existingJemData 		= $this->get('ExistingJemData');
-
 
 		$jinput = JFactory::getApplication()->input;
 		$progress = new stdClass();
@@ -90,7 +87,6 @@ class JEMViewImport extends JViewLegacy {
 		parent::display($tpl);
 	}
 
-
 	/**
 	 * Add Toolbar
 	 */
@@ -102,7 +98,6 @@ class JEMViewImport extends JViewLegacy {
 		JToolBarHelper::divider();
 		JToolBarHelper::help('import', true);
 	}
-
 
 	function WarningIcon()
 	{

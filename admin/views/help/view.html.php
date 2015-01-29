@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * View: Help
  */
@@ -34,7 +33,6 @@ class JEMViewHelp extends JViewLegacy {
 
 		parent::display($tpl);
 	}
-
 
 	/**
 	 * Add Toolbar

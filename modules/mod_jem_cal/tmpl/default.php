@@ -231,4 +231,3 @@ for ($counti = $weekday; $counti < 7; $counti++) {
 echo $calendar."</tr>\n</table>\n";
 
 echo "</div>";
-?>

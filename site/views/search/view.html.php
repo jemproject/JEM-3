@@ -43,7 +43,7 @@ class JemViewSearch extends JEMView
 		JemHelper::loadCss('jem');
 		JemHelper::loadCustomCss();
 		JemHelper::loadCustomTag();
-		
+
 		// Load Script
 		JHtml::_('script', 'com_jem/search.js', false, true);
 
@@ -232,4 +232,3 @@ class JemViewSearch extends JEMView
 		return $lists;
 	}
 }
-?>

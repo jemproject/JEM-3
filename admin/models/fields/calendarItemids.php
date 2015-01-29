@@ -13,8 +13,6 @@ JFormHelper::loadFieldClass('list');
 jimport('joomla.html.html');
 jimport('joomla.form.formfield');
 
-
-
 /**
  * CatOptions Field class.
  *
@@ -46,7 +44,6 @@ class JFormFieldCalendarItemids extends JFormFieldList
 		// Initialize JavaScript field attributes.
 		$attr .= $this->element['onchange'] ? ' onchange="'.(string) $this->element['onchange'].'"' : '';
 
-
 		$currentid = JFactory::getApplication()->input->getInt('id');
 
 		if ($currentid) {
@@ -63,7 +60,6 @@ class JFormFieldCalendarItemids extends JFormFieldList
 		} else {
 			$currentValue = false;
 		}
-
 
 		# Retrieve Holidays
 		$db = JFactory::getDBO();

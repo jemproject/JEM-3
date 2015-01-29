@@ -47,4 +47,3 @@ class JemViewCategory extends JViewLegacy
 
 	}
 }
-?>

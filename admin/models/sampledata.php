@@ -8,13 +8,11 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * Model: Sampledata
  */
 class JemModelSampledata extends JModelLegacy
 {
-
 	/**
 	 * Sample data directory
 	 *
@@ -246,7 +244,6 @@ class JemModelSampledata extends JModelLegacy
 		return true;
 	}
 
-
 	/**
 	 * check for folders
 	 */
@@ -263,7 +260,6 @@ class JemModelSampledata extends JModelLegacy
 			}
 		}
 	}
-
 
 	/**
 	 * Assign admin-id to created events

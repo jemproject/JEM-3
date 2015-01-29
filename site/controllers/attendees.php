@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * Controller-Attendees
  */
@@ -38,7 +37,7 @@ class JEMControllerAttendees extends JControllerLegacy
 	function attendeeremove()
 	{
 		$jinput = JFactory::getApplication()->input;
-		
+
 		$cid = $jinput->post->get('cid', array(0), 'array');
 		$id  = $jinput->getInt('id');
 		$fid = $jinput->getInt('Itemid');
@@ -68,7 +67,7 @@ class JEMControllerAttendees extends JControllerLegacy
 	function attendeetoggle()
 	{
 		$jinput = JFactory::getApplication()->input;
-		
+
 		$id = $jinput->getInt('id');
 		$fid = $jinput->getInt('Itemid');
 
@@ -146,4 +145,3 @@ class JEMControllerAttendees extends JControllerLegacy
 		$app->close();
 	}
 }
-?>

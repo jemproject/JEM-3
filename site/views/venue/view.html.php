@@ -25,7 +25,7 @@ class JemViewVenue extends JEMView {
 	 * Creates the Venue View
 	 */
 	function display($tpl = null) {
-		
+
 			// initialize variables
 			$app 			= JFactory::getApplication();
 			$jinput 		= $app->input;
@@ -51,12 +51,12 @@ class JemViewVenue extends JEMView {
 			JemHelper::loadCss('jem');
 			JemHelper::loadCustomCss();
 			JemHelper::loadCustomTag();
-			
+
 			if ($print) {
 				JemHelper::loadCss('print');
 				$document->setMetaData('robots', 'noindex, nofollow');
 			}
-				
+
 			// get data from model
 			$rows	= $this->get('Items');
 			$venue	= $this->get('Venue');
@@ -195,7 +195,6 @@ class JemViewVenue extends JEMView {
 				$venue->countryimg = JemHelperCountries::getCountryFlag($venue->country);
 			}
 
-
 			# retrieve mapType setting
 			$settings 		= JemHelper::globalattribs();
 			$mapType 		= $settings->get('mapType','0');
@@ -258,4 +257,3 @@ class JemViewVenue extends JEMView {
 		parent::display($tpl);
 	}
 }
-?>

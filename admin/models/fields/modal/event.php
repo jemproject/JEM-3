@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die();
 
-
 /**
  * Event Select
  */
@@ -37,7 +36,6 @@ class JFormFieldModal_Event extends JFormField
 		$script[] = '		jQuery("#'.$this->id.'_clear").removeClass("hidden");';
 		$script[] = '        SqueezeBox.close();';
 		$script[] = '    }';
-
 
 		# Clear button script
 		static $scriptClear;
@@ -95,7 +93,6 @@ class JFormFieldModal_Event extends JFormField
 		} else {
 			$value = (int)$this->value;
 		}
-
 
 		# The current event input field
 		$html[] = '<span class="input-append">';

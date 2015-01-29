@@ -14,12 +14,10 @@ defined('JPATH_BASE') or die;
 jimport('joomla.html.html');
 jimport('joomla.form.formfield');
 
-
-
 /**
  * Endtime Field class.
  *
- * 
+ *
  */
 class JFormFieldEndtime extends JFormField
 {
@@ -29,17 +27,15 @@ class JFormFieldEndtime extends JFormField
 	 */
 	protected $type = 'Endtime';
 
-	
+
 	public function getInput()
 	{
-		
+
 		$endhours = JEMHelper::buildtimeselect(23, 'endhours', substr( $this->value, 0, 2 ));
 		$endminutes = JEMHelper::buildtimeselect(59, 'endminutes', substr($this->value, 3, 2 ));
-		
+
 		$var2 = $endhours.$endminutes;
-	
+
 		return $var2;
-		
 	}
-	
 }

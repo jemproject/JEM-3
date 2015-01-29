@@ -20,7 +20,6 @@ class plgSearchJEM extends JPlugin
 		JPlugin::loadLanguage( 'plg_search_jem', JPATH_ADMINISTRATOR);
 	}
 
-
 	/**
 	 * @return array An array of search areas
 	 */
@@ -323,4 +322,4 @@ class plgSearchJEM extends JPlugin
 		}
 	}
 }
-?>
+

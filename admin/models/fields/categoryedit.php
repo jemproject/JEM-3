@@ -80,7 +80,6 @@ class JFormFieldCategoryEdit extends JFormFieldList
 			$html[] = JHtml::_('select.genericlist', $options, $this->name, trim($attr), 'value', 'text', $value, $this->id);
 		}
 
-
 		return implode($html);
 	}
 
@@ -175,7 +174,6 @@ class JFormFieldCategoryEdit extends JFormFieldList
 			JError::raiseWarning(500, $e->getMessage);
 		}
 
-
 			// Pad the option text with spaces using depth level as a multiplier.
 			for ($i = 0, $n = count($options); $i < $n; $i++)
 			{
@@ -201,7 +199,6 @@ class JFormFieldCategoryEdit extends JFormFieldList
 				}
 
 			}
-
 
 		// Get the current user object.
 		$user = JFactory::getUser();
@@ -269,8 +266,6 @@ class JFormFieldCategoryEdit extends JFormFieldList
 				}
 				array_unshift($options, JHtml::_('select.option', '0', JText::_('JGLOBAL_ROOT')));
 			}
-
-
 
 		// Merge any additional options in the XML definition.
 		$options = array_merge(parent::getOptions(), $options);

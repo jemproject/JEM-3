@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * Model: Events
  */
@@ -239,7 +238,6 @@ class JemModelEvents extends JModelList
 		return $query;
 	}
 
-
 	/**
 	 * Method to get the userinformation of edited/submitted events
 	 * @return object
@@ -275,13 +273,11 @@ class JemModelEvents extends JModelList
 
 		$items = JEMHelper::getAttendeesNumbers($items);
 
-
 		if ($items) {
 			return $items;
 		}
 
 		return array();
-
 	}
 
 	/**

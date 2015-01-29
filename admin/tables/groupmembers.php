@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * Table: Groupmembers
  */
@@ -27,7 +26,6 @@ class JEMTableGroupmembers extends JTable
 		return true;
 	}
 
-
 	/**
 	 * Store.
 	 */
@@ -35,7 +33,6 @@ class JEMTableGroupmembers extends JTable
 	{
 		return parent::store($updateNulls);
 	}
-
 
 	public function bind($array, $ignore = '')
 	{

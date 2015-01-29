@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * View: Dates
  */
@@ -61,8 +60,7 @@ defined('_JEXEC') or die;
 		$this->addToolbar();
 
 		parent::display($tpl);
-		}
-
+	}
 
 	/**
 	 * Add Toolbar

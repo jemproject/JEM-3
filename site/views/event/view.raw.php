@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * Event-Raw
  */
@@ -32,10 +31,10 @@ class JemViewEvent extends JViewLegacy
 
 			// check individual iCal Event setting
 			if ($params->get('event_show_ical_icon',1)) {
-				
+
 				$filename_type	= $params->get('event_ical_filename_type','2');
 				switch ($filename_type) {
-					case 1: 
+					case 1:
 						$filename	= JText::_('COM_JEM_EVENT_ICAL_FILENAME');
 						break;
 					case 2:
@@ -45,8 +44,7 @@ class JemViewEvent extends JViewLegacy
 						$filename	= $params->get('event_ical_filename','event');
 						break;
 				}
-				
-				
+
 				// initiate new CALENDAR
 				$vcal = JemHelper::getCalendarTool();
 				$vcal->setConfig("filename", $filename.'.ics');
@@ -61,4 +59,3 @@ class JemViewEvent extends JViewLegacy
 		}
 	}
 }
-?>

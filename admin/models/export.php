@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die();
 
-
 function add_apostroph($str) {
 	return sprintf("`%s`", $str);
 }
@@ -141,8 +140,6 @@ class JemModelExport extends JModelList
 		$text2.= ";\n";
 		fwrite($csv,$text2);
 
-
-
 		################
 		## CATEGORIES ##
 		################
@@ -158,7 +155,6 @@ class JemModelExport extends JModelList
 		$text3 .= "\r\n\n";
 		$text3 .= "INSERT INTO `".$db->getPrefix()."jem_categories` (".$categoryColumns.") VALUES";
 		$text3 .= "\r\n";
-
 
 		fwrite($csv,$text3);
 
@@ -187,7 +183,6 @@ class JemModelExport extends JModelList
 				$bak.=",";
 				$bak.= "\r\n";
 			}
-
 		}
 
 		$catid_array = array_unique($catid_array);
@@ -206,7 +201,6 @@ class JemModelExport extends JModelList
 
 		$text4.= ";\n";
 		fwrite($csv,$text4);
-
 
 		##############
 		## CATEVENT ##
@@ -232,7 +226,6 @@ class JemModelExport extends JModelList
 		# return output
 		return fclose($csv);
 	}
-
 
 	/**
 	 * Returns a CSV file with Events data
@@ -363,7 +356,6 @@ class JemModelExport extends JModelList
 		return $catids;
 	}
 
-
 	/**
 	 * Retrieve categoryData
 	 */
@@ -381,7 +373,6 @@ class JemModelExport extends JModelList
 
 		return $result;
 	}
-
 
 	/**
 	 * Retrieve categoryData
@@ -439,7 +430,6 @@ class JemModelExport extends JModelList
 		return $query;
 	}
 
-
 	/**
 	 * Returns a SQL file with data
 	 * @return boolean
@@ -449,7 +439,6 @@ class JemModelExport extends JModelList
 		# start output
 		$sql	= fopen('php://output', 'w');
 		$db		= $this->getDbo();
-
 
 		if (is_array($table)) {
 			$tables	= $table;
@@ -473,7 +462,6 @@ class JemModelExport extends JModelList
 				$start .= "\r\n";
 
 				fwrite($sql,$start);
-
 
 				foreach ($rows as $row) {
 					$values = get_object_vars($row);
@@ -546,5 +534,4 @@ class JemModelExport extends JModelList
 
 		return $query;
 	}
-
 }

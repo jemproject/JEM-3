@@ -29,7 +29,6 @@ class JemControllerDates extends JControllerAdmin
 		parent::__construct($config);
 
 		$this->registerTask('disabledate',	'setstatusdate');
-
 	}
 
 
@@ -61,7 +60,6 @@ class JemControllerDates extends JControllerAdmin
 		$task	= $this->getTask();
 		$value	= JArrayHelper::getValue($values, $task, 0, 'int');
 
-
 		// Access checks.
 		foreach ($ids as $i => $id)
 		{
@@ -87,6 +85,4 @@ class JemControllerDates extends JControllerAdmin
 
 		$this->setRedirect('index.php?option=com_jem&view=dates');
 	}
-
-
 }

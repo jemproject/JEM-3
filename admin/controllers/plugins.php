@@ -22,7 +22,6 @@ class JemControllerPlugins extends JControllerLegacy
 		parent::__construct();
 	}
 
-
 	/**
 	 * Handles Plugin screen
 	 *

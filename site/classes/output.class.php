@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * Holds the logic for all output related things
  */
@@ -106,7 +105,6 @@ class JEMOutput {
 			} else {
 				$text = JText::_('COM_JEM_DELIVER_NEW_VENUE');
 			}
-
 
 			$url = 'index.php?option=com_jem&task=editvenue.add&return='.base64_encode(urlencode($uri)).'&a_id=0';
 			$title = JText::_('COM_JEM_DELIVER_NEW_VENUE');
@@ -378,6 +376,7 @@ class JEMOutput {
 
 			return $output;
 		}
+
 		return;
 	}
 
@@ -651,7 +650,6 @@ class JEMOutput {
 	 */
 	static function mapicon($data,$view=false,$params)
 	{
-
 		$global = JemHelper::globalattribs();
 
 		//stop if disabled
@@ -860,7 +858,6 @@ class JEMOutput {
 
 		return $output;
 	}
-
 
 	/**
 	 * Formats date
@@ -1119,7 +1116,6 @@ class JEMOutput {
 		return $output;
 	}
 
-
 	static function statuslabel($published = false) {
 
 		# @todo check function
@@ -1357,6 +1353,4 @@ class JEMOutput {
 
 		return $result;
 	}
-
-} // end class
-?>
+}

@@ -100,6 +100,7 @@ class vcalendar {
     $this->xcaldecl   = array();
     $this->components = array();
   }
+
 /**
  * return iCalcreator version number
  *
@@ -133,6 +134,7 @@ class vcalendar {
         break;
     }
   }
+
 /**
  * set calendar property calscale
  *
@@ -145,6 +147,7 @@ class vcalendar {
     if( empty( $value )) return FALSE;
     $this->calscale = $value;
   }
+
 /*********************************************************************************/
 /**
  * Property Name: METHOD
@@ -180,6 +183,7 @@ class vcalendar {
     $this->method = $value;
     return TRUE;
   }
+
 /*********************************************************************************/
 /**
  * Property Name: PRODID
@@ -10541,4 +10545,3 @@ function expandTimezoneDates($vtzc) {
     }
     return $tzdates;
 }
-?>

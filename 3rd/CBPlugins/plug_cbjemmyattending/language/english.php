@@ -7,8 +7,7 @@
  *
  * Former info:
  * english.php 2nd November 2007 Himangi Chhatre (Tekdi Eco Services pvt ltd)
- *
- * */
+ */
 
  DEFINE("_JEMMYATTENDING_EDIT_ENTRY","Edit");
  DEFINE("_JEMMYATTENDING_DELETE_ENTRY","Delete");
@@ -26,4 +25,3 @@
 
  DEFINE("_JEMMYATTENDING_REGISTER","Registered users");
  DEFINE("_JEMMYATTENDING_NO_DESCRIPTION","Please enter a description under cb setting -> tab manager");
-

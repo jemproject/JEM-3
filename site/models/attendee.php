@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * Model-Attendee
  */
@@ -203,4 +202,3 @@ class JemModelAttendee extends JModelLegacy
 		return $row;
 	}
 }
-?>

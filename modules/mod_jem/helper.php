@@ -14,12 +14,12 @@ require_once (JPATH_SITE.'/components/com_jem/helpers/helper.php');
 
 # perform cleanup if it wasn't done today (archive, delete)
 JEMHelper::cleanup();
+
 /**
  * Module-Basic
  */
 abstract class modJEMHelper
 {
-
 	/**
 	 * Method to get the events
 	 *
@@ -95,7 +95,6 @@ abstract class modJEMHelper
 
 		$model->setState('list.limit',$count);
 
-
 		# Retrieve the available Events
 		$events = $model->getItems();
 
@@ -133,7 +132,6 @@ abstract class modJEMHelper
 
 		return $lists;
 	}
-
 
 	/**
 	 * Method to get a valid url

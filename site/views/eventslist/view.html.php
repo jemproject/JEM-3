@@ -127,8 +127,6 @@ class JemViewEventslist extends JEMView
 		$lists['filter'] = JHtml::_('select.genericlist', $filters, 'filter_type', array('size'=>'1','class'=>'inputbox input-medium'), 'value', 'text', $filter_type );
 		$lists['search']= $search;
 
-
-
 		$this->pageclass_sfx 	= htmlspecialchars($params->get('pageclass_sfx'));
 		$this->pagination 		= $this->get('Pagination');
 		$this->lists			= $lists;
@@ -161,7 +159,6 @@ class JemViewEventslist extends JEMView
 		$task 	= $jinput->getCmd('task');
 		$pathway = $app->getPathWay();
 		$menu = $menus->getActive();
-
 
 		// add feed link
 		$link	= 'index.php?option=com_jem&view=eventslist&format=feed';
@@ -227,6 +224,5 @@ class JemViewEventslist extends JEMView
 		{
 			$this->document->setMetadata('robots', $this->params->get('robots'));
 		}
-
 	}
 }

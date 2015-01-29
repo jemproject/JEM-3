@@ -8,7 +8,6 @@
  */
 defined( '_JEXEC' ) or die;
 
-
 /**
  * Controller: Venues
  */
@@ -20,7 +19,6 @@ class JemControllerVenues extends JControllerAdmin
 	 */
 	protected $text_prefix = 'COM_JEM_VENUES';
 
-
 	/**
 	 * Proxy for getModel.
 	 *
@@ -30,7 +28,6 @@ class JemControllerVenues extends JControllerAdmin
 		$model = parent::getModel($name, $prefix, $config);
 		return $model;
 	}
-
 
 	/**
 	 * logic for remove venues

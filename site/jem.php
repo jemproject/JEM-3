@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 # include files
 require_once (JPATH_COMPONENT_SITE.'/helpers/category.php');
 require_once (JPATH_COMPONENT_SITE.'/helpers/countries.php');
@@ -42,4 +41,3 @@ $controller->execute($input->getCmd('task'));
 
 # Redirect if set by the controller
 $controller->redirect();
-?>

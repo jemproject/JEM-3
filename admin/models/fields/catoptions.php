@@ -50,7 +50,6 @@ class JFormFieldCatOptions extends JFormFieldList
 		$currentid = JFactory::getApplication()->input->getInt('id');
 		$categories = JEMCategories::getCategoriesTree();
 
-
 		$db		= JFactory::getDbo();
 		$query	= $db->getQuery(true);
 		$query = 'SELECT DISTINCT catid FROM #__jem_cats_event_relations WHERE itemid = '. $db->quote($currentid);
@@ -72,7 +71,6 @@ class JFormFieldCatOptions extends JFormFieldList
 
 		return implode($html);
 	}
-
 
 	protected function getOptions() {
 

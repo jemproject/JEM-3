@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * Model: Attendee
  */
@@ -32,7 +31,6 @@ class JemModelAttendee extends JModelAdmin
 		parent::__construct();
 	}
 
-
 	function toggle($id)
 	{
 		$row = JTable::getInstance('Register', 'JEMTable');
@@ -40,7 +38,6 @@ class JemModelAttendee extends JModelAdmin
 		$row->waiting = $row->waiting ? 0 : 1;
 		return $row->store();
 	}
-
 
 	/**
 	 * Returns a reference to the a Table object, always creating it.
@@ -120,7 +117,6 @@ class JemModelAttendee extends JModelAdmin
 		return $data;
 	}
 
-
 	/**
 	 * Method to save the form data.
 	 *
@@ -128,7 +124,6 @@ class JemModelAttendee extends JModelAdmin
 	 */
 	public function save($data)
 	{
-
 		$app 			= JFactory::getApplication();
 		$jinput 		= $app->input;
 		$user 			= JFactory::getUser();

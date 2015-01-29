@@ -101,7 +101,6 @@ class JemControllerAttendees extends JControllerLegacy
 		}
 
 		echo $export;
-
 		$app->close();
 	}
 

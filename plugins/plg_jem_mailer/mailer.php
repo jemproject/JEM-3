@@ -23,7 +23,6 @@ defined('_JEXEC') or die;
 jimport('joomla.event.plugin');
 jimport('joomla.utilities.mail');
 
-
 include_once(JPATH_SITE.'/components/com_jem/helpers/route.php');
 include_once(JPATH_SITE.'/components/com_jem/helpers/helper.php');
 
@@ -55,7 +54,6 @@ class plgJEMMailer extends JPlugin {
 		$this->_FromName     = $app->getCfg('fromname');
 		$this->_AdminDBList  = self::Adminlist();
 		$this->_UseLoginName = !$jemsettings->get('global_regname', 1); // regname == 1: name, 0: username (login name)
-
 	}
 
 	/**
@@ -101,7 +99,6 @@ class plgJEMMailer extends JPlugin {
 		//create link to event
 		$link = JRoute::_(JUri::base().JEMHelperRoute::getEventRoute($event->slug), false);
 		$creator	= JFactory::getUser($event->created_by);
-
 
 		############################
 		## SENDMAIL - WAITINGLIST ##
@@ -230,7 +227,6 @@ class plgJEMMailer extends JPlugin {
 		$db->setQuery($query);
 		if (is_null($details = $db->loadObject())) return false;
 
-
 		$user 	= JFactory::getUser($details->uid);
 		$username = empty($this->_UseLoginName) ? $user->name : $user->username;
 
@@ -354,7 +350,6 @@ class plgJEMMailer extends JPlugin {
 		$db->setQuery($query);
 		if (is_null($event = $db->loadObject())) return false;
 
-
 		// create link to event
 		$link = JRoute::_(JUri::base().JEMHelperRoute::getEventRoute($event->slug), false);
 		$creator = JFactory::getUser($event->created_by);
@@ -413,7 +408,6 @@ class plgJEMMailer extends JPlugin {
 	*/
 	public function onEventEdited($event_id, $is_new)
 	{
-
 		####################
 		## DEFINING ARRAY ##
 		####################
@@ -493,7 +487,6 @@ class plgJEMMailer extends JPlugin {
 			break;
 		}
 
-
 		#######################
 		## RECEIVERS - ADMIN ##
 		#######################
@@ -506,7 +499,6 @@ class plgJEMMailer extends JPlugin {
 		} else {
 			$admin_receivers = false;
 		}
-
 
 		############################
 		## RECEIVERS - REGISTERED ##
@@ -531,7 +523,6 @@ class plgJEMMailer extends JPlugin {
 		} else {
 			$registered_receivers = false;
 		}
-
 
 		############################
 		## RECEIVERS - CATEGORY ##
@@ -563,7 +554,6 @@ class plgJEMMailer extends JPlugin {
 			$category_receivers = false;
 		}
 
-
 		#######################
 		## RECEIVERS - GROUP ##
 		#######################
@@ -590,7 +580,6 @@ class plgJEMMailer extends JPlugin {
 		} else {
 			$group_receivers = false;
 		}
-
 
 		#########################
 		## RECEIVERS - CREATOR ##
@@ -631,7 +620,6 @@ class plgJEMMailer extends JPlugin {
 			$editor_receiver = false;
 		}
 
-
 		#################################
 		## SENDMAIL: $creator_receiver ##
 		#################################
@@ -653,7 +641,6 @@ class plgJEMMailer extends JPlugin {
 			$this->_mailer($data);
 		}
 
-
 		################################
 		## SENDMAIL: $admin_receivers ##
 		################################
@@ -674,7 +661,6 @@ class plgJEMMailer extends JPlugin {
 			$data->receivers = $admin_receivers;
 			$this->_mailer($data);
 		}
-
 
 		################################
 		## SENDMAIL: $group_receivers ##
@@ -816,7 +802,6 @@ class plgJEMMailer extends JPlugin {
 		// Strip tags/scripts,etc from description
 		$text_description = JFilterOutput::cleanText($venue->locdescription);
 
-
 		#######################
 		## RECEIVERS - ADMIN ##
 		#######################
@@ -879,7 +864,6 @@ class plgJEMMailer extends JPlugin {
 
 		return true;
 	}
-
 
 	/**
 	 * This method executes and send the mail
@@ -959,7 +943,6 @@ class plgJEMMailer extends JPlugin {
 
 		return $AdminList;
 	}
-
 
 	/**
 	 * This method checks the categoryDBList

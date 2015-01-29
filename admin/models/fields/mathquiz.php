@@ -34,7 +34,6 @@ class JFormFieldMathquiz extends JFormField
 		$answer = '<input type="hidden" name="' . $this->name . '-answer" value="' . ( $this->operand1 + $this->operand2 ) . '"></input>';
 		$string = $label . "\n" . $answer;
 
-
 		return $string;
 	}
 

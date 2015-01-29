@@ -13,14 +13,12 @@ defined('_JEXEC') or die;
  */
 class JButtonFrontend extends JButton {
 
-
 	/**
 	 * Button type
 	 *
 	 * @var    string
 	 */
 	protected $_name = 'Standard';
-
 
 	public function fetchButton($type = 'Standard', $name = '', $text = '', $task = '', $list = true)
 	{
@@ -65,7 +63,7 @@ class JButtonFrontend extends JButton {
  	*
  	* @return  string   JavaScript command string
  	*
- 	* 
+ 	*
  	*/
 	protected function _getCommand($name, $task, $list)
 	{
@@ -85,4 +83,3 @@ class JButtonFrontend extends JButton {
 		return $cmd;
 	}
 }
-?>

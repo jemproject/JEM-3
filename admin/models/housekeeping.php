@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 jimport('joomla.filesystem.folder');
 jimport('joomla.filesystem.file');
 
@@ -60,7 +59,6 @@ class JemModelHousekeeping extends JModelLegacy
 		$this->map = $map;
 	}
 
-
 	/**
 	 * Method to delete the images
 	 *
@@ -104,7 +102,6 @@ class JemModelHousekeeping extends JModelLegacy
 
 		return $deleted;
 	}
-
 
 	/**
 	 * Deletes zombie cats_event_relations with no existing event or category
@@ -160,7 +157,6 @@ class JemModelHousekeeping extends JModelLegacy
 
 		return true;
 	}
-
 
 	/**
 	 * Method to determine the images to delete
@@ -219,9 +215,6 @@ class JemModelHousekeeping extends JModelLegacy
 		return $this->_unassigned;
 	}
 
-
-
-
 	/**
 	 * Remove obsolete images
 	 */
@@ -267,8 +260,6 @@ class JemModelHousekeeping extends JModelLegacy
 		return count($pass);
 	}
 
-
-
 	/**
 	 *
 	 *
@@ -283,8 +274,6 @@ class JemModelHousekeeping extends JModelLegacy
 		}
 		return TRUE;
 	}
-
-
 
 	/**
 	 *
@@ -372,5 +361,4 @@ class JemModelHousekeeping extends JModelLegacy
 
 		return $result;
 	}
-
 }

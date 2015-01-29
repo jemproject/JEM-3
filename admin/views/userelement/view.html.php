@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * View: Userelement
  */
@@ -31,7 +30,7 @@ class JEMViewUserElement extends JViewLegacy {
 
 		// prepare the document
 		$document->setTitle(JText::_('COM_JEM_SELECTATTENDEE'));
-		
+
 		// Load css
 		JHtml::_('stylesheet', 'com_jem/backend.css', array(), true);
 
@@ -56,4 +55,3 @@ class JEMViewUserElement extends JViewLegacy {
 		parent::display($tpl);
 	}
 }
-?>

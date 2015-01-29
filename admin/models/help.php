@@ -8,13 +8,11 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * Model: Help
  */
 class JEMModelHelp extends JModelLegacy
 {
-
 	protected $help_search = null;
 	protected $page = null;
 	protected $lang_tag = null;
@@ -147,5 +145,4 @@ class JEMModelHelp extends JModelLegacy
 
 		return $this->toc;
 	}
-
 }

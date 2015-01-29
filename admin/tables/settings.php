@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * Table: Settings
  */
@@ -19,7 +18,6 @@ class JEMTableSettings extends JTable
 		parent::__construct('#__jem_settings', 'id', $db);
 	}
 
-
 	/**
 	 * check
 	 */
@@ -28,7 +26,6 @@ class JEMTableSettings extends JTable
 		return true;
 	}
 
-
 	/**
 	 * store
 	 */
@@ -36,7 +33,6 @@ class JEMTableSettings extends JTable
 	{
 		return parent::store($updateNulls);
 	}
-
 
 	/**
 	 * Bind

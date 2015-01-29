@@ -25,8 +25,7 @@ class PlgButtonEvent extends JPlugin
 		parent::__construct($subject, $config);
 		$this->loadLanguage();
 	}
-	
-	
+
 	/**
 	 * Load the language file on instantiation.
 	 *
@@ -44,15 +43,14 @@ class PlgButtonEvent extends JPlugin
 	 */
 	public function onDisplay($name)
 	{
-		
+
 		$app = JFactory::getApplication();
-		
+
 		if (!$app->isSite())
 		{
 			return false;
 		}
-		
-		
+
 		/*
 		 * Javascript to insert the link
 		 * View element calls jSelectEvent when an event is clicked
@@ -82,14 +80,14 @@ class PlgButtonEvent extends JPlugin
 		 * Currently uses blank class.
 		 */
 		$app = JFactory::getApplication();
-		
+
 		if ($app->isSite())
 		{
 			$link = 'index.php?option=com_jem&amp;view=eventslist&amp;layout=modal&amp;tmpl=component&amp;' . JSession::getFormToken() . '=1';
 		} else {
 			$link = 'index.php?option=com_jem&amp;view=events&amp;layout=modal&amp;tmpl=component&amp;' . JSession::getFormToken() . '=1';
 		}
-		
+
 		$button = new JObject;
 		$button->modal = true;
 		$button->class = 'btn';
