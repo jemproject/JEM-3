@@ -146,7 +146,7 @@ defined('_JEXEC') or die;
 				<?php endif; ?>
 
 				<?php if ($this->jemsettings->showatte == 1) : ?>
-					<td class="jem_attendees">
+					<td class="jem_attendees center">
 						<?php echo !empty($row->regCount) ? $this->escape($row->regCount) : '-'; ?>
 					</td>
 				<?php endif; ?>

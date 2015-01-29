@@ -158,7 +158,7 @@ defined('_JEXEC') or die;
 				<?php endif; ?>
 
 				<?php if ($this->params->get('displayattendeecolumn') == 1) : ?>
-					<td class="attendees">
+					<td class="attendees center">
 					<?php if ($row->registra == 1) {
 						$app = JFactory::getApplication();
 						$menuitem = $app->getMenu()->getActive()->id;
