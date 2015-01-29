@@ -274,21 +274,16 @@ abstract class JEMHelperRoute
 		if ($defaultItemid) {
 			return $defaultItemid;
 		} else {
+			$active = $menus->getActive();
+			if ($active && $active->component == 'com_jem'){
+				return $active->id;
+			}
+
 			$component = JComponentHelper::getComponent('com_jem');
 			$items = $menus->getItems(array('component_id','link'), array($component->id,'index.php?option=com_jem&view=eventslist'),false);
-
 			$default = reset($items);
 
 			return !empty($default->id) ? $default->id : null;
 		}
-
-		/*
-		$active = $menus->getActive();
-
-		if ($active && $active->component == 'com_jem')
-		{
-			return $active->id;
-		}
-		*/
 	}
 }

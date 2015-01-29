@@ -1088,13 +1088,11 @@ class JEMOutput {
 	 * @param boolean $doLink Link the categories to the respective Category View
 	 * @return string|multitype:
 	 */
-	static function getCategoryList($categories, $doLink,$backend=false) {
+	static function getCategoryList($categories, $doLink,$backend=false,$FixItemID=false) {
 		$output = array_map(
-			function ($category) use ($doLink,$backend) {
+			function ($category) use ($doLink,$backend,$FixItemID) {
 				if ($doLink) {
-
 					if ($backend) {
-
 						$path = $category->path;
 						$path = str_replace('/',' &#187; ',$path);
 
@@ -1103,8 +1101,11 @@ class JEMOutput {
 								$category->catname.'</a>';
 						$value .= '</span>';
 					} else {
-						$value = '<a href="'.JRoute::_(JemHelperRoute::getCategoryRoute($category->catslug)).'">'.
-								$category->catname.'</a>';
+						if ($FixItemID) {
+							$value = '<a href="'.JRoute::_('index.php?option=com_jem&view=category&id='.$category->catslug.'&Itemid='.$FixItemID).'">'.$category->catname.'</a>';
+						} else {
+							$value = '<a href="'.JRoute::_(JemHelperRoute::getCategoryRoute($category->catslug)).'">'.$category->catname.'</a>';
+						}
 					}
 				} else {
 					$value = $category->catname;
