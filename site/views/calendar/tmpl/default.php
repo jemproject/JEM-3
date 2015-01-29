@@ -1,7 +1,7 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
+ * @version 3.0.6
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
@@ -28,14 +28,14 @@ jQuery( document ).ready(function( $ ) {
 		</h1>
 	<?php endif; ?>
 
-<!-- introtext -->			
+<!-- introtext -->
 	<?php if ($this->params->get('showintrotext')) : ?>
 		<div class="description no_space clearfix">
 			<?php echo $this->params->get('introtext'); ?>
 		</div>
 		<p> </p>
 	<?php endif; ?>
-	
+
 <!-- calendar -->
 <div class="calendarbox">
 <?php
@@ -44,7 +44,7 @@ jQuery( document ).ready(function( $ ) {
 	$countperday	= array();
 	$limit			= $this->params->get('daylimit', 10);
 	$catinfo		= array();
-	
+
 	# loop
 	foreach ($this->rows as $row) :
 		if (!JemHelper::isValidDate($row->dates)) {
@@ -96,10 +96,10 @@ jQuery( document ).ready(function( $ ) {
 		$ix = 0;
 		$content = '';
 		$contentend = '';
-		
+
 		$catz = array();
-		
-		
+
+
 		//walk through categories assigned to an event
 		foreach($row->categories AS $category) {
 			//Currently only one id possible...so simply just pick one up...
@@ -133,20 +133,20 @@ jQuery( document ).ready(function( $ ) {
 					$countcatevents[$category->id]++;
 				}
 			}
-			
-			
+
+
 			$catinfo[] = array('catid' => $category->id,'color' => $category->color);
-			
+
 		}
 		// end of category-loop
-		
+
 		$catz = implode(' ',$catz);
-		
+
 		$content    .= '<div id="catz" hidecat="" class="'.$catz.'">';
 		$contentend .= '</div>';
-		
-		
-		
+
+
+
 		$color  = '<div id="eventcontenttop" class="eventcontenttop">';
 		$color .= $colorpic;
 		$color .= '</div>';
@@ -156,11 +156,11 @@ jQuery( document ).ready(function( $ ) {
 
 		$multi = new stdClass();
 		$multi->row = (isset($row->multi) ? $row->multi : 'na');
-		
-		
+
+
 		$start = JemOutput::formattime($row->times,'',false);
 		$end   = JemOutput::formattime($row->endtimes,'',false);
-			
+
 		if (!$this->vsettings->get('show_timedetails','1')) {
 			$start = '';
 			$end = '';
@@ -187,7 +187,7 @@ jQuery( document ).ready(function( $ ) {
 				}
 			}
 		}
-		
+
 		$catname = '<div class="catname">'.$multicatname.'</div>';
 
 		$eventdate = !empty($row->multistartdate) ? JemOutput::formatdate($row->multistartdate) : JemOutput::formatdate($row->dates);
@@ -232,21 +232,21 @@ jQuery( document ).ready(function( $ ) {
 
 		$this->cal->setEventContent($year, $month, $day, $content);
 	endforeach;
-	
+
 	$catinfo	= JemHelper::arrayUnique($catinfo);
-	
+
 	// create hidden input fields
 	foreach ($catinfo as $val) {
-		echo "<input name='category".$val['catid']."' type='hidden' value='".$val['color']."'>";	
+		echo "<input name='category".$val['catid']."' type='hidden' value='".$val['color']."'>";
 	}
 	echo "<input id='usebgcatcolor' name='usebgcatcolor' type='hidden' value='".$this->params->get('usebgcatcolor','0')."'>";
-	
+
 	// print the calendar
 	echo $this->cal->showMonth();
 	?>
 
 	</div>
-	
+
 	<div id="jlcalendarlegend">
 
 	<!-- Calendar buttons -->
@@ -309,7 +309,7 @@ jQuery( document ).ready(function( $ ) {
 	<div class="poweredby">
 		<?php echo JemOutput::footer(); ?>
 	</div>
-	
-	
+
+
 	</div>
 </div>

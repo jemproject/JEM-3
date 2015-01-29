@@ -1,14 +1,14 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
+ * @version 3.0.6
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 defined('_JEXEC') or die;
 ?>
-	
+
 <!-- CUSTOM FIELDS -->
 	<fieldset class="form-horizontal">
 		<legend><span class="legendcolor"><?php echo JText::_('COM_JEM_EVENT_CUSTOMFIELDS_LEGEND') ?></span></legend>
@@ -23,11 +23,11 @@ defined('_JEXEC') or die;
 	<!-- REGISTRATION -->
 	<fieldset class="form-horizontal">
 		<legend><span class="legendcolor"><?php echo JText::_('COM_JEM_EVENT_REGISTRATION_LEGEND') ?></span></legend>
-		<?php 
-			echo $this->form->renderField('registra'); 
+		<?php
+			echo $this->form->renderField('registra');
 			echo $this->form->renderField('unregistra');
 			echo $this->form->renderField('maxplaces');
-		
+
 		?>
 			<div class="control-group">
 				<div class="control-label"><label><?php echo JText::_('COM_JEM_BOOKED_PLACES').':';?></label></div>
@@ -47,22 +47,22 @@ defined('_JEXEC') or die;
 	<!-- IMAGE -->
 	<fieldset class="form-horizontal">
 	<legend><span class="legendcolor"><?php echo JText::_('COM_JEM_IMAGE'); ?></span></legend>
-		
+
 		<?php
 		if (JFactory::getUser()->authorise('core.manage', 'com_jem')) {
 		?>
 		<div class="control-group ">
 			<div class="control-label"><?php echo $this->form->getLabel('datimage'); ?></div>
 			<div class="controls">
-			
+
 			<div class="input-append">
 			<?php echo $this->form->getInput('datimage'); ?>
 			</div>
 			</div>
 		</div>
-		
+
 		<?php } else { ?>
-	
+
 		<div class="control-group ">
 			<div class="control-label"><label for="userfile">
 				<?php echo JText::_('COM_JEM_IMAGE'); ?>
@@ -70,7 +70,7 @@ defined('_JEXEC') or die;
 					<?php echo $this->infoimage; ?>
 				</small>
 			</label></div>
-				
+
 			<div class="controls"><input class="inputbox <?php echo $this->jemsettings->imageenabled == 2 ? 'required' : ''; ?>" name="userfile" id="userfile" type="file" />
 			<button type="button" class="btn" onclick="document.getElementById('userfile').value = ''"><?php echo JText::_('JSEARCH_FILTER_CLEAR') ?></button>
 				<?php
@@ -80,12 +80,12 @@ defined('_JEXEC') or die;
 				?>
 			</div>
 		</div>
-		
+
 		<input type="hidden" name="removeimage" id="removeimage" value="0" />
-		
+
 		<?php } ?>
-		
-		
+
+
 		<?php
 		# image output
 		if ($this->item->datimage) :
@@ -98,22 +98,22 @@ defined('_JEXEC') or die;
 		<?php
 		endif;
 		?>
-		
+
 	</fieldset>
 
 <!-- Recurrence -->
 <?php if (!($this->item->recurrence_groupcheck)) { ?>
 		<fieldset class="form-horizontal">
 		<legend><span class="legendcolor"><?php echo JText::_('COM_JEM_EDITEVENT_FIELD_RECURRENCE'); ?></span></legend>
-			<?php 
-			echo $this->form->renderField('recurrence_freq'); 
+			<?php
+			echo $this->form->renderField('recurrence_freq');
 			echo $this->form->renderField('recurrence_interval');
 			echo $this->form->renderField('recurrence_count');
 			echo $this->form->renderField('recurrence_weekday');
 			echo $this->form->renderField('recurrence_exdates');
 			echo $this->form->renderField('recurrence_until');
 			?>
-			
+
 			<!-- Check if the're holidays -->
 			<?php if ($this->item->recurrence_country_holidays) { ?>
 			<div class="control-group">

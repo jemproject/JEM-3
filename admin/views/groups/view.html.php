@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * View: Groups
  */
@@ -44,8 +43,7 @@ defined('_JEXEC') or die;
 		$this->addToolbar();
 
 		parent::display($tpl);
-		}
-
+	}
 
 	/**
 	 * Add Toolbar
@@ -78,4 +76,3 @@ defined('_JEXEC') or die;
 		JToolBarHelper::help('listgroups', true);
 	}
 }
-?>

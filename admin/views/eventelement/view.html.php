@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * View: Eventelement
  */
@@ -36,7 +35,7 @@ class JemViewEventelement extends JViewLegacy {
 
 		//prepare the document
 		$document->setTitle(JText::_('COM_JEM_SELECT_EVENT'));
-		
+
 		// Load css
 		JHtml::_('stylesheet', 'com_jem/backend.css', array(), true);
 
@@ -73,4 +72,3 @@ class JemViewEventelement extends JViewLegacy {
 		parent::display($tpl);
 	}
 }
-?>

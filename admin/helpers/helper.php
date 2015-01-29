@@ -107,11 +107,8 @@ class JemHelperBackend
 		return $result;
 	}
 
-
-
 	public static function getCountryOptions()
 	{
-
 		$options = array();
 		$options = array_merge(JEMHelperCountries::getCountryOptions(),$options);
 
@@ -119,5 +116,4 @@ class JemHelperBackend
 
 		return $options;
 	}
-
 }

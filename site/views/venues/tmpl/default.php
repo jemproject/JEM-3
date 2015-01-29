@@ -1,7 +1,7 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
+ * @version 3.0.6
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
@@ -13,9 +13,9 @@ defined('_JEXEC') or die;
 <div id="jem" class="jem_venues<?php echo $this->pageclass_sfx;?>">
 <div class="topbox">
 <div class="btn-group pull-right">
-	
-	<?php 
-	if ($this->print) { 
+
+	<?php
+	if ($this->print) {
 		echo JemOutput::printbutton($this->print_link, $this->params);
 	} else {
 	?>
@@ -40,8 +40,8 @@ defined('_JEXEC') or die;
 	<div class="clr"> </div>
 
 	<?php foreach($this->rows as $row) : ?>
-	
-		<?php 
+
+		<?php
 			// Create image information
 			$row->limage = JEMImage::flyercreator($row->locimage, 'venue');
 
@@ -68,17 +68,17 @@ defined('_JEXEC') or die;
 				$row->countryimg = JemHelperCountries::getCountryFlag($row->country);
 			}
 		?>
-		
+
 	<div itemscope="itemscope" itemtype="http://schema.org/Place">
 		<h2 class="jem">
 			<a href="<?php echo $row->linkEventsPublished; ?>" itemprop="url"><span itemprop="name"><?php echo $this->escape($row->venue); ?></span></a>
 		</h2>
-		
+
 	<?php if ($row->limage) { ?>
 		<div class="image imagetop"><?php echo JemOutput::flyer( $row, $row->limage, 'venue' ); ?></div>
 	<?php } ?>
-		
-		
+
+
 		<!--  -->
 		<dl class="location" itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
 			<?php if (!empty($row->url)) : ?>
@@ -89,7 +89,7 @@ defined('_JEXEC') or die;
 				<a href="<?php echo $row->url; ?>" target="_blank"> <?php echo $row->urlclean; ?></a>
 			</dd>
 			<?php endif; ?>
-		
+
 		<?php if ( $this->vsettings->get('show_detailsadress',1)) : ?>
 				<?php if ($row->street) : ?>
 				<dt class="venue_street">
@@ -183,7 +183,7 @@ defined('_JEXEC') or die;
 		</div> <!-- // end itemscope -->
 		<?php endforeach; ?>
 	</div> <!-- infocontainer -->
-	
+
 	<!--pagination-->
 	<div class="pagination">
 		<?php echo $this->pagination->getPagesLinks(); ?>

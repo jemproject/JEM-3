@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * Model-Attendees
  */
@@ -70,11 +69,9 @@ class JemModelAttendees extends JModelLegacy
 
 		$this->setState('limit', $limit);
 		$this->setState('limitstart', $limitstart);
-		
+
 		//set unlimited if export or print action | task=export or task=print
 		$this->setState('unlimited', $jinput->getCmd('task'));
-
-
 	}
 
 	/**
@@ -193,7 +190,7 @@ class JemModelAttendees extends JModelLegacy
 
 		$filter_order		= $app->getUserStateFromRequest('com_jem.attendees.'.$itemid.'.filter_order','filter_order','u.username','cmd');
 		$filter_order_Dir	= $app->getUserStateFromRequest('com_jem.attendees.'.$itemid.'.filter_order_Dir','filter_order_Dir','','word');
-		
+
 		$filter_order		= JFilterInput::getinstance()->clean($filter_order, 'cmd');
 		$filter_order_Dir	= JFilterInput::getinstance()->clean($filter_order_Dir, 'word');
 
@@ -225,11 +222,11 @@ class JemModelAttendees extends JModelLegacy
 		$where = array();
 
 		$where[] = 'r.event = '.$this->_id;
-		
+
 		if ($filter_waiting == -1) {
 			$filter_waiting = 0;
 		}
-		
+
 		if ($filter_waiting) {
 			$where[] = ' (a.waitinglist = 0 OR r.waiting = '.($filter_waiting-1).') ';
 		}
@@ -275,9 +272,7 @@ class JemModelAttendees extends JModelLegacy
 	{
 
 		$query = 'SELECT id, alias, title, dates, enddates, times, endtimes, maxplaces, waitinglist FROM #__jem_events WHERE id = '.$this->_id;
-
 		$this->_db->setQuery( $query );
-
 		$_event = $this->_db->loadObject();
 
 		return $_event;
@@ -307,4 +302,3 @@ class JemModelAttendees extends JModelLegacy
 		return true;
 	}
 }
-?>

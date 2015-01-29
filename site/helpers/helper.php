@@ -17,7 +17,6 @@ use Recurr\RecurrenceRuleTransformer;
  */
 class JemHelper {
 
-
 	/**
 	 * Pulls settings from database and stores in an static object
 	 *
@@ -26,26 +25,25 @@ class JemHelper {
 	static function viewSettings($view)
 	{
 		static $settings;
-	
+
 		if (!is_object($settings)) {
 			$db = JFactory::getDBO();
 			$query = $db->getQuery(true);
-	
+
 			$query->select($view);
 			$query->from('#__jem_settings');
 			$query->where('id = 1');
-	
+
 			$db->setQuery($query);
-			$settings = $db->loadResult();		
+			$settings = $db->loadResult();
 		}
-	
+
 		$vregistry = new JRegistry;
 		$vregistry->loadString($settings);
-	
+
 		return $vregistry;
 	}
-	
-	
+
 	/**
 	 * Pulls settings from database and stores in an static object
 	 * @return object
@@ -70,7 +68,6 @@ class JemHelper {
 
 		return $config;
 	}
-
 
 	/**
 	 * Pulls settings from database and stores in an static object
@@ -100,7 +97,6 @@ class JemHelper {
 		return $globalregistry;
 	}
 
-
 	/**
 	 * Retrieves the CSS-settings from database and stores in an static object
 	 */
@@ -126,7 +122,6 @@ class JemHelper {
 		return $registryCSS;
 	}
 
-
 	/**
 	 * Performs daily scheduled cleanups
 	 *
@@ -134,7 +129,7 @@ class JemHelper {
 	 */
 	static function cleanup($forced = 0)
 	{
-		
+
 		# run only once (component/modules), non-forced
 		if (!$forced) {
 			static $counter = 0;
@@ -143,7 +138,7 @@ class JemHelper {
 			}
 			$counter++;
 		}
-		
+
 		$jemsettings	= JemHelper::config();
 
 		$now = time();
@@ -156,7 +151,7 @@ class JemHelper {
 		if ($nrdaysnow > $nrdaysupdate || $forced) {
 
 			$db = JFactory::getDbo();
-			
+
 			# delete outdated events
 			if ($jemsettings->oldevent == 1) {
 				$query = $db->getQuery(true);
@@ -187,7 +182,6 @@ class JemHelper {
 		}
 	}
 
-
 	/**
 	 * Build the select list for access level
 	 */
@@ -206,7 +200,6 @@ class JemHelper {
 		return $groups;
 	}
 
-
 	static function buildtimeselect($max, $name, $selected, $class = array('class'=>'inputbox'))
 	{
 		$timelist = array();
@@ -221,7 +214,6 @@ class JemHelper {
 		}
 		return JHtml::_('select.genericlist', $timelist, $name, $class, 'value', 'text', $selected);
 	}
-
 
 	/**
 	 * returns mime type of a file
@@ -353,13 +345,13 @@ class JemHelper {
 		{
 			// need to bump users to attending status
 			$bumping = array_slice($waiting, 0, $event_places->maxplaces - $registered);
-			
+
 			$query = $db->getQuery(true);
 			$query->update('#__jem_register');
 			$query->set('waiting = 0');
-			$query->where('id IN ('.implode(',', $bumping).')');	
+			$query->where('id IN ('.implode(',', $bumping).')');
 			$db->setQuery($query);
-			
+
 			if (!$db->execute()) {
 				$this->setError(JText::_('COM_JEM_FAILED_BUMPING_USERS_FROM_WAITING_TO_CONFIRMED_LIST'));
 				Jerror::raisewarning(0, JText::_('COM_JEM_FAILED_BUMPING_USERS_FROM_WAITING_TO_CONFIRMED_LIST').': '.$db->getErrorMsg());
@@ -396,7 +388,7 @@ class JemHelper {
 		$ids = implode(",", $ids);
 
 		$db = Jfactory::getDBO();
-		
+
 		$query = $db->getQuery(true);
 		$query->select('COUNT(id) as total, SUM(waiting) as waitinglist, event');
 		$query->from('#__jem_register');
@@ -424,9 +416,9 @@ class JemHelper {
 	 */
 	public static function getTimeZoneName() {
 		$settings	= self::globalattribs();
-		
+
 		$userTz		= JFactory::getUser()->getParam('timezone');
-		
+
 		$timeZone	= JFactory::getConfig()->get('offset');
 
 		/* disabled
@@ -438,7 +430,6 @@ class JemHelper {
 		return $timeZone;
 	}
 
-
 	/**
 	 * returns short timezone name
 	 */
@@ -449,7 +440,6 @@ class JemHelper {
 
 		return $timeZoneShort;
 	}
-
 
 	/**
 	 * returns offset
@@ -466,7 +456,6 @@ class JemHelper {
 
 		return $offset;
 	}
-
 
 	/**
 	 * return true is a date is valid (not null, or 0000-00...)
@@ -505,8 +494,7 @@ class JemHelper {
 		}
 		return true;
 	}
-	
-	
+
 	/**
 	 * Returns array of positive numbers
 	 *
@@ -522,10 +510,9 @@ class JemHelper {
 				$ids[] = (int)$id;
 			}
 		}
-	
+
 		return (empty($ids) ? false : $ids);
 	}
-	
 
 	/**
 	 * Creates a tooltip
@@ -534,7 +521,7 @@ class JemHelper {
 		$tooltip = $tooltip;
 		$title = $title;
 		$titleTip = JHtml::tooltipText($title, $tooltip, true,true);
-				
+
 		if ($href) {
 			$href = JRoute::_ ($href);
 			$tip = '<div class="'.$class.'" title="'.$titleTip.'"><a href="'.$href.'">'.$time.$text.'</a></div>';
@@ -628,7 +615,6 @@ class JemHelper {
 
 		return $css;
 	}
-
 
 	static function defineCenterMap($data = false) {
 		# retrieve venue
@@ -819,7 +805,6 @@ class JemHelper {
 		return $result;
 	}
 
-
 	/**
 	 * get Holiday-options
 	 */
@@ -861,7 +846,6 @@ class JemHelper {
 		return implode("\n", $html);
 	}
 
-
 	/**
 	* get Groupset
 	**/
@@ -889,9 +873,7 @@ class JemHelper {
 		}
 
 		return $options;
-
 	}
-
 
 	/**
 	 * Create Unique Arrays using an md5 hash
@@ -925,9 +907,7 @@ class JemHelper {
 		}
 
 		return $arrayRewrite;
-
 	}
-
 
 	/**
 	 * takes care of the recurrence of events
@@ -959,7 +939,7 @@ class JemHelper {
 		$recurrence_until		= $table->recurrence_until;
 		$recurrence_weekday		= $table->recurrence_weekday;
 		$recurrence_group		= $table->recurrence_group;
-		
+
 		# select all the data from the event and make an array of it
 		# this info will be used for the generated events.
 		$db = JFactory::getDbo();
@@ -1027,7 +1007,7 @@ class JemHelper {
 		$seconds1 	= $jdate1->format('s');
 
 		$limit_date2 = $year1.$month1.$day1.'T235959Z';
-		
+
 		# Define FREQ
 		switch($recurrence_freq) {
 			case "1":
@@ -1044,16 +1024,15 @@ class JemHelper {
 				break;
 			default:
 				$freq = '';
-		}		
-		
-		
+		}
+
 		# let's check if the user did select a weekday
 		if ($recurrence_weekday) {
 			$rrule = 'FREQ='.$freq.';INTERVAL='.$recurrence_interval.';UNTIL='.$limit_date2.';BYDAY='.$recurrence_weekday;
 		} else {
 			$rrule = 'FREQ='.$freq.';INTERVAL='.$recurrence_interval.';UNTIL='.$limit_date2;
 		}
-		
+
 		# Get new dates
 		$timezone    = JemHelper::getTimeZoneName();
 		$startDate   = new DateTime($startDateTime, new DateTimeZone($timezone));
@@ -1074,8 +1053,7 @@ class JemHelper {
 		# 	- public 'Date'
 		# 	- public 'timezone_type'
 		# 	- public 'timezone'
-		
-	
+
 		#########
 		## END ##
 		#########
@@ -1097,7 +1075,6 @@ class JemHelper {
 
 		}
 
-
 		$newArray2 = array();
 		foreach($newEventArray as $newEvent2) {
 			$date2 = $newEvent2->format('Y-m-d');
@@ -1109,11 +1086,9 @@ class JemHelper {
 			}
 		}
 
-
 		# retrieve first+last startdate of the array
 		$date_first_calculated_occurrence	=	reset($newArray2);
 		$date_last_calculated_occurrence	=	end($newArray2);
-
 
 		###########################
 		## IGNORE DATES: HOLIDAY ##
@@ -1171,14 +1146,9 @@ class JemHelper {
 
 			} // end foreach
 
-
 			# it's possible to have duplicates so we've to make the array Unique
 			$holiday_array = array_unique($holiday_array);
 		} // end holiday-check
-
-
-
-
 
 		####################################################
 		## IGNORE DATES: FORM FIELD (exdates), NO HOLIDAY ##
@@ -1202,9 +1172,9 @@ class JemHelper {
 				foreach ($form_exdate_splits as $ignoredate) {
 					$form_exdate_splits2[] = date("Y-m-d", strtotime($ignoredate));
 				}
-				
+
 				foreach ($form_exdate_splits2 as $form_exdate_split) {
-					
+
 					$date = date_parse($form_exdate_split);
 					if (checkdate($date["month"], $date["day"], $date["year"]) && !$date["errors"]) {
 
@@ -1230,8 +1200,6 @@ class JemHelper {
 			$form_exdate_output = array_unique($form_exdate_output);
 		} // end check exdates
 
-
-
 		#####################################
 		## IGNORE-DATES: TABLE, NO HOLIDAY ##
 		#####################################
@@ -1244,7 +1212,7 @@ class JemHelper {
 		$query->where(array('enabled = 1','holiday <> 1','date >= '.$db->Quote($date_first_calculated_occurrence),'date <= '.$db->Quote($date_last_calculated_occurrence)));
 		$db->setQuery($query);
 		$dateTable = $db->loadColumn();
-		
+
 		if ($dateTable) {
 			$excluded_dates = $dateTable;
 		} else {
@@ -1276,7 +1244,6 @@ class JemHelper {
 			$exclude_exdate_holiday = false;
 		}
 
-
 		######################################
 		## IGNORE-DATES: CREATE ARRAY, DIFF ##
 		######################################
@@ -1300,7 +1267,6 @@ class JemHelper {
 			$generating_array		= array_diff($array_input_form,$array_to_remove_form);
 		}
 
-
 		if ($exdates && $holidays){
 			# both fields have been filled
 			# in this case we've to merge both arrays and check for duplicates
@@ -1317,7 +1283,6 @@ class JemHelper {
 			$generating_array = $array_output;
 		}
 
-
 		$new_generating_array = array();
 		foreach($generating_array as $generated) {
 			$generated_enddate = new DateTime($generated);
@@ -1327,7 +1292,6 @@ class JemHelper {
 			$item2 = array('startDate' => $generated,'endDate' => $var2a);
 			$new_generating_array[] = $item2;
 		}
-
 
 		#############
 		## EXDATES ##
@@ -1383,7 +1347,6 @@ class JemHelper {
 		$first_event_recurrence->recurrence_id	= $var4;
 		$first_event_recurrence->store();
 
-
 		##############################################################
 		## Store the first occurence to the Recurrence-Master table ##
 		##############################################################
@@ -1427,7 +1390,6 @@ class JemHelper {
 		}
 		$location = implode(",", $location);
 
-
 		# retrieve categories
 		$db = JFactory::getDbo();
 		$query = $db->getQuery(true);
@@ -1458,7 +1420,6 @@ class JemHelper {
 		$rec_master->enddate_org 	= $endDateTime;
 		$rec_master->exdates		= $exdates;
 		$rec_master->store();
-
 
 		#######################################
 		## Bind & Store the generated values ##
@@ -1514,7 +1475,6 @@ class JemHelper {
 				$new_event_recurrence->freq				= $freq;
 				$new_event_recurrence->wholeday			= $new_event->wholeday;
 
-
 				$var5 	= 	$new_event_recurrence->startdate_org;
 				$var6	=	new JDate($var5);
 				$var7	=	$var3->format('Ymd\THis\Z');
@@ -1557,7 +1517,6 @@ class JemHelper {
 		}  // end adding new Events
 	}// end function
 
-
 	/**
 	 * return initialized calendar tool class for ics export
 	 *
@@ -1585,15 +1544,13 @@ class JemHelper {
 		$vcal->setProperty("X-WR-CALDESC", "Calendar Description");
 
 		$xprops = array( "X-LIC-LOCATION" => $timezone_name );
-		
+
 		if ($timezone_name != 'UTC') {
 			iCalUtilityFunctions::createTimezone( $vcal, $timezone_name, $xprops);
 		}
 
 		return $vcal;
 	}
-
-
 
 	static function icalAddEvent(&$calendartool, $event,$rows)
 	{
@@ -1602,11 +1559,11 @@ class JemHelper {
 		$settings 		= JemHelper::globalattribs();
 		$config			= JFactory::getConfig();
 		$sitename		= $config->get('sitename');
-		
-		
+
+
 		# retrieve TimezoneName
 		# if we have a timezone for the venue then that info will be used for the output
-		
+
 		if ($event->timezone) {
 			# venue - timeZone
 			$timezone_name 	= $event->timezone;
@@ -1614,7 +1571,7 @@ class JemHelper {
 			# global - TimeZone
 			$timezone_name	= JemHelper::getTimeZoneName();
 		}
-		
+
 		// get categories names
 		$categories = array();
 		foreach ($event->categories as $c) {
@@ -1779,5 +1736,4 @@ class JemHelper {
 		return $filename;
 		}
 
-} // end class
-?>
+}

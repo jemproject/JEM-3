@@ -108,7 +108,6 @@ class JemModelEditevent extends JEMModelEvent
 		$files = JEMAttachment::getAttachments('event' . $itemId);
 		$value->attachments = $files;
 
-
 		################
 		## RECURRENCE ##
 		################
@@ -160,7 +159,6 @@ class JemModelEditevent extends JEMModelEvent
 		} else {
 			$value->recurrence_country_holidays = false;
 		}
-
 
 		// Check general edit permission first.
 		if ($user->authorise('core.edit', $asset)) {
@@ -391,7 +389,6 @@ class JemModelEditevent extends JEMModelEvent
 
 		return $pagination;
 	}
-
 
 	/**
 	 * contacts-query

@@ -83,4 +83,3 @@ class JemControllerEvents extends JControllerAdmin
 		return $model;
 	}
 }
-?>

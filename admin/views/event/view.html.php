@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * View: Event
  */
@@ -30,7 +29,7 @@ class JemViewEvent extends JViewLegacy {
 			JError::raiseError(500, implode("\n", $errors));
 			return false;
 		}
-		
+
 		//initialise variables
 		$jemsettings 	= JemHelper::config();
 		$document		= JFactory::getDocument();
@@ -39,7 +38,7 @@ class JemViewEvent extends JViewLegacy {
 		$task			= JFactory::getApplication()->input->get('task');
 		$this->task 	= $task;
 		$url 			= JUri::root();
-		
+
 		$categories 	= JemCategories::getCategoriesTree(1);
 		$selectedcats 	= $this->get('Catsselected');
 
@@ -63,7 +62,6 @@ class JemViewEvent extends JViewLegacy {
 		parent::display($tpl);
 	}
 
-
 	/**
 	 * Add the page title and toolbar.
 	 */
@@ -71,7 +69,7 @@ class JemViewEvent extends JViewLegacy {
 	{
 		$jinput = JFactory::getApplication()->input;
 		$jinput->set('hidemainmenu', true);
-		
+
 		$recurrence = $this->item->recurrence_groupcheck;
 
 		$user		= JFactory::getUser();
@@ -86,7 +84,7 @@ class JemViewEvent extends JViewLegacy {
 			JToolBarHelper::apply('event.apply');
 			JToolBarHelper::save('event.save');
 		}
-		
+
 		if (!$recurrence) {
 			if (!$checkedOut && $canDo->get('core.create')) {
 				JToolBarHelper::save2new('event.save2new');
@@ -107,4 +105,3 @@ class JemViewEvent extends JViewLegacy {
 		JToolBarHelper::help('editevents', true);
 	}
 }
-?>

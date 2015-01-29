@@ -183,4 +183,3 @@ class ActiveCalendarWeek extends JEMCalendar {
 		$this->selectedday = -2; // $this->daytoday;
 	}
 }
-?>

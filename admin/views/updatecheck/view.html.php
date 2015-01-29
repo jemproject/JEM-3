@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * View: Updatecheck
  */
@@ -33,7 +32,6 @@ class JEMViewUpdatecheck extends JViewLegacy {
 
 		parent::display($tpl);
 	}
-
 
 	/**
 	 * Add Toolbar

@@ -1,13 +1,12 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
+ * @version 3.0.6
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 defined('_JEXEC') or die;
-
 
 /**
  * Editvenue-View
@@ -34,11 +33,10 @@ class JemViewEditvenue extends JViewLegacy
 		$menuitem    = $menu->getActive();
 		$pathway     = $app->getPathway();
 		$url         = JUri::root();
-		
+
 		$language 	= JFactory::getLanguage();
 		$language 	= $language->getTag();
 		$language 	= substr($language, 0,2);
-		
 
 		// Get model data.
 		$this->state 		= $this->get('State');
@@ -49,7 +47,7 @@ class JemViewEditvenue extends JViewLegacy
 		// Create a shortcut for $item and params.
 		$item = $this->item;
 		$params = $this->params;
-		
+
 		$this->form = $this->get('Form');
 		$this->return_page = $this->get('ReturnPage');
 
@@ -156,15 +154,15 @@ class JemViewEditvenue extends JViewLegacy
 		JemHelper::loadCss('jem');
 		JemHelper::loadCustomCss();
 		JemHelper::loadCustomTag();
-		
+
 		// Load script
 		JHtml::_('bootstrap.framework');
 		JHtml::_('script', 'com_jem/attachments.js', false, true);
-		
+
 		# retrieve mapType setting
 		$settings 		= JemHelper::globalattribs();
 		$mapType		= $settings->get('mapType','0');
-		
+
 		switch($mapType) {
 			case '0':
 				$type = '"roadmap"';
@@ -179,8 +177,7 @@ class JemViewEditvenue extends JViewLegacy
 				$type = '"terrain"';
 				break;
 		}
-		
-		
+
 		$this->mapType = $type;
 
 		$this->pageclass_sfx	= htmlspecialchars($item->params->get('pageclass_sfx'));
@@ -193,7 +190,6 @@ class JemViewEditvenue extends JViewLegacy
 		$this->_prepareDocument();
 		parent::display($tpl);
 	}
-
 
 	/**
 	 * Prepares the document
@@ -226,4 +222,3 @@ class JemViewEditvenue extends JViewLegacy
 		}
 	}
 }
-?>

@@ -23,4 +23,3 @@ class JEMControllerAttachments extends JControllerLegacy
 		parent::__construct();
 	}
 }
-?>

@@ -97,4 +97,3 @@ class JFormFieldVenue extends JFormFieldList
 		return implode("\n", $html);
 	}
 }
-?>

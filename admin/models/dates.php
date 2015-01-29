@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
  /**
   * Model: Dates
   */
@@ -94,7 +93,6 @@ class JemModelDates extends JModelList
 		return $query;
 	}
 
-
 	/**
 	 * Method to get the userinformation of edited/submitted events
 	 * @return object
@@ -106,7 +104,6 @@ class JemModelDates extends JModelList
 		if(!count($items)) {
 			return $items;
 		}
-
 
 		return $items;
 	}

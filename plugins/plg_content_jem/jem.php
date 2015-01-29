@@ -1,7 +1,7 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
+ * @version 3.0.6
  * @subpackage JEM Content Plugin
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -9,14 +9,12 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * JEM Content Plugin
  */
 class plgContentJem extends JPlugin
 {
-	
-	/**
+    /**
 	 * Constructor
 	 *
 	 * @param object $subject The object to observe
@@ -28,8 +26,7 @@ class plgContentJem extends JPlugin
 		parent::__construct($subject, $config);
 		$this->loadLanguage();
 	}
-	
-	
+
 	/**
 	 * @param	string	The context for the content passed to the plugin.
 	 * @param	object	The data relating to the content that was deleted.

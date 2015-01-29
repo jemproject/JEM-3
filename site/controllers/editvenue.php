@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * Controller-Editvenue
  */
@@ -66,7 +65,6 @@ class JEMControllerEditvenue extends JControllerForm
 		else {
 			return $allow;
 		}
-
 	}
 
 	/**
@@ -185,7 +183,7 @@ class JEMControllerEditvenue extends JControllerForm
 	protected function getRedirectToItemAppend($recordId = null, $urlVar = 'a_id')
 	{
 		$jinput = JFactory::getApplication()->input;
-		
+
 		// Need to override the parent method completely.
 		$tmpl		= JFactory::getApplication()->input->getCmd('tmpl');
 		$layout		= JFactory::getApplication()->input->getCmd('layout', 'edit');
@@ -240,7 +238,6 @@ class JEMControllerEditvenue extends JControllerForm
 		}
 	}
 
-
 	protected function postSaveHook(JModelLegacy $model, $validData = array())
 	{
 
@@ -250,7 +247,7 @@ class JEMControllerEditvenue extends JControllerForm
 		$id    = $model->getState('editvenue.id');
 
 		$enabled = JPluginHelper::isEnabled('jem','mailer');
-	
+
 		if ($enabled) {
 			JPluginHelper::importPlugin('jem','mailer');
 			$dispatcher = JEventDispatcher::getInstance();
@@ -260,7 +257,6 @@ class JEMControllerEditvenue extends JControllerForm
 		}
 	}
 	}
-
 
 	/**
 	 * Method to save a record.
@@ -298,7 +294,6 @@ class JEMControllerEditvenue extends JControllerForm
 		}
 
 		$recordId = $this->input->getInt($urlVar);
-
 
 		// Populate the row id from the session.
 		$data[$key] = $recordId;
@@ -502,5 +497,5 @@ class JEMControllerEditvenue extends JControllerForm
 					$this->postSaveHook($model, $validData);
 
 					return true;
-				}
+	}
 }

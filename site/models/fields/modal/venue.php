@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * Venue Select
  */
@@ -38,7 +37,6 @@ class JFormFieldModal_Venue extends JFormField
 		$script[] = '		jQuery("#'.$this->id.'_clear").removeClass("hidden");';
 		$script[] = '        SqueezeBox.close();';
 		$script[] = '    }';
-
 
 		// Clear button script
 		static $scriptClear;
@@ -90,7 +88,6 @@ class JFormFieldModal_Venue extends JFormField
 		}
 		$venue = htmlspecialchars($venue, ENT_QUOTES, 'UTF-8');
 
-
 		// The active venue id field
 		if (0 == (int)$this->value) {
 			$value = '';
@@ -116,4 +113,3 @@ class JFormFieldModal_Venue extends JFormField
 		return implode("\n", $html);
 	}
 }
-?>

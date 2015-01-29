@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * View: Help
  */
@@ -18,14 +17,14 @@ class JEMViewHelp extends JViewLegacy {
 	protected $page = null;
 	protected $lang_tag = null;
 	protected $toc = null;
-	
+
 	public function display($tpl = null) {
-	
+
 		$this->help_search			= $this->get('HelpSearch');
 		$this->page					= $this->get('Page');
 		$this->toc					= $this->get('Toc');
 		$this->langTag				= $this->get('LangTag');
-		
+
 		// Load css
 		JHtml::_('stylesheet', 'com_jem/backend.css', array(), true);
 
@@ -35,7 +34,6 @@ class JEMViewHelp extends JViewLegacy {
 		parent::display($tpl);
 	}
 
-	
 	/**
 	 * Add Toolbar
 	 */
@@ -45,4 +43,3 @@ class JEMViewHelp extends JViewLegacy {
 		JToolBarHelper::title(JText::_('COM_JEM_HELP'), 'help');
 	}
 }
-?>

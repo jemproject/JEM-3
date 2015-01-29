@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * Model: Main
  */
@@ -97,4 +96,3 @@ class JEMModelMain extends JModelLegacy
 	}
 
 }
-?>

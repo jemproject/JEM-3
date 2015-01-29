@@ -22,11 +22,10 @@ class JEMTableRecurrence extends JTable
 	 * Bind
 	 */
 	public function bind($array, $ignore = ''){
-		
+
 
 		return parent::bind($array, $ignore);
 	}
-
 
 	/**
 	 * Check
@@ -45,7 +44,4 @@ class JEMTableRecurrence extends JTable
 
 		return parent::store($updateNulls);
 	}
-
-	
 }
-?>

@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * Controller-Editevent
  */
@@ -41,7 +40,7 @@ class JEMControllerEditevent extends JControllerForm
 	protected function allowAdd($data = array())
 	{
 		$jinput = JFactory::getApplication()->input;
-		
+
 		// Initialise variables.
 		$user		= JFactory::getUser();
 		$categoryId	= JArrayHelper::getValue($data, 'catid', $jinput->getInt('catid'), 'int');
@@ -56,7 +55,7 @@ class JEMControllerEditevent extends JControllerForm
 		$maintainer		= JEMUser::ismaintainer('add');
 		$genaccess		= JEMUser::validate_user($jemsettings->evdelrec, $jemsettings->delivereventsyes);
 		$valguest		= JEMUser::validate_guest();
-		
+
 		if ($maintainer || $genaccess || $valguest) {
 			return true;
 		}
@@ -68,7 +67,6 @@ class JEMControllerEditevent extends JControllerForm
 		else {
 			return $allow;
 		}
-
 	}
 
 	/**
@@ -241,7 +239,6 @@ class JEMControllerEditevent extends JControllerForm
 		}
 	}
 
-
 	protected function postSaveHook(JModelLegacy $model, $validData = array())
 	{
 
@@ -251,7 +248,7 @@ class JEMControllerEditevent extends JControllerForm
 		$id    = $model->getState('editevent.id');
 
 		$enabled = JPluginHelper::isEnabled('jem','mailer');
-	
+
 		if ($enabled) {
 			JPluginHelper::importPlugin('jem','mailer');
 			$dispatcher = JEventDispatcher::getInstance();
@@ -262,7 +259,6 @@ class JEMControllerEditevent extends JControllerForm
 	}
 
 	}
-
 
 	/**
 	 * Method to save a record.
@@ -300,7 +296,6 @@ class JEMControllerEditevent extends JControllerForm
 		}
 
 		$recordId = $this->input->getInt($urlVar);
-
 
 		// Populate the row id from the session.
 		$data[$key] = $recordId;
@@ -359,13 +354,13 @@ class JEMControllerEditevent extends JControllerForm
 
 		// Test whether the data is valid.
 		$validData = $model->validate($form, $data);
-				
+
 		// Check for validation errors.
 		if ($validData === false)
 		{
 			// Get the validation messages.
 			$errors = $model->getErrors();
-			
+
 			// Push up to three validation messages out to the user.
 			for ($i = 0, $n = count($errors); $i < $n && $i < 3; $i++)
 			{
@@ -550,7 +545,7 @@ class JEMControllerEditevent extends JControllerForm
 	{
 		// Check for request forgeries
 		JSession::checkToken() or jexit('Invalid Token');
-		
+
 		$jinput = JFactory::getApplication()->input;
 		$id		= $jinput->post->getInt('rdid', 0);
 
@@ -598,7 +593,7 @@ class JEMControllerEditevent extends JControllerForm
 		$query->where(array('groupid_ref = '.$recurrence_group, 'itemid= '.$recordId));
 		$db->setQuery($query);
 		$recurrenceid = $db->loadResult();
-	
+
 		# Update field recurrence_group in event-table
 		$db = JFactory::getDbo();
 		$query	= $db->getQuery(true);
@@ -606,15 +601,15 @@ class JEMControllerEditevent extends JControllerForm
 		$query->set(array('recurrence_count = ""','recurrence_freq = ""','recurrence_group = ""','recurrence_interval = ""','recurrence_until = ""','recurrence_weekday = ""'));
 		$query->where('id = '.$recordId);
 		$db->setQuery($query)->query();
-	
+
 		# Blank field groupid_ref in recurrence-table and set exdate value
 		$recurrence_table	= JTable::getInstance('Recurrence', 'JEMTable');
 		$recurrence_table->load($recurrenceid);
-					
+
 		$startdate_org_input		= new JDate($recurrence_table->startdate_org);
 		$exdate						= $startdate_org_input->format('Ymd\THis\Z');
 		$recurrence_table->exdate	= $exdate;
-	
+
 		$recurrence_table->groupid_ref = "";
 		$recurrence_table->store();
 

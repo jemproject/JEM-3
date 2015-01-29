@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * Table: Register
  */
@@ -87,4 +86,3 @@ class JEMTableRegister extends JTable
 		return $this->_db->getAffectedRows();
 	}
 }
-?>

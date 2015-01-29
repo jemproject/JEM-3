@@ -922,4 +922,3 @@ class JEMCalendar {
 		else return mktime($hr,$min,$sec,$month,$day,$year);
 	}
 }
-?>

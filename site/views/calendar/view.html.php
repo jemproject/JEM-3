@@ -1,13 +1,12 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
+ * @version 3.0.6
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 defined('_JEXEC') or die;
-
 
 /**
  * Calendar-View
@@ -47,10 +46,10 @@ class JemViewCalendar extends JViewLegacy
 		div#jem .today .daynum {background-color:'.$currentdaycolor.' !important;}';
 
 		$document->addStyleDeclaration($style);
-		
+
 		// add javascript (using full path - see issue #590)
 		JHtml::_('script', 'media/com_jem/js/calendar.js');
-		
+
 		$year 	= $app->input->request->getInt('yearID', strftime("%Y"));
 		$month 	= $app->input->request->getInt('monthID', strftime("%m"));
 
@@ -59,7 +58,7 @@ class JemViewCalendar extends JViewLegacy
 		$model->setDate(mktime(0, 0, 1, $month, 1, $year));
 
 		$rows			= $this->get('Items');
-		
+
 		//Set Page title
 		$pagetitle   = $params->def('page_title', $menuitem->title);
 		$params->def('page_heading', $pagetitle);
@@ -94,4 +93,3 @@ class JemViewCalendar extends JViewLegacy
 		parent::display($tpl);
 	}
 }
-?>

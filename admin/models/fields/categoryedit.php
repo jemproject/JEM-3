@@ -32,45 +32,45 @@ class JFormFieldCategoryEdit extends JFormFieldList
 	{
 		$html = array();
 		$attr = '';
-	
+
 		// Initialize some field attributes.
 		$attr .= !empty($this->class) ? ' class="' . $this->class . '"' : '';
 		$attr .= !empty($this->size) ? ' size="' . $this->size . '"' : '';
 		$attr .= $this->multiple ? ' multiple' : '';
 		$attr .= $this->required ? ' required aria-required="true"' : '';
 		$attr .= $this->autofocus ? ' autofocus' : '';
-	
+
 		// To avoid user's confusion, readonly="true" should imply disabled="true".
 		if ((string) $this->readonly == '1' || (string) $this->readonly == 'true' || (string) $this->disabled == '1'|| (string) $this->disabled == 'true')
 		{
 			$attr .= ' disabled="disabled"';
 		}
-	
+
 		// Initialize JavaScript field attributes.
 		$attr .= $this->onchange ? ' onchange="' . $this->onchange . '"' : '';
-	
+
 		// Get the field options.
 		$options = (array) $this->getOptions();
-				
+
 		if ($this->element['editform'] == true) {
 			$currentid = JFactory::getApplication()->input->getInt('id');
 			$db		= JFactory::getDbo();
 			$query	= $db->getQuery(true);
-			
+
 			$query->select('DISTINCT catid');
 			$query->from('#__jem_cats_event_relations');
 			$query->where('itemid = '. $db->quote($currentid));
-			
+
 			$db->setQuery($query);
 			$selectedcats = $db->loadColumn();
-			
+
 			$value = $selectedcats;
-			
+
 		} else {
 			$value = $this->value;
-			
+
 		}
-			
+
 		// Create a read-only list (no name) with a hidden input to store the value.
 		if ((string) $this->readonly == '1' || (string) $this->readonly == 'true'){
 			$html[] = JHtml::_('select.genericlist', $options, '', trim($attr), 'value', 'text', $value, $this->id);
@@ -79,11 +79,10 @@ class JFormFieldCategoryEdit extends JFormFieldList
 			// Create a regular list.
 			$html[] = JHtml::_('select.genericlist', $options, $this->name, trim($attr), 'value', 'text', $value, $this->id);
 		}
-		
-			
+
 		return implode($html);
 	}
-	
+
 	/**
 	 * Method to get a list of categories that respects access controls and can be used for
 	 * either category assignment or parent category assignment in edit screens.
@@ -155,7 +154,7 @@ class JFormFieldCategoryEdit extends JFormFieldList
 			JArrayHelper::toInteger($published);
 			$query->where('a.published IN (' . implode(',', $published) . ')');
 		}
-		
+
 		if ($this->element['removeroot'] == true) {
 			$query->where('a.catname NOT LIKE "root"');
 		}
@@ -175,7 +174,6 @@ class JFormFieldCategoryEdit extends JFormFieldList
 			JError::raiseWarning(500, $e->getMessage);
 		}
 
-
 			// Pad the option text with spaces using depth level as a multiplier.
 			for ($i = 0, $n = count($options); $i < $n; $i++)
 			{
@@ -187,10 +185,10 @@ class JFormFieldCategoryEdit extends JFormFieldList
 						unset($options[$i]);
 						continue;
 					}
-					
+
 					$options[$i]->level = $options[$i]->level-1;
 				}
-				
+
 				if ($options[$i]->published == 1)
 				{
 					$options[$i]->text = str_repeat('- ', $options[$i]->level). $options[$i]->text ;
@@ -199,9 +197,8 @@ class JFormFieldCategoryEdit extends JFormFieldList
 				{
 					$options[$i]->text = str_repeat('- ', $options[$i]->level). '[' .$options[$i]->text . ']';
 				}
-				
-			}
 
+			}
 
 		// Get the current user object.
 		$user = JFactory::getUser();
@@ -269,8 +266,6 @@ class JFormFieldCategoryEdit extends JFormFieldList
 				}
 				array_unshift($options, JHtml::_('select.option', '0', JText::_('JGLOBAL_ROOT')));
 			}
-
-
 
 		// Merge any additional options in the XML definition.
 		$options = array_merge(parent::getOptions(), $options);

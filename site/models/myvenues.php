@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * Model-MyVenues
  */
@@ -31,7 +30,7 @@ class JemModelMyvenues extends JModelLegacy
 
 		$limit		= $app->getUserStateFromRequest('com_jem.myvenues.'.$itemid.'.limit', 'limit', $jemsettings->display_num, 'uint');
 		$limitstart = $app->input->get('limitstart', 0, 'uint');
-		
+
 		$this->setState('limit', $limit);
 		$this->setState('limitstart', $limitstart);
 	}
@@ -168,7 +167,7 @@ class JemModelMyvenues extends JModelLegacy
 		$search 		= $this->_db->escape(trim(JString::strtolower($search)));
 
 		$where = array();
-		
+
 		$where[] = ' l.published IN (0,1,2,-2)';
 
 		// check if venue is created by the user
@@ -199,4 +198,3 @@ class JemModelMyvenues extends JModelLegacy
 		return $where;
 	}
 }
-?>

@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  *  View: Categories
  */
@@ -112,8 +111,7 @@ class JemViewCategories extends JViewLegacy
 		JToolBarHelper::divider();
 		JToolBarHelper::help('listcategories', true);
 	}
-	
-	
+
 	/**
 	 * Returns an array of fields the table can be sorted by
 	 */
@@ -128,5 +126,4 @@ class JemViewCategories extends JViewLegacy
 				'a.id' => JText::_('JGRID_HEADING_ID')
 		);
 	}
-	
 }

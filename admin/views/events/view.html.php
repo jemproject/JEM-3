@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * View: Events
  */
@@ -56,8 +55,7 @@ defined('_JEXEC') or die;
 		$this->addToolbar();
 
 		parent::display($tpl);
-		}
-
+	}
 
 	/**
 	 * Add Toolbar
@@ -86,7 +84,7 @@ defined('_JEXEC') or die;
 			JToolBarHelper::unpublishList('events.unpublish', 'JTOOLBAR_UNPUBLISH', true);
 			JToolBarHelper::custom('events.featured', 'featured.png', 'featured_f2.png', 'JFEATURED', true);
 			JToolBarHelper::archiveList('events.archive');
-			JToolBarHelper::checkin('events.checkin');	
+			JToolBarHelper::checkin('events.checkin');
 		}
 
 		if ($this->state->get('filter.published') == -2 && $canDo->get('core.delete')) {
@@ -99,4 +97,3 @@ defined('_JEXEC') or die;
 		JToolBarHelper::help('listevents', true);
 	}
 }
-?>

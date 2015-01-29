@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * Table: Dates
  */
@@ -22,18 +21,16 @@ class JEMTableDates extends JTable
 	 * Bind.
 	 */
 	public function bind($array, $ignore = ''){
-		
+
 
 		return parent::bind($array, $ignore);
 	}
-
 
 	/**
 	 * Check
 	 */
 	function check() {
-		
-	
+
 		return true;
 	}
 
@@ -41,8 +38,8 @@ class JEMTableDates extends JTable
 	 * Store
 	 */
 	public function store($updateNulls = true)
-	{		
-		
+	{
+
 
 		return parent::store($updateNulls);
 	}
@@ -103,4 +100,3 @@ class JEMTableDates extends JTable
 		return $this->_db->getAffectedRows();
 	}
 }
-?>

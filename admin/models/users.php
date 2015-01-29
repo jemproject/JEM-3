@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * Model: Users
  */
@@ -46,7 +45,7 @@ class JEMModelUsers extends JModelLegacy
 		//global $mainframe, $option;
 
 		$app =  JFactory::getApplication();
-		
+
 		$limit		= $app->getUserStateFromRequest( 'com_jem.limit', 'limit', $app->getCfg('list_limit'), 'int');
 		$limitstart = $app->getUserStateFromRequest( 'com_jem.limitstart', 'limitstart', 0, 'int' );
 		$limitstart = $limit ? (int)(floor($limitstart / $limit) * $limit) : 0;
@@ -78,7 +77,7 @@ class JEMModelUsers extends JModelLegacy
 	 *
 	 * @access public
 	 * @return integer
-	 * 
+	 *
 	 */
 	function getTotal()
 	{
@@ -115,7 +114,7 @@ class JEMModelUsers extends JModelLegacy
 	 *
 	 * @access private
 	 * @return string
-	 * 
+	 *
 	 */
 	protected function _buildQuery()
 	{
@@ -137,7 +136,7 @@ class JEMModelUsers extends JModelLegacy
 	 *
 	 * @access private
 	 * @return string
-	 * 
+	 *
 	 */
 	protected function _buildContentOrderBy()
 	{
@@ -148,8 +147,8 @@ class JEMModelUsers extends JModelLegacy
 
 		$filter_order		= JFilterInput::getInstance()->clean($filter_order, 'cmd');
 		$filter_order_Dir	= JFilterInput::getInstance()->clean($filter_order_Dir, 'word');
-		
-		
+
+
 		$orderby 	= ' ORDER BY '.$filter_order.' '.$filter_order_Dir;
 
 		return $orderby;
@@ -160,7 +159,7 @@ class JEMModelUsers extends JModelLegacy
 	 *
 	 * @access private
 	 * @return string
-	 * 
+	 *
 	 */
 	protected function _buildContentWhere()
 	{
@@ -170,7 +169,7 @@ class JEMModelUsers extends JModelLegacy
 		$search 			= $this->_db->escape( trim(JString::strtolower( $search ) ) );
 
 		$where = array();
-		
+
 		/*
 		* Search venues
 		*/
@@ -183,4 +182,3 @@ class JEMModelUsers extends JModelLegacy
 		return $where;
 	}
 }
-?>

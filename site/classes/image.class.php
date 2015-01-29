@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * Holds the logic for image manipulation
  */
@@ -158,7 +157,6 @@ class JemImage {
 				break;
 		}
 
-
 		if ($image) {
 
 			# are we dealing with an image of previous JEM/EL versions
@@ -170,7 +168,6 @@ class JemImage {
 
 			$filename = basename($image);
 			$dirname = dirname($image);
-
 
 			# skip thumb generating if it's a file within a thumb directory
 			if (strpos($dirname,'small/') !== false) {
@@ -275,4 +272,3 @@ class JemImage {
 		return true;
 	}
 }
-?>

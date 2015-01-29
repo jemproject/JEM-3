@@ -19,7 +19,6 @@ class JemControllerGroup extends JControllerForm
 	 */
 	protected $text_prefix = 'COM_JEM_GROUP';
 
-
 	/**
 	 * Constructor.
 	 *

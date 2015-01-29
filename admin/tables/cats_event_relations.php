@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * Table: Cats_event_relations
  */
@@ -101,4 +100,3 @@ class JemTableCats_event_relations extends JTable
 		return $this->_db->getAffectedRows();
 	}
 }
-?>

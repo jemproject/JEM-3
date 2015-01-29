@@ -8,13 +8,11 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * Model: Group
  */
 class JemModelGroup extends JModelAdmin
 {
-
 	/**
 	 * Returns a reference to the a Table object, always creating it.
 	 *
@@ -133,7 +131,6 @@ class JemModelGroup extends JModelAdmin
 		}
 	}
 
-
 	/**
 	 * Method to get the members data
 	 *
@@ -169,7 +166,6 @@ class JemModelGroup extends JModelAdmin
 		}
 		return $users;
 	}
-
 
 	/**
 	 * Method to get the selected members

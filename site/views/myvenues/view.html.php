@@ -1,13 +1,12 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
+ * @version 3.0.6
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 defined('_JEXEC') or die;
-
 
 /**
  * MyVenues-View
@@ -47,7 +46,7 @@ class JemViewMyvenues extends JViewLegacy
 		// Load css
 		JemHelper::loadCss('jem');
 		JemHelper::loadCustomTag();
-			
+
 		$venues = $this->get('Venues');
 		$venues_pagination = $this->get('VenuesPagination');
 
@@ -134,4 +133,3 @@ class JemViewMyvenues extends JViewLegacy
 		parent::display($tpl);
 	}
 }
-?>

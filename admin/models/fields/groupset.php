@@ -22,12 +22,12 @@ class JFormFieldGroupset extends JFormFieldList
 	protected $type = 'Groupset';
 
 	/**
-	 * 
+	 *
 	 */
 	public function getOptions()
 	{
 		$options = JemHelper::getGroupset();
-	
+
 		return array_merge(parent::getOptions(), $options);
 	}
 }

@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * View: Group
  */
@@ -58,7 +57,6 @@ class JEMViewGroup extends JViewLegacy {
 		parent::display($tpl);
 	}
 
-
 	/**
 	 * Add the page title and toolbar.
 	 *
@@ -98,4 +96,3 @@ class JEMViewGroup extends JViewLegacy {
 		JToolBarHelper::help('editgroup', true);
 	}
 }
-?>

@@ -8,13 +8,11 @@
  */
 defined('_JEXEC') or die();
 
-
 /**
  * View: CSS_manager
  */
 class JEMViewCssmanager extends JViewLegacy
 {
-
 	protected $files;
 
 	function display($tpl = null)

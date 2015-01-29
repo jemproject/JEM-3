@@ -1,7 +1,7 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
+ * @version 3.0.6
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
@@ -55,7 +55,7 @@ class JemViewDay extends JEMView
 		JemHelper::loadCss('jem');
 		JemHelper::loadCustomCss();
 		JemHelper::loadCustomTag();
-		
+
 		// get variables
 		$itemid 			= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
 		$filter_order		= $app->getUserStateFromRequest('com_jem.day.'.$itemid.'.filter_order', 'filter_order', 	'a.dates', 'cmd');
@@ -109,7 +109,7 @@ class JemViewDay extends JEMView
 			JemHelper::loadCss('print');
 			$document->setMetaData('robots', 'noindex, nofollow');
 		}
-		
+
 		if ($requestVenueId){
 			$print_link = JRoute::_('index.php?view=day&tmpl=component&print=1&locid='.$requestVenueId.'&id='.$requestDate);
 		}
@@ -184,4 +184,3 @@ class JemViewDay extends JEMView
 		parent::display($tpl);
 	}
 }
-?>

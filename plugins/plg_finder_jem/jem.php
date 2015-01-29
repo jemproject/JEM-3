@@ -1,7 +1,7 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
+ * @version 3.0.6
  * @subpackage JEM Finder Plugin
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
@@ -14,7 +14,7 @@ require_once JPATH_ADMINISTRATOR . '/components/com_finder/helpers/indexer/adapt
 /**
  * Finder adapter for com_jem.
  *
- * @package     Joomla
+ * @package    Joomla
  * @subpackage  Finder.jem
  *
  */
@@ -23,7 +23,6 @@ class plgFinderJEM extends FinderIndexerAdapter {
 	 * The plugin identifier.
 	 *
 	 * @var    string
-	 *
 	 */
 	protected $context = 'JEM';
 
@@ -31,7 +30,6 @@ class plgFinderJEM extends FinderIndexerAdapter {
 	 * The extension name.
 	 *
 	 * @var    string
-	 *
 	 */
 	protected $extension = 'com_jem';
 

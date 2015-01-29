@@ -54,4 +54,3 @@ class JEMAdmin {
 		return JHtml::_('select.genericlist', $timelist, $name, $class, 'value', 'text', $selected);
 	}
 }
-?>

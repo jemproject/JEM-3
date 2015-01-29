@@ -11,12 +11,10 @@ defined('JPATH_BASE') or die;
 
 JFormHelper::loadFieldClass('list');
 
-
-
 /**
  * CountryOptions Field class.
  *
- * 
+ *
  */
 class JFormFieldCountryOptions extends JFormFieldList
 {

@@ -20,19 +20,18 @@ class JemControllerDates extends JControllerAdmin
 	 * Constructor.
 	 *
 	 * @param	array	$config	An optional associative array of configuration settings.
-	
+
 	 * @return	ContentControllerArticles
 	 * @see		JController
 	 */
 	public function __construct($config = array())
 	{
 		parent::__construct($config);
-		
+
 		$this->registerTask('disabledate',	'setstatusdate');
-	
 	}
-	
-	
+
+
 	/**
 	 * Proxy for getModel.
 	 *
@@ -42,8 +41,8 @@ class JemControllerDates extends JControllerAdmin
 		$model = parent::getModel($name, $prefix, $config);
 		return $model;
 	}
-	
-	
+
+
 	/**
 	 * Method to enable/disable dates
 	 *
@@ -52,7 +51,7 @@ class JemControllerDates extends JControllerAdmin
 	{
 		// Check for request forgeries
 		JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
-	
+
 		// Initialise variables.
 		$user	= JFactory::getUser();
 		$jinput	= JFactory::getApplication()->input;
@@ -60,8 +59,7 @@ class JemControllerDates extends JControllerAdmin
 		$values	= array('setstatusdate' => 1, 'disabledate' => 0);
 		$task	= $this->getTask();
 		$value	= JArrayHelper::getValue($values, $task, 0, 'int');
-	
-		
+
 		// Access checks.
 		foreach ($ids as $i => $id)
 		{
@@ -71,23 +69,20 @@ class JemControllerDates extends JControllerAdmin
 				JError::raiseNotice(403, JText::_('JLIB_APPLICATION_ERROR_EDITSTATE_NOT_PERMITTED'));
 			}
 		}
-	
+
 		if (empty($ids)) {
 			JError::raiseWarning(500, JText::_('JERROR_NO_ITEMS_SELECTED'));
 		}
 		else {
 			// Get the model.
 			$model = $this->getModel();
-	
+
 			// Publish the items.
 			if (!$model->setstatusdate($ids, $value)) {
 				JError::raiseWarning(500, $model->getError());
 			}
 		}
-	
+
 		$this->setRedirect('index.php?option=com_jem&view=dates');
 	}
-	
-
 }
-?>

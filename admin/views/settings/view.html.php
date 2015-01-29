@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * View: Settings
  */
@@ -17,7 +16,6 @@ class JEMViewSettings extends JViewLegacy {
 	protected $form;
 	protected $data;
 	protected $state;
-
 
 	public function display($tpl = null) {
 		$form	= $this->get('Form');
@@ -57,9 +55,9 @@ class JEMViewSettings extends JViewLegacy {
 
 		// Load Script
 		JHtml::_('script', 'com_jem/colorpicker.js', false, true);
-		
+
 		JHtml::_('behavior.framework');
-		
+
 		$app = JFactory::getApplication();
 
 		// only admins have access to this view
@@ -82,7 +80,6 @@ class JEMViewSettings extends JViewLegacy {
 		parent::display($tpl);
 	}
 
-
 	/**
 	 * Add the page title and toolbar.
 	 */
@@ -96,7 +93,6 @@ class JEMViewSettings extends JViewLegacy {
 		JToolBarHelper::divider();
 		JToolBarHelper::help('settings', true);
 	}
-
 
 	function WarningIcon()
 	{

@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * View: Housekeeping
  */
@@ -36,7 +35,6 @@ class JemViewHousekeeping extends JViewLegacy {
 		parent::display($tpl);
 	}
 
-
 	/**
 	 * Add Toolbar
 	 */
@@ -49,4 +47,3 @@ class JemViewHousekeeping extends JViewLegacy {
 		JToolBarHelper::help('housekeeping', true);
 	}
 }
-?>

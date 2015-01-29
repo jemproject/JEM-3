@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * Controller-Myevents
  */
@@ -125,4 +124,3 @@ class JEMControllerMyevents extends JControllerLegacy
 		$this->setRedirect(JEMHelperRoute::getMyEventsRoute(), $msg);
 	}
 }
-?>

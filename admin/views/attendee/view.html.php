@@ -8,12 +8,11 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * View: Attendee
  */
 class JemViewAttendee extends JViewLegacy {
-	
+
 	protected $form;
 	protected $item;
 
@@ -22,7 +21,7 @@ class JemViewAttendee extends JViewLegacy {
 		// initialise variables
 		$document	= JFactory::getDocument();
 		$jinput 	= JFactory::getApplication()->input;
-		
+
 		// get vars
 		$eventid = $jinput->getInt('eid');
 
@@ -47,7 +46,6 @@ class JemViewAttendee extends JViewLegacy {
 		parent::display($tpl);
 	}
 
-
 	/**
 	 * Add Toolbar
 	 */
@@ -55,7 +53,7 @@ class JemViewAttendee extends JViewLegacy {
 	{
 		$isNew		= ($this->item->id == 0);
 		JToolBarHelper::title($isNew ? JText::_('COM_JEM_ADD_ATTENDEE') : JText::_('COM_JEM_EDIT_ATTENDEE'), 'attendeeedit');
-		
+
 		JToolBarHelper::apply('attendee.apply');
 		JToolBarHelper::save('attendee.save');
 
@@ -69,4 +67,3 @@ class JemViewAttendee extends JViewLegacy {
 		JToolBarHelper::help('editattendee', true);
 	}
 }
-?>

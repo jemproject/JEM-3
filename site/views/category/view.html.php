@@ -1,7 +1,7 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
+ * @version 3.0.6
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
@@ -51,7 +51,7 @@ class JemViewCategory extends JEMView
 			JemHelper::loadCss('jem');
 			JemHelper::loadCustomCss();
 			JemHelper::loadCustomTag();
-						
+
 			//get data from model
 			$state		= $this->get('State');
 			$params		= $state->params;
@@ -150,7 +150,7 @@ class JemViewCategory extends JEMView
 			} else {
 				$print_link = JRoute::_(JemHelperRoute::getCategoryRoute($category->id) .'&print=1&tmpl=component');
 			}
-			
+
 			if ($print) {
 				JemHelper::loadCss('print');
 				$document->setMetaData('robots', 'noindex, nofollow');
@@ -181,7 +181,7 @@ class JemViewCategory extends JEMView
 			} else {
 				$dellink = 0;
 			}
-			
+
 			# Check if the user has access to the add-venueform
 			$maintainer2 = JemUser::venuegroups('add');
 			$genaccess2 = JemUser::validate_user($jemsettings->locdelrec, $jemsettings->deliverlocsyes);
@@ -235,4 +235,3 @@ class JemViewCategory extends JEMView
 		parent::display($tpl);
 	}
 }
-?>

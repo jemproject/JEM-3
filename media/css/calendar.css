@@ -34,14 +34,14 @@ div#jem select.yearpicker {
 	border: 1px solid grey;
 }
 
-div#jem table.month, 
+div#jem table.month,
 div#jem table.week {
   background-color:#FFFFFF;
   border:1px solid #000000;
   table-layout:fixed;
   width:100%;
   margin-top:12px;
-  
+
 }
 
 div#jem table.month .datepickerform {
@@ -137,7 +137,7 @@ div#jem .eventcontent {
 /* use this onlyif you eally want a break at any position
 -ms-word-break: break-all;
      word-break: break-all;
-*/     
+*/
 
      /* Non standard for webkit */
      word-break: break-word;
@@ -203,7 +203,7 @@ div#jem div#jem a .eventcontenttop {
 div#jem .eventcontenttop {
   border-bottom: solid 1px black;
   height: 16px;
-  minheight:16px;
+  min-height:16px;
   text-align:left;
   padding-left: 4px;
   padding-top:2px;
@@ -218,7 +218,7 @@ div#jem .eventtitle
 div#jem .rowcolor {
   border-top: solid 1px black;
   height: 10px;
-  text-aling:right;
+  text-align: right;
 }
 
 div#jem .eventtitle {
@@ -340,7 +340,7 @@ div#jem div#buttonhideall {
   border:1px solid black;
   font-family:Arial,sans-serif;
   line-height:18px;
-  vertical-align:middle;  
+  vertical-align:middle;
 }
 
 div#jem .daynum a {
@@ -404,7 +404,7 @@ div#jem .monthday {
   width:90px;
 }
 
-div#jem td.saturday, 
+div#jem td.saturday,
 div#jem td.sunday {
   text-align: center;
   vertical-align: top;
@@ -416,7 +416,7 @@ div#jem td.sunday {
   width:90px;
 }
 
-div#jem .sunday a, 
+div#jem .sunday a,
 div#jem .saturday a {
   color: #ffffff;
 }

@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * Controller: Venue
  */
@@ -19,7 +18,6 @@ class JemControllerVenue extends JControllerForm
 	 *
 	 */
 	protected $text_prefix = 'COM_JEM_VENUE';
-
 
 	/**
 	 * Constructor.

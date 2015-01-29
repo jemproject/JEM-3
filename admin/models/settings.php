@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * Model: Settings
  */
@@ -32,7 +31,6 @@ class JEMModelSettings extends JModelForm
 
 		return $form;
 	}
-
 
 	/**
 	 * Loading the table data
@@ -94,7 +92,6 @@ class JEMModelSettings extends JModelForm
 		return $data;
 	}
 
-
 	/**
 	 * Method to get the data that should be injected in the form.
 	 *
@@ -110,7 +107,6 @@ class JEMModelSettings extends JModelForm
 
 		return $data;
 	}
-
 
 	/**
 	 * Saves the settings
@@ -165,7 +161,6 @@ class JEMModelSettings extends JModelForm
 		$params = JComponentHelper::getParams('com_jem');
 		$this->setState('params', $params);
 	}
-
 
 	/**
 	 * Return config information
@@ -230,6 +225,4 @@ class JEMModelSettings extends JModelForm
 
 		return $config;
 	}
-
-
 }
