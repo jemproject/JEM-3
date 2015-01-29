@@ -75,7 +75,7 @@ abstract class modJEMHelper
 		$catids = $params->get('catid');
 		$venids = $params->get('venid');
 		$eventids = $params->get('eventid');
-		
+
 		# filter category's
 		if ($catids) {
 			$model->setState('filter.category_id',$catids);
@@ -93,14 +93,18 @@ abstract class modJEMHelper
 			$model->setState('filter.event_id',$eventids);
 			$model->setState('filter.event_id.include',true);
 		}
-		
+
 		# count
 		$count = $params->get('count', '2');
 
 		$model->setState('list.limit',$count);
 
+
 		# Retrieve the available Events
 		$events = $model->getItems();
+
+		$settings 	= JemHelper::config();
+		$dateformat = $params->get('formatdate', $settings->formatShortDate);
 
 		# Loop through the result rows and prepare data
 		$i		= 0;
@@ -118,8 +122,7 @@ abstract class modJEMHelper
 
 			$lists[$i] = new stdClass;
 			$lists[$i]->link		= JRoute::_(JEMHelperRoute::getEventRoute($row->slug));
-			$lists[$i]->dateinfo 	= JEMOutput::formatShortDateTime($row->dates, $row->times,
-						$row->enddates, $row->endtimes);
+			$lists[$i]->dateinfo 	= JEMOutput::formatDateTime($row->dates, $row->times,$row->enddates, $row->endtimes,$dateformat);
 			$lists[$i]->text		= $params->get('showtitloc', 0) ? $row->title : htmlspecialchars($row->venue, ENT_COMPAT, 'UTF-8');
 			$lists[$i]->venue		= htmlspecialchars($row->venue, ENT_COMPAT, 'UTF-8');
 			$lists[$i]->city		= htmlspecialchars($row->city, ENT_COMPAT, 'UTF-8');

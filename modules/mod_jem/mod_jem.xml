@@ -93,7 +93,7 @@
 					autocomplete="true"
 				/>
 				<field name="formatdate" type="customtooltip"
-					default="D, j. F Y"
+					default="m.d.y"
 					label="MOD_JEM_DATE_FORMAT"
 					description="MOD_JEM_DATE_FORMAT_DESC"
 					tooltiplabel="MOD_JEM_PHP_DATE_MANUAL"
