@@ -22,7 +22,7 @@ class JemTableEvents extends JTable
 	 * Overloaded bind method for the Event table.
 	 */
 	public function bind($array, $ignore = ''){
-		
+
 		// in here we are checking for the empty value of the checkbox
 
 		if (!isset($array['registra'])) {
@@ -102,10 +102,10 @@ class JemTableEvents extends JTable
 		###############
 		## DATE-TIME ##
 		###############
-		
+
 		// default empty values to null
 		# user didn't select a value for it
-		
+
 		if (empty($this->times)) {
 			$this->times = null;
 		}
@@ -118,7 +118,7 @@ class JemTableEvents extends JTable
 		if (empty($this->enddates) || $this->enddates == '0000-00-00') {
 			$this->enddates = null;
 		}
-		
+
 		// opendate
 		# do we have a startdate?
 		# if no then we consider it an "open date"
@@ -127,10 +127,10 @@ class JemTableEvents extends JTable
 			$this->times 	= null;
 			$this->enddates = null;
 			$this->endtimes = null;
-				
+
 			$this->opendate = 1;
 		}
-		
+
 		// combine DateTime
 		# startDateTime
 		if ($this->dates == null) {
@@ -144,7 +144,7 @@ class JemTableEvents extends JTable
 			$startTime = $this->times.':00';
 		}
 		$this->startDateTime	= $startDate.' '.$startTime;
-		
+
 		# endDateTime
 		if ($this->enddates == null) {
 			$endDate = '0000-00-00';
@@ -165,18 +165,18 @@ class JemTableEvents extends JTable
 		} else {
 			$this->endDateTime		= $endDate.' '.$endTime;
 		}
-		
+
 		// check if endDateTime is before startDateTime
 		if ($startDate != '0000-00-00') {
 			if ($this->startDateTime > $this->endDateTime) {
 				$this->setError(JText::_('COM_JEM_EVENT_ERROR_END_BEFORE_START'));
 			}
 		}
-		
+
 		if (!$this->getErrors()) {
 			return true;
 		}
-		
+
 	}
 
 	/**
@@ -267,7 +267,7 @@ class JemTableEvents extends JTable
 				} else {
 					$this->published = 0;
 				}
-					
+
 			}
 		}
 
@@ -386,4 +386,3 @@ class JemTableEvents extends JTable
 		return $this->_db->getAffectedRows();
 	}
 }
-?>

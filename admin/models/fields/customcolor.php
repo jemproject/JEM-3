@@ -36,28 +36,28 @@ class JFormFieldCustomColor extends JFormField
 
 		// load script.
 		$script = array();
-		
+
 		$script[] = '	function jClearColor(id) {';
 		$script[] = '		document.getElementById(id).value = "";';
 		$script[] = '		document.getElementById(id).style.background = "";';
 		$script[] = '	}';
-			
+
 		// Add the script to the document head.
 		JFactory::getDocument()->addScriptDeclaration(implode("\n", $script));
-		
+
 		// Initialize JavaScript field attributes.
 		$onclick = ' onclick="openPicker(\''.$this->id.'\', -200, 20)"';
 		$class = $classes ? ' class="' . trim($classes) . '"' : '';
 
-		
+
 		$onclickClr = ' onclick="document.id(\'' . $this->id . '\').value=\'\';"';
-		
-		
+
+
 		$html	= array();
 		$html[] = '<input style="background:'.$this->value.'" type="text" name="' . $this->name . '" id="' . $this->id . '"' . ' value="'
 			. htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8') . '"' . $class . $size .$onclick. '/>';
 		$html[] = '<a class="btn" ' . $onclickClr . '><i class="icon-cancel"></i></a>';
-			
+
 		return implode("\n", $html);
 	}
 }

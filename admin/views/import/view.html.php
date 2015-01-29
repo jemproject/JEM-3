@@ -30,21 +30,21 @@ class JEMViewImport extends JViewLegacy {
 		$venuefields 				= $this->get('VenueFields');
 		$cateventsfields 			= $this->get('CateventsFields');
 		$model 						= $this->getModel();
-		
+
 		$this->eventfields 			= $eventfields;
 		$this->catfields 			= $catfields;
 		$this->venuefields 			= $venuefields;
 		$this->cateventsfields 		= $cateventsfields;
 		$this->eventlistVersion		= $this->get('EventlistVersion');
 		$this->jemVersion 			= $this->get('JEMVersion');
-		
-		
+
+
 		$this->eventlistTables		= $model->eventlistTables($this->get('EventlistVersion'));
 		$this->detectedJEMTables	= $model->detectedJEMTables($this->get('JEMVersion'));
 		$this->jemTables 			= $this->get('JemTablesCount');
 		$this->existingJemData 		= $this->get('ExistingJemData');
-		
-		
+
+
 		$jinput = JFactory::getApplication()->input;
 		$progress = new stdClass();
 		# EL
@@ -55,7 +55,7 @@ class JEMViewImport extends JViewLegacy {
 		$progress->prefix 				= $jinput->get('prefix', '', 'CMD');
 		$progress->copyImages			= $jinput->get('copyImages', 0, 'INT');
 		$progress->copyAttachments		= $jinput->get('copyAttachments', 0, 'INT');
-		
+
 		# JEM
 		$progress->jem_step 			= $jinput->get('jem_step', 0, 'INT');
 		$progress->jem_current 			= $jinput->get->get('jem_current', 0, 'INT');
@@ -64,7 +64,7 @@ class JEMViewImport extends JViewLegacy {
 		$progress->jem_prefix 			= $jinput->get('jem_prefix', '', 'CMD');
 		$progress->jem_copyImages 		= $jinput->get('jem_copyImages', 0, 'INT');
 		$progress->jem_copyAttachments 	= $jinput->get('jem_copyAttachments', 0, 'INT');
-		
+
 		$this->progress = $progress;
 
 		// Do not show default prefix #__ but its replacement value
@@ -73,7 +73,7 @@ class JEMViewImport extends JViewLegacy {
 			$app = JFactory::getApplication();
 			$this->prefixToShow = $app->getCfg('dbprefix');
 		}
-		
+
 		$this->jem_prefixToShow = $progress->jem_prefix;
 		if($this->jem_prefixToShow == "#__" || $this->jem_prefixToShow == "") {
 			$app = JFactory::getApplication();
@@ -85,7 +85,7 @@ class JEMViewImport extends JViewLegacy {
 
 		//$this->sidebar = JHtmlSidebar::render();
 		JHtml::_('jquery.framework');
-		
+
 		//JHtml::_('script', 'com_jem/bootstrap-filestyle.js', false, true);
 		parent::display($tpl);
 	}
@@ -102,13 +102,12 @@ class JEMViewImport extends JViewLegacy {
 		JToolBarHelper::divider();
 		JToolBarHelper::help('import', true);
 	}
-	
-	
+
+
 	function WarningIcon()
 	{
 		$tip = JHtml::_('image', 'system/tooltip.png', null, NULL, true);
-	
+
 		return $tip;
 	}
 }
-?>

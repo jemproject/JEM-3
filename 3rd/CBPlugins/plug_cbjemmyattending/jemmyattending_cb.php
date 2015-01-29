@@ -358,4 +358,3 @@ class jemmyattendingTab extends cbTabHandler {
 		return $return;
 	}
 }
-?>

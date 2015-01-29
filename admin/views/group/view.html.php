@@ -98,4 +98,3 @@ class JEMViewGroup extends JViewLegacy {
 		JToolBarHelper::help('editgroup', true);
 	}
 }
-?>

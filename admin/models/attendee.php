@@ -41,7 +41,7 @@ class JemModelAttendee extends JModelAdmin
 		return $row->store();
 	}
 
-	
+
 	/**
 	 * Returns a reference to the a Table object, always creating it.
 	 *
@@ -55,7 +55,7 @@ class JemModelAttendee extends JModelAdmin
 	{
 		return JTable::getInstance($type, $prefix, $config);
 	}
-	
+
 	/**
 	 * Method to get the record form.
 	 *
@@ -71,10 +71,10 @@ class JemModelAttendee extends JModelAdmin
 		if (empty($form)) {
 			return false;
 		}
-	
+
 		return $form;
 	}
-	
+
 	/**
 	 * Method to get a single record.
 	 *
@@ -84,13 +84,13 @@ class JemModelAttendee extends JModelAdmin
 	 */
 	public function getItem($pk = null)
 	{
-		
+
 		$id = $this->getState('attendee.id');
 		$jemsettings = JEMAdmin::config();
 		$db		= JFactory::getDbo();
-		
+
 		if ($item = parent::getItem($pk)){
-			
+
 			if (!is_null($item->id)) {
 				$query = $db->getQuery(true);
 				$query->select(array('name'));
@@ -98,12 +98,12 @@ class JemModelAttendee extends JModelAdmin
 				$query->where('id = '.$item->uid);
 				$username = $db->setQuery($query);
 				$item->username = $db->loadResult();
-			}		
+			}
 		}
-	
+
 	return $item;
 	}
-	
+
 	/**
 	 * Method to get the data that should be injected in the form.
 	 *
@@ -112,15 +112,15 @@ class JemModelAttendee extends JModelAdmin
 	{
 		// Check the session for previously entered form data.
 		$data = JFactory::getApplication()->getUserState('com_jem.edit.attendee.data', array());
-	
+
 		if (empty($data)){
 			$data = $this->getItem();
 		}
-	
+
 		return $data;
 	}
-	
-	
+
+
 	/**
 	 * Method to save the form data.
 	 *
@@ -128,7 +128,7 @@ class JemModelAttendee extends JModelAdmin
 	 */
 	public function save($data)
 	{
-			
+
 		$app 			= JFactory::getApplication();
 		$jinput 		= $app->input;
 		$user 			= JFactory::getUser();
@@ -136,35 +136,35 @@ class JemModelAttendee extends JModelAdmin
 		$settings 		= JemHelper::globalattribs();
 		$table 			= $this->getTable();
 		$db 			= JFactory::getDbo();
-	
+
 		$eventid 		= $jinput->get('eid');
 		$id				= $data['id'];
 		$data['uregdate'] = gmdate('Y-m-d H:i:s');
-		
+
 		# new attendee
 		if ($id == 0) {
-			
+
 			$data['uregdate']	= gmdate('Y-m-d H:i:s');
 			$data['event'] 		= $eventid;
-				
+
 			// Get eventdata
 			$query = $db->getQuery(true);
 			$query->select(array('maxplaces','waitinglist'));
 			$query->from('#__jem_events');
 			$query->where('id= '.$db->quote($eventid));
-			
+
 			$db->setQuery($query);
 			$event = $db->loadObject();
-			
+
 			// Get register information of the event
 			$query = $db->getQuery(true);
 			$query->select(array('COUNT(id) AS registered', 'COALESCE(SUM(waiting), 0) AS waiting'));
 			$query->from('#__jem_register');
 			$query->where('event = '.$db->quote($eventid));
-			
+
 			$db->setQuery($query);
 			$register = $db->loadObject();
-			
+
 			// If no one is registered yet, $register is null!
 			if(is_null($register)) {
 				$register = new stdclass;
@@ -174,7 +174,7 @@ class JemModelAttendee extends JModelAdmin
 			} else {
 				$register->booked = $register->registered - $register->waiting;
 			}
-			
+
 			// put on waiting list ?
 			if ($event->maxplaces > 0) // there is a max
 			{
@@ -187,29 +187,28 @@ class JemModelAttendee extends JModelAdmin
 					}
 					$data['waiting'] = 1;
 				}
-			}	
+			}
 		}
-		
+
 		if (parent::save($data)){
-	
+
 			// At this point we do have an id.
 			$pk = $this->getState($this->getName() . '.id');
-				
-			
+
+
 			if (!isset($data['sendmail'])) {
 				$data['sendmail'] = 0;
 			}
-			
+
 			if ($data['sendmail'] == 1) {
 				JPluginHelper::importPlugin('jem');
 				$dispatcher = JEventDispatcher::getInstance();
 				$dispatcher->trigger('onEventUserRegistered', array($pk));
 			}
-			
+
 			return true;
 		}
-	
+
 		return false;
 	}
 }
-?>

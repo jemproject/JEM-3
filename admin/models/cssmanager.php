@@ -192,4 +192,3 @@ class JemModelCssmanager extends JModelLegacy
 		$db->execute();
 	}
 }
-?>

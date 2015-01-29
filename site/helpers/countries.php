@@ -1151,4 +1151,3 @@ class JEMHelperCountries
 		return JText::_($parts[0]);
 	}
 }
-?>

@@ -54,4 +54,3 @@ class JemControllerPlugins extends JControllerLegacy
 		$this->setRedirect($link, $msg);
 	}
 }
-?>

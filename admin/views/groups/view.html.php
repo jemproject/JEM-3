@@ -78,4 +78,3 @@ defined('_JEXEC') or die;
 		JToolBarHelper::help('listgroups', true);
 	}
 }
-?>

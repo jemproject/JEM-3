@@ -14,7 +14,7 @@ defined('_JEXEC') or die;
  */
 class JEMModelVenue extends JModelAdmin
 {
-	
+
 	/**
 	 * Returns a reference to the a Table object, always creating it.
 	 *
@@ -69,7 +69,7 @@ class JEMModelVenue extends JModelAdmin
 			$item->country = $jemsettings->defaultCountry;
 		}
 
-		
+
 		if (!empty($item->locimage)) {
 			if (strpos($item->locimage,'images/') !== false) {
 				# the image selected contains the images path
@@ -79,8 +79,8 @@ class JEMModelVenue extends JModelAdmin
 				$item->locimage = 'images/jem/venues/'.$item->locimage;
 			}
 		}
-		
-		
+
+
 		return $item;
 	}
 
@@ -130,7 +130,7 @@ class JEMModelVenue extends JModelAdmin
 		$user 			= JFactory::getUser();
 		$fileFilter 	= new JInput($_FILES);
 		$table 			= $this->getTable();
-		
+
 		// Check if we're in the front or back
 		if ($app->isAdmin())
 			$backend = true;
@@ -141,10 +141,10 @@ class JEMModelVenue extends JModelAdmin
 		if ($data['country']) {
 			$data['country'] = JString::strtoupper($data['country']);
 		}
-		
+
 		$data['author_ip'] 		= $jinput->getString('author_ip');
-		
-				
+
+
 		if (parent::save($data)){
 			// At this point we do have an id.
 			$pk = $this->getState($this->getName() . '.id');

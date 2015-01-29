@@ -44,21 +44,21 @@ class JemControllerAttendee extends JControllerForm
 		$tmpl		= $jinput->get('tmpl');
 		$eventid	= $jinput->getInt('eid');
 		$append = '';
-	
+
 		// Setup redirect info.
 		if ($tmpl)
 		{
 			$append .= '&tmpl=' . $tmpl;
 		}
-	
+
 		if ($eventid) {
 			$append .= '&eid='.$eventid;
-		} 
-		
+		}
+
 		return $append;
 	}
-	
-	
+
+
 	/**
 	 * Gets the URL arguments to append to an item redirect.
 	 *
@@ -70,37 +70,36 @@ class JemControllerAttendee extends JControllerForm
 	protected function getRedirectToItemAppend($recordId = null, $urlVar = 'id')
 	{
 		$jinput 	= JFactory::getApplication()->input;
-		
+
 		$tmpl   = $jinput->get('tmpl');
 		$id		= $jinput->get('id');
 		$layout = $jinput->getString('layout', 'edit');
 		$eventid = $jinput->get('eid');
 		$append = '';
-		
+
 		// Setup redirect info.
 		if ($tmpl)
 		{
 			$append .= '&tmpl=' . $tmpl;
 		}
-	
+
 		if ($layout)
 		{
 			$append .= '&layout=' . $layout;
 		}
-	
+
 		if ($recordId && $eventid)
 		{
 			$append .= '&' . $urlVar . '=' . $recordId.'&e' . $urlVar . '=' . $eventid;
 		}
-		
+
 		if (is_null($recordId))
 		{
 			$append .= '&e' . $urlVar . '=' . $id;
 		}
-		
+
 		return $append;
 	}
-	
+
 
 } // end class
-?>

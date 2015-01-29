@@ -55,7 +55,7 @@ class JEMTableGroups extends JTable
 		//don't override without calling base class
 		return parent::bind($array, $ignore);
 	}
-	
+
 	/**
 	 * try to insert first, update if fails
 	 *
@@ -74,7 +74,7 @@ class JEMTableGroups extends JTable
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Inserts a row into a table based on an objects properties, ignore if already exists
 	 *
@@ -88,7 +88,7 @@ class JEMTableGroups extends JTable
 	{
 		$fmtsql = 'INSERT IGNORE INTO '.$this->_db->quoteName($table).' (%s) VALUES (%s) ';
 		$fields = array();
-	
+
 		foreach (get_object_vars($object) as $k => $v) {
 			if (is_array($v) or is_object($v) or $v === NULL) {
 				continue;
@@ -99,7 +99,7 @@ class JEMTableGroups extends JTable
 			$fields[] = $this->_db->quoteName($k);
 			$values[] = $this->_db->quote($v);
 		}
-	
+
 		$this->_db->setQuery(sprintf($fmtsql, implode(",", $fields), implode(",", $values)));
 		if (!$this->_db->execute()) {
 			return false;
@@ -108,8 +108,7 @@ class JEMTableGroups extends JTable
 		if ($keyName && $id) {
 			$object->$keyName = $id;
 		}
-	
+
 		return $this->_db->getAffectedRows();
 	}
 }
-?>

@@ -87,4 +87,3 @@ class JEMTableRegister extends JTable
 		return $this->_db->getAffectedRows();
 	}
 }
-?>

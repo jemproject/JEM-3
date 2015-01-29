@@ -42,10 +42,10 @@ abstract class JHtmlJemHtml
 		if ($canChange) {
 			$html = '<a href="#" onclick="return listItemTask(\'cb' . $i . '\',\'' . $state[1] . '\')" title="' . JText::_($state[3]) . '">' . $html . '</a>';
 		}
-		
+
 		return $html;
 	}
-	
+
 	/**
 	 *
 	 * @param int $value state value
@@ -73,7 +73,7 @@ abstract class JHtmlJemHtml
 		if ($canChange) {
 			$html = '<a href="#" onclick="return listItemTask(\'cb' . $i . '\',\'' . $state[1] . '\')" title="' . JText::_($state[3]) . '">' . $html . '</a>';
 		}
-	
+
 		return $html;
 	}
 }

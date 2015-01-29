@@ -15,29 +15,29 @@ defined('_JEXEC') or die;
  * Controller: Export
  */
 class JemControllerExport extends JControllerAdmin {
-	
-	
+
+
 	public function __construct()
 	{
 		parent::__construct();
-		
-		
+
+
 		$jinput 	= JFactory::getApplication()->input;
 		$task 		= $jinput->getCmd('task');
-		
+
 		if (strpos($task,'table_') !== false) {
-			
+
 			if (strpos($task,'table_sql') !== false) {
-				
+
 				$this->registerTask($task,'export_table_sql');
 			} else {
 				$this->registerTask($task,'export_table');
 			}
-		
+
 		}
 	}
-	
-	
+
+
    /**
 	* Proxy for getModel.
 	*/
@@ -51,7 +51,7 @@ class JemControllerExport extends JControllerAdmin {
 		$this->getModel()->getCsv();
 		jexit();
 	}
-	
+
 	public function exportsql() {
 		$this->sendHeaders("events_".date('Ymd') .'_' . date('Hi').".sql", "text/plain");
 		$this->getModel()->getSQL();
@@ -65,18 +65,18 @@ class JemControllerExport extends JControllerAdmin {
 		$this->getModel()->getTableData($table);
 		jexit();
 	}
-	
+
 	public function export_table_sql() {
 		$task = $this->getTask();
 		$table = str_replace('table_sql_' ,"",$task);
-				
+
 		$this->sendHeaders($table.'_'.date('Ymd') .'_' . date('Hi').".sql", "text/plain");
 		$this->getModel()->getTableDataSQL($table);
 		jexit();
 	}
-	
+
 	public function tabledump() {
-		
+
 		$tables = array(
 				"attachments",
 				"categories",
@@ -89,12 +89,12 @@ class JemControllerExport extends JControllerAdmin {
 				"recurrence_master",
 				"register",
 				"venues");
-		
+
 		# add headers
 		$this->sendHeaders('tabledump_'.date('Ymd') .'_' . date('Hi').".sql", "text/plain");
-		
+
 		$this->getModel()->getTableDataSQL($tables,true);
-		
+
 		# end
 		jexit();
 	}

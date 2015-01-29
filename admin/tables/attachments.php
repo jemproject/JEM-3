@@ -49,7 +49,7 @@ class JEMTableAttachments extends JTable
 	{
 		return true;
 	}
-	
+
 	/**
 	 * try to insert first, update if fails
 	 *
@@ -68,7 +68,7 @@ class JEMTableAttachments extends JTable
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Inserts a row into a table based on an objects properties, ignore if already exists
 	 *
@@ -103,4 +103,3 @@ class JEMTableAttachments extends JTable
 		return $this->_db->getAffectedRows();
 	}
 }
-?>

@@ -254,4 +254,3 @@ class JEMTableVenues extends JTable
 		return $this->_db->getAffectedRows();
 	}
 }
-?>

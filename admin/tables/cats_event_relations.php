@@ -101,4 +101,3 @@ class JemTableCats_event_relations extends JTable
 		return $this->_db->getAffectedRows();
 	}
 }
-?>

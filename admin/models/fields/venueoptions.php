@@ -40,8 +40,8 @@ class JFormFieldVenueoptions extends JFormFieldList
 
 		$query->select('l.id AS value, l.venue AS text, l.published');
 		$query->from('#__jem_venues AS l');
-		
-		
+
+
 		// Filter on the published state
 		if (is_numeric($published))
 		{
@@ -74,11 +74,11 @@ class JFormFieldVenueoptions extends JFormFieldList
 			{
 				if ($options[$i]->published == 1)
 				{
-	
+
 				}
 				else
 				{
-			
+
 				}
 			}
 

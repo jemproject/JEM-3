@@ -40,4 +40,3 @@ class JemControllerSampledata extends JControllerLegacy
 		$this->setRedirect($link, $msg);
  	}
 }
-?>

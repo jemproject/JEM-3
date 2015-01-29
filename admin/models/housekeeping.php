@@ -147,9 +147,9 @@ class JemModelHousekeeping extends JModelLegacy
 
 		$db = JFactory::getDbo();
 
-		foreach ($tables as $table) {			
+		foreach ($tables as $table) {
 			$db->truncateTable("#__jem_".$table);
-			
+
 			if(!$db->execute()) {
 				return false;
 			}
@@ -218,60 +218,60 @@ class JemModelHousekeeping extends JModelLegacy
 
 		return $this->_unassigned;
 	}
-	
-	
-	
-	
+
+
+
+
 	/**
 	 * Remove obsolete images
 	 */
 	function rmObsImages() {
-		
+
 		# retrieve images from tables
 		$event		= $this->retrieveTableImages('events','datimage');
 		$category	= $this->retrieveTableImages('categories','image');
 		$venue		= $this->retrieveTableImages('venues','locimage');
-		
+
 		# merge the arrays
 		$tableImages = array_merge($event,$category,$venue);
-		
+
 		# make it unqiue
 		$tableImages = array_unique($tableImages);
-		
+
 		# retrieve images from JEM folder
 		$folderImages = $this->retrieveFolderImages();
-		
+
 		# compare table and folder
 		$same	= array_intersect($tableImages,$folderImages);
 		$diff	= array_diff($folderImages,$tableImages);
-	
+
 		$pass = array();
 		foreach ($diff AS $item) {
 			$pass[] = JFile::delete($item);
 		}
-		
+
 		# retrieve folders within image/jem directory
 		$arrayFolders = $this->retrieveFolders();
-		
+
 		# remove folders when they're empty
 		$pass2 = array();
 		foreach ($arrayFolders AS $item) {
 			$path = realpath($item);
 			$check = $this->is_dir_empty($path);
-			
+
 			if ($check){
 				$pass2[] = JFolder::delete($path);
-			} 
+			}
 		}
-		
+
 		return count($pass);
 	}
-	
-	
-	
+
+
+
 	/**
-	 * 
-	 * 
+	 *
+	 *
 	 */
 	function is_dir_empty($dir) {
 		if (!is_readable($dir)) return NULL;
@@ -283,27 +283,27 @@ class JemModelHousekeeping extends JModelLegacy
 		}
 		return TRUE;
 	}
-	
-	
-	
+
+
+
 	/**
-	 * 
+	 *
 	 */
-	function retrieveTableImages($table,$field) 
-	{		
+	function retrieveTableImages($table,$field)
+	{
 		$db = JFactory::getDbo();
 		$query = $db->getQuery(true);
 		$query->select($field);
 		$query->from('#__jem_'.$table);
 		$db->setQuery($query);
 		$db->execute();
-		
+
 		# output array
 		$array = $db->loadColumn(0);
-		
+
 		# strip empty values
 		$array = array_filter($array, 'strlen' );
-		
+
 		# append images to results without the images/ path
 		$images = array();
 		$thumbs = array();
@@ -312,9 +312,9 @@ class JemModelHousekeeping extends JModelLegacy
 				# check if we're in the JEM directory
 				if (strpos($item,'images/jem') !== false) {
 					$images[] = JPATH_SITE.'/'.$item;
-					
+
 					if (strpos($item,'small/') !== false) {
-			
+
 					} else {
 						$thumbs[] = JPATH_SITE.'/'.$item;
 					}
@@ -322,21 +322,21 @@ class JemModelHousekeeping extends JModelLegacy
 			} else {
 				$images[] = JPATH_SITE.'/images/jem/'.$table.'/'.$item;
 				if (strpos($item,'small/') !== false) {
-						
+
 				} else {
 					$thumbs[] = JPATH_SITE.'/images/jem/'.$table.'/small/'.$item;
 				}
 			}
-		}	
+		}
 
 		# merge the arrays
 		$result = array_merge($images,$thumbs);
-		
+
 		return $result;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 */
 	function retrieveFolderImages()
 	{
@@ -344,16 +344,16 @@ class JemModelHousekeeping extends JModelLegacy
 		$recurse = true;
 		$fullpath = true;
 		$exclude = false;
-	
+
 		$array = JFolder::files($path, $filter = '.', $recurse, $fullpath);
-		
+
 		foreach($array AS $item) {
 			$result[] = str_replace('\images\jem\/','/images/jem/',$item);
 		}
-		
+
 		return $result;
 	}
-	
+
 	/**
 	 *
 	 */
@@ -363,15 +363,14 @@ class JemModelHousekeeping extends JModelLegacy
 		$recurse = true;
 		$fullpath = true;
 		$exclude = false;
-	
+
 		$array = JFolder::folders($path, $filter = '.', $recurse, $fullpath);
-	
+
 		foreach($array AS $item) {
 			$result[] = str_replace('\images\jem\/','/images/jem/',$item);
 		}
-	
+
 		return $result;
 	}
-	
+
 }
-?>

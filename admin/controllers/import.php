@@ -516,4 +516,3 @@ class JemControllerImport extends JControllerLegacy {
 				$this->setRedirect($link, $msg);
 	}
 }
-?>

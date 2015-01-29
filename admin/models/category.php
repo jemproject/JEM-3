@@ -24,10 +24,10 @@ class JemModelCategory extends JModelAdmin
 	 * Method to test whether a record can be deleted.
 	 *
 	 * @param object $record A record object.
-	 *       
+	 *
 	 * @return boolean True if allowed to delete the record. Defaults to the
 	 *         permission set in the component.
-	 *        
+	 *
 	 */
 	protected function canDelete($record)
 	{
@@ -36,7 +36,7 @@ class JemModelCategory extends JModelAdmin
 				return;
 			}
 			$user = JFactory::getUser();
-			
+
 			return $user->authorise('core.delete', 'com_jem');
 		}
 	}
@@ -45,15 +45,15 @@ class JemModelCategory extends JModelAdmin
 	 * Method to test whether a record can have its state changed.
 	 *
 	 * @param object $record A record object.
-	 *       
+	 *
 	 * @return boolean True if allowed to change the state of the record.
 	 *         Defaults to the permission set in the component.
-	 *        
+	 *
 	 */
 	protected function canEditState($record)
 	{
 		$user = JFactory::getUser();
-		
+
 		// Check for existing category.
 		if (!empty($record->id)) {
 			return $user->authorise('core.edit.state', 'com_jem' . '.category.' . (int) $record->id);
@@ -80,14 +80,14 @@ class JemModelCategory extends JModelAdmin
 	{
 		$app = JFactory::getApplication('administrator');
 		$jinput = JFactory::getApplication()->input;
-		
+
 		$parentId = $jinput->getInt('parent_id');
 		$this->setState('category.parent_id', $parentId);
-		
+
 		// Load the User state.
 		$pk = $jinput->getInt('id');
 		$this->setState($this->getName() . '.id', $pk);
-		
+
 		// Load the parameters.
 		$params = JComponentHelper::getParams('com_jem');
 		$this->setState('params', $params);
@@ -99,45 +99,45 @@ class JemModelCategory extends JModelAdmin
 	 * @param string $type The table name. Optional.
 	 * @param string $prefix The class prefix. Optional.
 	 * @param array $config Configuration array for model. Optional.
-	 *       
+	 *
 	 * @return JTable A JTable object
-	 *        
+	 *
 	 */
 	public function getTable($type = 'Categories', $prefix = 'JEMTable', $config = array())
 	{
 		return JTable::getInstance($type, $prefix, $config);
 	}
 
-	
+
 
 	/**
 	 * Method to get a category.
 	 *
 	 * @param integer $pk An optional id of the object to get, otherwise the id
 	 *        	from the model state is used.
-	 *       
+	 *
 	 * @return mixed Category data object on success, false on failure.
-	 *        
+	 *
 	 */
 	public function getItem($pk = null)
 	{
 		if ($result = parent::getItem($pk)) {
-			
+
 			// Prime required properties.
 			if (empty($result->id)) {
 				$result->parent_id = $this->getState('category.parent_id');
 			}
-			
+
 			// Convert the metadata field to an array.
 			$registry = new JRegistry();
 			$registry->loadString($result->metadata);
 			$result->metadata = $registry->toArray();
-			
+
 			// Convert the created and modified dates to local user time for
 			// display in the form.
 			jimport('joomla.utilities.date');
 			$tz = new DateTimeZone(JFactory::getApplication()->getCfg('offset'));
-			
+
 			if (intval($result->created_time)) {
 				$date = new JDate($result->created_time);
 				$date->setTimezone($tz);
@@ -146,7 +146,7 @@ class JemModelCategory extends JModelAdmin
 			else {
 				$result->created_time = null;
 			}
-			
+
 			if (intval($result->modified_time)) {
 				$date = new JDate($result->modified_time);
 				$date->setTimezone($tz);
@@ -156,7 +156,7 @@ class JemModelCategory extends JModelAdmin
 				$result->modified_time = null;
 			}
 		}
-		
+
 		if (!empty($result->image)) {
 			if (strpos($result->image,'images/') !== false) {
 				# the image selected contains the images path
@@ -166,7 +166,7 @@ class JemModelCategory extends JModelAdmin
 				$result->image = 'images/jem/categories/'.$result->image;
 			}
 		}
-		
+
 		return $result;
 	}
 
@@ -176,13 +176,13 @@ class JemModelCategory extends JModelAdmin
 	 * @param array $data Data for the form.
 	 * @param boolean $loadData True if the form is to load its own data
 	 *        	(default case), false if not.
-	 *       
+	 *
 	 * @return mixed A JForm object on success, false on failure
-	 *        
+	 *
 	 */
 	public function getForm($data = array(), $loadData = true)
 	{
-		
+
 		// Get the form.
 		$form = $this->loadForm('com_jem.category', 'category', array(
 				'control' => 'jform',
@@ -191,7 +191,7 @@ class JemModelCategory extends JModelAdmin
 		if (empty($form)) {
 			return false;
 		}
-		
+
 		return $form;
 	}
 
@@ -200,17 +200,17 @@ class JemModelCategory extends JModelAdmin
 	 * Method to get the data that should be injected in the form.
 	 *
 	 * @return mixed The data for the form.
-	 *        
+	 *
 	 */
 	protected function loadFormData()
 	{
 		// Check the session for previously entered form data.
 		$data = JFactory::getApplication()->getUserState('com_jem.edit.category.data', array());
-		
+
 		if (empty($data)) {
 			$data = $this->getItem();
 		}
-		
+
 		return $data;
 	}
 
@@ -219,7 +219,7 @@ class JemModelCategory extends JModelAdmin
 	 * Method to save the form data.
 	 *
 	 * @param array $data The form data.
-	 *       
+	 *
 	 * @return boolean True on success.
 	 */
 	public function save($data)
@@ -228,60 +228,60 @@ class JemModelCategory extends JModelAdmin
 		$dispatcher = JEventDispatcher::getInstance();
 		$table = $this->getTable();
 		$jinput = JFactory::getApplication()->input;
-		
+
 		$pk = (!empty($data['id'])) ? $data['id'] : (int) $this->getState($this->getName() . '.id');
 		$isNew = true;
-		
+
 		// Include the content plugins for the on save events.
 		JPluginHelper::importPlugin('content');
-		
+
 		// Load the row if saving an existing category.
 		if ($pk > 0) {
 			$table->load($pk);
 			$isNew = false;
 		}
-		
+
 		// Set the new parent id if parent id not matched OR while New/Save as
 		// Copy .
 		if ($table->parent_id != $data['parent_id'] || $data['id'] == 0) {
 			$table->setLocation($data['parent_id'], 'last-child');
 		}
-		
+
 		// Alter the title for save as copy
 		if (JFactory::getApplication()->input->get('task') == 'save2copy') {
 			list ($title, $alias) = $this->generateNewTitle($data['parent_id'], $data['alias'], $data['title']);
 			$data['title'] = $title;
 			$data['alias'] = $alias;
 		}
-		
+
 		$groupid = $jinput->get('groupid', '', 'int');
 		$table->groupid = $groupid;
-		
+
 		$color = $jinput->get('color', '', 'html');
-		
+
 		if (!preg_match('/^#[0-9A-Fa-f]{6}$/', $color)) {
 			$color = '';
 		}
 		$table->color = $color;
-		
+
 		// Bind the data.
 		if (!$table->bind($data)) {
 			$this->setError($table->getError());
 			return false;
 		}
-		
+
 		// Bind the rules.
 		if (isset($data['rules'])) {
 			$rules = new JAccessRules($data['rules']);
 			$table->setRules($rules);
 		}
-		
+
 		// Check the data.
 		if (!$table->check()) {
 			$this->setError($table->getError());
 			return false;
 		}
-		
+
 		// Trigger the onContentBeforeSave event.
 		$result = $dispatcher->trigger($this->event_before_save, array(
 				$this->option . '.' . $this->name,
@@ -292,7 +292,7 @@ class JemModelCategory extends JModelAdmin
 			$this->setError($table->getError());
 			return false;
 		}
-		
+
 		// Trigger the onContentAfterSave event.
 		$result = $dispatcher->trigger($this->event_before_save, array($this->option . '.' . $this->name, &$table, $isNew));
 		if (in_array(false, $result, true))
@@ -300,16 +300,16 @@ class JemModelCategory extends JModelAdmin
 			$this->setError($table->getError());
 			return false;
 		}
-		
+
 		// Store the data.
 		if (!$table->store()) {
 			$this->setError($table->getError());
 			return false;
 		}
-		
+
 		// Trigger the onContentAfterSave event.
 		$dispatcher->trigger($this->event_after_save, array($this->option . '.' . $this->name, &$table, $isNew));
-		
+
 		// Rebuild the path for the category:
 		if (!$table->rebuildPath($table->id))
 		{
@@ -323,12 +323,12 @@ class JemModelCategory extends JModelAdmin
 			$this->setError($table->getError());
 			return false;
 		}
-		
+
 		$this->setState($this->getName() . '.id', $table->id);
-		
+
 		// Clear the cache
 		$this->cleanCache();
-		
+
 		return true;
 	}
 
@@ -337,9 +337,9 @@ class JemModelCategory extends JModelAdmin
 	 *
 	 * @param array $pks A list of the primary keys to change.
 	 * @param integer $value The value of the published state.
-	 *       
+	 *
 	 * @return boolean True on success.
-	 *        
+	 *
 	 */
 	function publish(&$pks, $value = 1)
 	{
@@ -347,18 +347,18 @@ class JemModelCategory extends JModelAdmin
 			// Initialise variables.
 			$dispatcher = JEventDispatcher::getInstance();
 			$extension = JFactory::getApplication()->input->getCmd('extension');
-			
+
 			// Include the content plugins for the change of category state
 			// event.
 			JPluginHelper::importPlugin('content');
-			
+
 			// Trigger the onCategoryChangeState event.
 			$dispatcher->trigger('onCategoryChangeState', array(
 					$extension,
 					$pks,
 					$value
 			));
-			
+
 			return true;
 		}
 	}
@@ -367,22 +367,22 @@ class JemModelCategory extends JModelAdmin
 	 * Method rebuild the entire nested set tree.
 	 *
 	 * @return boolean False on failure or error, true otherwise.
-	 *        
+	 *
 	 */
 	public function rebuild()
 	{
-		
+
 		// Get an instance of the table object.
 		$table = $this->getTable();
-		
+
 		if (!$table->rebuild()) {
 			$this->setError($table->getError());
 			return false;
 		}
-		
+
 		// Clear the cache
 		$this->cleanCache();
-		
+
 		return true;
 	}
 
@@ -393,23 +393,23 @@ class JemModelCategory extends JModelAdmin
 	 *
 	 * @param array $idArray An array of primary key ids.
 	 * @param integer $lft_array The lft value
-	 *       
+	 *
 	 * @return boolean False on failure or error, True otherwise
-	 *        
+	 *
 	 */
 	public function saveorder($idArray = null, $lft_array = null)
 	{
 		// Get an instance of the table object.
 		$table = $this->getTable();
-		
+
 		if (!$table->saveorder($idArray, $lft_array)) {
 			$this->setError($table->getError());
 			return false;
 		}
-		
+
 		// Clear the cache
 		$this->cleanCache();
-		
+
 		return true;
 	}
 
@@ -419,22 +419,22 @@ class JemModelCategory extends JModelAdmin
 	 * @param integer $value The new category.
 	 * @param array $pks An array of row IDs.
 	 * @param array $contexts An array of item contexts.
-	 *       
+	 *
 	 * @return mixed An array of new IDs on success, boolean false on failure.
-	 *        
+	 *
 	 */
 	protected function batchCopy($value, $pks, $contexts)
 	{
 		// $value comes as {parent_id}.{extension}
 		$parts = explode('.', $value);
 		$parentId = (int) JArrayHelper::getValue($parts, 0, 1);
-		
+
 		$table = $this->getTable();
 		$db = $this->getDbo();
 		$user = JFactory::getUser();
 		$extension = JFactory::getApplication()->input->get('extension', '', 'word');
 		$i = 0;
-		
+
 		// Check that the parent exists
 		if ($parentId) {
 			if (!$table->load($parentId)) {
@@ -457,7 +457,7 @@ class JemModelCategory extends JModelAdmin
 				return false;
 			}
 		}
-		
+
 		// If the parent is 0, set it to the ID of the root item in the tree
 		if (empty($parentId)) {
 			if (!$parentId = $table->getRootId()) {
@@ -470,10 +470,10 @@ class JemModelCategory extends JModelAdmin
 				return false;
 			}
 		}
-		
+
 		// We need to log the parent ID
 		$parents = array();
-		
+
 		// Calculate the emergency stop count as a precaution against a runaway
 		// loop bug
 		$query = $db->getQuery(true);
@@ -481,19 +481,19 @@ class JemModelCategory extends JModelAdmin
 		$query->from($db->quoteName('#__categories'));
 		$db->setQuery($query);
 		$count = $db->loadResult();
-		
+
 		if ($error = $db->getErrorMsg()) {
 			$this->setError($error);
 			return false;
 		}
-		
+
 		// Parent exists so we let's proceed
 		while (!empty($pks) && $count > 0) {
 			// Pop the first id off the stack
 			$pk = array_shift($pks);
-			
+
 			$table->reset();
-			
+
 			// Check that the row actually exists
 			if (!$table->load($pk)) {
 				if ($error = $table->getError()) {
@@ -507,7 +507,7 @@ class JemModelCategory extends JModelAdmin
 					continue;
 				}
 			}
-			
+
 			// Copy is a bit tricky, because we also need to copy the children
 			$query->clear();
 			$query->select('id');
@@ -516,71 +516,71 @@ class JemModelCategory extends JModelAdmin
 			$query->where('rgt < ' . (int) $table->rgt);
 			$db->setQuery($query);
 			$childIds = $db->loadColumn();
-			
+
 			// Add child ID's to the array only if they aren't already there.
 			foreach ($childIds as $childId) {
 				if (!in_array($childId, $pks)) {
 					array_push($pks, $childId);
 				}
 			}
-			
+
 			// Make a copy of the old ID and Parent ID
 			$oldId = $table->id;
 			$oldParentId = $table->parent_id;
-			
+
 			// Reset the id because we are making a copy.
 			$table->id = 0;
-			
+
 			// If we a copying children, the Old ID will turn up in the parents
 			// list
 			// otherwise it's a new top level item
 			$table->parent_id = isset($parents[$oldParentId]) ? $parents[$oldParentId] : $parentId;
-			
+
 			// Set the new location in the tree for the node.
 			$table->setLocation($table->parent_id, 'last-child');
-			
+
 			// TODO: Deal with ordering?
 			// $table->ordering = 1;
 			$table->level = null;
 			$table->asset_id = null;
 			$table->lft = null;
 			$table->rgt = null;
-			
+
 			// Alter the title & alias
 			list ($title, $alias) = $this->generateNewTitle($table->parent_id, $table->alias, $table->catname);
 			$table->title = $title;
 			$table->alias = $alias;
-			
+
 			// Store the row.
 			if (!$table->store()) {
 				$this->setError($table->getError());
 				return false;
 			}
-			
+
 			// Get the new item ID
 			$newId = $table->get('id');
-			
+
 			// Add the new ID to the array
 			$newIds[$i] = $newId;
 			$i++;
-			
+
 			// Now we log the old 'parent' to the new 'parent'
 			$parents[$oldId] = $table->id;
 			$count--;
 		}
-		
+
 		// Rebuild the hierarchy.
 		if (!$table->rebuild()) {
 			$this->setError($table->getError());
 			return false;
 		}
-		
+
 		// Rebuild the tree path.
 		if (!$table->rebuildPath($table->id)) {
 			$this->setError($table->getError());
 			return false;
 		}
-		
+
 		return $newIds;
 	}
 
@@ -590,27 +590,27 @@ class JemModelCategory extends JModelAdmin
 	 * @param integer $value The new category ID.
 	 * @param array $pks An array of row IDs.
 	 * @param array $contexts An array of item contexts.
-	 *       
+	 *
 	 * @return boolean True on success.
-	 *        
+	 *
 	 */
 	protected function batchMove($value, $pks, $contexts)
 	{
 		$parentId = (int) $value;
-		
+
 		$table = $this->getTable();
 		$db = $this->getDbo();
 		$query = $db->getQuery(true);
 		$user = JFactory::getUser();
 		$extension = JFactory::getApplication()->input->get('extension', '', 'word');
-		
+
 		// Check that the parent exists.
 		if ($parentId) {
 			if (!$table->load($parentId)) {
 				if ($error = $table->getError()) {
 					// Fatal error
 					$this->setError($error);
-					
+
 					return false;
 				}
 				else {
@@ -626,7 +626,7 @@ class JemModelCategory extends JModelAdmin
 				$this->setError(JText::_('COM_CATEGORIES_BATCH_CANNOT_CREATE'));
 				return false;
 			}
-			
+
 			// Check that user has edit permission for every category being
 			// moved
 			// Note that the entire batch operation fails if any category lacks
@@ -639,10 +639,10 @@ class JemModelCategory extends JModelAdmin
 				}
 			}
 		}
-		
+
 		// We are going to store all the children and just move the category
 		$children = array();
-		
+
 		// Parent exists so we let's proceed
 		foreach ($pks as $pk) {
 			// Check that the row actually exists
@@ -658,10 +658,10 @@ class JemModelCategory extends JModelAdmin
 					continue;
 				}
 			}
-			
+
 			// Set the new location in the tree for the node.
 			$table->setLocation($parentId, 'last-child');
-			
+
 			// Check if we are moving to a different parent
 			if ($parentId != $table->parent_id) {
 				// Add the child node ids to the children array.
@@ -672,33 +672,33 @@ class JemModelCategory extends JModelAdmin
 				$db->setQuery($query);
 				$children = array_merge($children, (array) $db->loadColumn());
 			}
-			
+
 			// Store the row.
 			if (!$table->store()) {
 				$this->setError($table->getError());
 				return false;
 			}
-			
+
 			// Rebuild the tree path.
 			if (!$table->rebuildPath()) {
 				$this->setError($table->getError());
 				return false;
 			}
 		}
-		
+
 		// Process the child rows
 		if (!empty($children)) {
 			// Remove any duplicates and sanitize ids.
 			$children = array_unique($children);
 			JArrayHelper::toInteger($children);
-			
+
 			// Check for a database error.
 			if ($db->getErrorNum()) {
 				$this->setError($db->getErrorMsg());
 				return false;
 			}
 		}
-		
+
 		return true;
 	}
 
@@ -731,9 +731,9 @@ class JemModelCategory extends JModelAdmin
 	 * @param integer $parent_id The id of the parent.
 	 * @param string $alias The alias.
 	 * @param string $title The title.
-	 *       
+	 *
 	 * @return array Contains the modified title and alias.
-	 *        
+	 *
 	 */
 	protected function generateNewTitle($parent_id, $alias, $title)
 	{
@@ -746,7 +746,7 @@ class JemModelCategory extends JModelAdmin
 			$title = JString::increment($title);
 			$alias = JString::increment($alias, 'dash');
 		}
-		
+
 		return array(
 				$title,
 				$alias
@@ -757,27 +757,27 @@ class JemModelCategory extends JModelAdmin
 	 * Method to get the group data
 	 *
 	 * @access public
-	 * @return boolean on success   
+	 * @return boolean on success
 	 */
 	function getGroups()
 	{
 		$db = $this->getDbo();
-		$query = 'SELECT id AS value, name AS text' 
-				. ' FROM #__jem_groups' 
+		$query = 'SELECT id AS value, name AS text'
+				. ' FROM #__jem_groups'
 				. ' ORDER BY name';
 		$db->setQuery($query);
-		
+
 		$groups = $db->loadObjectList();
-		
+
 		return $groups;
 	}
 
 	/**
 	 * Method to remove a category
-	 * 
+	 *
 	 * @todo: check if finder-plugin is being triggered
 	 * move to Candelete function
-	 * 
+	 *
 	 * @access public
 	 * @return string $msg
 	 */
@@ -787,23 +787,23 @@ class JemModelCategory extends JModelAdmin
 		foreach ($cids as $id) {
 			$this->_addCategories($id, $cids);
 		}
-		
+
 		$cids = implode(',', $cids);
-		
-		$query = 'SELECT c.id, c.catname, COUNT( e.catid ) AS numcat' 
-				. ' FROM #__jem_categories AS c' 
-				. ' LEFT JOIN #__jem_cats_event_relations AS e ON e.catid = c.id' 
+
+		$query = 'SELECT c.id, c.catname, COUNT( e.catid ) AS numcat'
+				. ' FROM #__jem_categories AS c'
+				. ' LEFT JOIN #__jem_cats_event_relations AS e ON e.catid = c.id'
 				. ' WHERE c.id IN (' . $cids .')' . ' GROUP BY c.id';
 		$this->_db->setQuery($query);
-		
+
 		if (!($rows = $this->_db->loadObjectList())) {
 			JError::raiseError(500, $this->_db->stderr());
 			return false;
 		}
-		
+
 		$err = array();
 		$cid = array();
-		
+
 		// TODO: Categories and its childs without assigned items will not be
 		// deleted if another tree has any item entry
 		foreach ($rows as $row) {
@@ -814,20 +814,20 @@ class JemModelCategory extends JModelAdmin
 				$err[] = $row->catname;
 			}
 		}
-		
+
 		if (count($cid) && count($err) == 0) {
 			$cids = implode(',', $cid);
-			$query = 'DELETE FROM #__jem_categories' 
+			$query = 'DELETE FROM #__jem_categories'
 					. ' WHERE id IN (' . $cids . ')';
-			
+
 			$this->_db->setQuery($query);
-			
+
 			if (!$this->_db->execute()) {
 				$this->setError($this->_db->getErrorMsg());
 				return false;
 			}
 		}
-		
+
 		if (count($err)) {
 			$cids = implode(', ', $err);
 			$msg = JText::sprintf('COM_JEM_CATEGORIES_ASSIGNED_EVENT', $cids);
@@ -839,7 +839,7 @@ class JemModelCategory extends JModelAdmin
 			return $msg;
 		}
 	}
-	
+
 	/**
 	 * Method to add children/parents to a specific category
 	 *
@@ -852,7 +852,7 @@ class JemModelCategory extends JModelAdmin
 	{
 		// Initialize variables
 		$return = true;
-	
+
 		if ($type == 'children') {
 			$get = 'id';
 			$source = 'parent_id';
@@ -860,20 +860,20 @@ class JemModelCategory extends JModelAdmin
 			$get = 'parent_id';
 			$source = 'id';
 		}
-	
+
 		// Get all rows with parent of $id
 		$query = 'SELECT '.$get.
 		' FROM #__jem_categories' .
 		' WHERE '.$source.' = '.(int) $id;
 		$this->_db->setQuery( $query );
 		$rows = $this->_db->loadObjectList();
-	
+
 		// Make sure there aren't any errors
 		if ($this->_db->getErrorNum()) {
 			$this->setError($this->_db->getErrorMsg());
 			return false;
 		}
-	
+
 		// Recursively iterate through all children
 		foreach ($rows as $row)
 		{
@@ -891,5 +891,5 @@ class JemModelCategory extends JModelAdmin
 			$return = $this->_addCategories($row->$get, $list, $type);
 		}
 		return $return;
-	}	
+	}
 }

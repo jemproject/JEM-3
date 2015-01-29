@@ -43,7 +43,7 @@ class JemViewCategory extends JViewLegacy
 
 		// Load Script
 		JHtml::_('script', 'com_jem/colorpicker.js', array(), true);
-		
+
 		// build grouplist
 		// @todo: make a form-field for this one
 		$groups 	= $this->get('Groups');
@@ -57,7 +57,7 @@ class JemViewCategory extends JViewLegacy
 
 		parent::display($tpl);
 		$jinput->set('hidemainmenu', true);
-		
+
 		$this->addToolbar();
 	}
 

@@ -31,7 +31,7 @@ class JEMViewDate extends JViewLegacy {
 			return false;
 		}
 		JHtml::_('behavior.framework');
-		
+
 		// initialise variables
 		$jemsettings 	= JEMHelper::config();
 		$document		= JFactory::getDocument();
@@ -40,7 +40,7 @@ class JEMViewDate extends JViewLegacy {
 		$this->task 	= $task;
 		$url 			= JUri::root();
 
-		
+
 		// Load css
 		JHtml::_('stylesheet', 'com_jem/backend.css', array(), true);
 
@@ -95,4 +95,3 @@ class JEMViewDate extends JViewLegacy {
 		JToolBarHelper::help('editevents', true);
 	}
 }
-?>

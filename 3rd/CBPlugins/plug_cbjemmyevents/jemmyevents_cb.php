@@ -708,4 +708,3 @@ class jemmyeventsTab extends cbTabHandler {
 
 	}
 }
-?>

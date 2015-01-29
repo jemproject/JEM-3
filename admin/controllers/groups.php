@@ -62,4 +62,3 @@ class JemControllerGroups extends JControllerAdmin
 		$this->setRedirect( 'index.php?option=com_jem&view=groups', $msg );
 	}
 }
-?>

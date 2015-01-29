@@ -75,4 +75,3 @@ class JemModelUpdatecheck extends JModelLegacy
 		}
 	}
 }
-?>

@@ -162,4 +162,3 @@ function jemParseRoute($segments)
 	}
 	return $vars;
 }
-?>

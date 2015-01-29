@@ -85,12 +85,12 @@ defined('_JEXEC') or die;
 			JToolBarHelper::editList('date.edit');
 			JToolBarHelper::divider();
 		}
-		
-		
+
+
 		if ($canDo->get('core.delete')) {
 			JToolBarHelper::deleteList('', 'dates.delete', 'JTOOLBAR_EMPTY_TRASH');
 		}
-		
+
 		/*
 		if ($canDo->get('core.edit.state')) {
 			if ($this->state->get('filter_state') != 2) {
@@ -118,9 +118,9 @@ defined('_JEXEC') or die;
 		} elseif ($canDo->get('core.edit.state')) {
 			JToolBarHelper::trash('dates.trash');
 		}
-		
+
 		*/
-		
+
 		//JToolBarHelper::divider();
 		//JToolBarHelper::custom('events.removeRecurrenceset','calendar_delete','','Recurrenceset');
 		//JToolBarHelper::trash('events.removeRecurrenceset','Recurrenceset');
@@ -128,4 +128,3 @@ defined('_JEXEC') or die;
 		JToolBarHelper::help('listevents', true);
 	}
 }
-?>

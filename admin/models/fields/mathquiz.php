@@ -15,7 +15,7 @@ defined('JPATH_PLATFORM') or die;
 class JFormFieldMathquiz extends JFormField
 {
 	private $operand1, $operand2;
-	
+
 	/**
 	 * The form field type.
 	 */
@@ -25,20 +25,20 @@ class JFormFieldMathquiz extends JFormField
 	 * Method to get the field input markup.
 	 */
 	protected function getInput()
-	{		
+	{
 		$this->generateNumbers();
-		
+
 		$label = '<span id="mathquiz">'.$this->operand1 . ' + ' . $this->operand2.'</span>';
 		//$math = '<input type="text" name="' . $this->name . '" value="" id="' . $this->name . '"></input>';
-			
+
 		$answer = '<input type="hidden" name="' . $this->name . '-answer" value="' . ( $this->operand1 + $this->operand2 ) . '"></input>';
 		$string = $label . "\n" . $answer;
-			
-			
+
+
 		return $string;
 	}
-	
-	
+
+
 	public function generateNumbers()
 	{
 		$this->operand1 = mt_rand( 1, 9 );

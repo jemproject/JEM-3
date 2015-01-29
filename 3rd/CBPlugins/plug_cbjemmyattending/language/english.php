@@ -1,13 +1,13 @@
 <?php
-/* 
+/*
  * @package My Attending
  * @version 2.0.0
  * @author JEM Community
  * @copyright (C) 2013-2014 joomlaeventmanager.net
- * 
+ *
  * Former info:
  * english.php 2nd November 2007 Himangi Chhatre (Tekdi Eco Services pvt ltd)
- * 
+ *
  * */
 
  DEFINE("_JEMMYATTENDING_EDIT_ENTRY","Edit");
@@ -26,4 +26,4 @@
 
  DEFINE("_JEMMYATTENDING_REGISTER","Registered users");
  DEFINE("_JEMMYATTENDING_NO_DESCRIPTION","Please enter a description under cb setting -> tab manager");
-?>
+

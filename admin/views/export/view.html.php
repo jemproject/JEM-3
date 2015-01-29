@@ -15,7 +15,7 @@ defined('_JEXEC') or die;
 class JEMViewExport extends JViewLegacy {
 
 	public function display($tpl = null) {
-		
+
 		// Load pane behavior
 		jimport('joomla.html.pane');
 
@@ -52,4 +52,3 @@ class JEMViewExport extends JViewLegacy {
 		JToolBarHelper::help('export', true);
 	}
 }
-?>

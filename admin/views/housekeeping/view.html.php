@@ -49,4 +49,3 @@ class JemViewHousekeeping extends JViewLegacy {
 		JToolBarHelper::help('housekeeping', true);
 	}
 }
-?>

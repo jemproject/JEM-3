@@ -57,7 +57,7 @@ class JemControllerCategories extends JControllerAdmin
 		}
 	}
 
-	
+
  	/**
  	 * Logic to delete categories
  	 *

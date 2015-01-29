@@ -40,8 +40,8 @@ class JFormFieldEventoptions extends JFormFieldList
 
 		$query->select('a.id AS value, a.title AS text, a.published');
 		$query->from('#__jem_events AS a');
-		
-		
+
+
 		// Filter on the published state
 		if (is_numeric($published))
 		{
@@ -74,11 +74,11 @@ class JFormFieldEventoptions extends JFormFieldList
 			{
 				if ($options[$i]->published == 1)
 				{
-	
+
 				}
 				else
 				{
-			
+
 				}
 			}
 

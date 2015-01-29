@@ -97,4 +97,3 @@ class JEMModelMain extends JModelLegacy
 	}
 
 }
-?>

@@ -22,4 +22,3 @@ class JemControllerUpdatecheck extends JControllerLegacy
 		parent::__construct();
 	}
 }
-?>

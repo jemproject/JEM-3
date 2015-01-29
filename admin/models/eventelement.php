@@ -77,22 +77,22 @@ class JemModelEventelement extends JModelLegacy
 				}
 			}
 		}
-		
-		
+
+
 		if($this->_data)
-		{	
+		{
 			$count = count($this->_data);
 			for($i = 0; $i < $count; $i++){
 				$item = $this->_data[$i];
 				$item->categories = $this->getCategories($item->id);
-		
+
 				//remove events without categories (users have no access to them)
 				if (empty($item->categories)) {
 					unset($this->_data[$i]);
 				}
 			}
 		}
-		
+
 
 		return $this->_data;
 	}
@@ -148,40 +148,40 @@ class JemModelEventelement extends JModelLegacy
 		$db 			= JFactory::getDBO();
 		$user 			= JFactory::getUser();
 		$levels			= $user->getAuthorisedViewLevels();
-		
+
 		$filter_order		= $app->getUserStateFromRequest('com_jem.eventelement.'.$itemid.'.filter_order', 'filter_order', 'a.dates', 'cmd' );
 		$filter_order_Dir	= $app->getUserStateFromRequest('com_jem.eventelement.'.$itemid.'.filter_order_Dir', 'filter_order_Dir', '', 'word' );
-		
+
 		$filter_order		= JFilterInput::getinstance()->clean($filter_order, 'cmd');
 		$filter_order_Dir	= JFilterInput::getinstance()->clean($filter_order_Dir, 'word');
-		
+
 		$published 			= $app->getUserStateFromRequest('com_jem.eventelement.'.$itemid.'.filter_state', 'filter_state', '', 'string');
 		$filter_type 		= $app->getUserStateFromRequest('com_jem.eventelement.'.$itemid.'.filter_type', 'filter_type', '', 'int' );
 		$search 			= $app->getUserStateFromRequest('com_jem.eventelement.'.$itemid.'.filter_search', 'filter_search', '', 'string' );
 		$search 			= $db->escape(trim(JString::strtolower($search)));
-		
+
 		// Query
 		$query = $db->getQuery(true);
 		$query->select(array('a.*','loc.venue','loc.city','c.catname'));
 		$query->from('#__jem_events as a');
-		
+
 		$query->join('LEFT', '#__jem_venues AS loc ON loc.id = a.locid');
 		$query->join('LEFT', '#__jem_cats_event_relations AS rel ON rel.itemid = a.id');
 		$query->join('LEFT', '#__jem_categories AS c ON c.id = rel.catid');
-		
+
 		// where
 		$where = array();
-		
+
 		// Filter by published state
 		if (is_numeric($published)) {
 			$where[] = 'a.published = '.(int) $published;
 		} elseif ($published === '') {
 			$where[] = '(a.published IN (1))';
 		}
-		
+
 		$where[] = ' c.published = 1';
 		$where[] = ' c.access IN (' . implode(',', $levels) . ')';
-		
+
 		/* something to search for? (we like to search for "0" too) */
 		if ($search || ($search === "0")) {
 			switch ($filter_type) {
@@ -199,11 +199,11 @@ class JemModelEventelement extends JModelLegacy
 				break;
 			}
 		}
-		
+
 		$query->where($where);
-	
+
 		$query->group('a.id');
-					
+
 		$orderby 	= array($filter_order.' '.$filter_order_Dir,'a.dates ASC');
 		$query->order($orderby);
 
@@ -216,12 +216,12 @@ class JemModelEventelement extends JModelLegacy
 	{
 		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
-		
+
 		$query->select(array('c.id','c.catname','c.checked_out AS cchecked_out'));
 		$query->from('#__jem_categories AS c');
 		$query->join('LEFT', '#__jem_cats_event_relations AS rel ON rel.catid = c.id');
 		$query->where('rel.itemid = '.(int)$id);
-		
+
 		$db->setQuery( $query );
 
 		$this->_cats = $db->loadObjectList();
@@ -237,4 +237,3 @@ class JemModelEventelement extends JModelLegacy
 		return $this->_cats;
 	}
 }
-?>

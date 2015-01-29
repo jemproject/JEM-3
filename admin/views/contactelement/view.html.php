@@ -31,7 +31,7 @@ class JEMViewContactelement extends JViewLegacy {
 
 		// prepare document
 		$document->setTitle(JText::_('COM_JEM_SELECTVENUE'));
-		
+
 		// Load css
 		JHtml::_('stylesheet', 'com_jem/backend.css', array(), true);
 
@@ -62,4 +62,3 @@ class JEMViewContactelement extends JViewLegacy {
 		parent::display($tpl);
 	}
 }
-?>

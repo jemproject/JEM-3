@@ -31,7 +31,7 @@ class JemControllerEvent extends JControllerForm
 	{
 		parent::__construct($config);
 	}
-	
+
 	/**
 	 * remove from set
 	 */
@@ -41,11 +41,11 @@ class JemControllerEvent extends JControllerForm
 		$key		= $table->getKeyName();
 		$urlVar		= $key;
 		$jinput 	= JFactory::getApplication()->input;
-	
+
 		$recordId	= $jinput->getInt($urlVar);
 		$recurrence_group = $jinput->getInt('recurrence_group');
-	
-	
+
+
 		# Retrieve id of current event from recurrence_table
 		$db = JFactory::getDbo();
 		$query = $db->getQuery(true);
@@ -54,7 +54,7 @@ class JemControllerEvent extends JControllerForm
 		$query->where(array('groupid_ref = '.$recurrence_group, 'itemid= '.$recordId));
 		$db->setQuery($query);
 		$recurrenceid = $db->loadResult();
-	
+
 		# Update field recurrence_group in event-table
 		$db = JFactory::getDbo();
 		$query	= $db->getQuery(true);
@@ -62,18 +62,18 @@ class JemControllerEvent extends JControllerForm
 		$query->set(array('recurrence_count = ""','recurrence_freq = ""','recurrence_group = ""','recurrence_interval = ""','recurrence_until = ""','recurrence_weekday = ""'));
 		$query->where('id = '.$recordId);
 		$db->setQuery($query)->query();
-	
+
 		# Blank field groupid_ref in recurrence-table and set exdate value
 		$recurrence_table	= JTable::getInstance('Recurrence', 'JEMTable');
 		$recurrence_table->load($recurrenceid);
-					
+
 		$startdate_org_input		= new JDate($recurrence_table->startdate_org);
 		$exdate						= $startdate_org_input->format('Ymd\THis\Z');
 		$recurrence_table->exdate	= $exdate;
-	
+
 		$recurrence_table->groupid_ref = "";
 		$recurrence_table->store();
-	
+
 		# redirect back
 		$this->setRedirect(JRoute::_('index.php?option=' . $this->option . '&view=' . $this->view_item. $this->getRedirectToItemAppend($recordId, $urlVar), false));
 	}
