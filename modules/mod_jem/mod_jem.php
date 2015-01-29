@@ -21,7 +21,7 @@ $list = modJEMHelper::getList($params);
 // check if any results returned
 $items = count($list);
 if (!$items) {
-	//return;
+	return;
 }
 
 require(JModuleHelper::getLayoutPath('mod_jem'));
