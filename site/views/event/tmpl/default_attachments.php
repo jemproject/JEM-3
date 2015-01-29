@@ -19,14 +19,17 @@ defined('_JEXEC') or die;
 		<tr>
 			<td>
 				<span class="file-dl-icon hasTooltip file-name"
-					title="	
-					<?php 
-					$overlib  = JText::_('COM_JEM_FILE').': '.$this->escape($file->file).'<BR />';
-					$overlib .= JText::_('COM_JEM_FILE_NAME').': '.$this->escape($file->name).'<BR />';
-					$overlib .= JText::_('COM_JEM_FILE_DESCRIPTION').': '.$this->escape($file->description);
-					
-					echo JText::_('COM_JEM_DOWNLOAD').'::'.$overlib;?>">
-					
+					title="
+					<?php
+					$desc  = JText::_('COM_JEM_FILE').': '.$this->escape($file->file).'<BR />';
+					if ($file->name) {
+						$desc .= JText::_('COM_JEM_FILE_NAME').': '.$this->escape($file->name).'<BR />';
+					}
+					if ($file->description) {
+						$desc .= JText::_('COM_JEM_FILE_DESCRIPTION').': '.$this->escape($file->description);
+					}
+					echo JHtml::tooltipText(JText::_('COM_JEM_DOWNLOAD'), $desc);
+					?>">
 					<?php
 						$filename	= $this->escape($file->name ? $file->name : $file->file);
 						$image		= JHtml::_('image','com_jem/download_16.png', JText::_('COM_JEM_DOWNLOAD'),NULL,true)." "."<span class=file-name>".$filename."</span>";
