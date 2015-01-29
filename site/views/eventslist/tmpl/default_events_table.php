@@ -183,12 +183,12 @@ $admin = $this->admin;
 				<?php endif; ?>
 
 				<?php if ($this->jemsettings->showatte == 1) : ?>
-					<td class="jem_attendees">
+					<td class="jem_attendees center">
 						<?php echo !empty($row->regCount) ? $this->escape($row->regCount) : '-'; ?>
 					</td>
 				<?php endif; ?>
 				<?php if ($admin && !$print) { ?>
-					<td class="jem_edit">
+					<td class="jem_edit center">
 						<?php echo JemOutput::editbutton($row, $params, $attribs, true, 'eventslist'); ?>
 					</td>
 				<?php } ?>

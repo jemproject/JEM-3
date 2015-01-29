@@ -107,7 +107,7 @@ defined('_JEXEC') or die;
 					<?php echo JemOutput::formatShortDateTime($row->dates, $row->times,
 						$row->enddates, $row->endtimes); ?>
 				</td>
-				
+
 				<?php if (($this->jemsettings->showtitle == 1) && ($this->jemsettings->showdetails == 2)) : ?>
 				<?php if ($this->escape($row->introtext) != "" ) { ?>
 					<td class="jem_title">
@@ -158,7 +158,7 @@ defined('_JEXEC') or die;
 				<?php endif; ?>
 
 				<?php if ($this->params->get('displayattendeecolumn') == 1) : ?>
-					<td class="attendees">
+					<td class="attendees center">
 					<?php if ($row->registra == 1) {
 						$app = JFactory::getApplication();
 						$menuitem = $app->getMenu()->getActive()->id;
