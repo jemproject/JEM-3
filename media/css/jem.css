@@ -131,7 +131,7 @@ div#jem #jem_filter
 div#jem h1{
 	font-size: 26px;
 	line-height:28px;
-	margin:12px 0px;
+	margin:12px 0;
 }
 
 div#jem h2 {
@@ -139,8 +139,8 @@ div#jem h2 {
 	line-height:24px;
 	font-weight:normal;
 	padding:0.3em 0.3em;
-	margin:12px 0px;
-	background:none repeat scroll 0% 0% #D4D6B2;
+	margin:12px 0;
+	background:none repeat scroll 0 0 #D4D6B2;
 	border:1px solid #808080;
 }
 
@@ -148,7 +148,7 @@ div#jem h2 img {
 	border:none;
 	margin-left:0.3em;
 	vertical-align:baseline;
-	margin-bottom: 0px;
+	margin-bottom: 0;
 }
 
 div#jc h4 {
@@ -193,7 +193,7 @@ div#jem div.description {
 
 div#jem .flyerimage {
 	/*float:right !important;*/
-	border:0px solid #000000;
+	border:0 solid #000000;
 	/*width:auto;*/
 	/*position:static !important;*/
 	background:transparent;
@@ -209,7 +209,7 @@ div#jem .flyerimage img {
 div#jem div.image {
 	color: #C09853;
 	padding: 7px;
-	text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.5);
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
 }
 
 div#jem div.image.imagetop {
@@ -218,7 +218,7 @@ div#jem div.image.imagetop {
 }
 
 div#jem .googlemap {
-	border:0px solid #000000;
+	border:0 solid #000000;
 	width:auto;
 	position:static !important;
 	background:transparent;
@@ -411,7 +411,7 @@ div#jem.jem_editvenue input.required {
 }
 div#jem table#el-attachments input{
 	width: 100%;
-	margin: 0px 0px 0.5em;
+	margin: 0 0 0.5em;
 	padding: 0.2em;
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
@@ -436,7 +436,7 @@ div#jem table#el-attachments th {
 }
 /** googlemap **/
 div#jem #googlemap {
-	margin:20px 0px 20px 20px;
+	margin:20px 0 20px 20px;
 }
 
 
@@ -547,7 +547,7 @@ div#jem fieldset.alert {
 	color: #C09853;
 	padding: 8px 35px 8px 14px;
 	margin-bottom: 18px;
-	text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.5);
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
 	background-color: #FCF8E3;
 	border-radius: 4px;
 }
@@ -577,7 +577,7 @@ div#jem .badge {
     color: #FFF;
     vertical-align: baseline;
     white-space: nowrap;
-    text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.25);
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
     /*background-color: #999;*/
 }
 div#jem .label-info,
@@ -586,13 +586,13 @@ div#jem .badge-info {
 }
 div#jem .input-append {
     display: inline-block;
-    font-size: 0px;
+    font-size: 0;
     white-space: nowrap;
 }
 div#jem .input-append .btn {
 	margin-left: -1px;
 	vertical-align: top;
-	border-radius: 0px;
+	border-radius: 0;
 }
 div#jem .input-append .btn_button {
 	padding: 4px 12px 5px;
@@ -600,14 +600,14 @@ div#jem .input-append .btn_button {
 div#jem .btn {
     display: inline-block;
     padding: 4px 12px;
-    margin-bottom: 0px;
+    margin-bottom: 0;
     font-size: 13px;
     line-height: 16px;
     text-align: center;
     vertical-align: middle;
     cursor: pointer;
     color: #333;
-    text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.75);
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
 	background: #F5F5F5 linear-gradient(to bottom, #FFF, #E6E6E6) repeat-x;
 	border: 1px solid;
 	/* border-color: #BBB #BBB #A2A2A2;*/
@@ -617,7 +617,7 @@ div#jem .btn {
     -moz-border-left-colors: none;
     border-image: none;
     border-radius: 4px;
-    box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.2) inset, 0px 1px 2px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 div#jem .btn:hover,
 div#jem .btn:focus {
@@ -643,10 +643,10 @@ div#jem .clearfix:after {
 }
 div#jem .pagination ul {
     display: inline-block;
-    margin-left: 0px;
-    margin-bottom: 0px;
+    margin-left: 0;
+    margin-bottom: 0;
     border-radius: 4px;
-    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 div#jem .btn_chkbox {
 	padding-right: 4px;
@@ -679,10 +679,10 @@ div#jem a {
     color: #095197;
 }
 div#jem form {
-	margin: 0px 0px 18px;
-	padding:0px;
-	border:0px none;
-	outline: 0px none;
+	margin: 0 0 18px;
+	padding:0;
+	border:0 none;
+	outline: 0 none;
 	vertical-align: baseline;
 	background: none repeat scroll 0% 0% transparent;
 }

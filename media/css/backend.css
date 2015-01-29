@@ -44,7 +44,7 @@ input.required {
 /** linkicons **/
 div.linkicon {
 	text-align:center;
-	margin:0px 5px 5px 0px;
+	margin:0 5px 5px 0;
 }
 
 .icon-cancel:before {
@@ -213,14 +213,14 @@ div.clear {
 
 .jem_centering {
 	text-align:center;
-	margin-top:0px;
-	margin-bottom:0px;
-	padding:0px;
+	margin-top:0;
+	margin-bottom:0;
+	padding:0;
 }
 
 div#page-parameters fieldset.adminform .el-spacer {
 	background-color:#D3D3D3;
-	padding:5px 0px;
+	padding:5px 0;
 }
 
 /* align radio buttons horizontally */
@@ -418,7 +418,7 @@ div .btn-wrapper {
 
 dl.tabs {
     float: left;
-    margin: 10px 0px -1px;
+    margin: 10px 0 -1px;
     z-index: 50;
 }
 
@@ -427,20 +427,20 @@ dl.tabs dt {
     padding: 4px 10px;
     border: 1px solid #CCC;
     margin-left: 3px;
-    background: none repeat scroll 0% 0% #E9E9E9;
+    background: none repeat scroll 0 0 #E9E9E9;
     color: #666;
 }
 
 dl.tabs dt.open {
-    background: none repeat scroll 0% 0% #F9F9F9;
+    background: none repeat scroll 0 0 #F9F9F9;
     border-bottom: 1px solid #F9F9F9;
     z-index: 100;
     color: #000;
 }
 
 dl.tabs dt h3 {
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
     font-size: 1em;
     font-weight: normal;
 }
