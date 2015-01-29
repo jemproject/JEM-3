@@ -53,7 +53,7 @@ abstract class modjemcalqhelper
 		$catids = $params->get('catid');
 		$venids = $params->get('venid');
 		$eventids = $params->get('eventid');
-		
+
 		# filter category's
 		if ($catids) {
 			$model->setState('filter.category_id',$catids);
@@ -223,4 +223,3 @@ abstract class modjemcalqhelper
 		return $days;
 	}
 }
-?>

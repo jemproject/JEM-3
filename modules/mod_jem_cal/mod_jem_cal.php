@@ -115,4 +115,3 @@ $next_link = JRoute::_($nlink, false);
 $days = modjemcalqHelper::getdays($offset_year, $offset_month, $params);
 
 require(JModuleHelper::getLayoutPath('mod_jem_cal'));
-?>
