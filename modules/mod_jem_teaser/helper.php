@@ -31,10 +31,6 @@ abstract class modJEMteaserHelper
 	{
 		mb_internal_encoding('UTF-8');
 
-		$db		= JFactory::getDBO();
-		$user	= JFactory::getUser();
-		$levels = $user->getAuthorisedViewLevels();
-
 		# Retrieve Eventslist model for the data
 		$model = JModelLegacy::getInstance('Eventslist', 'JemModel', array('ignore_request' => true));
 
@@ -79,7 +75,7 @@ abstract class modJEMteaserHelper
 
 			$cal_from = " ((DATEDIFF(a.dates, CURDATE()) <= $offset_days) AND (DATEDIFF(IFNULL(a.enddates,a.dates), CURDATE()) >= $offset_days))";
 		}
-		
+
 		# featured
 		elseif ($type == 4) {
 			$offset_minutes = $offset_hourss * 60;
@@ -90,7 +86,7 @@ abstract class modJEMteaserHelper
 			$cal_from  = "((TIMESTAMPDIFF(MINUTE, NOW(), CONCAT(a.dates,' ',IFNULL(a.times,'00:00:00'))) > $offset_minutes) ";
 			$cal_from .= " OR (TIMESTAMPDIFF(MINUTE, NOW(), CONCAT(IFNULL(a.enddates,a.dates),' ',IFNULL(a.endtimes,'23:59:59'))) > $offset_minutes)) ";
 		}
-		
+
 		$model->setState('filter.calendar_from',$cal_from);
 		$model->setState('filter.groupby','a.id');
 
@@ -98,7 +94,7 @@ abstract class modJEMteaserHelper
 		$catids = $params->get('catid');
 		$venids = $params->get('venid');
 		$eventids = $params->get('eventid');
-		
+
 		# filter category's
 		if ($catids) {
 			$model->setState('filter.category_id',$catids);
@@ -116,20 +112,23 @@ abstract class modJEMteaserHelper
 			$model->setState('filter.event_id',$eventids);
 			$model->setState('filter.event_id.include',true);
 		}
-		
+
 		# count
 		$count = $params->get('count', '2');
 
 		if ($params->get('use_modal', 0)) {
-		JHtml::_('behavior.modal', 'a.flyermodal');
+			JHtml::_('behavior.modal', 'a.flyermodal');
 		}
 
 		$model->setState('list.limit',$count);
-		
-		
+
+
 		# Retrieve the available Events
 		$events = $model->getItems();
 
+		if (!$events) {
+			return array();
+		}
 
 		# Loop through the result rows and prepare data
 		$i		= 0;
@@ -255,7 +254,6 @@ abstract class modJEMteaserHelper
 	protected static function _format_day($row, &$params)
 	{
 		//Get needed timestamps and format
-		//setlocale (LC_TIME, 'de_DE.UTF8');
 		$yesterday_stamp	= mktime(0, 0, 0, date("m") , date("d")-1, date("Y"));
 		$yesterday 			= strftime("%Y-%m-%d", $yesterday_stamp);
 		$today_stamp		= mktime(0, 0, 0, date("m") , date("d"), date("Y"));

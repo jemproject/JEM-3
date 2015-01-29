@@ -30,10 +30,6 @@ abstract class modJEMHelper
 	{
 		mb_internal_encoding('UTF-8');
 
-		$db		= JFactory::getDBO();
-		$user	= JFactory::getUser();
-		$levels = $user->getAuthorisedViewLevels();
-
 		# Retrieve Eventslist model for the data
 		$model = JModelLegacy::getInstance('Eventslist', 'JemModel', array('ignore_request' => true));
 
@@ -103,12 +99,17 @@ abstract class modJEMHelper
 		# Retrieve the available Events
 		$events = $model->getItems();
 
-		$settings 	= JemHelper::config();
-		$dateformat = $params->get('formatdate', $settings->formatShortDate);
+		# do we have $events?
+		if (!$events) {
+			return array();
+		}
 
 		# Loop through the result rows and prepare data
 		$i		= 0;
 		$lists	= array();
+
+		$settings 	= JemHelper::config();
+		$dateformat = $params->get('formatdate', $settings->formatShortDate);
 
 		foreach ($events as $row)
 		{

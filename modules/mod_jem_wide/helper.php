@@ -31,63 +31,59 @@ abstract class modJEMwideHelper
 	public static function getList(&$params)
 	{
 		mb_internal_encoding('UTF-8');
-	
-		$db		= JFactory::getDBO();
-		$user	= JFactory::getUser();
-		$levels = $user->getAuthorisedViewLevels();
-	
+
 		# Retrieve Eventslist model for the data
 		$model = JModelLegacy::getInstance('Eventslist', 'JemModel', array('ignore_request' => true));
-	
+
 		# Set params for the model
 		# has to go before the getItems function
 		$model->setState('params', $params);
 		$model->setState('filter.access',true);
-	
+
 		# filter published
 		#  0: unpublished
 		#  1: published
 		#  2: archived
 		# -2: trashed
-	
+
 		$type = $params->get('type');
 		$offset_hourss = $params->get('offset_hours', 0);
-	
+
 		# all upcoming or unfinished events
 		if (($type == 0) || ($type == 1)) {
 			$offset_minutes = $offset_hourss * 60;
-	
+
 			$model->setState('filter.published',1);
 			$model->setState('filter.orderby',array('a.dates ASC','a.times ASC'));
-	
+
 			$cal_from = "((TIMESTAMPDIFF(MINUTE, NOW(), CONCAT(a.dates,' ',IFNULL(a.times,'00:00:00'))) > $offset_minutes) ";
 			$cal_from .= ($type == 1) ? " OR (TIMESTAMPDIFF(MINUTE, NOW(), CONCAT(IFNULL(a.enddates,a.dates),' ',IFNULL(a.endtimes,'23:59:59'))) > $offset_minutes)) " : ") ";
 		}
-	
+
 		# archived events only
 		elseif ($type == 2) {
 			$model->setState('filter.published',2);
 			$model->setState('filter.orderby',array('a.dates DESC','a.times DESC'));
 			$cal_from = "";
 		}
-	
+
 		# currently running events only (today + offset is inbetween start and end date of event)
 		elseif ($type == 3) {
 			$offset_days = (int)round($offset_hourss / 24);
-			
+
 			$model->setState('filter.published',1);
 			$model->setState('filter.orderby',array('a.dates ASC','a.times ASC'));
 			$cal_from = " ((DATEDIFF(a.dates, CURDATE()) <= $offset_days) AND (DATEDIFF(IFNULL(a.enddates,a.dates), CURDATE()) >= $offset_days))";
 		}
-	
+
 		$model->setState('filter.calendar_from',$cal_from);
 		$model->setState('filter.groupby','a.id');
-	
+
 		# clean parameter data
 		$catids = $params->get('catid');
 		$venids = $params->get('venid');
 		$eventids = $params->get('eventid');
-		
+
 		# filter category's
 		if ($catids) {
 			$model->setState('filter.category_id',$catids);
@@ -105,28 +101,32 @@ abstract class modJEMwideHelper
 			$model->setState('filter.event_id',$eventids);
 			$model->setState('filter.event_id.include',true);
 		}
-	
+
 		# count
 		$count = $params->get('count', '2');
 		$model->setState('list.limit',$count);
-	
+
 		if ($params->get('use_modal', 0)) {
 			JHtml::_('behavior.modal', 'a.flyermodal');
 		}
-	
+
 		# Retrieve the available Events
 		$events = $model->getItems();
-	
+
+		if (!$events) {
+			return array();
+		}
+
 		# define list-array
 		# in here we collect the row information
 		$lists	= array();
 		$i = 0;
-	
-	
+
+
 		#####################
 		### DEFINE FOREACH ##
 		#####################
-	
+
 		foreach ($events as $row)
 		{
 			//create thumbnails if needed and receive imagedata
@@ -140,28 +140,28 @@ abstract class modJEMwideHelper
 			} else {
 				$limage = null;
 			}
-	
+
 			//cut titel
 			$length = mb_strlen($row->title);
-	
+
 			if ($length > $params->get('cuttitle', '25')) {
 				$row->title = mb_substr($row->title, 0, $params->get('cuttitle', '18'));
 				$row->title = $row->title.'...';
 			}
-	
+
 			$lists[$i] = new stdClass();
 			$lists[$i]->title			= htmlspecialchars($row->title, ENT_COMPAT, 'UTF-8');
 			$lists[$i]->venue			= htmlspecialchars($row->venue, ENT_COMPAT, 'UTF-8');
 			$lists[$i]->state			= htmlspecialchars($row->state, ENT_COMPAT, 'UTF-8');
 			$lists[$i]->eventlink		= $params->get('linkevent', 1) ? JRoute::_(JEMHelperRoute::getEventRoute($row->slug)) : '';
 			$lists[$i]->venuelink		= $params->get('linkvenue', 1) ? JRoute::_(JEMHelperRoute::getVenueRoute($row->venueslug)) : '';
-			
+
 			list($lists[$i]->date,
 					$lists[$i]->time)		= modJEMwideHelper::_format_date_time($row, $params);
-	
+
 			# walk through categories assigned to an event
 			$lists[$i]->catname			= implode(", ", JemOutput::getCategoryList($row->categories, $params->get('linkcategory', 1)));
-	
+
 			if ($dimage == null) {
 				$lists[$i]->eventimage		= "";
 				$lists[$i]->eventimageorig	= "";
@@ -169,7 +169,7 @@ abstract class modJEMwideHelper
 				$lists[$i]->eventimage		= JURI::base(true).'/'.$dimage['thumb'];
 				$lists[$i]->eventimageorig	= JURI::base(true).'/'.$dimage['original'];
 			}
-	
+
 			if ($limage == null) {
 				$lists[$i]->venueimage		= "";
 				$lists[$i]->venueimageorig	= "";
@@ -181,7 +181,7 @@ abstract class modJEMwideHelper
 			$lists[$i]->venuedescription= strip_tags($row->locdescription);
 			$i++;
 		}
-	
+
 		return $lists;
 	}
 
@@ -275,7 +275,7 @@ abstract class modJEMwideHelper
 
 		return array($date, $time);
 	}
-	
+
 	/**
 	 * Method to format time information
 	 *
