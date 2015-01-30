@@ -124,11 +124,24 @@
 					label="MOD_JEM_WIDE_TIME_FORMAT"
 					description="MOD_JEM_WIDE_TIME_FORMAT_DESC"
 				/>
-				<field name="moduleclass_sfx" type="text"
-					default=""
-					label="MOD_JEM_WIDE_MODULE_CLASS_SUFFIX"
-					description="MOD_JEM_WIDE_MODULE_CLASS_SUFFIX_DESC"
-				/>
+				<field name="eventimg" type="radio"
+					default="1"
+					label="MOD_JEM_WIDE_SHOW_EVENTIMG"
+					description="MOD_JEM_WIDE_SHOW_EVENTIMG_DESC"
+					class="btn-group btn-group-yesno"
+				>
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="venueimg" type="radio"
+					default="1"
+					label="MOD_JEM_WIDE_SHOW_VENUEIMG"
+					description="MOD_JEM_WIDE_SHOW_VENUEIMG_DESC"
+					class="btn-group btn-group-yesno"
+				>
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
 			</fieldset>
 
 			<fieldset name="advanced">
@@ -144,6 +157,18 @@
 					default="900"
 					label="MOD_JEM_WIDE_CACHE_TIME"
 					description="MOD_JEM_WIDE_CACHE_TIME_DESC"
+				/>
+				<field name="moduleclass_sfx" type="text"
+					default=""
+					label="MOD_JEM_WIDE_MODULE_CLASS_SUFFIX"
+					description="MOD_JEM_WIDE_MODULE_CLASS_SUFFIX_DESC"
+				/>
+				<field
+					name="FixItemID"
+					default=""
+					type="text"
+					label="MOD_JEM_WIDE_FIXEDITEMID"
+					description="MOD_JEM_WIDE_FIXEDITEMID_DESC"
 				/>
 			</fieldset>
 		</fields>

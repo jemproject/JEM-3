@@ -1,7 +1,7 @@
 <?php
 /**
  * @package JEM
- * @subpackage JEM Wide Module
+ * @subpackage JEM Module - Wide
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
@@ -72,8 +72,8 @@ JHtml::_('behavior.modal', 'a.flyermodal');
 				<?php endif; ?>
 			</span>
 		</td>
-		<td align="center" class="event-image-cell">	
-			<?php 
+		<td align="center" class="event-image-cell">
+			<?php
 			if ($item->eventimage) {
 				if ($params->get('use_modal')) :
 				if ($item->eventimageorig) {
@@ -87,8 +87,8 @@ JHtml::_('behavior.modal', 'a.flyermodal');
 				<img src="<?php echo $item->eventimage; ?>" alt="<?php echo $item->title; ?>" class="image-preview" />
 			<?php if ($item->eventlink) : ?>
 				</a>
-			<?php 
-			endif; 			
+			<?php
+			endif;
 			}
 			?>
 		</td>
