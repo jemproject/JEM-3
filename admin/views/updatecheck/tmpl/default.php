@@ -20,20 +20,20 @@ if ($this->updatedata->failed == 0) {
 		  		<td>
 		  		<?php
 		  			if ($this->updatedata->current == 0 ) {
-		  				echo JHtml::_('image', 'com_jem/icon-48-update.png', NULL, NULL, true);
+		  				echo JHtml::_('image', 'com_jem/icon-48-update.png', null, null, true);
 		  			} elseif( $this->updatedata->current == -1 ) {
-		  				echo JHtml::_('image', 'com_jem/icon-48-update.png', NULL, NULL, true);
+		  				echo JHtml::_('image', 'com_jem/icon-48-update.png', null, null, true);
 		  			} else {
-		  				echo JHtml::_('image', 'com_jem/icon-48-update.png', NULL, NULL, true);
+		  				echo JHtml::_('image', 'com_jem/icon-48-update.png', null, null, true);
 		  			}
 		  		?>
 		  		</td>
 		  		<td>
 		  		<?php
-		  			if ($this->updatedata->current == 0) {
-		  				echo '<b><font color="green">'.JText::_('COM_JEM_UPDATECHECK_LATEST_VERSION').'</font></b>';
-		  			} elseif( $this->updatedata->current == -1 ) {
-		  				echo '<b><font color="red">'.JText::_('COM_JEM_UPDATECHECK_OLD_VERSION').'</font></b>';
+                    if ($this->updatedata->current == 0) {
+                        echo '<b><font color="green">'.JText::_('COM_JEM_UPDATECHECK_LATEST_VERSION').'</font></b>';
+                    } elseif( $this->updatedata->current == -1 ) {
+                        echo '<b><font color="red">'.JText::_('COM_JEM_UPDATECHECK_OLD_VERSION').'</font></b>';
 		  			} else {
 		  				echo '<b><font color="orange">'.JText::_('COM_JEM_UPDATECHECK_NEWER_VERSION').'</font></b>';
 		  			}

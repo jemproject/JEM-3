@@ -29,12 +29,12 @@ class JemViewAttendee extends JViewLegacy {
 		JHtml::_('stylesheet', 'com_jem/backend.css', array(), true);
 
 		// Get data from the model
-		$this->item	 = $this->get('Item');
-		$this->form	 = $this->get('Form');
+		$this->item = $this->get('Item');
+        $this->form = $this->get('Form');
 
 		// build selectlists
 		$lists = array();
-		$lists['users'] = JHtml::_('list.users', 'uid', $this->item->uid, false, NULL, 'name', 0);
+		$lists['users'] = JHtml::_('list.users', 'uid', $this->item->uid, false, null, 'name', 0);
 
 		// assign data to template
 		$this->lists 	= $lists;

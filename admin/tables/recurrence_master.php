@@ -13,7 +13,8 @@ defined('_JEXEC') or die;
  */
 class JEMTableRecurrence_master extends JTable
 {
-	public function __construct(&$db) {
+	public function __construct(&$db)
+	{
 		parent::__construct('#__jem_recurrence_master', 'id', $db);
 	}
 

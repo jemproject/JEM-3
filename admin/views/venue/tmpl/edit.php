@@ -16,7 +16,7 @@ JHtml::_('behavior.modal', 'a.modal');
 $params = $this->state->get('params');
 $params = $params->toArray();
 
-# defining values for centering default-map
+// defining values for centering default-map
 $location = JemHelper::defineCenterMap($this->form);
 $mapType = $this->mapType;
 

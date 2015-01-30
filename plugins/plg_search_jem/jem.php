@@ -317,7 +317,7 @@ class plgSearchJEM extends JPlugin
 			}
 
 			return $results;
-		} else if ( $count == 1 ) {
+		} elseif ( $count == 1 ) {
 			return $rows[0];
 		}
 	}

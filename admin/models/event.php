@@ -30,12 +30,9 @@ class JemModelEvent extends JModelAdmin
 		JPluginHelper::importPlugin('content');
 
 		// Iterate the items to delete each one.
-		foreach ($pks as $i => $pk)
-		{
-			if ($table->load($pk))
-			{
-				if ($this->canDelete($table))
-				{
+        foreach ($pks as $i => $pk) {
+            if ($table->load($pk)) {
+                if ($this->canDelete($table)) {
 
 					#####################################################
 					## check if the event is part of a recurrence-set  ##
@@ -463,10 +460,10 @@ class JemModelEvent extends JModelAdmin
 		// StartTime
 		if ($starthours != '' && $startminutes != '') {
 			$table->times = $starthours.':'.$startminutes;
-		} else if ($starthours != '' && $startminutes == '') {
+		} elseif ($starthours != '' && $startminutes == '') {
 			$startminutes = "00";
 			$table->times = $starthours.':'.$startminutes;
-		} else if ($starthours == '' && $startminutes != '') {
+		} elseif ($starthours == '' && $startminutes != '') {
 			$starthours = "00";
 			$table->times = $starthours.':'.$startminutes;
 		} else {
@@ -476,10 +473,10 @@ class JemModelEvent extends JModelAdmin
 		// EndTime
 		if ($endhours != '' && $endminutes != '') {
 			$table->endtimes = $endhours.':'.$endminutes;
-		} else if ($endhours != '' && $endminutes == '') {
+		} elseif ($endhours != '' && $endminutes == '') {
 			$endminutes = "00";
 			$table->endtimes = $endhours.':'.$endminutes;
-		} else if ($endhours == '' && $endminutes != '') {
+		} elseif ($endhours == '' && $endminutes != '') {
 			$endhours = "00";
 			$table->endtimes = $endhours.':'.$endminutes;
 		} else {

@@ -24,8 +24,9 @@ class JEMTableVenues extends JTable
 	public function bind($array, $ignore = ''){
 		// in here we are checking for the empty value of the checkbox
 
-		if (!isset($array['map']))
+		if (!isset($array['map'])) {
 			$array['map'] = 0 ;
+		}
 
 		//don't override without calling base class
 		return parent::bind($array, $ignore);

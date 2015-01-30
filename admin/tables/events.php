@@ -13,14 +13,16 @@ defined('_JEXEC') or die;
  */
 class JemTableEvents extends JTable
 {
-	public function __construct(&$db) {
+	public function __construct(&$db)
+    {
 		parent::__construct('#__jem_events', 'id', $db);
-	}
+    }
 
 	/**
 	 * Overloaded bind method for the Event table.
 	 */
-	public function bind($array, $ignore = ''){
+	public function bind($array, $ignore = '')
+	{
 
 		// in here we are checking for the empty value of the checkbox
 

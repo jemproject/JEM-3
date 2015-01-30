@@ -229,7 +229,7 @@ class JemHelper {
 			finfo_close($finfo);
 			return $mimetype;
 		}
-		else if (function_exists('mime_content_type') && 0)
+		elseif (function_exists('mime_content_type') && 0)
 		{
 			return mime_content_type($filename);
 		}

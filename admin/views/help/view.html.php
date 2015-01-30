@@ -11,15 +11,15 @@ defined('_JEXEC') or die;
 /**
  * View: Help
  */
-class JEMViewHelp extends JViewLegacy {
+class JEMViewHelp extends JViewLegacy
+{
+    protected $help_search = null;
+    protected $page = null;
+    protected $lang_tag = null;
+    protected $toc = null;
 
-	protected $help_search = null;
-	protected $page = null;
-	protected $lang_tag = null;
-	protected $toc = null;
-
-	public function display($tpl = null) {
-
+    public function display($tpl = null)
+    {
 		$this->help_search			= $this->get('HelpSearch');
 		$this->page					= $this->get('Page');
 		$this->toc					= $this->get('Toc');
@@ -32,7 +32,7 @@ class JEMViewHelp extends JViewLegacy {
 		$this->addToolbar();
 
 		parent::display($tpl);
-	}
+    }
 
 	/**
 	 * Add Toolbar

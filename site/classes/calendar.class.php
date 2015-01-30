@@ -630,13 +630,13 @@ class JEMCalendar {
 			} else {
 				$out="<td class=\"".$this->eventID."\"><div class=\"daynum\">".$linktext.'</div>'.$eventContent."</td>";
 			}
-		} else if ($var==$this->selectedday && $this->actmonth==$this->selectedmonth && $this->actyear==$this->selectedyear) {
+		} elseif ($var==$this->selectedday && $this->actmonth==$this->selectedmonth && $this->actyear==$this->selectedyear) {
 			$out="<td class=\"".$this->cssSelecDay."\"><div class=\"daynum\">".$linktext.'</div>'.$eventContent."</td>";
-		} else if ($var==$this->daytoday && $this->actmonth==$this->monthtoday && $this->actyear==$this->yeartoday) {
+		} elseif ($var==$this->daytoday && $this->actmonth==$this->monthtoday && $this->actyear==$this->yeartoday) {
 			$out="<td class=\"".$this->cssToday.   "\"><div class=\"daynum\">".$linktext.'</div>'.$eventContent."</td>";
-		} else if ($this->getWeekday($var)==0 && $this->crSunClass) {
+		} elseif ($this->getWeekday($var)==0 && $this->crSunClass) {
 			$out="<td class=\"".$this->cssSunday.  "\"><div class=\"daynum\">".$linktext.'</div>'.$eventContent."</td>";
-		} else if ($this->getWeekday($var)==6 && $this->crSatClass) {
+		} elseif ($this->getWeekday($var)==6 && $this->crSatClass) {
 			$out="<td class=\"".$this->cssSaturday."\"><div class=\"daynum\">".$linktext.'</div>'.$eventContent."</td>";
 		} else {
 			$out="<td class=\"".$this->cssMonthDay."\"><div class=\"daynum\">".$linktext.'</div>'.$eventContent."</td>";
@@ -684,9 +684,9 @@ class JEMCalendar {
 		$hasContent=$this->hasEventContent($var);
 		$out="";
 		if ($hasContent) {
-			for ($x=0;$x<count($hasContent);$x++) {
-				foreach($hasContent[$x] as $eventContentid => $eventContentData) {
-					foreach($eventContentData as $eventContentUrl => $eventContent) {
+			for ($x=0; $x<count($hasContent); $x++) {
+				foreach ($hasContent[$x] as $eventContentid => $eventContentData) {
+					foreach ($eventContentData as $eventContentUrl => $eventContent) {
 						$out.="<table class=\"".$eventContentid."\">";
 						if (is_string($eventContent)) {
 							if (is_int($eventContentUrl)) {
@@ -694,8 +694,8 @@ class JEMCalendar {
 							} else {
 								$out.="<tr><td><a href=\"".$eventContentUrl."\">".$eventContent."</a></td></tr></table>";
 							}
-						} else if (is_array($eventContent)) {
-							foreach($eventContent as $arrayContent) {
+						} elseif (is_array($eventContent)) {
+							foreach ($eventContent as $arrayContent) {
 								if (is_int($eventContentUrl)) {
 									$out.="<tr><td>".$arrayContent."</td></tr>";
 								} else {

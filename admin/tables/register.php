@@ -17,21 +17,22 @@ class JEMTableRegister extends JTable
 	 * Primary Key
 	 * @var int
 	 */
-	var $id 		= null;
+    var $id 		= null;
 	/** @var int */
-	var $event 		= null;
+    var $event 		= null;
 	/** @var int */
-	var $uid 		= null;
+    var $uid 		= null;
 	/** @var date */
-	var $uregdate 	= null;
+    var $uregdate 	= null;
 	/** @var string */
-	var $uip 		= null;
+    var $uip 		= null;
 	/** @var int */
-	var $waiting 	= 0;
+    var $waiting 	= 0;
 
-	public function __construct(& $db) {
-		parent::__construct('#__jem_register', 'id', $db);
-	}
+    public function __construct(& $db)
+    {
+        parent::__construct('#__jem_register', 'id', $db);
+    }
 
 	/**
 	 * try to insert first, update if fails

@@ -11,9 +11,11 @@ defined('_JEXEC') or die;
 /**
  * View: Import
  */
-class JEMViewImport extends JViewLegacy {
+class JEMViewImport extends JViewLegacy
+{
 
-	public function display($tpl = null) {
+    public function display($tpl = null)
+	{
 		//Load pane behavior
 		//jimport('joomla.html.pane');
 

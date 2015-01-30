@@ -15,7 +15,7 @@ defined('_JEXEC') or die;
 	<legend><?php echo JText::_('COM_JEM_GLOBAL_PARAMETERS'); ?></legend>
 
 	<div class="span6">
-	<?php foreach ($this->form->getFieldset('globalparam') as $field): ?>
+	<?php foreach ($this->form->getFieldset('globalparam') as $field) : ?>
 		<div class="control-group">	
 			<div class="control-label"><?php echo $field->label; ?></div>
 			<div class="controls"><?php echo $field->input; ?></div>

@@ -25,10 +25,10 @@ class JFormFieldModal_Event extends JFormField
 	{
 		$allowClear		= ((string) $this->element['clear'] != 'false') ? true : false;
 
-		# Load the modal behavior script.
+		// Load the modal behavior script.
 		JHtml::_('behavior.modal', 'a.flyermodal');
 
-		# Build the script
+		// Build the script
 		$script = array();
 		$script[] = '    function jSelectEvent_'.$this->id.'(id, event, object) {';
 		$script[] = '        document.id("'.$this->id.'_id").value = id;';

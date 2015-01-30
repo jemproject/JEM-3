@@ -72,7 +72,7 @@ JHtml::_('bootstrap.tooltip');
 			
 			foreach ($this->items as $i => $row) :
 			
-			if (!$row->date_range){
+			if (!$row->date_range) {
 			
 			?>
 			<tr class="row<?php echo $i % 2; ?>">

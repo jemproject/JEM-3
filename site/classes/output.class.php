@@ -659,8 +659,8 @@ class JEMOutput {
 
 		if ($view == 'event') {
 			$mapserv	= $params->get('event_show_mapserv');
-		} else if ($view == 'venues') {
-			# @todo check
+		} elseif ($view == 'venues') {
+			// @todo check
 			$mapserv	= $params->get('show_mapserv');
 		} else {
 			$mapserv	= $params->get('show_mapserv');

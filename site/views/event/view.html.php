@@ -222,9 +222,9 @@ class JemViewEvent extends JEMView
 		//is the user allready registered at the event
 		if ($isregistered) {
 			$formhandler = 3;
-		} else if ($timecheck > 0 && !is_null($item->dates)) { //check if it is too late to register and overwrite $formhandler
+		} elseif ($timecheck > 0 && !is_null($item->dates)) { //check if it is too late to register and overwrite $formhandler
 			$formhandler = 1;
-		} else if (!$user->get('id')) { //is the user registered at joomla and overwrite $formhandler if not
+		} elseif (!$user->get('id')) { //is the user registered at joomla and overwrite $formhandler if not
 			$formhandler = 2;
 		} else {
 			$formhandler = 4;

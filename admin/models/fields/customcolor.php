@@ -25,14 +25,13 @@ class JFormFieldCustomColor extends JFormField
 	protected function getInput()
 	{
 		// Initialize field attributes.
-		$size = $this->element['size'] ? ' size="' . (int) $this->element['size'] . '"' : '';
-		$classes = (string) $this->element['class'];
-		$disabled = ((string) $this->element['disabled'] == 'true') ? ' disabled="disabled"' : '';
+        $size = $this->element['size'] ? ' size="' . (int) $this->element['size'] . '"' : '';
+        $classes = (string) $this->element['class'];
+        $disabled = ((string) $this->element['disabled'] == 'true') ? ' disabled="disabled"' : '';
 
-		if (!$disabled)
-		{
-			$classes .= ' colorpicker';
-		}
+        if (!$disabled) {
+            $classes .= ' colorpicker';
+        }
 
 		// load script.
 		$script = array();
