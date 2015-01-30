@@ -17,13 +17,13 @@ class JemTableCategories extends JTableNested
 {
 
 	public function __construct(JDatabaseDriver $db)
-	{
+    {
 		parent::__construct('#__jem_categories', 'id', $db);
 
 		if (self::addRoot() !== false) {
 			return;
 		}
-	}
+    }
 
 	/**
 	 * Method to delete a node and, optionally, its child nodes from the table.

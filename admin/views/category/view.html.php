@@ -17,7 +17,7 @@ class JemViewCategory extends JViewLegacy
 	protected $item;
 	protected $state;
 
-	/**
+    /**
 	 * Display the view
 	 */
 	public function display($tpl = null)

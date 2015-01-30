@@ -11,14 +11,14 @@ defined('_JEXEC') or die;
 /**
  * View: Groups
  */
- class JEMViewGroups extends JViewLegacy {
-
+class JEMViewGroups extends JViewLegacy
+{
 	protected $items;
 	protected $pagination;
 	protected $state;
 
-	public function display($tpl = null)
-	{
+    public function display($tpl = null)
+    {
 		$user 		= JFactory::getUser();
 		$jemsettings = JEMAdmin::config();
 

@@ -11,8 +11,8 @@ defined('_JEXEC') or die;
 /**
  * View: Updatecheck
  */
-class JEMViewUpdatecheck extends JViewLegacy {
-
+class JEMViewUpdatecheck extends JViewLegacy
+{
 	public function display($tpl = null)
 	{
 		//Get data from the model

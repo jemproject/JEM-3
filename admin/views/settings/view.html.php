@@ -11,13 +11,14 @@ defined('_JEXEC') or die;
 /**
  * View: Settings
  */
-class JEMViewSettings extends JViewLegacy {
-
+class JEMViewSettings extends JViewLegacy
+{
 	protected $form;
 	protected $data;
 	protected $state;
 
-	public function display($tpl = null) {
+	public function display($tpl = null)
+	{
 		$form	= $this->get('Form');
 		$data	= $this->get('Data');
 		$state	= $this->get('State');
@@ -27,20 +28,20 @@ class JEMViewSettings extends JViewLegacy {
 		$document 	= JFactory::getDocument();
 
 		// Load css
-		JHtml::_('stylesheet', 'com_jem/backend.css', array(), true);
-		JHtml::_('stylesheet', 'com_jem/colorpicker.css', array(), true);
+        JHtml::_('stylesheet', 'com_jem/backend.css', array(), true);
+        JHtml::_('stylesheet', 'com_jem/colorpicker.css', array(), true);
 
-		$style = '
+        $style = '
 		    div.current fieldset.radio input {
 		        cursor: pointer;
 		    }';
 		$document->addStyleDeclaration($style);
 
-		// Check for model errors.
-		if ($errors = $this->get('Errors')) {
-			JError::raiseError(500, implode('<br />', $errors));
-			return false;
-		}
+        // Check for model errors.
+        if ($errors = $this->get('Errors')) {
+            JError::raiseError(500, implode('<br />', $errors));
+            return false;
+        }
 
 		// Bind the form to the data.
 		if ($form && $data) {

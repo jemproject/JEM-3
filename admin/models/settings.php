@@ -25,11 +25,11 @@ class JEMModelSettings extends JModelForm
 	{
 		// Get the form.
 		$form = $this->loadForm('com_jem.settings', 'settings', array('control' => 'jform', 'load_data' => $loadData));
-		if (empty($form)) {
-			return false;
-		}
+        if (empty($form)) {
+            return false;
+        }
 
-		return $form;
+        return $form;
 	}
 
 	/**

@@ -38,19 +38,19 @@ defined('_JEXEC') or die;
 						$meta_key = explode(", ", $this->data->meta_keywords);
 					?>
 					<select name="meta_keywords[]" multiple="multiple" size="5" class="inputbox" id="jform_meta_keywords">
-						<option value="[title]" <?php if(in_array("[title]",$meta_key)) { echo "selected=\"selected\""; } ?>>
+						<option value="[title]" <?php if (in_array("[title]",$meta_key)) { echo "selected=\"selected\""; } ?>>
 						<?php echo JText::_('COM_JEM_EVENT_TITLE'); ?></option>
-						<option value="[a_name]" <?php if(in_array("[a_name]",$meta_key)) { echo "selected=\"selected\""; } ?>>
+						<option value="[a_name]" <?php if (in_array("[a_name]",$meta_key)) { echo "selected=\"selected\""; } ?>>
 						<?php echo JText::_('COM_JEM_VENUE'); ?></option>
-						<!-- <option value="[locid]" <?php if(in_array("[locid]",$meta_key)) { echo "selected=\"selected\""; } ?>>
+						<!-- <option value="[locid]" <?php if (in_array("[locid]",$meta_key)) { echo "selected=\"selected\""; } ?>>
 						<?php echo JText::_('COM_JEM_CITY'); ?></option> -->
-						<option value="[dates]" <?php if(in_array("[dates]",$meta_key)) { echo "selected=\"selected\""; } ?>>
+						<option value="[dates]" <?php if (in_array("[dates]",$meta_key)) { echo "selected=\"selected\""; } ?>>
 						<?php echo JText::_('COM_JEM_DATE'); ?></option>
-						<option value="[times]" <?php if(in_array("[times]",$meta_key)) { echo "selected=\"selected\""; } ?>>
+						<option value="[times]" <?php if (in_array("[times]",$meta_key)) { echo "selected=\"selected\""; } ?>>
 						<?php echo JText::_('COM_JEM_EVENT_TIME'); ?></option>
-						<option value="[enddates]" <?php if(in_array("[enddates]",$meta_key)) { echo "selected=\"selected\""; } ?>>
+						<option value="[enddates]" <?php if (in_array("[enddates]",$meta_key)) { echo "selected=\"selected\""; } ?>>
 						<?php echo JText::_('COM_JEM_ENDDATE'); ?></option>
-						<option value="[endtimes]" <?php if(in_array("[endtimes]",$meta_key)) { echo "selected=\"selected\""; } ?>>
+						<option value="[endtimes]" <?php if (in_array("[endtimes]",$meta_key)) { echo "selected=\"selected\""; } ?>>
 						<?php echo JText::_('COM_JEM_END_TIME'); ?></option>
 					</select>
 				</div>

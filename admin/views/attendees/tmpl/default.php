@@ -40,7 +40,7 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 					<?php
 					// @todo: use helper functions
 					
-					$text	= JHtml::_('image','com_jem/export_excel.png', JText::_('COM_JEM_EXPORT_FILE'), NULL, true).' '.JText::_('COM_JEM_EXPORT_FILE');
+					$text	= JHtml::_('image','com_jem/export_excel.png', JText::_('COM_JEM_EXPORT_FILE'), null, true).' '.JText::_('COM_JEM_EXPORT_FILE');
 					$status = 'status=no,toolbar=no,scrollbars=yes,titlebar=no,menubar=no,resizable=yes,width=800,height=480,directories=no,location=no';
 					$print_link = 'index.php?option=com_jem&amp;task=attendees.export&amp;tmpl=raw&amp;eid='.$this->eventid;
 						
@@ -56,7 +56,7 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 					echo $output;
 					
 
-					$text	= JHtml::_('image','system/printButton.png', JText::_('COM_JEM_PRINT'), NULL, true).' '.JText::_('COM_JEM_PRINT');
+					$text	= JHtml::_('image','system/printButton.png', JText::_('COM_JEM_PRINT'), null, true).' '.JText::_('COM_JEM_PRINT');
 					$status = 'status=no,toolbar=no,scrollbars=yes,titlebar=no,menubar=no,resizable=yes,width=800,height=480,directories=no,location=no';
 					$print_link = 'index.php?option=com_jem&amp;view=attendees&amp;layout=print&amp;tmpl=component&amp;eid='.$this->eventid;
 					

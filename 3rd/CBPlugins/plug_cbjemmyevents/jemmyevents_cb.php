@@ -9,9 +9,8 @@
  * Try to keep the query code inline with my-attending view
  *
  */
-if (! (defined('_VALID_CB') || defined('_JEXEC') || defined('_VALID_MOS')))
-{
-	die();
+if (! (defined('_VALID_CB') || defined('_JEXEC') || defined('_VALID_MOS'))) {
+    die();
 }
 
 @include_once (JPATH_SITE.'/components/com_jem/classes/image.class.php');
@@ -41,7 +40,7 @@ class jemmyeventsTab extends cbTabHandler {
 	 * Retrieve the languagefile
 	 * The file is located in the folder language
 	 */
-	function _getLanguageFile() {
+    function _getLanguageFile() {
 		global $_CB_framework;
 		$UElanguagePath=$_CB_framework->getCfg('absolute_path').'/components/com_comprofiler/plugin/user/plug_cbjemmyevents';
 		if (file_exists($UElanguagePath.'/language/'.$_CB_framework->getCfg('lang').'.php')) {

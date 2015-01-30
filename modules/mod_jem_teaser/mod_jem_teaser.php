@@ -14,11 +14,11 @@ defined('_JEXEC') or die;
 require_once(dirname(__FILE__).'/helper.php');
 
 //require needed component classes
-require_once(JPATH_SITE.'/components/com_jem/helpers/helper.php');
-require_once(JPATH_SITE.'/components/com_jem/helpers/route.php');
-require_once(JPATH_SITE.'/components/com_jem/classes/image.class.php');
-require_once(JPATH_SITE.'/components/com_jem/classes/Zebra_Image.php');
-require_once(JPATH_SITE.'/components/com_jem/classes/output.class.php');
+require_once JPATH_SITE . '/components/com_jem/helpers/helper.php';
+require_once JPATH_SITE . '/components/com_jem/helpers/route.php';
+require_once JPATH_SITE . '/components/com_jem/classes/image.class.php';
+require_once JPATH_SITE . '/components/com_jem/classes/Zebra_Image.php';
+require_once JPATH_SITE . '/components/com_jem/classes/output.class.php';
 
 $paramsdatemethod = $params->get('datemethod', 1);
 $paramsuse_modal = $params->get('use_modal', 0);

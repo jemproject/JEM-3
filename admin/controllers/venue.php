@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
  */
 class JemControllerVenue extends JControllerForm
 {
-	/**
+    /**
 	 * @var    string  The prefix to use with controller messages.
 	 *
 	 */

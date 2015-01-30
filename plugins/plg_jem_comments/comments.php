@@ -50,7 +50,7 @@ class plgJEMComments extends JPlugin
 		//jcomments integration
 		if ($this->params->get('commentsystem') == 1) {
 			if (file_exists(JPATH_SITE.'/components/com_jcomments/jcomments.php')) {
-				require_once(JPATH_SITE.'/components/com_jcomments/jcomments.php');
+				require_once JPATH_SITE . '/components/com_jcomments/jcomments.php';
 				$res .= '<div class="jcomments">';
 				$res .= JComments::showComments($event_id, 'com_jem', $event_title);
 				$res .= '</div>';

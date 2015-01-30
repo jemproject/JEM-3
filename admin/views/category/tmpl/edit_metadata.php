@@ -22,7 +22,7 @@ defined('_JEXEC') or die;
 
 	<?php foreach($this->form->getGroup('metadata') as $field): ?>
 		<div class="control-group">
-		<?php if ($field->hidden): ?>
+		<?php if ($field->hidden) : ?>
 			<div class="controls"><?php echo $field->input; ?></div>
 		<?php else: ?>
 			<div class="control-label"><?php echo $field->label; ?></div>

@@ -21,7 +21,7 @@ abstract class JemAttachment {
 	static function postUpload($post_files, $object) {
 		jimport('joomla.filesystem.file');
 		jimport('joomla.filesystem.folder');
-		require_once JPATH_SITE.'/components/com_jem/classes/image.class.php';
+		require_once JPATH_SITE . '/components/com_jem/classes/image.class.php';
 
 		$user = JFactory::getUser();
 		$jemsettings = JemHelper::config();

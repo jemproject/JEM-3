@@ -13,24 +13,24 @@ defined('_JEXEC') or die;
  */
 class JEMTableDates extends JTable
 {
-	public function __construct(&$db) {
+	public function __construct(&$db)
+    {
 		parent::__construct('#__jem_dates', 'id', $db);
-	}
+    }
 
 	/**
 	 * Bind.
 	 */
-	public function bind($array, $ignore = ''){
-
-
+	public function bind($array, $ignore = '')
+	{
 		return parent::bind($array, $ignore);
 	}
 
 	/**
 	 * Check
 	 */
-	function check() {
-
+	function check()
+	{
 		return true;
 	}
 

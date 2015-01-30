@@ -11,14 +11,15 @@ defined('_JEXEC') or die;
 /**
  * View: Events
  */
- class JEMViewEvents extends JViewLegacy {
+class JEMViewEvents extends JViewLegacy
+{
 
 	protected $items;
 	protected $pagination;
 	protected $state;
 
-	public function display($tpl = null)
-	{
+    public function display($tpl = null)
+    {
 		$user 		= JFactory::getUser();
 		$document	= JFactory::getDocument();
 		$settings 	= JEMHelper::globalattribs();

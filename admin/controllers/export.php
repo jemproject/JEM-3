@@ -28,9 +28,9 @@ class JemControllerExport extends JControllerAdmin {
 
 			if (strpos($task,'table_sql') !== false) {
 
-				$this->registerTask($task,'export_table_sql');
+				$this->registerTask($task, 'export_table_sql');
 			} else {
-				$this->registerTask($task,'export_table');
+				$this->registerTask($task, 'export_table');
 			}
 		}
 	}

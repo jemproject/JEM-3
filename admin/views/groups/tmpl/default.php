@@ -18,10 +18,9 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 $canOrder	= $user->authorise('core.edit.state', 'com_jem.category');
 $saveOrder	= $listOrder=='a.ordering';
 
-if ($saveOrder)
-{
-	$saveOrderingUrl = 'index.php?option=com_jem&task=groups.saveOrderAjax&tmpl=component';
-	JHtml::_('sortablelist.sortable', 'eventList', 'adminForm', strtolower($listDirn), $saveOrderingUrl);
+if ($saveOrder) {
+    $saveOrderingUrl = 'index.php?option=com_jem&task=groups.saveOrderAjax&tmpl=component';
+    JHtml::_('sortablelist.sortable', 'eventList', 'adminForm', strtolower($listDirn), $saveOrderingUrl);
 }
 
 $params		= (isset($this->state->params)) ? $this->state->params : new JObject();

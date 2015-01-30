@@ -22,10 +22,9 @@ $trashed	= $this->state->get('filter.published') == -2 ? true : false;
 
 $saveOrder	= $listOrder == 'a.ordering';
 
-if ($saveOrder)
-{
-	$saveOrderingUrl = 'index.php?option=com_jem&task=events.saveOrderAjax&tmpl=component';
-	JHtml::_('sortablelist.sortable', 'eventList', 'adminForm', strtolower($listDirn), $saveOrderingUrl);
+if ($saveOrder) {
+    $saveOrderingUrl = 'index.php?option=com_jem&task=events.saveOrderAjax&tmpl=component';
+    JHtml::_('sortablelist.sortable', 'eventList', 'adminForm', strtolower($listDirn), $saveOrderingUrl);
 }
 
 $params		= (isset($this->state->params)) ? $this->state->params : new JObject();

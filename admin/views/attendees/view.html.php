@@ -21,10 +21,10 @@ class JemViewAttendees extends JViewLegacy {
 	{
 		$app = JFactory::getApplication();
 
-		if($this->getLayout() == 'print') {
-			$this->_displayprint($tpl);
-			return;
-		}
+        if ($this->getLayout() == 'print') {
+            $this->_displayprint($tpl);
+            return;
+        }
 
 		// Load css
 		JHtml::_('stylesheet', 'com_jem/backend.css', array(), true);

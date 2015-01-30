@@ -11,27 +11,27 @@ defined('_JEXEC') or die;
 /**
  * Model: Import
  */
-class JEMModelImport extends JModelLegacy {
-
+class JEMModelImport extends JModelLegacy
+{
 	private $prefix 	= "#__";
 	private $jemprefix	= "#__";
 
 	/**
 	 * Constructor
 	 */
-	public function __construct() {
-
+	public function __construct()
+	{
 		$jinput 		= JFactory::getApplication()->input;
 
 		$this->prefix	= $jinput->get('prefix', '#__', 'CMD');
-		if($this->prefix == "") {
+        if ($this->prefix == "") {
 			$this->prefix = '#__';
 		}
 
-		$this->jemprefix	= $jinput->get('jem_prefix', '#__', 'CMD');
-		if($this->jemprefix == "") {
-			$this->jemprefix = '#__';
-		}
+        $this->jemprefix = $jinput->get('jem_prefix', '#__', 'CMD');
+        if ($this->jemprefix == "") {
+            $this->jemprefix = '#__';
+        }
 
 		parent::__construct();
 	}

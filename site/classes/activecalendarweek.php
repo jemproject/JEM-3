@@ -18,7 +18,7 @@
 */
 defined('_JEXEC') or die;
 
-require_once('calendar.class.php');
+require_once 'calendar.class.php';
 
 class ActiveCalendarWeek extends JEMCalendar {
 	/*

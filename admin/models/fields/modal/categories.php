@@ -25,10 +25,10 @@ class JFormFieldModal_Categories extends JFormField
 	{
 		$allowClear		= ((string) $this->element['clear'] != 'false') ? true : false;
 
-		# Load the modal behavior script.
+		// Load the modal behavior script.
 		JHtml::_('behavior.modal', 'a.flyermodal');
 
-		# Build the script.
+		// Build the script.
 		$script = array();
 		$script[] = '    function jSelectCategory_'.$this->id.'(id, category, object) {';
 		$script[] = '		document.id("'.$this->id.'_id").value = id;';
@@ -36,7 +36,7 @@ class JFormFieldModal_Categories extends JFormField
 		$script[] = '		SqueezeBox.close();';
 		$script[] = '	}';
 
-		# Clear button script
+		// Clear button script
 		static $scriptClear;
 
 		if ($allowClear && !$scriptClear)

@@ -11,9 +11,10 @@ defined('_JEXEC') or die;
 /**
  * View: Main
  */
-class JEMViewMain extends JViewLegacy {
+class JEMViewMain extends JViewLegacy
+{
 
-	public function display($tpl = null)
+    public function display($tpl = null)
 	{
 		//initialise variables
 		$document	= JFactory::getDocument();

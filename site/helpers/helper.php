@@ -229,7 +229,7 @@ class JemHelper {
 			finfo_close($finfo);
 			return $mimetype;
 		}
-		else if (function_exists('mime_content_type') && 0)
+		elseif (function_exists('mime_content_type') && 0)
 		{
 			return mime_content_type($filename);
 		}
@@ -915,7 +915,7 @@ class JemHelper {
 	static function generate_events($table,$exdates=false,$holidays=false)
 	{
 		# include route
-		require_once (JPATH_COMPONENT_SITE.'/helpers/route.php');
+		require_once JPATH_COMPONENT_SITE . '/helpers/route.php';
 
 		$jemsettings			= JemHelper::config();
 		$weekstart 				= $jemsettings->weekdaystart;
@@ -1524,7 +1524,7 @@ class JemHelper {
 	 */
 	static function getCalendarTool()
 	{
-		require_once JPATH_SITE.'/components/com_jem/classes/iCalcreator.class.php';
+		require_once JPATH_SITE . '/components/com_jem/classes/iCalcreator.class.php';
 		$timezone_name 	= JemHelper::getTimeZoneName();
 		$config			= JFactory::getConfig();
 		$sitename		= $config->get('sitename');
@@ -1554,7 +1554,7 @@ class JemHelper {
 
 	static function icalAddEvent(&$calendartool, $event,$rows)
 	{
-		require_once JPATH_SITE.'/components/com_jem/classes/iCalcreator.class.php';
+		require_once JPATH_SITE . '/components/com_jem/classes/iCalcreator.class.php';
 		$jemsettings	= JemHelper::config();
 		$settings 		= JemHelper::globalattribs();
 		$config			= JFactory::getConfig();

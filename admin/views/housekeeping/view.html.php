@@ -11,9 +11,11 @@ defined('_JEXEC') or die;
 /**
  * View: Housekeeping
  */
-class JemViewHousekeeping extends JViewLegacy {
+class JemViewHousekeeping extends JViewLegacy
+{
 
-	public function display($tpl = null) {
+    public function display($tpl = null)
+    {
 
 		$app = JFactory::getApplication();
 

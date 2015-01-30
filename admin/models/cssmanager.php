@@ -14,24 +14,24 @@ jimport('joomla.filesystem.file');
  */
 class JemModelCssmanager extends JModelLegacy
 {
-	/**
+    /**
 	 * Internal method to get file properties.
 	 *
-	 * @param	string The base path.
-	 * @param	string The file name.
-	 * @return	object
+	 * @param string The base path.
+	 * @param string The file name.
+	 * @return object
 	 *
 	 */
-	protected function getFile($path, $name)
+    protected function getFile($path, $name)
 	{
-		$temp = new stdClass;
+        $temp = new stdClass;
 
-		$temp->name = $name;
-		$temp->exists = file_exists($path.$name);
-		$temp->id = urlencode(base64_encode($name));
+        $temp->name = $name;
+        $temp->exists = file_exists($path.$name);
+        $temp->id = urlencode(base64_encode($name));
 
-		if ($temp->exists) {
-			$ext =  JFile::getExt($path.$name);
+        if ($temp->exists) {
+            $ext =  JFile::getExt($path.$name);
 				if ($ext != 'css') {
 					# the file is valid but the extension not so let's return false
 					$temp->ext = false;
@@ -40,7 +40,7 @@ class JemModelCssmanager extends JModelLegacy
 				}
 		}
 
-		return $temp;
+        return $temp;
 	}
 
 	/**

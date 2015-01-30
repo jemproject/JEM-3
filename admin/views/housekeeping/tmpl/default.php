@@ -16,7 +16,7 @@ defined('_JEXEC') or die;
 		<td width="10%">
 			<div class="linkicon">
 				<a href="index.php?option=com_jem&amp;task=housekeeping.rmObsImages">
-					<?php echo JHtml::_('image', 'com_jem/icon-48-cleancategoryimg.png', JText::_('COM_JEM_HOUSEKEEPING_REMOVE_IMAGES'), NULL, true); ?>
+					<?php echo JHtml::_('image', 'com_jem/icon-48-cleancategoryimg.png', JText::_('COM_JEM_HOUSEKEEPING_REMOVE_IMAGES'), null, true); ?>
 					<span><?php echo JText::_('COM_JEM_HOUSEKEEPING_REMOVE_IMAGES'); ?></span>
 				</a>
 			</div>
@@ -28,7 +28,7 @@ defined('_JEXEC') or die;
 		<td width="10%">
 			<div class="linkicon">
 				<a href="index.php?option=com_jem&amp;task=housekeeping.triggerarchive">
-					<?php echo JHtml::_('image', 'com_jem/icon-48-archive.png', JText::_('COM_JEM_HOUSEKEEPING_TRIGGER_AUTOARCHIVE'), NULL, true); ?>
+					<?php echo JHtml::_('image', 'com_jem/icon-48-archive.png', JText::_('COM_JEM_HOUSEKEEPING_TRIGGER_AUTOARCHIVE'), null, true); ?>
 					<span><?php echo JText::_('COM_JEM_HOUSEKEEPING_TRIGGER_AUTOARCHIVE'); ?></span>
 				</a>
 			</div>
@@ -42,7 +42,7 @@ defined('_JEXEC') or die;
 		<td width="10%">
 			<div class="linkicon">
 				<a href="index.php?option=com_jem&amp;task=housekeeping.cleanupCatsEventRelations">
-					<?php echo JHtml::_('image', 'com_jem/icon-48-cleancategoryimg.png', JText::_('COM_JEM_HOUSEKEEPING_CATSEVENT_RELS'), NULL, true); ?>
+					<?php echo JHtml::_('image', 'com_jem/icon-48-cleancategoryimg.png', JText::_('COM_JEM_HOUSEKEEPING_CATSEVENT_RELS'), null, true); ?>
 					<span><?php echo JText::_('COM_JEM_HOUSEKEEPING_CLEANUP_CATSEVENT_RELS'); ?></span>
 				</a>
 			</div>
@@ -55,7 +55,7 @@ defined('_JEXEC') or die;
 		<td width="10%">
 			<div class="linkicon">
 				<a href="index.php?option=com_jem&amp;task=housekeeping.truncateAllData" onclick="javascript:return confirm('<?php echo JText::_('COM_JEM_HOUSEKEEPING_TRUNCATE_ALL_DATA_CONFIRM'); ?>');">
-					<?php echo JHtml::_('image', 'com_jem/icon-48-truncatealldata.png', JText::_('COM_JEM_HOUSEKEEPING_TRUNCATE_ALL_DATA'), NULL, true); ?>
+					<?php echo JHtml::_('image', 'com_jem/icon-48-truncatealldata.png', JText::_('COM_JEM_HOUSEKEEPING_TRUNCATE_ALL_DATA'), null, true); ?>
 					<span><?php echo JText::_('COM_JEM_HOUSEKEEPING_TRUNCATE_ALL_DATA'); ?></span>
 				</a>
 			</div>

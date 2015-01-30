@@ -32,8 +32,7 @@ class JEMModelHelp extends JModelLegacy
 	 */
 	public function &getHelpSearch()
 	{
-		if (is_null($this->help_search))
-		{
+		if (is_null($this->help_search)) {
 			$this->help_search = JFactory::getApplication()->input->getString('helpsearch');
 		}
 

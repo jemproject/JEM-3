@@ -13,7 +13,7 @@ $gdv = JEMImage::gdVersion();
 $group = 'globalattribs';
 ?>
 <fieldset class="form-horizontal">
-	<legend><?php echo JText::_( 'COM_JEM_IMAGE_HANDLING' ); ?></legend>
+	<legend><?php echo JText::_( 'COM_JEM_IMAGE_HANDLING' );?></legend>
 			
 		<div class="control-group">	
 			<div class="control-label"><?php echo $this->form->getLabel('sizelimit'); ?></div>

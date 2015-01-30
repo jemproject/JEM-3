@@ -11,10 +11,11 @@ defined('_JEXEC') or die;
 /**
  * View: Export
  */
-class JEMViewExport extends JViewLegacy {
+class JEMViewExport extends JViewLegacy
+{
 
-	public function display($tpl = null) {
-
+	public function display($tpl = null)
+	{
 		// Load pane behavior
 		jimport('joomla.html.pane');
 

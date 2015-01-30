@@ -172,7 +172,7 @@ jQuery( document ).ready(function( $ ) {
 		$eventdate = !empty($row->multistartdate) ? JemOutput::formatdate($row->multistartdate) : JemOutput::formatdate($row->dates);
 		if (!empty($row->multienddate)) {
 			$eventdate .= ' - ' . JemOutput::formatdate($row->multienddate);
-		} else if ($row->enddates && $row->dates < $row->enddates) {
+		} elseif ($row->enddates && $row->dates < $row->enddates) {
 			$eventdate .= ' - ' . JemOutput::formatdate($row->enddates);
 		}
 

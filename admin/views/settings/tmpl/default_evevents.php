@@ -13,11 +13,11 @@ $params = $params->toArray();
 // This checks if the config options have ever been saved. If they haven't they will fall back to the original settings.
 $editoroptions = isset($params['show_publishing_options']);
 
-if (!$editoroptions):
-$params['show_publishing_options'] = '1';
-$params['show_article_options'] = '1';
-$params['show_urls_images_backend'] = '0';
-$params['show_urls_images_frontend'] = '0';
+if (!$editoroptions) :
+    $params['show_publishing_options'] = '1';
+    $params['show_article_options'] = '1';
+    $params['show_urls_images_backend'] = '0';
+    $params['show_urls_images_frontend'] = '0';
 endif;
 
 defined('_JEXEC') or die;

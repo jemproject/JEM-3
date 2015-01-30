@@ -16,10 +16,10 @@ class JEMModelMain extends JModelLegacy
 	/**
 	 * Constructor
 	 */
-	public function __construct()
-	{
-		parent::__construct();
-	}
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
 	/**
 	 * Get number of items for given states of a table
@@ -31,16 +31,15 @@ class JEMModelMain extends JModelLegacy
 	{
 		$db = JFactory::getDbo();
 
-		if($map == null) {
-			$map = array('published' => 1, 'unpublished' => 0, 'archived' => 2, 'trashed' => -2);
-		}
+        if ($map == null) {
+            $map = array('published' => 1, 'unpublished' => 0, 'archived' => 2, 'trashed' => -2);
+        }
 
 		// Get nr of all states of events
 		$query = $db->getQuery(true);
 		$query->select(array('published', 'COUNT(published) as num'));
 		$query->from($tablename);
-		if ($tablename == "#__jem_categories")
-		{
+        if ($tablename == "#__jem_categories") {
 		    $query->where('alias NOT LIKE "root"');
 		}
 		$query->group('published');
