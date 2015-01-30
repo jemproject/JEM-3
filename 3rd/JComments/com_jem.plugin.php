@@ -14,18 +14,18 @@ defined('_JEXEC') or die;
 
 class jc_com_jem extends JCommentsPlugin
 {
-	function getObjectTitle($id)
+    function getObjectTitle($id)
 	{
-		$db = JFactory::getDbo();
-		$db->setQuery( 'SELECT title, id FROM #__jem_events WHERE id = ' . $id );
+        $db = JFactory::getDbo();
+        $db->setQuery( 'SELECT title, id FROM #__jem_events WHERE id = ' . $id );
 		return $db->loadResult();
 	}
 
-	function getObjectLink($id)
+    function getObjectLink($id)
 	{
 		$db = JFactory::getDBO();
 
-		$query = 'SELECT a.id, CASE WHEN CHAR_LENGTH(a.alias) THEN CONCAT_WS(\':\', a.id, a.alias) ELSE a.id END as slug'
+        $query = 'SELECT a.id, CASE WHEN CHAR_LENGTH(a.alias) THEN CONCAT_WS(\':\', a.id, a.alias) ELSE a.id END as slug'
 			. ' FROM #__jem_events AS a'
 			. ' WHERE id = ' . $id
 			;

@@ -9,8 +9,7 @@
  * Keep the query code inline with my-attendances view
  *
  */
-if (! (defined('_VALID_CB') || defined('_JEXEC') || defined('_VALID_MOS')))
-{
+if (! (defined('_VALID_CB') || defined('_JEXEC') || defined('_VALID_MOS'))) {
 	die();
 }
 
@@ -25,8 +24,9 @@ class jemmyattendingTab extends cbTabHandler {
 
 	protected $jemFound = false;
 
-	/* JEM Attending tab
-	 */
+	/**
+	 * JEM Attending tab
+     */
 	function __construct()
 	{
 		// Check if JEM is installed.
