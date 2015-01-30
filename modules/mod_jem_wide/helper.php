@@ -143,9 +143,10 @@ abstract class modJEMwideHelper
 
 			//cut titel
 			$length = mb_strlen($row->title);
+			$maxlength = $params->get('cuttitle', '18');
 
-			if ($length > $params->get('cuttitle', '25')) {
-				$row->title = mb_substr($row->title, 0, $params->get('cuttitle', '18'));
+			if ($length > $maxlength && $maxlength > 0) {
+				$row->title = mb_substr($row->title, 0, $maxlength);
 				$row->title = $row->title.'...';
 			}
 
@@ -206,15 +207,21 @@ abstract class modJEMwideHelper
 		$enddates_stamp		= $row->enddates ? strtotime($row->enddates) : null;
 
 		//if datemethod show day difference
-		if($params->get('datemethod', 1) == 2) {
+		if($params->get('datemethod', 1) == 2)
+		{
 			//check if today or tomorrow
-			if($row->dates == $today) {
+			if($row->dates == $today)
+			{
 				$date = JText::_('MOD_JEM_WIDE_TODAY');
 				$time = $row->times ? JEMOutput::formattime($row->times, null, false) : '';
-			} elseif($row->dates == $tomorrow) {
+			}
+			elseif($row->dates == $tomorrow)
+			{
 				$date = JText::_('MOD_JEM_WIDE_TOMORROW');
 				$time = $row->times ? JEMOutput::formattime($row->times, null, false) : '';
-			} elseif($row->dates == $yesterday) {
+			}
+			elseif($row->dates == $yesterday)
+			{
 				$date = JText::_('MOD_JEM_WIDE_YESTERDAY');
 				$time = $row->times ? JEMOutput::formattime($row->times, null, false) : '';
 
@@ -222,32 +229,43 @@ abstract class modJEMwideHelper
 			//adequate to use a different language string here.
 			//
 			//the event has an enddate and it's earlier than yesterday
-			} elseif($row->enddates && $enddates_stamp < $yesterday_stamp) {
+			}
+			elseif($row->enddates && $enddates_stamp < $yesterday_stamp)
+			{
 				$days = round(($today_stamp - $enddates_stamp) / 86400);
 				$date = JText::sprintf('MOD_JEM_WIDE_ENDED_DAYS_AGO', $days);
 				$time = $row->times ? JEMOutput::formattime($row->endtimes, null, false) : '';
 
 			//the event has an enddate and it's later than today but the startdate is earlier than today
 			//means a currently running event
-			} elseif($row->dates && $row->enddates && $enddates_stamp > $today_stamp && $dates_stamp < $today_stamp) {
+			}
+			elseif($row->dates && $row->enddates && $enddates_stamp > $today_stamp && $dates_stamp < $today_stamp)
+			{
 				$days = round(($today_stamp - $dates_stamp) / 86400);
 				$date = JText::sprintf('MOD_JEM_WIDE_STARTED_DAYS_AGO', $days);
 				$time = $row->times ? JEMOutput::formattime($row->times, null, false) : '';
 
 			//the events date is earlier than yesterday
-			} elseif($row->dates && $dates_stamp < $yesterday_stamp) {
+			}
+			elseif($row->dates && $dates_stamp < $yesterday_stamp)
+			{
 				$days = round(($today_stamp - $dates_stamp) / 86400);
 				$date = JText::sprintf('MOD_JEM_WIDE_DAYS_AGO', $days);
 				$time = $row->times ? JEMOutput::formattime($row->times, null, false) : '';
 
 			//the events date is later than tomorrow
-			} elseif($row->dates && $dates_stamp > $tomorrow_stamp) {
+			}
+			elseif($row->dates && $dates_stamp > $tomorrow_stamp)
+			{
 				$days = round(($dates_stamp - $today_stamp) / 86400);
 				$date = JText::sprintf('MOD_JEM_WIDE_DAYS_AHEAD', $days);
 				$time = $row->times ? JEMOutput::formattime($row->times, null, false) : '';
 			}
-		} else {
+		}
+		else
+		{
 			//Upcoming multidayevent (From 16.10.2008 Until 18.08.2008)
+
 			if($dates_stamp > $today_stamp && $enddates_stamp > $dates_stamp) {
 				$startdate = JEMOutput::formatdate($row->dates, $params->get('formatdate', '%d.%m.%Y') );
 				$enddate = JEMOutput::formatdate($row->enddates, $params->get('formatdate', '%d.%m.%Y') );
@@ -258,7 +276,9 @@ abstract class modJEMwideHelper
 			}
 
 			//current multidayevent (Until 18.08.2008)
-			elseif($row->enddates && $enddates_stamp > $today_stamp && $dates_stamp < $today_stamp) {
+
+			elseif($row->enddates && $enddates_stamp > $today_stamp && $dates_stamp < $today_stamp)
+			{
 				//format date
 				$date = JEMOutput::formatdate($row->enddates, $params->get('formatdate', '%d.%m.%Y') );
 				$date = JText::sprintf('MOD_JEM_WIDE_UNTIL', $date);
@@ -266,7 +286,9 @@ abstract class modJEMwideHelper
 			}
 
 			//single day event
-			else {
+
+			else
+			{
 				$date = JEMOutput::formatdate($row->dates, $params->get('formatdate', '%d.%m.%Y') );
 				$date = JText::sprintf('MOD_JEM_WIDE_ON_DATE', $date);
 				$time = $row->times ? JEMOutput::formattime($row->times, null, false) : '';
