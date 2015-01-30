@@ -21,7 +21,7 @@ class JemModelAttendee extends JModelAdmin
 	/**
 	 * Category data array
 	 */
-	pulic $_data = null;
+	public $_data = null;
 
 	/**
 	 * Constructor
