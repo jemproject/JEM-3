@@ -9,50 +9,52 @@
  * Keep the query code inline with my-attendances view
  *
  */
-if (! (defined('_VALID_CB') || defined('_JEXEC') || defined('_VALID_MOS'))) {
-	die();
-}
 
-@include_once (JPATH_SITE.'/components/com_jem/classes/image.class.php');
-@include_once (JPATH_SITE.'/components/com_jem/classes/output.class.php');
-@include_once (JPATH_SITE.'/components/com_jem/classes/Zebra_Image.php');
-@include_once (JPATH_SITE.'/components/com_jem/helpers/helper.php');
-@include_once (JPATH_SITE.'/components/com_jem/helpers/route.php');
+defined('_JEXEC') or die;
+
+include_once JPATH_SITE . '/components/com_jem/classes/image.class.php';
+include_once JPATH_SITE . '/components/com_jem/classes/output.class.php';
+include_once JPATH_SITE . '/components/com_jem/classes/Zebra_Image.php';
+include_once JPATH_SITE . '/components/com_jem/helpers/helper.php';
+include_once JPATH_SITE . '/components/com_jem/helpers/route.php';
 
 
-class jemmyattendingTab extends cbTabHandler {
+public class JemMyAttendingTab extends cbTabHandler
+{
+    protected $jemFound = false;
 
-	protected $jemFound = false;
-
-	/**
-	 * JEM Attending tab
+    /**
+     * JEM Attending tab
      */
-	function __construct()
-	{
-		// Check if JEM is installed.
-		$this->jemFound = class_exists('JemImage') && class_exists('JemOutput') && class_exists('JemHelperRoute');
+    function __construct()
+    {
+        // Check if JEM is installed.
+        $this->jemFound = class_exists('JemImage') && class_exists('JemOutput') && class_exists('JemHelperRoute');
 
-		$this->cbTabHandler();
-	}
+        $this->cbTabHandler();
+    }
 
 
-	/**
-	 * Retrieve the languagefile
-	 * The file is located in the folder language
-	 */
-	function _getLanguageFile() {
-		global $_CB_framework;
-		$UElanguagePath=$_CB_framework->getCfg('absolute_path').'/components/com_comprofiler/plugin/user/plug_cbjemmyattending';
-		if (file_exists($UElanguagePath.'/language/'.$_CB_framework->getCfg('lang').'.php')) {
-			include_once($UElanguagePath.'/language/'.$_CB_framework->getCfg('lang').'.php');
-		} else include_once($UElanguagePath.'/language/english.php');
-	}
+    /**
+     * Retrieve the languagefile
+     * The file is located in the folder language
+     */
+    public function _getLanguageFile() {
+        global $_CB_framework;
+
+        $UElanguagePath=$_CB_framework->getCfg('absolute_path').'/components/com_comprofiler/plugin/user/plug_cbjemmyattending';
+        if (file_exists($UElanguagePath.'/language/'.$_CB_framework->getCfg('lang').'.php')) {
+            include_once($UElanguagePath.'/language/'.$_CB_framework->getCfg('lang').'.php');
+        } else {
+			include_once($UElanguagePath.'/language/english.php');
+		}
+    }
 
 
 	/**
 	 * Display Tab
 	 */
-	function getDisplayTab($tab,$user,$ui) {
+	public function getDisplayTab($tab,$user,$ui) {
 		/* loading global variables */
 		global $_CB_database,$_CB_framework;
 
@@ -300,7 +302,7 @@ class jemmyattendingTab extends cbTabHandler {
 				 * a link to the venueevent is specified so people can visit the venue page
 				 */
 				if ($event_venue==1) {
-					$location = "<a href='".JRoute::_(JEMHelperRoute::getVenueRoute($result->locid))."'>{$result->venue}</a>";
+					$location = "<a href='" . JRoute::_(JEMHelperRoute::getVenueRoute($result->locid)) . "'>{$result->venue}</a>";
 					$return .= "\n\t\t\t<td class='jemmyattendingCBTabTableVenue'>";
 					$return .= "\n\t\t\t\t$location";
 					if (!empty($result->city)) {
@@ -336,7 +338,7 @@ class jemmyattendingTab extends cbTabHandler {
 			// When no data has been found the user will see a message
 
 			/* display no listings */
-			$return .= '<tr><td class="jemmyattendingCBTabTableTitle" span="9">'._JEMMYATTENDING_NO_LISTING.'</td></tr>';
+			$return .= '<tr><td class="jemmyattendingCBTabTableTitle" span="9">'._JEMMYATTENDING_NO_LISTING.'</td></tr>'; // TODO. set the right colspan or rowspan
 		}
 
 		/* closing tag of the table */

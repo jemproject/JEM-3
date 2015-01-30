@@ -9,19 +9,18 @@
  * Try to keep the query code inline with my-attending view
  *
  */
-if (! (defined('_VALID_CB') || defined('_JEXEC') || defined('_VALID_MOS'))) {
-    die();
-}
 
-@include_once (JPATH_SITE.'/components/com_jem/classes/image.class.php');
-@include_once (JPATH_SITE.'/components/com_jem/classes/Zebra_Image.php');
-@include_once (JPATH_SITE.'/components/com_jem/classes/output.class.php');
-@include_once (JPATH_SITE.'/components/com_jem/helpers/helper.php');
-@include_once (JPATH_SITE.'/components/com_jem/helpers/route.php');
+defined('_JEXEC') or die;
+
+include_once JPATH_SITE . '/components/com_jem/classes/image.class.php';
+include_once JPATH_SITE . '/components/com_jem/classes/Zebra_Image.php';
+include_once JPATH_SITE . '/components/com_jem/classes/output.class.php';
+include_once JPATH_SITE . '/components/com_jem/helpers/helper.php';
+include_once JPATH_SITE . '/components/com_jem/helpers/route.php';
 
 
-class jemmyeventsTab extends cbTabHandler {
-
+public class JemMyEventsTab extends cbTabHandler
+{
 	protected $jemFound = false;
 
 	/**
@@ -40,7 +39,8 @@ class jemmyeventsTab extends cbTabHandler {
 	 * Retrieve the languagefile
 	 * The file is located in the folder language
 	 */
-    function _getLanguageFile() {
+    public function _getLanguageFile()
+	{
 		global $_CB_framework;
 		$UElanguagePath=$_CB_framework->getCfg('absolute_path').'/components/com_comprofiler/plugin/user/plug_cbjemmyevents';
 		if (file_exists($UElanguagePath.'/language/'.$_CB_framework->getCfg('lang').'.php')) {
@@ -52,7 +52,7 @@ class jemmyeventsTab extends cbTabHandler {
 	/**
 	 * Retrieval of the setting fields
 	 */
-	function &config()
+	public function &config()
 	{
 		static $config;
 
@@ -73,7 +73,7 @@ class jemmyeventsTab extends cbTabHandler {
 	 *
 	 * not begin used
 	 */
-	function deleteRecord() {
+	public function deleteRecord() {
 	/* Unsafe !!!
 		global $_CB_database;
 		foreach($_POST as $delete_id) {
@@ -87,7 +87,7 @@ class jemmyeventsTab extends cbTabHandler {
 	/**
 	 * Display Tab
 	 */
-	function getDisplayTab($tab,$user,$ui) {
+	public function getDisplayTab($tab,$user,$ui) {
 
 		/* loading global variables */
 		global $_CB_database,$_CB_framework;
@@ -201,7 +201,8 @@ class jemmyeventsTab extends cbTabHandler {
 			$_CB_database->setQuery($query4);
 			$results4 = $_CB_database->loadObjectList();
 
-			if ($results4 != null && count($results4) > 0) {
+			if ($results4 != null && count($results4) > 0)
+			{
 				$return .="<br><br>".count($results4)._JEMMYEVENTS_PUB."<br>";
 			}
 		}
@@ -230,7 +231,7 @@ class jemmyeventsTab extends cbTabHandler {
 		$return .= "\n\t\t<tr class='jemmyeventstableheader'>";
 
 		/* start of imagefield */
-		if($event_image==1) {
+		if ($event_image == 1) {
 			$return .= "\n\t\t\t<th class='jemmyeventsCBTabTableTitle'>";
 			$return .= "\n\t\t\t\t" . _JEMMYEVENTS_IMAGE;
 			$return .= "\n\t\t\t</th>";
@@ -242,28 +243,28 @@ class jemmyeventsTab extends cbTabHandler {
 		$return .= "\n\t\t\t</th>";
 
 		/* Category header */
-		if ($event_categories==1) {
+		if ($event_categories == 1) {
 			$return .= "\n\t\t\t<th class='jemmyeventsCBTabTableCat'>";
 			$return .= "\n\t\t\t\t" . _JEMMYEVENTS_CATEGORY;
 			$return .= "\n\t\t\t</th>";
 		}
 
 		/* Startdate header */
-		if($start_date==1) {
+		if ($start_date == 1) {
 			$return .= "\n\t\t\t<th class='jemmyeventsCBTabTableStart'>";
 			$return .= "\n\t\t\t\t" . _JEMMYEVENTS_START;
 			$return .= "\n\t\t\t</th>";
 		}
 
 		/* Enddate header */
-		if($end_date==1) {
+		if ($end_date == 1) {
 			$return .= "\n\t\t\t<th class='jemmyeventsCBTabTableExp'>";
 			$return .= "\n\t\t\t\t" . _JEMMYEVENTS_EXPIRE;
 			$return .= "\n\t\t\t</th>";
 		}
 
 		/* Attendees */
-		if ($event_attending==1) {
+		if ($event_attending == 1) {
 			$return .= "\n\t\t\t<th class='jemmyeventsCBTabTableReg'>";
 			$return .= "\n\t\t\t\t" . _JEMMYEVENTS_REGISTER;
 			$return .= "\n\t\t\t</th>";
@@ -280,7 +281,7 @@ class jemmyeventsTab extends cbTabHandler {
 		 */
 		$entryCount = 0;
 		$cat = null;
-		if(count($results)) {
+		if (count($results)) {
 			for ($i=0, $n = count($results); $i < $n; $i++) {
 				$entryCount++;
 
@@ -311,7 +312,7 @@ class jemmyeventsTab extends cbTabHandler {
 				$return .= "\n\t\t<tr class='{$CSSClass}'>";
 
 				/* Image field */
-				if($event_image == 1) {
+				if ($event_image == 1) {
 					$dimage =	JEMImage::flyercreator($result->datimage, 'event');
 					$pimage =	JEMOutput::flyer($result, $dimage, 'event');
 					$return .= "\n\t\t\t<td class='jemmyeventsCBTabTableImage'>";
@@ -323,11 +324,11 @@ class jemmyeventsTab extends cbTabHandler {
 				$result_titles = explode(" " , $result->title);
 				$result_title = implode("-" , $result_titles);
 				$return .= "\n\t\t\t<td class='jemmyeventsCBTabTableTitle'>";
-				$return .= "\n\t\t\t\t<a href=\"". JRoute::_(JEMHelperRoute::getEventRoute($result->eventid)) ."\">{$result->title}</a>";
+				$return .= "\n\t\t\t\t<a href=\"" . JRoute::_(JEMHelperRoute::getEventRoute($result->eventid)) . "\">{$result->title}</a>";
 				$return .= "\n\t\t\t</td>";
 
 				/* Category field */
-				if ($event_categories==1) {
+				if ($event_categories == 1) {
 					$cat = "<a href='".JRoute::_(JEMHelperRoute::getCategoryRoute($result->catid))."'>{$result->catname}</a>";
 					$return .= "\n\t\t\t<td class='jemmyeventsCBTabTableCat'>";
 					$return .= "\n\t\t\t\t$cat";
@@ -335,7 +336,7 @@ class jemmyeventsTab extends cbTabHandler {
 				}
 
 				/* Startdate field */
-				if($start_date==1) {
+				if ($start_date == 1) {
 					$startdate2 =	JEMOutput::formatdate($result->dates,$settings[0]->formatShortDate);
 					$return .= "\n\t\t\t<td class='jemmyeventsCBTabTableStart'>";
 					$return .= "\n\t\t\t\t{$startdate2}";
@@ -346,7 +347,7 @@ class jemmyeventsTab extends cbTabHandler {
 				 * Enddate
 				 * if no enddate is given nothing will show up
 				 */
-				if($end_date==1) {
+				if ($end_date == 1) {
 					$enddate2 =	JEMOutput::formatdate($result->enddates, $settings[0]->formatShortDate);
 					$return .= "\n\t\t\t<td class='jemmyeventsCBTabTableExp'>";
 					$return .= "\n\t\t\t\t{$enddate2}";
@@ -373,7 +374,7 @@ class jemmyeventsTab extends cbTabHandler {
 			// When no data has been found the user will see a message
 
 			// display no listings
-			$return .= '<tr><td class="jemmyattendingCBTabTableTitle" span="9">'._JEMMYEVENTS_NO_LISTING.'</td></tr>';
+			$return .= '<tr><td class="jemmyattendingCBTabTableTitle" span="9">'._JEMMYEVENTS_NO_LISTING.'</td></tr>'; // TODO: set the right colspan or rowspan
 		}
 
 		/* closing tag of the table */
@@ -411,7 +412,7 @@ class jemmyeventsTab extends cbTabHandler {
 	 * 																	*
  	 * 																	*
 	 *******************************************************************/
-	function getEditTabDISABLED($tab,$user,$ui)
+	public function getEditTabDISABLED($tab,$user,$ui)
 	{
 		return ''; /* disabled */
 
@@ -439,7 +440,7 @@ class jemmyeventsTab extends cbTabHandler {
 			$event_attending = $params->get('event_attending');
 
 			/* load css */
-			$_CB_framework->addCustomHeadTag("<link href=\"".$_CB_framework->getCfg('live_site')."/components/com_comprofiler/plugin/user/plug_cbjemmyevents/jemmyevents_cb.css\" rel=\"stylesheet\" type=\"text/css\" />");
+			$_CB_framework->addCustomHeadTag("<link href=\"" . $_CB_framework->getCfg('live_site') . "/components/com_comprofiler/plugin/user/plug_cbjemmyevents/jemmyevents_cb.css\" rel=\"stylesheet\" type=\"text/css\" />");
 
 			/* check for tabdescription */
 			if($tab->description == null) {
@@ -558,14 +559,14 @@ class jemmyeventsTab extends cbTabHandler {
 			$return .= "\n\t\t\t</th>";
 
 			/* Category header */
-			if ($event_categories==1) {
+			if ($event_categories == 1) {
 				$return .= "\n\t\t\t<th class='jemmyeventsCBTabTableCat'>";
 				$return .= "\n\t\t\t\t" . _JEMMYEVENTS_CATEGORY;
 				$return .= "\n\t\t\t</th>";
 			}
 
 			/* Startdate header */
-			if($start_date==1) {
+			if ($start_date == 1) {
 				$return .= "\n\t\t\t<th class='jemmyeventsCBTabTableStart'>";
 				$return .= "\n\t\t\t\t" . _JEMMYEVENTS_START;
 				$return .= "\n\t\t\t</th>";
@@ -573,7 +574,7 @@ class jemmyeventsTab extends cbTabHandler {
 
 
 			/* Enddate header */
-			if($end_date==1) {
+			if ($end_date == 1) {
 				$return .= "\n\t\t\t<th class='jemmyeventsCBTabTableExp'>";
 				$return .= "\n\t\t\t\t" . _JEMMYEVENTS_EXPIRE;
 				$return .= "\n\t\t\t</th>";
@@ -597,7 +598,7 @@ class jemmyeventsTab extends cbTabHandler {
 			* */
 			$entryCount = 0;
 			$cat = null;
-			if(count($results)) {
+			if (count($results)) {
 				for ($i=0, $n = count($results); $i < $n; $i++) {
 					$entryCount++;
 
@@ -631,7 +632,7 @@ class jemmyeventsTab extends cbTabHandler {
 					$result_titles = explode(" " , $result->title);
 					$result_title = implode("-" , $result_titles);
 					$return .= "\n\t\t\t<td class='jemmyeventsCBTabTableTitle'>";
-					$return .= "\n\t\t\t\t<a href=\"". JRoute::_(JEMHelperRoute::getEventRoute($result->id).'&Itemid='.$S_Itemid1) ."\">{$result->title}</a>";
+					$return .= "\n\t\t\t\t<a href=\"" . JRoute::_(JEMHelperRoute::getEventRoute($result->id) . '&Itemid='.$S_Itemid1) . "\">{$result->title}</a>";
 					$return .= "\n\t\t\t</td>";
 
 					/* Category field */
@@ -642,7 +643,7 @@ class jemmyeventsTab extends cbTabHandler {
 					}
 
 					/* Startdate field */
-					if($start_date==1) {
+					if($start_date == 1) {
 						$startdate2 =	JEMOutput::formatdate($result->dates, $settings[0]->formatShortDate);
 						$return .= "\n\t\t\t<td class='jemmyeventsCBTabTableStart'>";
 						$return .= "\n\t\t\t\t{$startdate2}";
@@ -652,7 +653,7 @@ class jemmyeventsTab extends cbTabHandler {
 					/* Enddate
 					 * if no enddate is given nothing will show up
 					* */
-					if($end_date==1) {
+					if ($end_date == 1) {
 						$enddate2 =	JEMOutput::formatdate($result->enddates, $settings[0]->formatShortDate);
 						$return .= "\n\t\t\t<td class='jemmyeventsCBTabTableExp'>";
 						$return .= "\n\t\t\t\t{$enddate2}";
