@@ -18,14 +18,14 @@ class JemModelAttendee extends JModelLegacy
 	 *
 	 * @var int
 	 */
-	var $_id = null;
+	public $_id = null;
 
 	/**
 	 * Category data array
 	 *
 	 * @var array
 	 */
-	var $_data = null;
+	public $_data = null;
 
 	/**
 	 * Constructor

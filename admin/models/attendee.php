@@ -16,12 +16,12 @@ class JemModelAttendee extends JModelAdmin
 	/**
 	 * attendee id
 	 */
-	var $_id = null;
+	public $_id = null;
 
 	/**
 	 * Category data array
 	 */
-	var $_data = null;
+	pulic $_data = null;
 
 	/**
 	 * Constructor

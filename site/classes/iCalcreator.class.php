@@ -43,29 +43,29 @@ define( 'ICALCREATOR_VERSION', 'iCalcreator 2.20' );
  */
 class vcalendar {
             //  calendar property variables
-  var $calscale;
-  var $method;
-  var $prodid;
-  var $version;
-  var $xprop;
+  public $calscale;
+  public $method;
+  public $prodid;
+  public $version;
+  public $xprop;
             //  container for calendar components
-  var $components;
+  public $components;
             //  component config variables
-  var $allowEmpty;
-  var $unique_id;
-  var $language;
-  var $directory;
-  var $filename;
-  var $url;
-  var $delimiter;
-  var $nl;
-  var $format;
-  var $dtzid;
+  public $allowEmpty;
+  public $unique_id;
+  public $language;
+  public $directory;
+  public $filename;
+  public $url;
+  public $delimiter;
+  public $nl;
+  public $format;
+  public $dtzid;
             //  component internal variables
-  var $attributeDelimiter;
-  var $valueInit;
+  public $attributeDelimiter;
+  public $valueInit;
             //  component xCal declaration container
-  var $xcaldecl;
+  public $xcaldecl;
 /**
  * constructor for calendar object
  *
@@ -1943,31 +1943,31 @@ class vcalendar {
  */
 class calendarComponent {
             //  component property variables
-  var $uid;
-  var $dtstamp;
+  public $uid;
+  public $dtstamp;
 
             //  component config variables
-  var $allowEmpty;
-  var $language;
-  var $nl;
-  var $unique_id;
-  var $format;
-  var $objName; // created automatically at instance creation
-  var $dtzid;   // default (local) timezone
+  public $allowEmpty;
+  public $language;
+  public $nl;
+  public $unique_id;
+  public $format;
+  public $objName; // created automatically at instance creation
+  public $dtzid;   // default (local) timezone
             //  component internal variables
-  var $componentStart1;
-  var $componentStart2;
-  var $componentEnd1;
-  var $componentEnd2;
-  var $elementStart1;
-  var $elementStart2;
-  var $elementEnd1;
-  var $elementEnd2;
-  var $intAttrDelimiter;
-  var $attributeDelimiter;
-  var $valueInit;
+  public $componentStart1;
+  public $componentStart2;
+  public $componentEnd1;
+  public $componentEnd2;
+  public $elementStart1;
+  public $elementStart2;
+  public $elementEnd1;
+  public $elementEnd2;
+  public $intAttrDelimiter;
+  public $attributeDelimiter;
+  public $valueInit;
             //  component xCal declaration container
-  var $xcaldecl;
+  public $xcaldecl;
 /**
  * constructor for calendar component object
  *

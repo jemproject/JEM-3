@@ -26,8 +26,8 @@ class ActiveCalendarWeek extends JEMCalendar {
 	Names of the generated html classes. You may change them to avoid any conflicts with your existing CSS
 	********************************************************************************
 	*/
-	var $cssWeeksTable="week";
-	var $cssMonthWeek="monthweek";
+	public $cssWeeksTable="week";
+	public $cssMonthWeek="monthweek";
 	/*
 	----------------------
 	@START PUBLIC METHODS

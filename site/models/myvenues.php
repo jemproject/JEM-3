@@ -13,8 +13,8 @@ defined('_JEXEC') or die;
  */
 class JemModelMyvenues extends JModelLegacy
 {
-	var $_venues = null;
-	var $_total_venues = null;
+	public $_venues = null;
+	public $_total_venues = null;
 
 	/**
 	 * Constructor

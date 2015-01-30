@@ -18,28 +18,28 @@ class JemModelVenueelement extends JModelLegacy
 	 *
 	 * @var array
 	 */
-	var $_data = null;
+	public $_data = null;
 
 	/**
 	 * total
 	 *
 	 * @var integer
 	 */
-	var $_total = null;
+	public $_total = null;
 
 	/**
 	 * Pagination object
 	 *
 	 * @var object
 	 */
-	var $_pagination = null;
+	public $_pagination = null;
 
 	/**
 	 * id
 	 *
 	 * @var int
 	 */
-	var $_id = null;
+	public $_id = null;
 
 	/**
 	 * Constructor

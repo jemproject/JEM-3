@@ -43,21 +43,21 @@ class JEMCategories
 	 *
 	 * @var int
 	 */
-	var $id = null;
+	public $id = null;
 
 	/**
 	 * Parent Categories (name, slug), with top category first
 	 *
 	 * @var array
 	 */
-	var $parentcats = array();
+	public $parentcats = array();
 
 	/**
 	 * Category data
 	 *
 	 * @var array
 	 */
-	var $category = array();
+	public $category = array();
 
 	/**
 	 * Constructor

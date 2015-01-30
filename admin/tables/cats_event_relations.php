@@ -17,23 +17,23 @@ class JemTableCats_event_relations extends JTable
 	 * Primary Key
 	 * @var int
 	 */
-	var $id = null;
+	public $id = null;
 	/**
 	 * Category ID
 	 * @var int
 	 */
-	var $catid = null;
+	public $catid = null;
 	/**
 	 * Event ID
 	 * @var int
 	 */
-	var $itemid = null;
+	public $itemid = null;
 	/**
 	 * Ordering
 	 * @var int
 	 * @todo implement
 	 */
-	var $ordering = null;
+	public $ordering = null;
 
 	public function __construct(& $db) {
 		parent::__construct('#__jem_cats_event_relations', 'id', $db);

@@ -18,7 +18,7 @@ class JemModelCategoryelement extends JModelLegacy
 	 *
 	 * @var object
 	 */
-	var $_pagination = null;
+	public $_pagination = null;
 
 	/**
 	 * Constructor

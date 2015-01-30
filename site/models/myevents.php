@@ -18,21 +18,21 @@ class JemModelMyevents extends JModelLegacy
 	 *
 	 * @var array
 	 */
-	var $_events = null;
+	public $_events = null;
 
 	/**
 	 * Events total
 	 *
 	 * @var integer
 	 */
-	var $_total_events = null;
+	public $_total_events = null;
 
 	/**
 	 * Pagination object
 	 *
 	 * @var object
 	 */
-	var $_pagination_events = null;
+	public $_pagination_events = null;
 
 	/**
 	 * Constructor
