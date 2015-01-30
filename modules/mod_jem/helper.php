@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 JModelLegacy::addIncludePath(JPATH_SITE.'/components/com_jem/models', 'JemModel');
 require_once JPATH_SITE . '/components/com_jem/helpers/helper.php';
 
-# perform cleanup if it wasn't done today (archive, delete)
+// perform cleanup if it wasn't done today (archive, delete)
 JEMHelper::cleanup();
 
 /**
@@ -30,11 +30,11 @@ abstract class modJEMHelper
 	{
 		mb_internal_encoding('UTF-8');
 
-		# Retrieve Eventslist model for the data
+		// Retrieve Eventslist model for the data
 		$model = JModelLegacy::getInstance('Eventslist', 'JemModel', array('ignore_request' => true));
 
-		# Set params for the model
-		# has to go before the getItems function
+		// Set params for the model
+		// has to go before the getItems function
 		$model->setState('params', $params);
 		$model->setState('filter.access',true);
 
