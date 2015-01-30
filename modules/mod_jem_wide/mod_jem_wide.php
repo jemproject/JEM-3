@@ -1,10 +1,10 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @subpackage JEM Wide Module
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
+ * @version 3.0.6
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 

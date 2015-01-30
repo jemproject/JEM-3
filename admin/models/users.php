@@ -18,21 +18,21 @@ class JEMModelUsers extends JModelLegacy
 	 *
 	 * @var array
 	 */
-	var $_data = null;
+	public $_data = null;
 
 	/**
 	 * total
 	 *
 	 * @var integer
 	 */
-	var $_total = null;
+	public $_total = null;
 
 	/**
 	 * Pagination object
 	 *
 	 * @var object
 	 */
-	var $_pagination = null;
+	public $_pagination = null;
 
 	/**
 	 * Constructor

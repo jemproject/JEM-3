@@ -1,18 +1,18 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @subpackage JEM Wide Module
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
+ * @version 3.0.6
  */
 defined('_JEXEC') or die;
 
 JModelLegacy::addIncludePath(JPATH_SITE.'/components/com_jem/models', 'JemModel');
 require_once JPATH_SITE . '/components/com_jem/helpers/helper.php';
 
-# perform cleanup if it wasn't done today (archive, delete)
+// perform cleanup if it wasn't done today (archive, delete)
 JEMHelper::cleanup();
 
 
@@ -32,24 +32,24 @@ abstract class modJEMwideHelper
 	{
 		mb_internal_encoding('UTF-8');
 
-		# Retrieve Eventslist model for the data
+		// Retrieve Eventslist model for the data
 		$model = JModelLegacy::getInstance('Eventslist', 'JemModel', array('ignore_request' => true));
 
-		# Set params for the model
-		# has to go before the getItems function
+		// Set params for the model
+		// has to go before the getItems function
 		$model->setState('params', $params);
 		$model->setState('filter.access',true);
 
-		# filter published
-		#  0: unpublished
-		#  1: published
-		#  2: archived
-		# -2: trashed
+		// filter published
+		//  0: unpublished
+		//  1: published
+		//  2: archived
+		// -2: trashed
 
 		$type = $params->get('type');
 		$offset_hourss = $params->get('offset_hours', 0);
 
-		# all upcoming or unfinished events
+		// all upcoming or unfinished events
 		if (($type == 0) || ($type == 1)) {
 			$offset_minutes = $offset_hourss * 60;
 
@@ -60,14 +60,14 @@ abstract class modJEMwideHelper
 			$cal_from .= ($type == 1) ? " OR (TIMESTAMPDIFF(MINUTE, NOW(), CONCAT(IFNULL(a.enddates,a.dates),' ',IFNULL(a.endtimes,'23:59:59'))) > $offset_minutes)) " : ") ";
 		}
 
-		# archived events only
+		// archived events only
 		elseif ($type == 2) {
 			$model->setState('filter.published',2);
 			$model->setState('filter.orderby',array('a.dates DESC','a.times DESC'));
 			$cal_from = "";
 		}
 
-		# currently running events only (today + offset is inbetween start and end date of event)
+		// currently running events only (today + offset is inbetween start and end date of event)
 		elseif ($type == 3) {
 			$offset_days = (int)round($offset_hourss / 24);
 
@@ -79,30 +79,30 @@ abstract class modJEMwideHelper
 		$model->setState('filter.calendar_from',$cal_from);
 		$model->setState('filter.groupby','a.id');
 
-		# clean parameter data
+		// clean parameter data
 		$catids = $params->get('catid');
 		$venids = $params->get('venid');
 		$eventids = $params->get('eventid');
 
-		# filter category's
+		// filter category's
 		if ($catids) {
 			$model->setState('filter.category_id',$catids);
 			$model->setState('filter.category_id.include',true);
 		}
 
-		# filter venue's
+		// filter venue's
 		if ($venids) {
 			$model->setState('filter.venue_id',$venids);
 			$model->setState('filter.venue_id.include',true);
 		}
 
-		# filter event id's
+		// filter event id's
 		if ($eventids) {
 			$model->setState('filter.event_id',$eventids);
 			$model->setState('filter.event_id.include',true);
 		}
 
-		# count
+		// count
 		$count = $params->get('count', '2');
 		$model->setState('list.limit',$count);
 
@@ -110,22 +110,22 @@ abstract class modJEMwideHelper
 			JHtml::_('behavior.modal', 'a.flyermodal');
 		}
 
-		# Retrieve the available Events
+		// Retrieve the available Events
 		$events = $model->getItems();
 
 		if (!$events) {
 			return array();
 		}
 
-		# define list-array
-		# in here we collect the row information
+		// define list-array
+		// in here we collect the row information
 		$lists	= array();
 		$i = 0;
 
 
-		#####################
-		### DEFINE FOREACH ##
-		#####################
+		/**
+		 * DEFINE FOREACH
+		 */
 
 		foreach ($events as $row)
 		{
@@ -160,7 +160,7 @@ abstract class modJEMwideHelper
 			list($lists[$i]->date,
 					$lists[$i]->time)		= modJEMwideHelper::_format_date_time($row, $params);
 
-			# walk through categories assigned to an event
+			// walk through categories assigned to an event
 			$lists[$i]->catname			= implode(", ", JemOutput::getCategoryList($row->categories, $params->get('linkcategory', 1)));
 
 			if ($dimage == null) {

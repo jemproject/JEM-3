@@ -17,17 +17,17 @@ class JEMTableRegister extends JTable
 	 * Primary Key
 	 * @var int
 	 */
-    var $id 		= null;
+	public $id 		= null;
 	/** @var int */
-    var $event 		= null;
+	public $event 		= null;
 	/** @var int */
-    var $uid 		= null;
+	public $uid 		= null;
 	/** @var date */
-    var $uregdate 	= null;
+	public $uregdate 	= null;
 	/** @var string */
-    var $uip 		= null;
+	public $uip 		= null;
 	/** @var int */
-    var $waiting 	= 0;
+	public $waiting 	= 0;
 
     public function __construct(& $db)
     {

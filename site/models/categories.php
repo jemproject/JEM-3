@@ -18,35 +18,35 @@ class JemModelCategories extends JModelLegacy
 	 *
 	 * @var int
 	 */
-	var $_id = 0;
+	public $_id = 0;
 
 	/**
 	 * Event data array
 	 *
 	 * @var array
 	 */
-	var $_data = null;
+	public $_data = null;
 
 	/**
 	 * Categories total
 	 *
 	 * @var integer
 	 */
-	var $_total = null;
+	public $_total = null;
 
 	/**
 	 * Categories data array
 	 *
 	 * @var array
 	 */
-	var $_categories = null;
+	public $_categories = null;
 
 	/**
 	 * Pagination object
 	 *
 	 * @var object
 	 */
-	var $_pagination = null;
+	public $_pagination = null;
 
 	/**
 	 * Show empty categories in list

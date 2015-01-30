@@ -18,35 +18,35 @@ class JemModelAttendees extends JModelLegacy
 	 *
 	 * @var array
 	 */
-	var $_data = null;
+	public $_data = null;
 
 	/**
 	 * Events total
 	 *
 	 * @var integer
 	 */
-	var $_total = null;
+	public $_total = null;
 
 	/**
 	 * Events total
 	 *
 	 * @var integer
 	 */
-	var $_event = null;
+	public $_event = null;
 
 	/**
 	 * Pagination object
 	 *
 	 * @var object
 	 */
-	var $_pagination = null;
+	public $_pagination = null;
 
 	/**
 	 * Events id
 	 *
 	 * @var int
 	 */
-	var $_id = null;
+	public $_id = null;
 
 	/**
 	 * Constructor

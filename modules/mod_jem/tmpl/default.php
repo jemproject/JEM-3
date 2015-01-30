@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 ?>
 
 <ul class="jemmod<?php echo $params->get('moduleclass_sfx'); ?>">
-<?php if (count($items)): ?>
+<?php if (count($items)) : ?>
 
 <?php foreach ($list as $item) : ?>
 	<li class="jemmod<?php echo $params->get('moduleclass_sfx'); ?>">

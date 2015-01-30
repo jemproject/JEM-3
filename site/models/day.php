@@ -14,7 +14,7 @@ require_once dirname(__FILE__) . '/eventslist.php';
  */
 class JemModelDay extends JemModelEventslist
 {
-	var $_date = null;
+	public $_date = null;
 
 	/**
 	 * Constructor
