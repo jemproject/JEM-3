@@ -9,19 +9,19 @@
 defined('_JEXEC') or die;
 
 # include files
-require_once (JPATH_COMPONENT_SITE.'/helpers/category.php');
-require_once (JPATH_COMPONENT_SITE.'/helpers/countries.php');
-require_once (JPATH_COMPONENT_SITE.'/helpers/helper.php');
-require_once (JPATH_COMPONENT_SITE.'/helpers/route.php');
-require_once (JPATH_COMPONENT_SITE.'/classes/activecalendarweek.php');
-require_once (JPATH_COMPONENT_SITE.'/classes/attachment.class.php');
-require_once (JPATH_COMPONENT_SITE.'/classes/calendar.class.php');
-require_once (JPATH_COMPONENT_SITE.'/classes/categories.class.php');
-require_once (JPATH_COMPONENT_SITE.'/classes/image.class.php');
-require_once (JPATH_COMPONENT_SITE.'/classes/output.class.php');
-require_once (JPATH_COMPONENT_SITE.'/classes/user.class.php');
-require_once (JPATH_COMPONENT_SITE.'/classes/Zebra_Image.php');
-require_once (JPATH_COMPONENT_ADMINISTRATOR.'/helpers/helper.php');
+require_once JPATH_COMPONENT_SITE . '/helpers/category.php';
+require_once JPATH_COMPONENT_SITE . '/helpers/countries.php';
+require_once JPATH_COMPONENT_SITE . '/helpers/helper.php';
+require_once JPATH_COMPONENT_SITE . '/helpers/route.php';
+require_once JPATH_COMPONENT_SITE . '/classes/activecalendarweek.php';
+require_once JPATH_COMPONENT_SITE . '/classes/attachment.class.php';
+require_once JPATH_COMPONENT_SITE . '/classes/calendar.class.php';
+require_once JPATH_COMPONENT_SITE . '/classes/categories.class.php';
+require_once JPATH_COMPONENT_SITE . '/classes/image.class.php';
+require_once JPATH_COMPONENT_SITE . '/classes/output.class.php';
+require_once JPATH_COMPONENT_SITE . '/classes/user.class.php';
+require_once JPATH_COMPONENT_SITE . '/classes/Zebra_Image.php';
+require_once JPATH_COMPONENT_ADMINISTRATOR . '/helpers/helper.php';
 
 # include Recurr files
 JLoader::registerNamespace('Recurr', JPATH_COMPONENT_SITE . '/classes');

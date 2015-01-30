@@ -33,7 +33,7 @@ class jc_com_jem extends JCommentsPlugin
 		$slug = $db->loadResult();
 
 
-		$JEMRouter = JPATH_SITE.'/components/com_jem/helpers/route.php';
+		$JEMRouter = JPATH_SITE . '/components/com_jem/helpers/route.php';
 		if (is_file($JEMRouter)) {
 			require_once($JEMRouter);
 			$link = JRoute::_(JemHelperRoute::getEventRoute($slug));

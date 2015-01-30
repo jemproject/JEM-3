@@ -10,7 +10,7 @@
 defined('_JEXEC') or die;
 
 JModelLegacy::addIncludePath(JPATH_SITE.'/components/com_jem/models', 'JemModel');
-require_once (JPATH_SITE.'/components/com_jem/helpers/helper.php');
+require_once JPATH_SITE . '/components/com_jem/helpers/helper.php';
 
 // check for component
 /*
@@ -294,7 +294,7 @@ class plgContentListevents extends JPlugin
 		$n_event = 0;
 		foreach ($rows as $event)
 		{
-			require_once (JPATH_BASE . "/components/com_jem/helpers/route.php");
+			require_once JPATH_BASE . "/components/com_jem/helpers/route.php";
 			$linkdetails 	= JRoute::_( JEMHelperRoute::getEventRoute($event->slug) );
 			$linkdate 		= JRoute::_( JEMHelperRoute::getRoute(str_replace( '-','',$event->dates), 'day') );
 			$linkvenue		= JRoute::_( JEMHelperRoute::getVenueRoute($event->venueslug) );
@@ -302,7 +302,7 @@ class plgContentListevents extends JPlugin
 
 			if (( $parameters["eventstype"] == 'regprev') || ( $parameters["eventstype"] == 'regnext'))
 			{
-				require_once (JPATH_BASE . "/components/com_jem/models/eventlist.php");
+				require_once JPATH_BASE . "/components/com_jem/models/eventlist.php";
 				$eventsmodel = new EventListModelEventList;
 				$query = 'SELECT COUNT(uid) as attendees from #__eventlist_register WHERE event = '.$event->eventid;
 				$eventsmodel->_db->setQuery( $query );
@@ -326,8 +326,8 @@ class plgContentListevents extends JPlugin
 			if ( ($parameters["eventsdate"] != 'off') && ($event->dates) )
 			{
 				# display startdate
-				require_once (JPATH_BASE . "/components/com_jem/helpers/helper.php");
-				require_once (JPATH_BASE . "/components/com_jem/classes/output.class.php");
+				require_once JPATH_BASE . "/components/com_jem/helpers/helper.php";
+				require_once JPATH_BASE . "/components/com_jem/classes/output.class.php";
 				$html_list .= ' : '.'<span id="eventdate">';
 				$html_list .= ( ($parameters["eventsdate"] == 'link') ? ('<a href="'.$linkdate.'">') : '' );
 				$html_list .= JEMOutput::formatdate($event->dates);
@@ -338,8 +338,8 @@ class plgContentListevents extends JPlugin
 			if ( ($parameters["eventstime"] != 'off') && ($event->times) )
 			{
 				# display starttime
-				require_once (JPATH_BASE . "/components/com_jem/helpers/helper.php");
-				require_once (JPATH_BASE . "/components/com_jem/classes/output.class.php");
+				require_once JPATH_BASE . "/components/com_jem/helpers/helper.php";
+				require_once JPATH_BASE . "/components/com_jem/classes/output.class.php";
 				$html_list .= ' '.'<span id="eventtime">';
 				$html_list .= JEMOutput::formattime($event->times);
 				$html_list .= '</span>';

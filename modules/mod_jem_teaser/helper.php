@@ -11,7 +11,7 @@ defined('_JEXEC') or die;
 
 JModelLegacy::addIncludePath(JPATH_SITE.'/components/com_jem/models', 'JemModel');
 
-require_once (JPATH_SITE.'/components/com_jem/helpers/helper.php');
+require_once JPATH_SITE . '/components/com_jem/helpers/helper.php';
 
 # perform cleanup if it wasn't done today (archive, delete)
 JEMHelper::cleanup();

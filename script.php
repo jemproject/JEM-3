@@ -556,7 +556,7 @@ class com_jemInstallerScript
 		###############################
 		## # update calendar entries ##
 		###############################
-		require_once (JPATH_SITE.'/components/com_jem/classes/categories.class.php');
+		require_once JPATH_SITE . '/components/com_jem/classes/categories.class.php';
 
 		$types = array('calendar','category','venue');
 

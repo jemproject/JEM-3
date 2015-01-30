@@ -52,7 +52,7 @@ class plgSearchJEM extends JPlugin
 		$groups	= implode(',', $user->getAuthorisedViewLevels());
 		$tag = JFactory::getLanguage()->getTag();
 
-		require_once(JPATH_SITE.'/components/com_jem/helpers/route.php');
+		require_once JPATH_SITE . '/components/com_jem/helpers/route.php';
 
 		if (is_array( $areas )) {
 			if (!array_intersect( $areas, array_keys( $this->onContentSearchAreas() ) )) {

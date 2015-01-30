@@ -17,8 +17,8 @@
 defined('_JEXEC') or die;
 
 require_once(dirname(__FILE__).'/helper.php');
-require_once(JPATH_SITE.'/components/com_jem/helpers/route.php');
-require_once(JPATH_SITE.'/components/com_jem/helpers/helper.php');
+require_once JPATH_SITE . '/components/com_jem/helpers/route.php';
+require_once JPATH_SITE . '/components/com_jem/helpers/helper.php';
 
 
 // Parameters
@@ -41,7 +41,7 @@ $User_stylesheet	= $params->get('User_stylesheet', 'modules/mod_jem_cal/mod_jem_
 
 if (empty($LocaleOverride)) {
 } else {
-	setlocale(LC_ALL, $LocaleOverride);
+    setlocale(LC_ALL, $LocaleOverride);
 }
 
 //get switch trigger
