@@ -46,11 +46,11 @@ $year = $offset_year;
 $month = $offset_month;
 
 $uxtime_first_of_month = gmmktime(0, 0, 0, $month, 1, $year);
-#remember that mktime will automatically correct if invalid dates are entered
-# for instance, mktime(0,0,0,12,32,1997) will be the date for Jan 1, 1998
-# this provides a built in "rounding" feature to generate_calendar()
+//remember that mktime will automatically correct if invalid dates are entered
+// for instance, mktime(0,0,0,12,32,1997) will be the date for Jan 1, 1998
+// this provides a built in "rounding" feature to generate_calendar()
 
-$day_names = array(); #generate all the day names according to the current locale
+$day_names = array(); //generate all the day names according to the current locale
 $day_names_short = array();
 $day_names_long = array();
 if ($UseJoomlaLanguage == 1) {
@@ -62,10 +62,10 @@ if ($UseJoomlaLanguage == 1) {
 		$day_names_short = array(JText::_('SUN'),JText::_('MON'),JText::_('TUE'),JText::_('WED'),JText::_('THU'),JText::_('FRI'),JText::_('SAT'));
 	}
 } else {
-	for($n = 0, $t = (3 + $first_day) *24 *60 *60; $n < 7; ++$n, $t += 24 *60 *60) { #January 4, 1970 was a Sunday
+	for ($n = 0, $t = (3 + $first_day) *24 *60 *60; $n < 7; ++$n, $t += 24 *60 *60) { //January 4, 1970 was a Sunday
 		if (!function_exists('mb_convert_case')) {
-			$day_names_long[$n] = ucfirst(gmstrftime('%A',$t)); #%A means full textual day name
-			$day_names_short[$n] = ucfirst(gmstrftime('%A',$t)); #%a means short day name
+			$day_names_long[$n] = ucfirst(gmstrftime('%A',$t)); //%A means full textual day name
+			$day_names_short[$n] = ucfirst(gmstrftime('%A',$t)); //%a means short day name
 		} else {
 			$day_names_long[$n] = mb_convert_case(gmstrftime('%A',$t),MB_CASE_TITLE, "UTF-8"); #%A means full textual day name
 			$day_names_short[$n] = mb_convert_case(gmstrftime('%A',$t),MB_CASE_TITLE, "UTF-8"); #%a means short day name
