@@ -1,10 +1,10 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
+ * @version 3.0.6
  */
 defined('_JEXEC') or die;
 
@@ -167,7 +167,6 @@ class com_jemInstallerScript
 
 		$globalParams = $this->getGlobalParams();
 		$cleanup = $globalParams->get('global_cleanup_db_on_uninstall', 0);
-		$this->disableJemMenuItems();
 		if (!empty($cleanup)) {
 			// user decided to fully remove JEM - so do it!
 			$this->removeJemMenuItems();
@@ -436,7 +435,7 @@ class com_jemInstallerScript
 		$db = JFactory::getDbo();
 		$query = $db->getQuery(true);
 		$query->delete('#__menu');
-		$query->where(array('client_id = 0', 'published > 0', 'link LIKE "index.php?option=com_jem%"'));
+		$query->where(array('client_id = 0', 'link LIKE "index.php?option=com_jem%"'));
 		$db->setQuery($query);
 		$db->execute();
 	}
