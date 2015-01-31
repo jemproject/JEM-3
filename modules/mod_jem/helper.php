@@ -1,18 +1,18 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
- * @subpackage JEM Module
+ * @subpackage JEM - Module-Basic
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
+ * @version 3.0.6
  */
 defined('_JEXEC') or die;
 
 JModelLegacy::addIncludePath(JPATH_SITE.'/components/com_jem/models', 'JemModel');
 require_once JPATH_SITE . '/components/com_jem/helpers/helper.php';
 
-// perform cleanup if it wasn't done today (archive, delete)
+// perform cleanup if it wasn't done today (archive, trash)
 JEMHelper::cleanup();
 
 /**
@@ -107,6 +107,8 @@ abstract class modJEMHelper
 		$i		= 0;
 		$lists	= array();
 
+		$maxlength = $params->get('cuttitle', '18');
+
 		$settings 	= JemHelper::config();
 		$dateformat = $params->get('formatdate', $settings->formatShortDate);
 
@@ -115,8 +117,8 @@ abstract class modJEMHelper
 			//cut titel
 			$length = mb_strlen($row->title);
 
-			if ($length > $params->get('cuttitle', '18')) {
-				$row->title = mb_substr($row->title, 0, $params->get('cuttitle', '18'));
+			if ($length > $maxlength && $maxlength > 0) {
+				$row->title = mb_substr($row->title, 0, $maxlength);
 				$row->title = $row->title.'...';
 			}
 
@@ -131,19 +133,5 @@ abstract class modJEMHelper
 		}
 
 		return $lists;
-	}
-
-	/**
-	 * Method to get a valid url
-	 *
-	 * @access public
-	 * @return string
-	 */
-	protected static function _format_url($url)
-	{
-		if(!empty($url) && strtolower(substr($url, 0, 7)) != "http://") {
-			$url = 'http://'.$url;
-		}
-		return $url;
 	}
 }

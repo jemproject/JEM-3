@@ -1,17 +1,17 @@
 <?php
 /**
  * @package JEM
- * @subpackage JEM Module - Wide
+ * @subpackage JEM - Module-Wide
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
- * @version 3.0.6
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
+ * @version 3.0.6
  */
 
 defined('_JEXEC') or die;
 
 // get module helper
-require_once(dirname(__FILE__).'/helper.php');
+require_once __DIR__ . '/helper.php';
 
 // require needed component classes
 require_once JPATH_SITE . '/components/com_jem/helpers/helper.php';
@@ -30,4 +30,4 @@ $items = count($list);
 if (!$items) {
 	return;
 }
-require(JModuleHelper::getLayoutPath('mod_jem_wide'));
+require JModuleHelper::getLayoutPath('mod_jem_wide');

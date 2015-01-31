@@ -1,7 +1,7 @@
 <?php
 /**
  * @package JEM
- * @subpackage JEM Module - Teaser
+ * @subpackage JEM - Module-Teaser
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
@@ -11,9 +11,9 @@
 defined('_JEXEC') or die;
 
 // get module helper
-require_once(dirname(__FILE__).'/helper.php');
+require_once __DIR__ . '/helper.php';
 
-//require needed component classes
+// require needed component classes
 require_once JPATH_SITE . '/components/com_jem/helpers/helper.php';
 require_once JPATH_SITE . '/components/com_jem/helpers/route.php';
 require_once JPATH_SITE . '/components/com_jem/classes/image.class.php';
@@ -45,4 +45,4 @@ switch($params->get('color')) {
 $document->addStyleSheet(JUri::base(true).'/modules/mod_jem_teaser/tmpl/mod_jem_teaser.css');
 $document->addStyleSheet(JUri::base(true).'/modules/mod_jem_teaser/tmpl/'.$color.'.css');
 
-require(JModuleHelper::getLayoutPath('mod_jem_teaser'));
+require JModuleHelper::getLayoutPath('mod_jem_teaser');
