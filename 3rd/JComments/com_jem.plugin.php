@@ -15,42 +15,42 @@ defined('_JEXEC') or die;
 
 class jc_com_jem extends JCommentsPlugin
 {
-    function getObjectTitle($id)
-	{
+    public function getObjectTitle($id)
+    {
         $db = JFactory::getDbo();
         $db->setQuery( 'SELECT title, id FROM #__jem_events WHERE id = ' . $id );
-		return $db->loadResult();
-	}
+        return $db->loadResult();
+    }
 
-    function getObjectLink($id)
-	{
-		$db = JFactory::getDBO();
+    public function getObjectLink($id)
+    {
+        $db = JFactory::getDBO();
 
         $query = 'SELECT a.id, CASE WHEN CHAR_LENGTH(a.alias) THEN CONCAT_WS(\':\', a.id, a.alias) ELSE a.id END as slug'
-			. ' FROM #__jem_events AS a'
-			. ' WHERE id = ' . $id
-			;
-		$db->setQuery($query);
-		$slug = $db->loadResult();
+            . ' FROM #__jem_events AS a'
+            . ' WHERE id = ' . $id
+            ;
+        $db->setQuery($query);
+        $slug = $db->loadResult();
 
 
-		$JEMRouter = JPATH_SITE . '/components/com_jem/helpers/route.php';
-		if (is_file($JEMRouter)) {
-			require_once($JEMRouter);
-			$link = JRoute::_(JemHelperRoute::getEventRoute($slug));
-		} else {
-			$link = JRoute::_( 'index.php?option=com_jem&view=event&id=' . $slug );
-		}
+        $JEMRouter = JPATH_SITE . '/components/com_jem/helpers/route.php';
+        if (is_file($JEMRouter)) {
+            require_once($JEMRouter);
+            $link = JRoute::_(JemHelperRoute::getEventRoute($slug));
+        } else {
+            $link = JRoute::_('index.php?option=com_jem&view=event&id=' . $slug);
+        }
 
-		return $link;
-	}
+        return $link;
+    }
 
-	function getObjectOwner($id) {
+    public function getObjectOwner($id)
+    {
+        $db = JFactory::getDbo();
+        $db->setQuery( 'SELECT created_by, id FROM #__jem_events WHERE id = ' . $id );
+        $userid = $db->loadResult();
 
-		$db = JFactory::getDbo();
-		$db->setQuery( 'SELECT created_by, id FROM #__jem_events WHERE id = ' . $id );
-		$userid = $db->loadResult();
-
-		return $userid;
-	}
+        return $userid;
+    }
 }

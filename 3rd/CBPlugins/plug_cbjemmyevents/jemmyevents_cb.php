@@ -42,10 +42,15 @@ public class JemMyEventsTab extends cbTabHandler
     public function _getLanguageFile()
 	{
 		global $_CB_framework;
-		$UElanguagePath=$_CB_framework->getCfg('absolute_path').'/components/com_comprofiler/plugin/user/plug_cbjemmyevents';
-		if (file_exists($UElanguagePath.'/language/'.$_CB_framework->getCfg('lang').'.php')) {
-			include_once($UElanguagePath.'/language/'.$_CB_framework->getCfg('lang').'.php');
-		} else include_once($UElanguagePath.'/language/english.php');
+		$UElanguagePath=$_CB_framework->getCfg('absolute_path') . '/components/com_comprofiler/plugin/user/plug_cbjemmyevents';
+		if (file_exists($UElanguagePath . '/language/' . $_CB_framework->getCfg('lang') . '.php'))
+		{
+			include_once($UElanguagePath . '/language/' . $_CB_framework->getCfg('lang') . '.php');
+		}
+		else
+		{
+			include_once($UElanguagePath . '/language/english.php');
+		}
 	}
 
 
@@ -90,7 +95,7 @@ public class JemMyEventsTab extends cbTabHandler
 	public function getDisplayTab($tab,$user,$ui) {
 
 		/* loading global variables */
-		global $_CB_database,$_CB_framework;
+		global $_CB_database, $_CB_framework;
 
 		if (!$this->jemFound) {
 			return '';
@@ -117,7 +122,7 @@ public class JemMyEventsTab extends cbTabHandler
 
 		/* load css */
 		//$_CB_framework->addCustomHeadTag("<link href=\"".$_CB_framework->getCfg('live_site')."/components/com_comprofiler/plugin/user/plug_cbjemmyevents/jemmyevents_cb.css\" rel=\"stylesheet\" type=\"text/css\" />");
-		$_CB_framework->document->addHeadStyleSheet($_CB_framework->getCfg('live_site').'/components/com_comprofiler/plugin/user/plug_cbjemmyevents/jemmyevents_cb.css');
+		$_CB_framework->document->addHeadStyleSheet($_CB_framework->getCfg('live_site') . '/components/com_comprofiler/plugin/user/plug_cbjemmyevents/jemmyevents_cb.css');
 
 		/*
 		 * Tab description
@@ -128,7 +133,7 @@ public class JemMyEventsTab extends cbTabHandler
 
 		if (!empty($tab->description)) {
 			// html content is allowed in descriptions
-			$return .= "\t\t<div class=\"tab_Description\">". $tab->description . "</div>\n";
+			$return .= "\t\t<div class=\"tab_Description\">" . $tab->description . "</div>\n";
 		}
 
 		// Check if gd is enabled, for thumbnails
@@ -181,7 +186,7 @@ public class JemMyEventsTab extends cbTabHandler
 			. ' LEFT JOIN `#__jem_venues` AS l ON l.id = a.locid '
 			. ' LEFT JOIN #__jem_cats_event_relations AS rel ON rel.itemid = a.id '
 			. ' LEFT JOIN #__jem_categories AS c ON c.id = rel.catid '
-			. ' WHERE a.published = 1 AND c.published = 1 AND a.created_by = '.$userid.' AND c.access IN (' . implode(',', $levels) . ')'
+			. ' WHERE a.published = 1 AND c.published = 1 AND a.created_by = ' . $userid . ' AND c.access IN (' . implode(',', $levels) . ')'
 			. ' GROUP BY a.id'
 			. ' ORDER BY a.dates'
 			;
@@ -203,7 +208,7 @@ public class JemMyEventsTab extends cbTabHandler
 
 			if ($results4 != null && count($results4) > 0)
 			{
-				$return .="<br><br>".count($results4)._JEMMYEVENTS_PUB."<br>";
+				$return .="<br><br>" . count($results4) . _JEMMYEVENTS_PUB . "<br>";
 			}
 		}
 
@@ -374,7 +379,7 @@ public class JemMyEventsTab extends cbTabHandler
 			// When no data has been found the user will see a message
 
 			// display no listings
-			$return .= '<tr><td class="jemmyattendingCBTabTableTitle" span="9">'._JEMMYEVENTS_NO_LISTING.'</td></tr>'; // TODO: set the right colspan or rowspan
+			$return .= '<tr><td class="jemmyattendingCBTabTableTitle" span="9">' . _JEMMYEVENTS_NO_LISTING . '</td></tr>'; // TODO: set the right colspan or rowspan
 		}
 
 		/* closing tag of the table */
@@ -389,7 +394,7 @@ public class JemMyEventsTab extends cbTabHandler
 		 * At the top we did specify the variable
 		 * but not sure where we can fill it
 		 */
-		$return .= "\t\t<div>\n<p>". htmlspecialchars($event_tab_message). "</p></div>\n";
+		$return .= "\t\t<div>\n<p>" . htmlspecialchars($event_tab_message) . "</p></div>\n";
 
 		/* Showing the code
 		 *
@@ -412,12 +417,12 @@ public class JemMyEventsTab extends cbTabHandler
 	 * 																	*
  	 * 																	*
 	 *******************************************************************/
-	public function getEditTabDISABLED($tab,$user,$ui)
+	public function getEditTabDISABLED($tab, $user, $ui)
 	{
 		return ''; /* disabled */
 
 		/* loading global variables */
-		global $_CB_database,$_CB_framework;
+		global $_CB_database, $_CB_framework;
 		$adminurl = strstr($_SERVER['REQUEST_URI'], 'index');
 
 		if ($adminurl != 'index2.php') {
@@ -457,7 +462,7 @@ public class JemMyEventsTab extends cbTabHandler
 			 */
 
 			// html content is allowed in descriptions
-			$return .= "\t\t<div class=\"tab_Description\">". $tabdescription. "</div>\n";
+			$return .= "\t\t<div class=\"tab_Description\">" . $tabdescription . "</div>\n";
 
 			// Check if gd is enabled, for thumbnails
 
@@ -478,7 +483,7 @@ public class JemMyEventsTab extends cbTabHandler
 
 			$S_Itemid1= $_CB_database->loadResult();
 
-			if(!$S_Itemid1) {
+			if (!$S_Itemid1) {
 				$S_Itemid1 = 999999;
 			}
 
@@ -518,13 +523,13 @@ public class JemMyEventsTab extends cbTabHandler
 			if ($userid == $user->id) {
 				if ($user->gid == 8) { // Hoffi: Dangerous. $user->authorise('core.manage'); would be more secure (but is true on Administrator (7) too)
 					$url = "index.php?option=com_jem&view=editevent&Itemid=$S_Itemid1" ;
-					$return .= "<a href='".JRoute::_($url)."' class='eventCBAddLink'>". _JEMMYEVENTS_ADDNEW. "</a>";
+					$return .= "<a href='" . JRoute::_($url) . "' class='eventCBAddLink'>" . _JEMMYEVENTS_ADDNEW . "</a>";
 					$query4 = "SELECT `published` FROM `#__jem_events` WHERE `created_by` = $userid and `published` = 0 " ;
 					$_CB_database->setQuery($query4);
 					$results4 = $_CB_database->loadObjectList();
 
 					if ($results4 != null && count($results4) > 0) {
-						$return .="<br><br>".count($results4)._JEMMYEVENTS_PUB."<br>";
+						$return .="<br><br>" . count($results4) . _JEMMYEVENTS_PUB."<br>";
 					}
 				}
 			}
