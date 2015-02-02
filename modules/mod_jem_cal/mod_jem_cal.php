@@ -1,11 +1,11 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
- * @subpackage JEM Calendar Module
+ * @subpackage JEM - Module-Calendar
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2008 Toni Smillie www.qivva.com
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
+ * @version 3.0.6
  *
  * Original Eventlist calendar from Christoph Lukes www.schlu.net
  * PHP Calendar (version 2.3), written by Keith Devens
@@ -16,7 +16,7 @@
 
 defined('_JEXEC') or die;
 
-require_once(dirname(__FILE__).'/helper.php');
+require_once __DIR__ . '/helper.php';
 require_once JPATH_SITE . '/components/com_jem/helpers/route.php';
 require_once JPATH_SITE . '/components/com_jem/helpers/helper.php';
 
@@ -58,11 +58,11 @@ if ($Remember == 1) { // Remember which month / year is selected. Don't jump bac
 	}
 }
 
-//Requested URL
+// Requested URL
 $uri = JUri::getInstance();
 $myurl = $uri->toString(array('query'));
 
-//08/09/09 - Added Fix for sh404sef
+// 08-09-09 - Added Fix for sh404sef
 if (empty($myurl)) {
 	$request_link = $uri->toString(array('path')).'?';
 } else {
@@ -71,10 +71,10 @@ if (empty($myurl)) {
 	$request_link = str_replace("&el_mcal_year=".$req_year,"",$request_link);
 }
 
-//set now
+// Set now
 $config = JFactory::getConfig();
 $tzoffset = $config->get('config.offset');
-$time 			= time() + (($tzoffset + $Time_offset)*60*60); //25/2/08 Change for v 0.6 to incorporate server offset into time;
+$time 			= time() + (($tzoffset + $Time_offset)*60*60); // 25-2-08 Change for v 0.6 to incorporate server offset into time;
 $today_month 	= date('m', $time);
 $today_year 	= date('Y', $time);
 $today 			= date('j',$time);
@@ -89,7 +89,7 @@ if ($offset_month > 12) {
 	$offset_year = $req_year + 1;
 }
 
-//Setting the previous and next month numbers
+// Setting the previous and next month numbers
 $prev_month_year = $req_year;
 $next_month_year = $req_year;
 
@@ -105,7 +105,7 @@ if($next_month > 12) {
 	$next_month_year = $next_month_year+1;
 }
 
-//Create Links
+// Create Links
 $plink = $request_link.'&el_mcal_month='.$prev_month.'&el_mcal_year='.$prev_month_year;
 $nlink = $request_link.'&el_mcal_month='.$next_month.'&el_mcal_year='.$next_month_year;
 
@@ -114,4 +114,4 @@ $next_link = JRoute::_($nlink, false);
 
 $days = modjemcalqHelper::getdays($offset_year, $offset_month, $params);
 
-require(JModuleHelper::getLayoutPath('mod_jem_cal'));
+require JModuleHelper::getLayoutPath('mod_jem_cal');

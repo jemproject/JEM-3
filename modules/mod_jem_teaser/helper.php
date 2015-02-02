@@ -1,7 +1,7 @@
 <?php
 /**
  * @package JEM
- * @subpackage JEM Teaser Module
+ * @subpackage JEM - Module-Teaser
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
@@ -13,7 +13,7 @@ JModelLegacy::addIncludePath(JPATH_SITE.'/components/com_jem/models', 'JemModel'
 
 require_once JPATH_SITE . '/components/com_jem/helpers/helper.php';
 
-// perform cleanup if it wasn't done today (archive, delete)
+// perform cleanup if it wasn't done today (archive, trash)
 JEMHelper::cleanup();
 
 /**
@@ -133,7 +133,9 @@ abstract class modJEMteaserHelper
 		// Loop through the result rows and prepare data
 		$i		= 0;
 		$lists	= array();
-
+		$FixItemID = $params->get('FixItemID', '');
+		$eventimg = $params->get('eventimg',1);
+		$venueimg = $params->get('venueimg',1);
 
 		foreach ($events as $row)
 		{
@@ -151,40 +153,26 @@ abstract class modJEMteaserHelper
 
 			// cut titel
 			$length = mb_strlen($row->title);
+			$maxlength = $params->get('cuttitle', '18');
 
-			if ($length > $params->get('cuttitle', '25')) {
-				$row->title = mb_substr($row->title, 0, $params->get('cuttitle', '18'));
+			if ($length > $maxlength && $maxlength > 0) {
+				$row->title = mb_substr($row->title, 0, $maxlength);
 				$row->title = $row->title.'...';
 			}
 
 			/**
-			 * DEFINE LIST ##
-			**/
+			 * DEFINE LIST
+			 **/
 
 			$settings	= JEMHelper::globalattribs();
 			$access		= !$settings->get('show_noauth','0');
 			$authorised = JAccess::getAuthorisedViewLevels(JFactory::getUser()->get('id'));
 
 			$lists[$i] = new stdClass();
-
-			if ($access || in_array($row->access, $authorised))
-			{
-				// We know that user has the privilege to view the event
-				$lists[$i]->link = JRoute::_(JEMHelperRoute::getEventRoute($row->slug));
-				$lists[$i]->linkText = JText::_('MOD_JEM_TEASER_READMORE');
-			}
-			else {
-				$lists[$i]->link = JRoute::_('index.php?option=com_users&view=login');
-				$lists[$i]->linkText = JText::_('MOD_JEM_TEASER_READMORE_REGISTER');
-			}
-
 			$lists[$i]->title			= htmlspecialchars($row->title, ENT_COMPAT, 'UTF-8');
 			$lists[$i]->venue			= htmlspecialchars($row->venue, ENT_COMPAT, 'UTF-8');
-			$lists[$i]->catname			= implode(", ", JemOutput::getCategoryList($row->categories, $params->get('linkcategory', 1)));
 			$lists[$i]->state			= htmlspecialchars($row->state, ENT_COMPAT, 'UTF-8');
 			$lists[$i]->city			= htmlspecialchars( $row->city, ENT_COMPAT, 'UTF-8' );
-			$lists[$i]->eventlink		= $params->get('linkevent', 1) ? JRoute::_(JEMHelperRoute::getEventRoute($row->slug)) : '';
-			$lists[$i]->venuelink		= $params->get('linkvenue', 1) ? JRoute::_(JEMHelperRoute::getVenueRoute($row->venueslug)) : '';
 
 			// time/date
 			$lists[$i]->date			= modJEMteaserHelper::_format_date($row, $params);
@@ -195,20 +183,62 @@ abstract class modJEMteaserHelper
 			$lists[$i]->year 			= modJEMteaserHelper::_format_year($row);
 			$lists[$i]->time 			= $row->times ? modJEMteaserHelper::_format_time($row->dates, $row->times, $params) : '' ;
 
-			if ($dimage == null) {
-				$lists[$i]->eventimage		= '';
-				$lists[$i]->eventimageorig	= '';
-			} else {
-				$lists[$i]->eventimage		= JURI::base(true).'/'.$dimage['thumb'];
-				$lists[$i]->eventimageorig	= JURI::base(true).'/'.$dimage['original'];
+			if ($access || in_array($row->access, $authorised))
+			{
+				// We know that user has the privilege to view the event
+				if ($FixItemID)
+				{
+					$lists[$i]->link = JRoute::_('index.php?option=com_jem&view=event&id=' . $row->slug . '&Itemid=' . $FixItemID);
+				}
+				else
+				{
+					$lists[$i]->link = JRoute::_(JEMHelperRoute::getEventRoute($row->slug));
+				}
+				$lists[$i]->linkText = JText::_('MOD_JEM_TEASER_READMORE');
+			}
+			else
+			{
+				$lists[$i]->link = JRoute::_('index.php?option=com_users&view=login');
+				$lists[$i]->linkText = JText::_('MOD_JEM_TEASER_READMORE_REGISTER');
 			}
 
-			if ($limage == null) {
+			if ($FixItemID)
+			{
+				$lists[$i]->eventlink = $params->get('linkevent', 1) ? JRoute::_('index.php?option=com_jem&view=event&id=' . $row->slug . '&Itemid=' . $FixItemID) : '';
+				$lists[$i]->venuelink = $params->get('linkvenue', 1) ? JRoute::_('index.php?option=com_jem&view=venue&id=' . $row->venueslug . '&Itemid=' . $FixItemID) : '';
+			}
+			else
+			{
+				$lists[$i]->eventlink = $params->get('linkevent', 1) ? JRoute::_(JEMHelperRoute::getEventRoute($row->slug)) : '';
+				$lists[$i]->venuelink = $params->get('linkvenue', 1) ? JRoute::_(JEMHelperRoute::getVenueRoute($row->venueslug)) : '';
+			}
+			$lists[$i]->catname			= implode(", ", JemOutput::getCategoryList($row->categories, $params->get('linkcategory', 1),false,$FixItemID));
+
+			// images
+			if ($eventimg) {
+				if ($dimage == null) {
+					$lists[$i]->eventimage		= '';
+					$lists[$i]->eventimageorig	= '';
+				} else {
+					$lists[$i]->eventimage		= JURI::base(true).'/'.$dimage['thumb'];
+					$lists[$i]->eventimageorig	= JURI::base(true).'/'.$dimage['original'];
+				}
+			} else {
+				$lists[$i]->eventimage		= '';
+				$lists[$i]->eventimageorig	= '';
+			}
+
+			if ($venueimg) {
+				if ($limage == null) {
+					$lists[$i]->venueimage 		= '';
+					$lists[$i]->venueimageorig 	= '';
+				} else {
+					$lists[$i]->venueimage		= JURI::base(true).'/'.$limage['thumb'];
+					$lists[$i]->venueimageorig	= JURI::base(true).'/'.$limage['original'];
+				}
+			} else {
 				$lists[$i]->venueimage 		= '';
 				$lists[$i]->venueimageorig 	= '';
-			} else {
-				$lists[$i]->venueimage		= JURI::base(true).'/'.$limage['thumb'];
-				$lists[$i]->venueimageorig	= JURI::base(true).'/'.$limage['original'];
 			}
 
 			$length = $params->get('descriptionlength');

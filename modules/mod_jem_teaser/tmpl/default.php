@@ -1,7 +1,7 @@
 <?php
 /**
  * @package JEM
- * @subpackage JEM Teaser Module
+ * @subpackage JEM - Module-Teaser
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
@@ -106,5 +106,5 @@ if ($params->get('use_modal', 0)) {
 		</table>
 	</div> <!-- end of row -->
 	<?php endforeach; ?>
-	
+
 </div><!-- end of container -->

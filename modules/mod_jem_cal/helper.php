@@ -1,11 +1,11 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
- * @subpackage JEM Calendar Module
+ * @subpackage JEM - Module-Calendar
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2008 Toni Smillie www.qivva.com
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
+ * @version 3.0.6
  *
  * Original Eventlist calendar from Christoph Lukes www.schlu.net
  * PHP Calendar (version 2.3), written by Keith Devens
@@ -19,7 +19,7 @@ JModelLegacy::addIncludePath(JPATH_SITE.'/components/com_jem/models', 'JemModel'
 
 require_once JPATH_SITE . '/components/com_jem/helpers/helper.php';
 
-// perform cleanup if it wasn't done today (archive, delete)
+// perform cleanup if it wasn't done today (archive, trash)
 JEMHelper::cleanup();
 
 abstract class modjemcalqhelper
