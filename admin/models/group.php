@@ -113,22 +113,25 @@ class JemModelGroup extends JModelAdmin
 		$db->setQuery($query);
 		$db->execute();
 
-		foreach($members as $member)
-		{
-			$member = intval($member);
-
-			$query = $db->getQuery(true);
-			$columns = array('group_id', 'member');
-			$values = array($table->id, $member);
-
-			$query
+		if ($members) {
+			foreach($members as $member)
+			{
+				$member = intval($member);
+			
+				$query = $db->getQuery(true);
+				$columns = array('group_id', 'member');
+				$values = array($table->id, $member);
+			
+				$query
 				->insert($db->quoteName('#__jem_groupmembers'))
 				->columns($db->quoteName($columns))
 				->values(implode(',', $values));
-
-			$db->setQuery($query);
-			$db->execute();
+			
+				$db->setQuery($query);
+				$db->execute();
+			}
 		}
+		
 	}
 
 	/**
