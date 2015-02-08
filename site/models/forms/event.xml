@@ -38,6 +38,7 @@
 			class="inputbox"
 			size="22"
 			format="%Y-%m-%d"
+			filter="no"
 		/>
 		<field name="enddates" type="calendar"
 			label="COM_JEM_EDITEVENT_FIELD_ENDDATE"
@@ -45,6 +46,7 @@
 			class="inputbox"
 			size="22"
 			format="%Y-%m-%d"
+			filter="no"
 		/>
 		<field name="times" type="starttime"
 			class="inputbox"
