@@ -1,7 +1,6 @@
 <?php
 /**
  * @package JEM
- * @version 3.0.6
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
@@ -9,11 +8,10 @@
  * @todo add Itemid parameter to action link
  */
 defined('_JEXEC') or die;
+
 ?>
 <?php
 //the user is allready registered. Let's check if he can unregister from the event
-
-
 if ($this->print == 0) {
 
 if ($this->item->unregistra == 0) :

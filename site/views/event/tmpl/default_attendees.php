@@ -1,15 +1,14 @@
 <?php
 /**
  * @package JEM
- * @version 3.0.6
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  *
  * @todo add check if CB does exists and if so perform action
  */
-
 defined('_JEXEC') or die;
+
 $user		= JFactory::getUser();
 $userId		= $user->get('id');
 $params		= $this->item->params;
