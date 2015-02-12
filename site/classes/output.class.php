@@ -932,34 +932,34 @@ class JEMOutput {
 		$output = "";
 
 		if(JemHelper::isValidDate($dateStart)) {
-			$output .= self::formatdate($dateStart, $format);
+			$output .= '<span class="date">'.self::formatdate($dateStart, $format).'</span>';
 
 			if($settings->get('global_show_timedetails','1') && JemHelper::isValidTime($timeStart)) {
-				$output .= ', '.self::formattime($timeStart);
+				$output .= ', <span class="time">'.self::formattime($timeStart).'</span>';
 			}
 
 			// Display end date only when it differs from start date
 			$displayDateEnd = JemHelper::isValidDate($dateEnd) && $dateEnd != $dateStart;
 			if($displayDateEnd) {
-				$output .= ' - '.self::formatdate($dateEnd, $format);
+				$output .= ' - <span class="time">'.self::formatdate($dateEnd, $format).'</span>';
 			}
 
 			// Display end time only when both times are set
 			if($settings->get('global_show_timedetails','1') && JemHelper::isValidTime($timeStart) && JemHelper::isValidTime($timeEnd))
 			{
 				$output .= $displayDateEnd ? ', ' : ' - ';
-				$output .= self::formattime($timeEnd);
+				$output .= '<span class="time">'.self::formattime($timeEnd).'</span>';
 			}
 		} else {
-			$output .= JText::_('COM_JEM_OPEN_DATE');
+			$output .= '<span class="date">'.JText::_('COM_JEM_OPEN_DATE').'</span>';
 
 			if($settings->get('global_show_timedetails','1')) {
 				if(JemHelper::isValidTime($timeStart)) {
-					$output .= ', '.self::formattime($timeStart);
+					$output .= ', <span class="date">'.self::formattime($timeStart).'</span>';
 				}
 				// Display end time only when both times are set
 				if(JemHelper::isValidTime($timeStart) && JemHelper::isValidTime($timeEnd)) {
-					$output .= ' - '.self::formattime($timeEnd);
+					$output .= ' - <span class="time">'.self::formattime($timeEnd).'<span>';
 				}
 			}
 		}
@@ -1173,6 +1173,8 @@ class JEMOutput {
 			$timeFormat = str_replace('%M','i',$timeFormat);
 			$timeFormat = str_replace('%p','A',$timeFormat);
 			$timeFormat = str_replace('%P','a',$timeFormat);
+			$timeFormat = str_replace('%I','h',$timeFormat);
+			$timeFormat = str_replace('%l','g',$timeFormat);
 		} else {
 			$timeFormat	= "H:i";
 		}
@@ -1201,7 +1203,7 @@ class JEMOutput {
 		$datetimeStart	= new JDate($row->dates.' '.$row->times);
 		$otimeStart		= $datetimeStart->format('H:i');
 		$odateStart		= $datetimeStart->format($dateFormat);
-
+		
 		if ($otimeStart == '00.00' || $otimeStart == '00:00') {
 			if ($rowtime == null) {
 				$otimeStart = "";
@@ -1211,6 +1213,7 @@ class JEMOutput {
 		} else {
 			$otimeStart = $datetimeStart->format($timeFormat);
 		}
+		
 
 		# -- date/time End --
 		# - no enddate + no endtime = blank both variables
