@@ -2,7 +2,6 @@
 /**
  * @package MyAttending
  * @author JEM Community
- * @version 2.0.0
  * @copyright (C) 2013-2014 joomlaeventmanager.net
  *
  * Former info:

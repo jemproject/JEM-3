@@ -1,15 +1,12 @@
 <?php
 /**
- * JComments plugin for JEM
- *
  * @package   JEM
- * @version   3.0.6
+ * @subpackage JComments-Plugin
  * @author    Sergey M. Litvinov <smart@joomlatune.ru>
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  *
  * @copyright (C) 2006-2013 by Sergey M. Litvinov (http://www.joomlatune.ru)
  * @license GNU/GPL: http://www.gnu.org/copyleft/gpl.html
- * @version 3.0.6
  */
 defined('_JEXEC') or die;
 

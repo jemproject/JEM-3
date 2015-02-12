@@ -1,7 +1,6 @@
 <?php
 /**
  * @package JEM
- * @version 3.0.6
  * @subpackage JEM Listevents Plugin
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes

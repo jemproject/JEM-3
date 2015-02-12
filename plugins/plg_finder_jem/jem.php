@@ -1,7 +1,6 @@
 <?php
 /**
  * @package JEM
- * @version 3.0.6
  * @subpackage JEM Finder Plugin
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL

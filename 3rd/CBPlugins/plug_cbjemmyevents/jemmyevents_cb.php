@@ -1,15 +1,13 @@
 <?php
 /**
- * @package MyEvents
+ * @package JEM
+ * @subpackage CB-Plugin: MyEvents
  * @author JEM Community
- * @version JEM v3.0.6 & CB 1.9
- * @copyright (C) 2013-2014 joomlaeventmanager.net
+ * @copyright (C) 2013-2015 joomlaeventmanager.net
  *
  * Just a note:
  * Try to keep the query code inline with my-attending view
- *
  */
-
 defined('_JEXEC') or die;
 
 include_once JPATH_SITE . '/components/com_jem/classes/image.class.php';
