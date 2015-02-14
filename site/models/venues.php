@@ -82,6 +82,7 @@ class JemModelVenues extends JemModelEventslist
 		$where[] = ' l.published = 1';
 
 		$query->where($where);
+		$query->order(array('l.venue ASC'));
 		$query->group(array('l.id','l.venue'));
 
 
