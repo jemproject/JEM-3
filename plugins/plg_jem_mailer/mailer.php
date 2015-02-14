@@ -831,9 +831,7 @@ class plgJEMMailer extends JPlugin {
 				$data->receivers = $admin_receivers;
 
 				$this->_mailer($data);
-			} else {
-				return false;
-			}
+			} 
 		}
 
 		######################
