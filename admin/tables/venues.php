@@ -34,7 +34,7 @@ class JEMTableVenues extends JTable
 	/**
 	 * Check
 	 */
-	function check(){
+	public function check() {
 
 		$jinput = JFactory::getApplication()->input;
 
@@ -58,20 +58,6 @@ class JEMTableVenues extends JTable
 					$this->setError(JText::_('COM_JEM_VENUE_ERROR_MAP_ADDRESS'));
 					return false;
 				}
-			}
-		}
-
-		if (trim($this->url)) {
-			$this->url = strip_tags($this->url);
-
-			if (strlen($this->url) > 199) {
-				$this->setError(JText::_('COM_JEM_VENUE_ERROR_URL_LENGTH'));
-				return false;
-			}
-			if (!preg_match('/^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}'
-					.'((:[0-9]{1,5})?\/.*)?$/i' , $this->url)) {
-				$this->setError(JText::_('COM_JEM_VENUE_ERROR_URL_FORMAT'));
-				return false;
 			}
 		}
 
