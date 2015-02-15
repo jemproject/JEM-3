@@ -405,7 +405,7 @@ class plgJEMMailer extends JPlugin {
 	* @return  boolean
 	*
 	*/
-	public function onEventEdited($event_id, $is_new)
+	public function onEventEdited($event_id, $is_new,$link=false)
 	{
 		####################
 		## DEFINING ARRAY ##
@@ -454,9 +454,11 @@ class plgJEMMailer extends JPlugin {
 		$db->setQuery($query);
 		if (is_null($event = $db->loadObject())) return false;
 
-		// Link for event
-		$link = JRoute::_(JUri::base().JEMHelperRoute::getEventRoute($event->slug), false);
-
+		
+		if (!$link) {
+			$link = JRoute::_(JUri::base().JEMHelperRoute::getEventRoute($event->slug), false);
+		}
+		
 		// Strip tags/scripts, etc. from description
 		$text_description = JFilterOutput::cleanText($event->text);
 
@@ -629,7 +631,7 @@ class plgJEMMailer extends JPlugin {
 			if ($is_new) {
 				$created = JHtml::Date($event->created, JText::_('DATE_FORMAT_LC2'));
 				$data->body = JText::sprintf('PLG_JEM_MAILER_CREATOR_NEWEVENT_BODY', $username, $created, $event->title, $event->dates, $event->times, $event->venue, $event->city, $text_description, $userstate);
-				$data->subject = JText::sprintf( 'PLG_JEM_MAILER_CREATOR_EDITEVENT_SUBJECT', $this->_SiteName );
+				$data->subject = JText::sprintf( 'PLG_JEM_MAILER_CREATOR_NEWEVENT_SUBJECT', $this->_SiteName );
 			} else {
 				$modified = JHtml::Date($event->modified, JText::_('DATE_FORMAT_LC2'));
 				$data->body = JText::sprintf('PLG_JEM_MAILER_CREATOR_EDITEVENT_BODY', $username, $modified, $event->title, $event->dates, $event->times, $event->venue, $event->city, $text_description, $userstate);
@@ -639,6 +641,8 @@ class plgJEMMailer extends JPlugin {
 			$data->receivers = $creator_receiver;
 			$this->_mailer($data);
 		}
+		
+		
 
 		################################
 		## SENDMAIL: $admin_receivers ##
@@ -757,12 +761,13 @@ class plgJEMMailer extends JPlugin {
 	 */
 	public function onVenueEdited($venue_id, $is_new)
 	{
+
 		// Sendto
 		$send_to = array(
 			'user' => $is_new ? $this->params->get('newvenue_mail_user', '1') : $this->params->get('editvenue_mail_user', '0'),
 			'admin' => $is_new ? $this->params->get('newvenue_mail_admin', '1') : $this->params->get('editvenue_mail_admin', '0'),
 		);
-
+		
 		// Skip if processing not needed
 		if (!array_filter($send_to)) return true;
 
@@ -801,6 +806,7 @@ class plgJEMMailer extends JPlugin {
 		// Strip tags/scripts,etc from description
 		$text_description = JFilterOutput::cleanText($venue->locdescription);
 
+		
 		#######################
 		## RECEIVERS - ADMIN ##
 		#######################
@@ -809,8 +815,8 @@ class plgJEMMailer extends JPlugin {
 		# we selected admin so we can use the adminDBList.
 		# if the adminDBList is empty mailing should stop!
 
+		
 		if ($send_to['admin']) {
-
 			$admin_receivers = $this->_AdminDBList;
 
 			if ($admin_receivers) {
@@ -831,7 +837,7 @@ class plgJEMMailer extends JPlugin {
 				$data->receivers = $admin_receivers;
 
 				$this->_mailer($data);
-			} 
+			}
 		}
 
 		######################
@@ -841,8 +847,9 @@ class plgJEMMailer extends JPlugin {
 		# here we selected the option to send to a logged in user
 		# we make a selection between added/edited venue
 		# -> here we don't specify an extra variable
-
+		
 		if ($send_to['user']) {
+			
 			$data = new stdClass();
 
 			if ($is_new) {
@@ -854,7 +861,7 @@ class plgJEMMailer extends JPlugin {
 				$data->body = JText::sprintf('PLG_JEM_MAILER_USER_MAIL_EDIT_VENUE_A', $username, $modified, $venue->venue, $venue->url, $venue->street, $venue->postalCode, $venue->city, $venue->country, $text_description, $userstate);
 				$data->subject = JText::sprintf( 'PLG_JEM_MAILER_EDIT_USER_VENUE_MAIL', $this->_SiteName );
 			}
-
+			
 			$data->receivers = $user->email;
 			$this->_mailer($data);
 		}
