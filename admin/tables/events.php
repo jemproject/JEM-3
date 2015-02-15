@@ -76,7 +76,7 @@ class JemTableEvents extends JTable
 	/**
 	 * overloaded check function
 	 */
-	function check()
+	public function check()
 	{
 		$jinput = JFactory::getApplication()->input;
 
@@ -121,12 +121,14 @@ class JemTableEvents extends JTable
 		# do we have a startdate?
 		# if no then we consider it an "open date"
 		$this->opendate = 0;
+		$opendate = false;
 		if ($this->dates == null) {
-			$this->times 	= null;
+			// $this->times 	= null;
 			$this->enddates = null;
-			$this->endtimes = null;
+			// $this->endtimes = null;
 
 			$this->opendate = 1;
+			$opendate = true;
 		}
 
 		// combine DateTime
@@ -165,7 +167,7 @@ class JemTableEvents extends JTable
 		}
 
 		// check if endDateTime is before startDateTime
-		if ($startDate != '0000-00-00') {
+		if ($startDate != '0000-00-00' && !$opendate) {
 			if ($this->startDateTime > $this->endDateTime) {
 				$this->setError(JText::_('COM_JEM_EVENT_ERROR_END_BEFORE_START'));
 			}
