@@ -71,6 +71,7 @@ class JemModelHousekeeping extends JModelLegacy
 
 		// Get some data from the request
 		$images	= $this->getImages($type);
+		
 		$folder = $this->map[$type]['folder'];
 
 		$count = count($images);
@@ -236,7 +237,7 @@ class JemModelHousekeeping extends JModelLegacy
 		# compare table and folder
 		$same	= array_intersect($tableImages,$folderImages);
 		$diff	= array_diff($folderImages,$tableImages);
-
+		
 		$pass = array();
 		foreach ($diff AS $item) {
 			$pass[] = JFile::delete($item);
@@ -333,7 +334,7 @@ class JemModelHousekeeping extends JModelLegacy
 		$fullpath = true;
 		$exclude = false;
 
-		$array = JFolder::files($path, $filter = '.', $recurse, $fullpath);
+		$array = JFolder::files($path, $filter = '.', $recurse, $fullpath,array('index.html'));
 
 		foreach($array AS $item) {
 			$result[] = str_replace('\images\jem\/','/images/jem/',$item);
