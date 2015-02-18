@@ -59,19 +59,19 @@ jQuery( document ).ready(function( $ ) {
 		}
 
 		//for time in tooltip
-		$timehtml = '';
+		$timeTip = '';
 
 		if ($this->settings->get('global_show_timedetails','1')) {
 			$start = JemOutput::formattime($row->times);
 			$end = JemOutput::formattime($row->endtimes);
 
 			if ($start != '') {
-				$timehtml = '<div class="time"><span class="text-label">'.JText::_('COM_JEM_TIME_SHORT').': </span>';
-				$timehtml .= $start;
+				$timeTip = '<div class="time"><span class="text-label">'.JText::_('COM_JEM_TIME_SHORT').': </span>';
+				$timeTip .= $start;
 				if ($end != '') {
-					$timehtml .= ' - '.$end;
+					$timeTip .= ' - '.$end;
 				}
-				$timehtml .= '</div>';
+				$timeTip .= '</div>';
 			}
 		}
 
@@ -135,7 +135,7 @@ jQuery( document ).ready(function( $ ) {
 		$color .= '</div>';
 
 		//for time in calendar
-		$timetp = '';
+		$timeData = '';
 
 		if ($this->settings->get('global_show_timedetails','1')) {
 			$start = JemOutput::formattime($row->times,'',false);
@@ -146,24 +146,34 @@ jQuery( document ).ready(function( $ ) {
 
 			if ($multi->row) {
 				if ($multi->row == 'first') {
-					$timetp .= $image = JHtml::_("image","com_jem/arrow-left.png",'', NULL, true).' '.$start;
-					$timetp .= '<br />';
+					$timeData .= $image = JHtml::_("image","com_jem/arrow-left.png",'', NULL, true).' '.$start;
+					$timeData .= '<br />';
 				} elseif ($multi->row == 'middle') {
-					$timetp .= JHtml::_("image","com_jem/arrow-middle.png",'', NULL, true);
-					$timetp .= '<br />';
+					$timeData .= JHtml::_("image","com_jem/arrow-middle.png",'', NULL, true);
+					$timeData .= '<br />';
 				} elseif ($multi->row == 'zlast') {
-					$timetp .= JHtml::_("image","com_jem/arrow-right.png",'', NULL, true).' '.$end;
-					$timetp .= '<br />';
+					$timeData .= JHtml::_("image","com_jem/arrow-right.png",'', NULL, true).' '.$end;
+					$timeData .= '<br />';
 				} elseif ($multi->row == 'na') {
 					if ($start != '') {
-						$timetp .= $start;
+						$timeData .= $start;
+						/*
 						if ($end != '') {
 							$timetp .= ' - '.$end;
 						}
 						$timetp .= '<br />';
+						*/
+						$timeData .= ' ';
 					}
 				}
 			}
+		}
+
+		if ($timeData) {
+			$timeHtml  = '<div class="time label label-info">';
+			$timeHtml .= $timeData.'</div><br>';
+		} else {
+			$timeHtml = '';
 		}
 
 		$catname = '<div class="catname">'.$multicatname.'</div>';
@@ -185,7 +195,7 @@ jQuery( document ).ready(function( $ ) {
 		}
 
 		//date in tooltip
-		$multidaydate = '<div class="time"><span class="text-label">'.JText::_('COM_JEM_DATE').': </span>';
+		$multidaydate = '<div class="time label label-info"><span class="text-label">'.JText::_('COM_JEM_DATE').': </span>';
 		if ($multi->row == 'first') {
 			$multidaydate .= JemOutput::formatShortDateTime($row->dates, $row->times, $row->enddates, $row->endtimes);
 			$multidaydate .= JemOutput::formatSchemaOrgDateTime($row->dates, $row->times, $row->enddates, $row->endtimes);
@@ -202,7 +212,7 @@ jQuery( document ).ready(function( $ ) {
 		$multidaydate .= '</div>';
 
 		//generate the output
-		$content .= JemHelper::caltooltip($catname.$eventname.$timehtml.$venue, $eventdate, $row->title, $detaillink, 'hasTooltip', $timetp, $category->color);
+		$content .= JemHelper::caltooltip($catname.$eventname.$timeTip.$venue, $eventdate, $row->title, $detaillink, 'hasTooltip', $timeHtml, $category->color);
 		$content .= $colorpic;
 		$content .= $contentend;
 

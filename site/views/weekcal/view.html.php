@@ -52,6 +52,7 @@ class JemViewWeekcal extends JViewLegacy
 		$rows = $this->get('Items');
 		$currentweek = $this->get('Currentweek');
 		$currentyear =  Date("Y");
+		$showweeknr	= $params->get('showweeknr',true);
 
 		//Set Page title
 		$pagetitle = $params->def('page_title', $menuitem->title);
@@ -71,7 +72,7 @@ class JemViewWeekcal extends JViewLegacy
 
 
 		$cal = new activeCalendarWeek($currentyear,1,1);
-		$cal->enableWeekNum(JText::_('COM_JEM_WKCAL_WEEK'),null,''); // enables week number column with linkable week numbers
+		$cal->enableWeekNum(JText::_('COM_JEM_WKCAL_WEEK'),null,'',$showweeknr); // enables week number column with linkable week numbers
 		$cal->setFirstWeekDay($params->get('firstweekday', 0));
 
 		$this->rows 		= $rows;

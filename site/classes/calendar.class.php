@@ -228,10 +228,14 @@ class JEMCalendar {
 	PUBLIC enableWeekNum() -> enables a week number column
 	********************************************************************************
 	*/
-	function enableWeekNum($title="",$link=false,$javaScript=false) {
+	function enableWeekNum($title="",$link=false,$javaScript=false,$weeknum=false) {
 		// checking before enabling, as week number calulation works only if php version > 4.1.0 [php function: date ("W")]
 		if (is_integer($this->getWeekNum($this->actday))) {
-			$this->weekNum=true;
+			if ($weeknum) {
+				$this->weekNum=true;
+			} else {
+				$this->weekNum=false;
+			}
 			$this->weekNumTitle=$title;
 			$this->monthSpan++;
 

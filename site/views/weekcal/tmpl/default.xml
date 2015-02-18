@@ -91,6 +91,15 @@
 				<option value="0">COM_JEM_SUNDAY</option>
 				<option value="1">COM_JEM_MONDAY</option>
 			</field>
+			<field name="showweeknr" type="radio"
+				default="0"
+				label="COM_JEM_WKCAL_SHOW_WEEKNR"
+				description="COM_JEM_WKCAL_SHOW_WEEKNR_DESC"
+				class="btn-group btn-group-yesno"
+			>
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
 		</fieldset>
 	</fields>
 </metadata>
