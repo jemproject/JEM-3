@@ -101,6 +101,7 @@ CREATE TABLE IF NOT EXISTS `#__jem_recurrence_master` (
 
 ALTER TABLE `#__jem_settings`
 	DROP `ical_tz`,
+	DROP `datemode`,
 	ADD `version` varchar (20) NOT NULL DEFAULT '3.0.6';
 
 
