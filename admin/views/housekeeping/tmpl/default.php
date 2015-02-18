@@ -11,17 +11,7 @@ defined('_JEXEC') or die;
 
 <table style="width:100%">
 	<tr>
-		<td width="10%">
-			<div class="linkicon">
-				<a href="index.php?option=com_jem&amp;task=housekeeping.rmObsImages">
-					<?php echo JHtml::_('image', 'com_jem/icon-48-cleancategoryimg.png', JText::_('COM_JEM_HOUSEKEEPING_REMOVE_IMAGES'), null, true); ?>
-					<span><?php echo JText::_('COM_JEM_HOUSEKEEPING_REMOVE_IMAGES'); ?></span>
-				</a>
-			</div>
-		</td>
-		<td width="40%" valign="middle">
-			<?php echo JText::_('COM_JEM_HOUSEKEEPING_REMOVE_IMAGES_DESC'); ?>
-		</td>
+		<td width="10%"></td><td width="40%"></td>
 		<!-- CLEAN TRIGGER ARCHIVE -->
 		<td width="10%">
 			<div class="linkicon">
