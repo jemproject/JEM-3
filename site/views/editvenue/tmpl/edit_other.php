@@ -7,7 +7,7 @@
  */
 defined('_JEXEC') or die;
 ?>
-
+<div class="editform_content">
 	<!-- CUSTOMFIELDS -->
 	<fieldset class="form-horizontal">
 	<legend><span class="legendcolor"><?php echo JText::_('COM_JEM_EDITVENUE_CUSTOMFIELDS'); ?></span></legend>
@@ -33,3 +33,4 @@ defined('_JEXEC') or die;
 		endif;
 		?>
 	</fieldset>
+</div>

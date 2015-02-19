@@ -233,8 +233,9 @@ jQuery(function() {
 
 <!-- TABS -->
 <?php echo JHtml::_('bootstrap.startTabSet', 'myTab', array('active' => 'details')); ?>
+<div class="editform_spacer"></div>
 <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'details', JText::_('COM_JEM_EDITVENUE_INFO_TAB', true)); ?>
-
+<div class="editform_content">
 			<fieldset class="form-horizontal">
 				<legend><?php echo JText::_('COM_JEM_EDITVENUE_DETAILS_LEGEND'); ?></legend>
 					<?php
@@ -369,6 +370,7 @@ jQuery(function() {
 					</div>
 					<?php endforeach; ?>
 			</fieldset>
+</div>
 			<?php echo JHtml::_('bootstrap.endTab'); ?>
 
 <!-- ATTACHMENTS TAB -->
