@@ -857,6 +857,14 @@
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
+			<field name="trashedimages_path" type="text"
+				label="COM_JEM_SETTINGS_TRASHED_FOLDER_PATH"
+				description="COM_JEM_SETTINGS_TRASHED_FOLDER_PATH_DESC"
+				class="inputbox"
+				size="40"
+				required="true"
+				default="/trashedimages"
+			/>
 		</fieldset>
 
 		<fieldset name="venues"

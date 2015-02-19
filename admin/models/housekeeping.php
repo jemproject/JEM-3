@@ -216,10 +216,12 @@ class JemModelHousekeeping extends JModelLegacy
 	}
 
 	/**
-	 * Remove obsolete images
+	 * Cleanup images
 	 */
-	function rmObsImages() {
+	function CleanupImages() {
 
+		$app = JFactory::getApplication();
+		
 		# retrieve images from tables
 		$event		= $this->retrieveTableImages('events','datimage');
 		$category	= $this->retrieveTableImages('categories','image');
@@ -238,28 +240,139 @@ class JemModelHousekeeping extends JModelLegacy
 		$same	= array_intersect($tableImages,$folderImages);
 		$diff	= array_diff($folderImages,$tableImages);
 		
-		$pass = array();
-		foreach ($diff AS $item) {
-			$pass[] = JFile::delete($item);
-		}
-
-		# retrieve folders within image/jem directory
-		$arrayFolders = $this->retrieveFolders();
-
-		# remove folders when they're empty
-		$pass2 = array();
-		foreach ($arrayFolders AS $item) {
-			$path = realpath($item);
-			$check = $this->is_dir_empty($path);
-
-			if ($check){
-				$pass2[] = JFolder::delete($path);
+		$settings 		= JemHelper::globalattribs();
+		$trash_path		= $settings->get('trashedimages_path','/trashedimages');
+			
+		// "trashed" folder
+		$trash_folder		= JPATH_SITE . $trash_path;
+		if(!JFolder::exists($trash_folder)){
+			if (!JFolder::create($trash_folder)) {
+				$app->enqueueMessage(JText::_('COM_JEM_HOUSEKEEPING_ERROR_TRASHEDFOLDER'), 'error');
+				return false;
+			}
+		} 
+		$trash_foldersmall	= JPATH_SITE . $trash_path.'/small';
+		if(!JFolder::exists($trash_foldersmall)){
+			if (!JFolder::create($trash_foldersmall)) {
+				$app->enqueueMessage(JText::_('COM_JEM_HOUSEKEEPING_ERROR_TRASHEDFOLDER'), 'error');
+				return false;
 			}
 		}
+		
+		
+		// loop trough items
+		$thumbs = array();
+		$array_folders = array();
+		foreach ($diff AS $item) {
+			
+			if (strpos($item,'images/jem/') !== false) {
+				$array_folders[] = (dirname($item));
+			}
+			$filename = basename($item);
+			
+			//  check for thumb
+			if (strpos($item,'small/') !== false) {
+				$thumb = true;
+				$folder = $trash_foldersmall;
+			} else {
+				$thumb = false;
+				$folder = $trash_folder;
+			}
+			if (JFile::exists($folder.'/'.$filename)) {
+				$filename = self::file_newname($folder, $filename);
+				
+				if (JFile::move($item, $folder.'/'.$filename)) {
+					if ($thumb) {
+						$thumbs[] = true;
+					} else {
+						$thumbs[] = false;
+					}
+				} 
+				
+			} else {
+				if (JFile::move($item, $folder.'/'.$filename)) {
+					if ($thumb) {
+						$thumbs[] = true;
+					} else {
+						$thumbs[] = false;
+					}
+				} 
+			}					
+		}
 
-		return count($pass);
+		// loop trough the folders
+		$pass2 = array();
+		foreach ($array_folders AS $item) {
+			$path = realpath($item);
+			
+			$files = JFolder::files($path, $filter = '.', false, true , array('index.html'));
+			if (!$files) {
+				$pass2[] = JFolder::delete($path);
+					
+			}
+		}
+		
+		return $thumbs;
 	}
 
+	/**
+	 * Remove images
+	 */
+	
+	function rmObsImages() {
+		$settings 		= JemHelper::globalattribs();
+		$trash_path		= $settings->get('trashedimages_path','/trashedimages');
+			
+		
+		$trash_folder		= JPATH_SITE . $trash_path;
+		$trash_foldersmall	= JPATH_SITE . $trash_path.'/small';
+		
+		if(JFolder::exists($trash_folder)){
+			$files = JFolder::files($trash_folder, $filter = '.', false, true , array('index.html'));
+			if ($files) {
+				JFile::delete($files);
+			}
+		}
+		
+		if(JFolder::exists($trash_foldersmall)){
+			$files = JFolder::files($trash_foldersmall, $filter = '.', false, true , array('index.html'));
+			if ($files) {
+				JFile::delete($files);
+			}
+		}
+		
+		return;
+	}
+	
+	
+	
+	
+	/**
+	 * @author http://css-tricks.com/snippets/
+	 */
+	
+	function file_newname($path, $filename){
+		if ($pos = strrpos($filename, '.')) {
+			$name = substr($filename, 0, $pos);
+			$ext = substr($filename, $pos);
+		} else {
+			$name = $filename;
+		}
+	
+		$newpath = $path.'/'.$filename;
+		$newname = $filename;
+		$counter = 0;
+		while (file_exists($newpath)) {
+			$newname = $name .'_'. $counter . $ext;
+			$newpath = $path.'/'.$newname;
+			$counter++;
+		}
+	
+		return $newname;
+	}
+	
+	
+	
 	/**
 	 *
 	 *
