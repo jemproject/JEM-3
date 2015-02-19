@@ -293,6 +293,13 @@ class JemModelSampledata extends JModelLegacy
 		$query->where(array('created_by = 62'));
 		$db->setQuery($query);
 		$db->execute();
+		
+		$query = $db->getQuery(true);
+		$query->update('#__jem_categories');
+		$query->set('created_user_id = '.$db->quote((int)$result));
+		$query->where(array('created_user_id = 62'));
+		$db->setQuery($query);
+		$db->execute();
 
 		return true;
 	}
