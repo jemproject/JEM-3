@@ -14,9 +14,9 @@ JFormHelper::loadFieldClass('list');
  */
 class JFormFieldCatOptions extends JFormFieldList
 {
+
 	/**
 	 * The form field type.
-	 *
 	 */
 	protected $type = 'CatOptions';
 
@@ -24,192 +24,185 @@ class JFormFieldCatOptions extends JFormFieldList
 	{
 		$html = array();
 		$attr = '';
-
+		
 		// Initialize some field attributes.
-		$attr .= !empty($this->class) ? ' class="' . $this->class . '"' : '';
-		$attr .= !empty($this->size) ? ' size="' . $this->size . '"' : '';
+		$attr .= ! empty($this->class) ? ' class="' . $this->class . '"' : '';
+		$attr .= ! empty($this->size) ? ' size="' . $this->size . '"' : '';
 		$attr .= $this->multiple ? ' multiple' : '';
 		$attr .= $this->required ? ' required aria-required="true"' : '';
 		$attr .= $this->autofocus ? ' autofocus' : '';
-
+		
 		$frontedit = $this->element['frontedit'];
-
-		// To avoid user's confusion, readonly="true" should imply disabled="true".
-		if ((string) $this->readonly == '1' || (string) $this->readonly == 'true' || (string) $this->disabled == '1'|| (string) $this->disabled == 'true')
+		
+		// To avoid user's confusion, readonly="true" should imply
+		// disabled="true".
+		if ((string) $this->readonly == '1' || (string) $this->readonly == 'true' || (string) $this->disabled == '1' ||
+				 (string) $this->disabled == 'true')
 		{
 			$attr .= ' disabled="disabled"';
 		}
-
+		
 		// Initialize JavaScript field attributes.
 		$attr .= $this->onchange ? ' onchange="' . $this->onchange . '"' : '';
-
+		
 		// Get the field options.
 		$options = (array) $this->getOptions();
-
+		
 		// Selected Categories
 		$currentid = JFactory::getApplication()->input->getInt('a_id');
-		$categories = self::getCategories($currentid);
-
-		$db		= JFactory::getDbo();
-		$query	= $db->getQuery(true);
-		$query = 'SELECT DISTINCT catid FROM #__jem_cats_event_relations WHERE itemid = '. $db->quote($currentid);
-
+		
+		// @todo check, obsolete?
+		// $categories = self::getCategories($currentid);
+		
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		
+		$query->select('DISTINCT catid');
+		$query->from('#__jem_cats_event_relations');
+		$query->where('itemid = ' . $db->quote($currentid));
+		
 		$db->setQuery($query);
 		$selectedcats = $db->loadColumn();
-
-		// Create a read-only list (no name) with a hidden input to store the value.
+		
+		// Create a read-only list (no name) with a hidden input to store the
+		// value.
 		if ((string) $this->readonly == '1' || (string) $this->readonly == 'true')
 		{
-			$html[] = JHtml::_('select.genericlist', $options, $this->name, trim($attr), 'value', 'text', $selectedcats,$this->id);
+			$html[] = JHtml::_('select.genericlist', $options, $this->name, trim($attr), 'value', 'text', $selectedcats, $this->id);
 			$html[] = '<input type="hidden" name="' . $this->name . '" value="' . htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8') . '"/>';
 		}
 		else
-			// Create a regular list.
+		// Create a regular list.
 		{
-			$html[] = JHtml::_('select.genericlist', $options, $this->name, trim($attr), 'value', 'text', $selectedcats,$this->id);
+			$html[] = JHtml::_('select.genericlist', $options, $this->name, trim($attr), 'value', 'text', $selectedcats, $this->id);
 		}
-
+		
 		return implode($html);
 	}
 
-	protected function getOptions() {
-
-		$db			= JFactory::getDbo();
-
+	protected function getOptions()
+	{
+		// Initialise variables.
+		$options = array();
+		$published = $this->element['published'] ? $this->element['published'] : array(0,1);
+		$name = (string) $this->element['name'];
+		$action = (string) $this->element['action'];
 		$frontedit = $this->element['frontedit'];
-		if ($frontedit) {
-			$options	= $this->getCategories();
-		} else {
-			$options	= JEMCategories::getCategoriesTree();
+		$jinput = JFactory::getApplication()->input;
+		$db		= JFactory::getDbo();
+		$a_id = $jinput->get('a_id',null);
+		
+		// retrieve data
+		if ($frontedit)
+		{	
+			$user = JFactory::getUser();
+			$jemsettings = JEMHelper::config();
+			$userid = (int) $user->get('id');
+			$superuser = JEMUser::superuser();
+			$levels = $user->getAuthorisedViewLevels();
+			$settings = JemHelper::globalattribs();
+			$guestcat = $settings->get('guest_category', '0');
+			$jinput = JFactory::getApplication()->input;
+			$valguest = JEMUser::validate_guest();
+			$name = (string) $this->element['name'];
+			$db		= JFactory::getDbo();
+			$auth_joomlagr	= $user->getAuthorisedGroups();
+		
+			$oldCat = 0;
+			
+			$query = $db->getQuery(true)
+			->select('a.id AS value, a.catname AS text, a.level, a.published')
+			->from('#__jem_categories AS a')
+			->join('LEFT', $db->quoteName('#__jem_categories') . ' AS b ON a.lft > b.lft AND a.rgt < b.rgt');
+			
+			if (is_numeric($published))
+			{
+				$query->where('a.published = ' . (int) $published);
+			}
+			elseif (is_array($published))
+			{
+				JArrayHelper::toInteger($published);
+				$query->where('a.published IN (' . implode(',', $published) . ')');
+			}
+			
+			
+			// specific code
+			if (!$valguest) {
+				
+				$validated =false;
+				if($superuser) {
+					// no need to restrict to category's
+					$validated = true;
+				}
+				
+				if (!$validated) {
+					// in this case it's going to be difficult
+					// catch the groupnumber of the user+add rights
+					$query2	= $db->getQuery(true);
+					$query2->select(array('gr.id'));
+					$query2->from($db->quoteName('#__jem_groups').' AS gr');
+					$query2->join('LEFT', '#__jem_groupmembers AS g ON g.group_id = gr.id');
+					$query2->where(array('g.member = '. (int) $user->get('id'),$db->quoteName('gr.addevent').' =1','g.member NOT LIKE 0'));
+					$db->setQuery($query2);
+					$groupnumber = $db->loadColumn();
+					
+					// is the user member of a group with edit rights?
+					if ($groupnumber) {
+						// restrict submission into maintained categories only
+						$query->where(array('a.groupid IN (' . implode(',', $groupnumber) . ')'));
+					} else {
+						return false;
+					}
+				}				
+			} else {
+				// $specified guest category
+				$query->where(array('a.id = '. $guestcat));
+			}
+			
+			$query->group('a.id, a.catname, a.level, a.lft, a.rgt, a.parent_id, a.published')
+			->order('a.lft ASC');
+				
+			$db->setQuery($query);
 		}
-
+		
 		try
 		{
 			$options = $db->loadObjectList();
 		}
 		catch (RuntimeException $e)
-		{
+		{		
 			JError::raiseWarning(500, $e->getMessage);
 		}
-
+		
+					
+		// Pad the option text with spaces using depth level as a multiplier.
+		for ($i = 0, $n = count($options); $i < $n; $i ++)
+		{
+			// remove root
+			if ($this->element['removeroot'] == true)
+			{
+				if ($options[$i]->level == 0)
+				{
+					unset($options[$i]);
+					continue;
+				}
+				
+				$options[$i]->level = $options[$i]->level - 1;
+			}
+			
+			if ($options[$i]->published == 1)
+			{
+				$options[$i]->text = str_repeat('- ', $options[$i]->level) . $options[$i]->text;
+			}
+			else
+			{
+				$options[$i]->text = str_repeat('- ', $options[$i]->level) . '[' . $options[$i]->text . ']';
+			}
+		}
+		
 		// Merge any additional options in the XML definition.
 		$options = array_merge(parent::getOptions(), $options);
-
+		
 		return $options;
-	}
-
-	/**
-	 * logic to get the categories
-	 *
-	 * @access public
-	 * @return void
-	 */
-	function getCategories($id=false)
-	{
-		$user		= JFactory::getUser();
-		$jemsettings = JEMHelper::config();
-		$userid		= (int) $user->get('id');
-		$superuser	= JEMUser::superuser();
-		$levels 	= $user->getAuthorisedViewLevels();
-		$settings 	= JemHelper::globalattribs();
-		$guestcat	= $settings->get('guest_category','0');
-
-		$valguest	= JEMUser::validate_guest();
-		if (!$valguest) {
-			$where = ' WHERE c.published = 1 AND c.access IN (' . implode(',', $levels) . ')';
-
-			//get the ids of the categories the user maintaines
-			$db		= JFactory::getDbo();
-			$query	= $db->getQuery(true);
-			$query = 'SELECT g.group_id'
-					. ' FROM #__jem_groupmembers AS g'
-					. ' WHERE g.member = '.$userid
-					;
-					$db->setQuery($query);
-					$catids = $db->loadColumn();
-
-					$query = 'SELECT gr.id'
-							. ' FROM #__jem_groups AS gr'
-									. ' LEFT JOIN #__jem_groupmembers AS g ON g.group_id = gr.id'
-											. ' WHERE g.member = ' . (int) $user->get('id')
-											. ' AND ' .$db->quoteName('gr.addevent') . ' = 1 '
-													. ' AND g.member NOT LIKE 0';
-					$db->setQuery($query);
-					$groupnumber = $db->loadColumn();
-					$categories = implode(' OR c.groupid = ', $groupnumber);
-
-					//build ids query
-					if ($categories) {
-						//check if user is allowed to submit events in general, if yes allow to submit into categories
-						//which aren't assigned to a group. Otherwise restrict submission into maintained categories only
-						if (JEMUser::validate_user($jemsettings->evdelrec, $jemsettings->delivereventsyes)) {
-							$where .= ' AND c.groupid = 0 OR c.groupid = '.$categories;
-						} else {
-							$where .= ' AND c.groupid = '.$categories;
-						}
-					} else {
-						$where .= ' AND c.groupid = 0';
-					}
-
-					//administrators or superadministrators have access to all categories, also maintained ones
-					if($superuser) {
-						$where = ' WHERE c.published = 1';
-					}
-		} else {
-			# specified category
-			$where = ' WHERE c.id = '. $guestcat;
-		}
-
-		//get the maintained categories and the categories whithout any group
-		//or just get all if somebody have edit rights
-		$db		= JFactory::getDbo();
-		$query	= $db->getQuery(true);
-		$query = 'SELECT c.*,c.id as value,catname as text'
-				. ' FROM #__jem_categories AS c'
-				. $where
-				. ' ORDER BY c.ordering'
-				;
-		$db->setQuery($query);
-
-		//	$this->_category = array();
-		//	$this->_category[] = JHtml::_('select.option', '0', JText::_( 'COM_JEM_SELECT_CATEGORY' ) );
-		//	$this->_categories = array_merge( $this->_category, $this->_db->loadObjectList() );
-
-		$mitems = $db->loadObjectList();
-
-		// Check for a database error.
-		if ($db->getErrorNum())
-		{
-			JError::raiseNotice(500, $db->getErrorMsg());
-		}
-
-		if (!$mitems)
-		{
-			$mitems = array();
-			$children = array();
-
-			$parentid = $mitems;
-		}
-		else
-		{
-			$mitems_temp = $mitems;
-
-			$children = array();
-			// First pass - collect children
-			foreach ($mitems as $v)
-			{
-				$pt = $v->parent_id;
-				$list = @$children[$pt] ? $children[$pt] : array();
-				array_push($list, $v);
-				$children[$pt] = $list;
-			}
-
-			$parentid = intval($mitems[0]->parent_id);
-		}
-
-		//get list of the items
-		$list = JEMCategories::treerecurse($parentid, '', array(), $children, 9999, 0, 0);
-
-		return $list;
 	}
 }
