@@ -78,9 +78,11 @@ jQuery( document ).ready(function( $ ) {
 			if ($start != '') {
 				$timehtml = '<div class="time"><span class="text-label">'.JText::_('COM_JEM_TIME_SHORT').': </span>';
 				$timehtml .= $start;
+				
 				if ($end != '') {
 					$timehtml .= ' - '.$end;
 				}
+				
 				$timehtml .= '</div>';
 			}
 		}
@@ -151,8 +153,10 @@ jQuery( document ).ready(function( $ ) {
 		$color .= '</div>';
 
 		# for time in calendar
-		$timetp = '';
-
+		
+		
+		$timetp   = '';
+		
 		$multi = new stdClass();
 		$multi->row = (isset($row->multi) ? $row->multi : 'na');
 
@@ -178,14 +182,24 @@ jQuery( document ).ready(function( $ ) {
 			} elseif ($multi->row == 'na') {
 				if ($start != '') {
 					$timetp .= $start;
+					/*
 					if ($end != '') {
 						$timetp .= ' - '.$end;
 					}
+					*/
 					//$timetp .= '<br />';
 					$timetp .= ' ';
 				}
 			}
 		}
+		$timetp2 = '';
+		if ($timetp) {
+			$timetp2  = '<div class="time label label-info">';
+			$timetp2 .= $timetp.'</div><br>';
+		} else {
+			$timetp2 .= $timetp;
+		}
+		
 
 		$catname = '<div class="catname">'.$multicatname.'</div>';
 
@@ -225,7 +239,7 @@ jQuery( document ).ready(function( $ ) {
 		$multidaydate .= '</div>';
 
 		//generate the output
-		$content .= JemHelper::caltooltip($catname.$eventname.$timehtml.$venue, $eventdate, $row->title, $detaillink, 'hasTooltip', $timetp, $category->color);
+		$content .= JemHelper::caltooltip($catname.$eventname.$timehtml.$venue, $eventdate, $row->title, $detaillink, 'hasTooltip', $timetp2, $category->color);
 		$content .= $colorpic;
 		$content .= $contentend;
 
