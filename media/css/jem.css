@@ -78,9 +78,9 @@ div#jem .inputbox:focus {
 --------------------- */
 div#jem {
 	overflow:hidden;
-	background-color:#EDF4F5;
-	border:1px solid #000000;
-	border-radius:5px;
+	background-color:rgba(41,39,37,0.07);
+	border:1px solid #CECECE;
+	/* border-radius:5px;*/
 	padding:10px;
 }
 
@@ -375,8 +375,6 @@ div#jem table.eventtable tr.featured td{
 	background-color: #B6B6B4;
 }
 
-
-
 /* ---------------------
 	EDITEVENT-PAGE
 -------------------- */
@@ -609,11 +607,7 @@ div#jem .btn {
     text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
 	background: #F5F5F5 linear-gradient(to bottom, #FFF, #E6E6E6) repeat-x;
 	border: 1px solid;
-	/* border-color: #BBB #BBB #A2A2A2;*/
-    -moz-border-top-colors: none;
-    -moz-border-right-colors: none;
-    -moz-border-bottom-colors: none;
-    -moz-border-left-colors: none;
+	border-color: #808080;
     border-image: none;
     border-radius: 4px;
     box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
@@ -929,7 +923,6 @@ div#jem .btn-success {
     color: #FFF;
     text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.25);
 	background: #5BB75B linear-gradient(to bottom, #62C462, #51A351) repeat-x;
-	border-color: #51A351 #51A351 #387038;
 }
 
 div#jem .btn-success:hover,
@@ -1082,7 +1075,7 @@ div#jem .input-append .btn-group {
 
 div#jem #myTabContent {
 	background-color:white;
-	padding:10px;
+	/*padding:10px;*/
 	border: 1px solid #CECECE;
 }
 
@@ -1109,7 +1102,7 @@ div#jem .nav {
 }
 div#jem .nav > li > a {
 	display: block;
-	background-color: #808080;
+	background-color: #E9E9E9;
 	color: black;
 	text-decoration: none;
 }
@@ -1195,7 +1188,7 @@ div#jem .nav-tabs > li > a,
 div#jem .nav-pills > li > a {
 	padding-right: 12px;
 	padding-left: 12px;
-	margin-right: 2px;
+	margin-right: 4px;
 	line-height: 14px;
 }
 div#jem .nav-tabs {
@@ -1205,6 +1198,7 @@ div#jem .nav-tabs > li {
 	margin-bottom: -1px;
 }
 div#jem .nav-tabs > li > a {
+	border-color: #DDD #DDD transparent;
 	padding-top: 8px;
 	padding-bottom: 8px;
 	line-height: 18px;
@@ -1212,21 +1206,22 @@ div#jem .nav-tabs > li > a {
 	-webkit-border-radius: 4px 4px 0 0;
 	-moz-border-radius: 4px 4px 0 0;
 	border-radius: 4px 4px 0 0;
-	border-top: 1px solid black;
-	border-left: 1px solid black;
-	border-right: 1px solid black;
+	border-top: 1px solid grey;
+	border-left: 1px solid grey;
+	border-right: 1px solid grey;
 	text-transform: none;
 }
 div#jem .nav-tabs > li > a:hover,
 div#jem .nav-tabs > li > a:focus {
-	/* border-color: #eee #eee #ddd; */
+	background-color: #FCE775;
 }
 div#jem .nav-tabs > .active > a,
 div#jem .nav-tabs > .active > a:hover,
 div#jem .nav-tabs > .active > a:focus {
-	color: #555;
-	background-color: #fff;
-	border: 1px solid black;
+	border-color: #DDD #DDD transparent;
+	color: black;
+	background-color: #FCE775;
+	border: 1px solid grey;
 	border-bottom-color: transparent;
 	cursor: default;
 	-moz-border-top-colors: none;
@@ -1537,4 +1532,14 @@ div#jem input[type="checkbox"] {
 div#jem .btn[disabled] {
 	border:1px solid #666666;
 	opacity: 1;
+}
+
+div#jem .editform_content {
+	padding:10px;
+}
+
+div#jem .editform_spacer {
+	height: 10px;
+	background-color: rgba(248, 244, 181, 0.99);
+	border-bottom: 1px solid #CECECE;
 }

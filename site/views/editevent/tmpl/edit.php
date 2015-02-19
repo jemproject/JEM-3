@@ -127,7 +127,10 @@ $settings	= json_decode($this->item->attribs);
 
 <!-- TABS -->
 <?php echo JHtml::_('bootstrap.startTabSet', 'myTab', array('active' => 'details')); ?>
+<div class="editform_spacer"></div>
+
 <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'details', JText::_('COM_JEM_EDITEVENT_INFO_TAB', true)); ?>
+<div class="editform_content">
 
 			<fieldset class="form-horizontal">
 				<legend><span class="legendcolor"><?php echo JText::_('COM_JEM_EDITEVENT_DETAILS_LEGEND'); ?></span></legend>
@@ -147,6 +150,7 @@ $settings	= json_decode($this->item->attribs);
 						if ($this->vsettings->get('editevent_show_published',1) && !($this->valguest)) {
 							echo $this->form->renderField('published');
 						}
+						echo $this->form->renderField('language');
 						echo $this->form->renderField('locid');
 						if (!$this->valguest) {
 							 echo $this->form->renderField('contactid');
@@ -184,7 +188,7 @@ $settings	= json_decode($this->item->attribs);
 			</fieldset>
 			<!--  END META FIELDSET -->
 
-
+</div>
 			<?php echo JHtml::_('bootstrap.endTab'); ?>
 
 			<?php

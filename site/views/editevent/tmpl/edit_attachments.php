@@ -7,7 +7,7 @@
  */
 defined ('_JEXEC') or die;
 ?>
-
+<div class="editform_content">
 <fieldset>
 	<legend><?php echo JText::_('COM_JEM_ATTACHMENTS_LEGEND'); ?></legend>
 
@@ -69,3 +69,4 @@ defined ('_JEXEC') or die;
 		</tbody>
 	</table>
 </fieldset>
+</div>

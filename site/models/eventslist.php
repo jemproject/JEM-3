@@ -173,6 +173,9 @@ class JemModelEventslist extends JModelList
 			$this->setState('filter.category_id',$catids);
 			$this->setState('filter.category_id.include',$catidsfilter);
 		}
+		
+		// language filter
+		$this->setState('filter.language', JLanguageMultilang::isEnabled());
 
 		$this->setState('filter.access', true);
 		$this->setState('filter.groupby',array('a.id'));
@@ -460,7 +463,14 @@ class JemModelEventslist extends JModelList
 				}
 			}
 		}
-
+		
+		
+		// Filter by language
+		if ($this->getState('filter.language'))
+		{
+			$query->where('a.language in (' . $db->quote(JFactory::getLanguage()->getTag()) . ',' . $db->quote('*') . ')');
+		}
+		
 		# Group
 		$group = $this->getState('filter.groupby');
 		if ($group) {

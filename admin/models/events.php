@@ -31,6 +31,7 @@ class JemModelEvents extends JModelList
 					'id', 'a.id',
 					'catname', 'c.catname',
 					'featured', 'a.featured',
+					'language', 'a.language',
 					'filtertype',
 					'published',
 					'access', 'a.access', 'access_level',
@@ -67,6 +68,10 @@ class JemModelEvents extends JModelList
 
 		$end = $this->getUserStateFromRequest($this->context.'.filter.groupset', 'filter.groupset', '', 'string');
 		$this->setState('filter.groupset', $end);
+		
+		$language = $this->getUserStateFromRequest($this->context.'.filter.language', 'filter_language', '');
+		$this->setState('filter.language', $language);
+		
 
 		// Load the parameters.
 		$params = JComponentHelper::getParams('com_jem');
@@ -119,6 +124,11 @@ class JemModelEvents extends JModelList
 		);
 		$query->from($db->quoteName('#__jem_events').' AS a');
 
+		// Join over the language
+		$query->select('l.title AS language_title')
+		->join('LEFT', $db->quoteName('#__languages') . ' AS l ON l.lang_code = a.language');
+		
+		
 		// Join over venue data.
 		$query->select('loc.venue, loc.city, loc.state, loc.checked_out AS vchecked_out');
 		$query->join('LEFT', '#__jem_venues AS loc ON loc.id = a.locid');
@@ -212,6 +222,12 @@ class JemModelEvents extends JModelList
 				}
 			}
 		}
+		
+		// Filter on the language.
+		if ($language = $this->getState('filter.language'))
+		{
+			$query->where('a.language = ' . $db->quote($language));
+		}
 
 		# filter events with a recurrence-group
 		$groupset = $this->getState('filter.groupset');
@@ -226,6 +242,12 @@ class JemModelEvents extends JModelList
 		# ordering
 		$orderCol	= $this->state->get('list.ordering','a.title');
 		$orderDirn	= $this->state->get('list.direction','asc');
+		
+		// SQL server change
+		if ($orderCol == 'language')
+		{
+			$orderCol = 'l.title';
+		}
 
 		if ($orderCol == 'a.dates')
 		{

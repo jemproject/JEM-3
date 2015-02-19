@@ -17,6 +17,14 @@
 			<option value="0">JNO</option>
 			<option value="1">JYES</option>
 		</field>
+		<field
+			name="language"
+			type="contentlanguage"
+			label="JFIELD_LANGUAGE_LABEL"
+			description="COM_JEM_EDITEVENT_LANGUAGE_DESC"
+			class="inputbox">
+			<option value="*">JALL</option>
+		</field>
 		
 		<field name="title" type="text"
 			class="inputbox"
@@ -71,6 +79,8 @@
 			description="COM_JEM_EDITEVENT_FIELD_CATEGORIES_DESC"
 			required="true"
 			frontedit="true"
+			removeroot="true"
+			action=""
 		/>
 		
 		<field
