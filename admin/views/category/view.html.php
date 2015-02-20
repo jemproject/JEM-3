@@ -41,6 +41,8 @@ class JemViewCategory extends JViewLegacy
 
 		// Load Script
 		JHtml::_('script', 'com_jem/colorpicker.js', array(), true);
+		JHtml::_('script', 'com_jem/slider-state.js', false, true);
+		
 
 		// build grouplist
 		// @todo: make a form-field for this one

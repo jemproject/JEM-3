@@ -15,8 +15,6 @@ JHtml::_('behavior.keepalive');
 
 // Define slides options
 $slidesOptions = array(
-		"active" => "slide1",
-		"useCookie" => "true" // It is the ID of the active tab.
 );
 ?>
 
@@ -33,11 +31,10 @@ $slidesOptions = array(
 		}
 	}
 </script>
-
+		
 <form action="<?php echo JRoute::_('index.php?option=com_jem&layout=edit&id='.(int) $this->item->id); ?>" method="post" name="adminForm" id="item-form" class="form-validate">
 <div class="form-horizontal">	
 	<div class="span12">
-	
 	
 <!-- Tabs -->	
 	<div class="span8">
