@@ -281,23 +281,24 @@ class JemModelEvent extends JModelAdmin
 			##############
 			## HOLIDAYS ##
 			##############
-
+			
 			# Retrieve dates that are holidays and enabled.
 			$db = JFactory::getDbo();
 			$query = $db->getQuery(true);
 			$query->select('holiday');
 			$query->from('#__jem_dates');
 			$query->where(array('enabled = 1', 'holiday = 1'));
-
+			
 			$db->setQuery($query);
 			$holidays = $db->loadColumn();
-
+			
 			if ($holidays) {
 				$item->recurrence_country_holidays = true;
 			} else {
 				$item->recurrence_country_holidays = false;
 			}
-
+			
+			
 			$item->author_ip = $jemsettings->storeip ? JemHelper::retrieveIP() : false;
 
 			if (empty($item->id)){
@@ -341,6 +342,12 @@ class JemModelEvent extends JModelAdmin
 		}
 
 		$jemsettings 	= JemHelper::config();
+		$app 			= JFactory::getApplication();
+		if ($app->isAdmin())
+			$backend = true;
+		else
+			$backend = false;
+		
 
 		if ($this->getState('event.id')) {
 			// existing event
@@ -384,6 +391,23 @@ class JemModelEvent extends JModelAdmin
 
 		} else {
 			// new event
+			
+			
+			// specific backend settings
+			if ($backend) {
+				$settings 		= JemHelper::globalattribs();
+				$registering = $settings->get('registering_b');
+				$form->setFieldAttribute('registra', 'default', $registering);
+				$unregistering = $settings->get('unregistering_b');
+				$form->setFieldAttribute('unregistra', 'default', $unregistering);
+			} else {
+				$veditevent		= JemHelper::viewSettings('veditevent');
+				$registering = $veditevent->get('registering');
+				$form->setFieldAttribute('registra', 'default', $registering);
+				$unregistering = $veditevent->get('unregistering');
+				$form->setFieldAttribute('unregistra', 'default', $unregistering);
+			}
+			
 
 			$meta_keywords = $jemsettings->meta_keywords;
 			$form->setFieldAttribute('meta_keywords', 'default', $meta_keywords);
@@ -415,6 +439,10 @@ class JemModelEvent extends JModelAdmin
 			$form->removeField('captcha');
 			$form->setFieldAttribute('articletext', 'buttons', 'false');
 		}
+		
+		
+		
+		
 
 		return $form;
 	}
@@ -523,10 +551,11 @@ class JemModelEvent extends JModelAdmin
 
 		if ($backend || $hide_othertab == false) {
 
+			
 			##############
 			## HOLIDAYS ##
 			##############
-
+			
 			if (isset($data['activated'])) {
 				if ($data['activated'] == null) {
 					$holidays =	array();
@@ -537,8 +566,8 @@ class JemModelEvent extends JModelAdmin
 				$holidays = array();
 			}
 			$countryholiday		= $jinput->getInt('recurrence_country_holidays','');
-
-
+				
+			
 			################
 			## RECURRENCE ##
 			################
@@ -713,8 +742,6 @@ class JemModelEvent extends JModelAdmin
 					# the event is not part of a recurrence-set
 
 					# we passed the check but now we'll pass some variables to the generating functions
-					#
-					# holidays: the holidays that were checked
 					# exdates: the dates filled
 					# table: the row info
 

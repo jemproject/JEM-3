@@ -20,7 +20,7 @@ class JEMTableSettings extends JTable
 	/**
 	 * check
 	 */
-	function check()
+	public function check()
 	{
 		return true;
 	}
@@ -39,9 +39,16 @@ class JEMTableSettings extends JTable
 	 */
 	public function bind($array, $ignore = '')
 	{
-
 		if (isset($array['globalattribs']) && is_array($array['globalattribs']))
 		{
+			if (!isset($array['globalattribs']['registering_b'])) {
+				$array['globalattribs']['registering_b'] = 0 ;
+			}
+			
+			if (!isset($array['globalattribs']['unregistering_b'])) {
+				$array['globalattribs']['unregistering_b'] = 0 ;
+			}
+			
 			$registry = new JRegistry;
 			$registry->loadArray($array['globalattribs']);
 			$array['globalattribs'] = (string) $registry;
@@ -91,6 +98,14 @@ class JEMTableSettings extends JTable
 
 		if (isset($array['veditevent']) && is_array($array['veditevent']))
 		{
+			if (!isset($array['veditevent']['registering'])) {
+				$array['veditevent']['registering'] = 0 ;
+			}
+				
+			if (!isset($array['veditevent']['unregistering'])) {
+				$array['veditevent']['unregistering'] = 0 ;
+			}
+			
 			$registry = new JRegistry;
 			$registry->loadArray($array['veditevent']);
 			$array['veditevent'] = (string) $registry;
