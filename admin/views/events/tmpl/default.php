@@ -222,7 +222,7 @@ $settings	= $this->settings;
 				}
 				?>
 				</td>
-				<td class="small hidden-phone">
+				<td class="center small hidden-phone">
 				<?php 
 				if ($row->language == '*') {
 					echo JText::alt('JALL', 'language'); 
