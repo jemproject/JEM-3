@@ -41,18 +41,6 @@ defined('_JEXEC') or die;
 </div><div class="span6">
 
 	<fieldset class="form-horizontal">
-		<legend><?php echo JText::_('COM_JEM_REGISTRATION'); ?></legend>
-		<div class="control-group">	
-			<div class="control-label"><?php echo $this->form->getLabel('showfroregistra'); ?></div>
-			<div class="controls"><?php echo $this->form->getInput('showfroregistra'); ?></div>
-		</div>
-		<div id="froreg1" class="control-group">	
-			<div class="control-label"><?php echo $this->form->getLabel('showfrounregistra'); ?></div>
-			<div class="controls"><?php echo $this->form->getInput('showfrounregistra'); ?></div>
-		</div>
-	</fieldset>
-
-	<fieldset class="form-horizontal">
 		<legend><?php echo JText::_('COM_JEM_AC_VENUES'); ?></legend>
 		
 			<?php foreach ($this->form->getFieldset('usercontrolacvenue') as $field): ?>
