@@ -83,7 +83,7 @@ class JemModelEvent extends JModelItem
 
 				// Join on user table.
 				$name = $settings->get('global_regname','1') ? 'u.name' : 'u.username';
-				$query->select($name.' AS author');
+				$query->select(array($name.' AS author','u.name','u.username'));
 				$query->join('LEFT', '#__users AS u on u.id = a.created_by');
 
 				// Join on contact-user table.
