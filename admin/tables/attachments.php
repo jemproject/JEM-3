@@ -12,31 +12,6 @@ defined('_JEXEC') or die;
  */
 class JEMTableAttachments extends JTable
 {
-	/**
-	 * Primary Key
-	 * @var int
-	 */
-	public $id 			= null;
-	/** @var int */
-	public $file			= '';
-	/** @var int */
-	public $object			= '';
-	/** @var string */
-	public $name 			= null;
-	/** @var string */
-	public $description 	= null;
-	/** @var string */
-	public $icon 			= null;
-	/** @var int */
-	public $frontend		= 1;
-	/** @var int */
-	public $access 		= 0;
-	/** @var int */
-	public $ordering 		= 0;
-	/** @var string */
-	public $added 			= '';
-	/** @var int */
-	public $added_by 		= 0;
 
 	public function __construct(& $db) {
 		parent::__construct('#__jem_attachments', 'id', $db);

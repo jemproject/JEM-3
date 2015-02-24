@@ -19,7 +19,7 @@ class JEMTableGroupmembers extends JTable
 
 
 	// overloaded check function
-	function check()
+	public function check()
 	{
 
 		return true;

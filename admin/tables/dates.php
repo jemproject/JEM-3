@@ -28,7 +28,7 @@ class JEMTableDates extends JTable
 	/**
 	 * Check
 	 */
-	function check()
+	public function check()
 	{
 		return true;
 	}
@@ -38,8 +38,6 @@ class JEMTableDates extends JTable
 	 */
 	public function store($updateNulls = true)
 	{
-
-
 		return parent::store($updateNulls);
 	}
 

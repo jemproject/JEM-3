@@ -19,7 +19,7 @@ class JEMTableGroups extends JTable
     }
 
 	// overloaded check function
-	function check()
+	public function check()
 	{
 		// Not typed in a category name?
 		if (trim($this->name ) == '') {

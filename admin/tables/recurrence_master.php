@@ -29,7 +29,7 @@ class JEMTableRecurrence_master extends JTable
 	/**
 	 * check
 	 */
-	function check()
+	public function check()
 	{
 
 		return true;
