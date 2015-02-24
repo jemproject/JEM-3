@@ -98,20 +98,14 @@ if ( $check && $this->registers|| JFactory::getUser()->authorise('core.manage') 
 
 # Community Builder
 if ($this->settings->get('event_comunsolution','0')==1) {
-	global $_CB_framework, $mainframe, $ueConfig;
-
-	if (defined('JPATH_ADMINISTRATOR')) {
-		if (!file_exists( JPATH_ADMINISTRATOR.'/components/com_comprofiler/plugin.foundation.php')) {
-			// echo 'CB not installed!';
-		} else {
-			include_once(JPATH_ADMINISTRATOR.'/components/com_comprofiler/plugin.foundation.php' );
+	static $CB_loaded;
+	
+	if (!$CB_loaded) {
+		if ((!file_exists(JPATH_SITE.'/libraries/CBLib/CBLib/Core/CBLib.php')) || (!file_exists(JPATH_ADMINISTRATOR.'/components/com_comprofiler/plugin.foundation.php'))) {
+			echo 'CB not installed'; return;
 		}
-	} else {
-		if (!file_exists($mainframe->getCfg('absolute_path').'/administrator/components/com_comprofiler/plugin.foundation.php')) {
-			// echo 'CB not installed!';
-		} else {
-			include_once($mainframe->getCfg( 'absolute_path' ).'/administrator/components/com_comprofiler/plugin.foundation.php');
-		}
+	
+		include_once(JPATH_ADMINISTRATOR.'/components/com_comprofiler/plugin.foundation.php' );
 	}
 }
 
@@ -128,7 +122,7 @@ if ($this->settings->get('event_comunsolution','0')==2) {
 	//$width = '60';
 	//$height = '60';
 
-	if (!file_exists( JPATH_ADMINISTRATOR.'/components/com_kunena/api.php')) {
+	if (!file_exists(JPATH_ADMINISTRATOR.'/components/com_kunena/api.php')) {
 		// echo 'Kunena not installed!';
 	} else {
 		include_once(JPATH_ADMINISTRATOR.'/components/com_kunena/api.php' );
@@ -138,31 +132,16 @@ if ($this->settings->get('event_comunsolution','0')==2) {
 //  loop trough the registerdata
 foreach ($this->registers as $register) :
 
-	# no communitycomponent is set so only show the name according to global setting
+	// no community component is set so only show the name according to global setting
 	if ($this->settings->get('event_comunsolution','0')==0) {
 		$name = $this->settings->get('global_regname','1') ? 'name' : 'username';
 		echo "<li><span class='username'>".$register->$name."</span></li>";
 	}
 
-	# Community Builder
+	// Community Builder
 	if ($this->settings->get('event_comunsolution','0')==1) :
-		$format = $ueConfig['name_format'];
-
-		switch ($format) {
-			case 1 :
-				$name = $register->name;
-				break;
-			case 2 :
-				$name = $register->name." ".$register->username;
-				break;
-			case 4 :
-				$name = $register->username." ".$register->name;
-				break;
-			case 3 :
-			default:
-				$name = $register->username;
-				break;
-			}
+		$cbUserCreate	= CBuser::getInstance( (int) $register->uid, false );
+		$name 		= $cbUserCreate->getField( 'formatname', null, 'html', 'none', 'list', 0, true );
 
 		# name with avatar + link
 		if ($this->settings->get('event_comunoption','0')==1) {
@@ -180,7 +159,7 @@ foreach ($this->registers as $register) :
 		}
 	endif;
 
-	# Kunena
+	// Kunena
 	if ($this->settings->get('event_comunsolution','0')==2) {
 		$user	= KunenaFactory::getUser($register->uid);
 		$avatar = $user->getAvatarImage('', '', '');
