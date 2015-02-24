@@ -25,22 +25,25 @@ class JemHelper {
 	{
 		static $settings;
 
-		if (!is_object($settings)) {
-			$db = JFactory::getDBO();
-			$query = $db->getQuery(true);
+		if (!isset($config)) {
+			if (!is_object($settings)) {
+				$db = JFactory::getDBO();
+				$query = $db->getQuery(true);
 
-			$query->select($view);
-			$query->from('#__jem_settings');
-			$query->where('id = 1');
+				$query->select($view);
+				$query->from('#__jem_settings');
+				$query->where('id = 1');
 
-			$db->setQuery($query);
-			$settings = $db->loadResult();
+				$db->setQuery($query);
+				$settings = $db->loadResult();
+			}
+
+			$vregistry = new JRegistry;
+			$vregistry->loadString($settings);
+			$settings = $vregistry;
 		}
 
-		$vregistry = new JRegistry;
-		$vregistry->loadString($settings);
-
-		return $vregistry;
+		return $settings;
 	}
 
 	/**
@@ -51,18 +54,20 @@ class JemHelper {
 	{
 		static $config;
 
-		if (!is_object($config)) {
-			$db = JFactory::getDBO();
-			$query = $db->getQuery(true);
+		if (!isset($config)) {
+			if (!is_object($config)) {
+				$db = JFactory::getDBO();
+				$query = $db->getQuery(true);
 
-			$query->select('*');
-			$query->from('#__jem_settings');
-			$query->where('id = 1');
+				$query->select('*');
+				$query->from('#__jem_settings');
+				$query->where('id = 1');
 
-			$db->setQuery($query);
-			$config = $db->loadObject();
+				$db->setQuery($query);
+				$config = $db->loadObject();
 
-			$config->params = JComponentHelper::getParams('com_jem');
+				$config->params = JComponentHelper::getParams('com_jem');
+			}
 		}
 
 		return $config;
