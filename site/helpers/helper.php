@@ -76,24 +76,30 @@ class JemHelper {
 	 */
 	static function globalattribs()
 	{
+		
 		static $globalattribs;
-
-		if (!is_object($globalattribs)) {
-			$db = JFactory::getDBO();
-			$query = $db->getQuery(true);
-
-			$query->select('globalattribs');
-			$query->from('#__jem_settings');
-			$query->where('id = 1');
-
-			$db->setQuery($query);
-			$globalattribs = $db->loadResult();
+		
+		if (!isset($globalattribs)) {
+			if (!is_object($globalattribs)) {
+				$db = JFactory::getDBO();
+				$query = $db->getQuery(true);
+					
+				$query->select('globalattribs');
+				$query->from('#__jem_settings');
+				$query->where(array('id = 1'));
+				$db->setQuery($query);
+				$globalattribs = $db->loadResult();
+			}
+				
+			$globalregistry = new JRegistry;
+			$globalregistry->loadString($globalattribs);
+			
+			$globalattribs = $globalregistry;
+		} else {
+			
 		}
 
-		$globalregistry = new JRegistry;
-		$globalregistry->loadString($globalattribs);
-
-		return $globalregistry;
+		return $globalattribs;
 	}
 
 	/**
@@ -103,22 +109,29 @@ class JemHelper {
 	{
 		static $css;
 
-		if (!is_object($css)) {
-			$db = JFactory::getDBO();
-			$query = $db->getQuery(true);
+		if (!isset($css)) {
+			if (!is_object($css)) {
+				$db = JFactory::getDBO();
+				$query = $db->getQuery(true);
 
-			$query->select('css');
-			$query->from('#__jem_settings');
-			$query->where('id = 1');
+				$query->select('css');
+				$query->from('#__jem_settings');
+				$query->where('id = 1');
 
-			$db->setQuery($query);
-			$css = $db->loadResult();
+				$db->setQuery($query);
+				$css = $db->loadResult();
+			}
+
+			$registryCSS = new JRegistry;
+			$registryCSS->loadString($css);
+			
+			$css = $registryCSS;
+			
+		} else {
+					
 		}
-
-		$registryCSS = new JRegistry;
-		$registryCSS->loadString($css);
-
-		return $registryCSS;
+			
+		return $css;
 	}
 
 	/**
@@ -1092,18 +1105,18 @@ class JemHelper {
 		###########################
 		## IGNORE DATES: HOLIDAY ##
 		###########################
-
+		
 		/*
-		$currenttime	= new JDate();
-		$year 			= $currenttime->format('Y');
-		*/
-
+		 $currenttime	= new JDate();
+		 $year 			= $currenttime->format('Y');
+		 */
+		
 		if ($holidays) {
 			$currenttime	= new JDate();
 			$year 			= $currenttime->format('Y');
 			$format 		= 'd-m-Y';
 			$holiday_array 	= array();
-
+		
 			foreach ($holidays as $holiday) {
 				$db = JFactory::getDbo();
 				$query = $db->getQuery(true);
@@ -1112,47 +1125,47 @@ class JemHelper {
 				$query->where(array('id = '.$holiday,'holiday =' .$db->quote('1')));
 				$db->setQuery($query);
 				$reference2 = $db->loadAssoc();
-
+		
 				if ($reference2['date_startdate_range']) {
 					# If we're dealing with a range we've to calculate things
-
+		
 					$start_range_input	= $reference2['date_startdate_range'];
 					$end_range_input	= $reference2['date_enddate_range'];
-
+		
 					$start_range_parsed = date_parse($start_range_input);
 					$end_range_parsed	= date_parse($end_range_input);
-
+		
 					if (checkdate($start_range_parsed["month"], $start_range_parsed["day"], $start_range_parsed["year"]) && !$start_range_parsed["errors"]
-						&& checkdate($end_range_parsed["month"], $end_range_parsed["day"], $end_range_parsed["year"]) && !$end_range_parsed["errors"]) {
-
-
-						# at this point we made sure we're dealing with valid start+enddates
-						# now we're making a DateTimeperiod
-						$begin2		= new DateTime($start_range_input);
-						$end2		= new DateTime($end_range_input);
-						$end2		= $end2->modify('+1 day');
-						$interval2	= new DateInterval('P1D');
-						$daterange2	= new DatePeriod($begin2, $interval2 ,$end2);
-
-						foreach($daterange2 as $exdate2){
-							$holiday_array[] = $exdate2->format("Y-m-d");
-						}
-					}
+							&& checkdate($end_range_parsed["month"], $end_range_parsed["day"], $end_range_parsed["year"]) && !$end_range_parsed["errors"]) {
+		
+		
+								# at this point we made sure we're dealing with valid start+enddates
+								# now we're making a DateTimeperiod
+								$begin2		= new DateTime($start_range_input);
+								$end2		= new DateTime($end_range_input);
+								$end2		= $end2->modify('+1 day');
+								$interval2	= new DateInterval('P1D');
+								$daterange2	= new DatePeriod($begin2, $interval2 ,$end2);
+		
+								foreach($daterange2 as $exdate2){
+									$holiday_array[] = $exdate2->format("Y-m-d");
+								}
+							}
 				} else {
 					# If we're dealing with a single_date we can use the date supplied
 					$holiday_array[] = $reference2['date'];
 				}
-
+		
 			} // end foreach
-
+		
 			# it's possible to have duplicates so we've to make the array Unique
 			$holiday_array = array_unique($holiday_array);
 		} // end holiday-check
-
+		
 		####################################################
 		## IGNORE DATES: FORM FIELD (exdates), NO HOLIDAY ##
 		####################################################
-
+		
 		# basically we add all occurrences of the set to the database but the unneeded ones will
 		# get a 1 in the ignore field. Those events will get an exdate in the iCal RRULE output
 
