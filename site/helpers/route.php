@@ -24,6 +24,8 @@ require_once JPATH_SITE . '/components/com_jem/classes/categories.class.php';
 abstract class JEMHelperRoute
 {
 	protected static $lookup2;
+	protected static $FixedItemid;
+	
 	const ARTIFICALID = 0;
 
 	/**
@@ -70,9 +72,15 @@ abstract class JEMHelperRoute
 
 	public static function getCategoryRoute($id)
 	{
-		$settings 		= JEMHelper::globalattribs();
-		$defaultItemid 	= $settings->get('default_Itemid');
-
+		if (!isset(self::$FixedItemid)) {
+			$settings 		= JEMHelper::globalattribs();
+			$defaultItemid 	= $settings->get('default_Itemid');
+		} else {
+			if (isset(self::$FixedItemid)) {
+				$defaultItemid = self::$FixedItemid;
+			}
+		}
+		
 		$needles = array(
 			'category' => array((int) $id)
 		);
@@ -103,8 +111,14 @@ abstract class JEMHelperRoute
 
 	public static function getEventRoute($id, $catid = null)
 	{
-		$settings 		= JEMHelper::globalattribs();
-		$defaultItemid 	= $settings->get('default_Itemid');
+		if (!isset(self::$FixedItemid)) {
+			$settings 		= JEMHelper::globalattribs();
+			$defaultItemid 	= $settings->get('default_Itemid');
+		} else {
+			if (isset(self::$FixedItemid)) {
+				$defaultItemid = self::$FixedItemid;
+			}
+		}
 
 		$needles = array(
 			'event' => array((int) $id)
@@ -132,8 +146,14 @@ abstract class JEMHelperRoute
 
 	public static function getVenueRoute($id)
 	{
-		$settings 		= JEMHelper::globalattribs();
-		$defaultItemid 	= $settings->get('default_Itemid');
+		if (!isset(self::$FixedItemid)) {
+			$settings 		= JEMHelper::globalattribs();
+			$defaultItemid 	= $settings->get('default_Itemid');
+		} else {
+			if (isset(self::$FixedItemid)) {
+				$defaultItemid = self::$FixedItemid;
+			}
+		}
 
 		$needles = array(
 			'venue' => array((int) $id)
@@ -157,8 +177,14 @@ abstract class JEMHelperRoute
 
 	protected static function getRouteWithoutId($my)
 	{
-		$settings 		= JEMHelper::globalattribs();
-		$defaultItemid 	= $settings->get('default_Itemid');
+		if (!isset(self::$FixedItemid)) {
+			$settings 		= JEMHelper::globalattribs();
+			$defaultItemid 	= $settings->get('default_Itemid');
+		} else {
+			if (isset(self::$FixedItemid)) {
+				$defaultItemid = self::$FixedItemid;
+			}
+		}
 
 		$needles = array();
 		$needles[$my] = array(self::ARTIFICALID);
@@ -206,8 +232,14 @@ abstract class JEMHelperRoute
 	{
 		$app = JFactory::getApplication();
 		$menus = $app->getMenu('site');
-		$settings 		= JEMHelper::globalattribs();
-		$defaultItemid 	= $settings->get('default_Itemid');
+		if (!isset(self::$FixedItemid)) {
+			$settings 		= JEMHelper::globalattribs();
+			$defaultItemid 	= $settings->get('default_Itemid');
+		} else {
+			if (isset(self::$FixedItemid)) {
+				$defaultItemid = self::$FixedItemid;
+			}
+		}
 
 		// Prepare the reverse lookup array.
 		if (!isset(self::$lookup2)) {
