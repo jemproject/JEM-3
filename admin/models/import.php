@@ -382,11 +382,11 @@ class JEMModelImport extends JModelLegacy
 		## actions outside foreach loop ##
 		##################################
 
-		if ($objectname == "JEMTableCategories") {
+		if ($objectname == "JemTableCategories") {
 			$object->rebuild();
 		}
 
-		if ($objectname == "JEMTableEvents") {
+		if ($objectname == "JemTableEvents") {
 			// store cat event relations
 			if (!empty($events)) {
 				$this->storeCatsEventRelations($events, $replace);
