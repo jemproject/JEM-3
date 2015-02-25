@@ -93,7 +93,7 @@ class JemViewVenue extends JEMView {
 			$limage = JemImage::flyercreator($venue->locimage,'venue');
 
 			// Add feed links
-			$link = '&format=feed&id='.$venue->id.'&limitstart=';
+			$link    = '&format=feed&limitstart=';
 			$attribs = array('type' => 'application/rss+xml', 'title' => 'RSS 2.0');
 			$this->document->addHeadLink(JRoute::_($link . '&type=rss'), 'alternate', 'rel', $attribs);
 			$attribs = array('type' => 'application/atom+xml', 'title' => 'Atom 1.0');
