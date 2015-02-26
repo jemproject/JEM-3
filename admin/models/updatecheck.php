@@ -30,7 +30,7 @@ class JemModelUpdatecheck extends JModelLegacy
 	function getUpdatedata()
 	{
 		$installedversion	= JemHelper::getParam(1,'version',1,'com_jem');
-		$updateFile			= "http://www.joomlaeventmanager.com/updatecheck/jem-3-update.xml";
+		$updateFile			= "http://www.joomlaeventmanager.com/updatecheck/3/updateview.xml";
 		$checkFile			= self::CheckFile($updateFile);
 		$updatedata 		= new stdClass();
 
