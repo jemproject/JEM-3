@@ -70,7 +70,7 @@
 			description="COM_JEM_EDITEVENT_FIELD_END_TIME_DESC"
 			required="false"
 		/>
-		<field name="cats" type="catoptions"
+		<field name="cats" type="catoptionsfront"
 			multiple="true"
 			class="inputbox"
 			size="10"
