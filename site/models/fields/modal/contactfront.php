@@ -10,13 +10,13 @@ defined('_JEXEC') or die;
 /**
  * Contact select
  */
-class JFormFieldModal_Contact extends JFormField
+class JFormFieldModal_Contactfront extends JFormField
 {
 	/**
 	 * field type
 	 * @var string
 	 */
-	protected $type = 'Modal_Contact';
+	protected $type = 'Modal_Contactfront';
 
 
 	/**

@@ -162,13 +162,13 @@
 	<fieldset name="request"
 		addfieldpath="/administrator/components/com_jem/models/fields"
 	>
-		<field name="locid" type="modal_venue"
+		<field name="locid" type="modal_venuefront"
 			label="COM_JEM_EDITEVENT_FIELD_VENUE"
 			description="COM_JEM_EDITEVENT_FIELD_VENUE_DESC"
 			size="40"
 			required="false"
 		/>
-		<field name="contactid" type="modal_contact"
+		<field name="contactid" type="modal_contactfront"
 			label="COM_JEM_EDITEVENT_FIELD_CONTACT"
 			description="COM_JEM_EDITEVENT_FIELD_CONTACT_DESC"
 			size="40"

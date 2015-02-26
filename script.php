@@ -528,7 +528,11 @@ class com_jemInstallerScript
 			'/media/com_jem/js/settings.js',
 			'/media/com_jem/js/unlimited.js',
 			# 3.0.3 -> 3.0.4
-			'/media/com_jem/js/dropdown.js'
+			'/media/com_jem/js/dropdown.js',
+			# 3.0.6 -> 3.0.7
+			'/components/com_jem/models/fields/catoptions.php',
+			'/components/com_jem/models/fields/modal/venuefront.php',
+			'/components/com_jem/models/fields/modal/contactfront.php'
 		);
 		$folders = array();
 

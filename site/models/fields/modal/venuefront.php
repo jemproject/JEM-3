@@ -10,13 +10,13 @@ defined('_JEXEC') or die;
 /**
  * Venue Select
  */
-class JFormFieldModal_Venue extends JFormField
+class JFormFieldModal_Venuefront extends JFormField
 {
 	/**
 	 * field type
 	 * @var string
 	 */
-	protected $type = 'Modal_Venue';
+	protected $type = 'Modal_Venuefront';
 
 	/**
 	 * Method to get the field input markup
