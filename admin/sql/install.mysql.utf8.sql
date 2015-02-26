@@ -343,7 +343,7 @@ CREATE TABLE IF NOT EXISTS `#__jem_settings` (
   `defaultCountry` varchar(10) NOT NULL,
   `globalattribs` varchar(5120) NOT NULL,
   `css` varchar (5120) NOT NULL DEFAULT '',
-  `version` varchar (20) NOT NULL DEFAULT '3.0.6',
+  `version` varchar (20) NOT NULL DEFAULT '3.0.7',
   `vevent` text NOT NULL DEFAULT '',
   `vvenue` text NOT NULL DEFAULT '',
   `vvenues` text NOT NULL DEFAULT '',

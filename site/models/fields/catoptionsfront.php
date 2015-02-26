@@ -12,13 +12,13 @@ JFormHelper::loadFieldClass('list');
 /**
  * CatOptions Field class.
  */
-class JFormFieldCatOptions extends JFormFieldList
+class JFormFieldCatOptionsFront extends JFormFieldList
 {
 
 	/**
 	 * The form field type.
 	 */
-	protected $type = 'CatOptions';
+	protected $type = 'CatOptionsFront';
 
 	protected function getInput()
 	{
