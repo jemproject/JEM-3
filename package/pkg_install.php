@@ -81,6 +81,8 @@ class Pkg_JemInstallerScript {
 			// Installing component version as per Manifest file
 			$this->newRelease = $parent->get('manifest')->version;
 
+			$this->setUpdateServer();
+			
 			/*
 			if ($this->oldRelease < 3) {
 				Jerror::raiseNotice(100,JText::sprintf('PKG_JEM_INSTALLATION_PREVENTINSTALL',$this->oldRelease));	
@@ -195,6 +197,26 @@ class Pkg_JemInstallerScript {
 		}
 		return true;
 	}
+	
+	protected function setUpdateServer() {
+		$app = JFactory::getApplication();
+		
+		$version = array('3.0.1','3.0.2','3.0.3','3.0.4','3.0.5','3.0.6');
+		
+		if (in_array($this->oldRelease,$version)) {
+			// Remove entry in table update_sites
+			$db = JFactory::getDbo();
+			$query	= $db->getQuery(true);
+			$query->delete('#__update_sites');
+			$query->where('name = '.$db->q('JEM Update Site'));
+			$db->setQuery($query);
+			$db->execute(); 
+		}
+		
+		return true;
+		
+	}
+	
 	
 	/**
 	 * Helper method that outputs a short JEM header with logo and text
