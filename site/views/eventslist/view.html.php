@@ -1,6 +1,5 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -15,10 +14,10 @@ require JPATH_COMPONENT_SITE.'/classes/view.class.php';
 */
 class JemViewEventslist extends JEMView
 {
-	
+
 	protected $state = null;
 	protected $pagination = null;
-	
+
 	function __construct($config = array()) {
 		parent::__construct($config);
 	}
@@ -51,12 +50,12 @@ class JemViewEventslist extends JEMView
 		JemHelper::loadCss('jem');
 		JemHelper::loadCustomCss();
 		JemHelper::loadCustomTag();
-		
+
 		if ($print) {
 			JemHelper::loadCss('print');
 			$document->setMetaData('robots', 'noindex, nofollow');
 		}
-		
+
 		// userstate variables
 		$filter_order		= $app->getUserStateFromRequest('com_jem.eventslist.'.$itemid.'.filter_order', 'filter_order', 'a.dates', 'cmd');
 		$filter_order_DirDefault = 'ASC';
@@ -82,7 +81,7 @@ class JemViewEventslist extends JEMView
 		} else {
 			$noevents = 0;
 		}
-		
+
 		# print-link
 		if ($task == 'archive') {
 			$print_link = JRoute::_('index.php?view=eventslist&task=archive&tmpl=component&print=1');
@@ -99,7 +98,7 @@ class JemViewEventslist extends JEMView
 		} else {
 			$dellink = 0;
 		}
-		
+
 		# Check if the user has access to the add-venueform
 		$maintainer2	= JemUser::venuegroups('add');
 		$genaccess2		= JemUser::validate_user($jemsettings->locdelrec, $jemsettings->deliverlocsyes);
@@ -127,8 +126,6 @@ class JemViewEventslist extends JEMView
 		$lists['filter'] = JHtml::_('select.genericlist', $filters, 'filter_type', array('size'=>'1','class'=>'inputbox input-medium'), 'value', 'text', $filter_type );
 		$lists['search']= $search;
 
-		
-		
 		$this->pageclass_sfx 	= htmlspecialchars($params->get('pageclass_sfx'));
 		$this->pagination 		= $this->get('Pagination');
 		$this->lists			= $lists;
@@ -161,20 +158,19 @@ class JemViewEventslist extends JEMView
 		$task 	= $jinput->getCmd('task');
 		$pathway = $app->getPathWay();
 		$menu = $menus->getActive();
-		
-		
+
 		// add feed link
 		$link	= 'index.php?option=com_jem&view=eventslist&format=feed';
 		$attribs = array('type' => 'application/rss+xml', 'title' => 'RSS 2.0');
 		$this->document->addHeadLink(JRoute::_($link.'&type=rss'), 'alternate', 'rel', $attribs);
 		$attribs = array('type' => 'application/atom+xml', 'title' => 'Atom 1.0');
 		$this->document->addHeadLink(JRoute::_($link.'&type=atom'), 'alternate', 'rel', $attribs);
-		
+
 		// PATH-WAY
 		if ($task == 'archive') {
 			$pathway->addItem(JText::_('COM_JEM_ARCHIVE'), JRoute::_('index.php?view=eventslist&task=archive') );
 		}
-		
+
 		// PAGE-HEADING
 		if ($menu)
 		{
@@ -184,14 +180,14 @@ class JemViewEventslist extends JEMView
 		{
 			$this->params->def('page_heading', JText::_('COM_JEM_EVENTS'));
 		}
-		
+
 		// PAGE-TITLE
 		$title = $this->params->get('page_title', '');
 		if (empty($title))
 		{
 			$title = $app->get('sitename');
-		} 
-		
+		}
+
 		if ($title) {
 			if ($task == 'archive') {
 				$title = $title.' - ' . JText::_('COM_JEM_ARCHIVE');
@@ -210,8 +206,8 @@ class JemViewEventslist extends JEMView
 			}
 		}
 		$this->document->setTitle($title);
-		
-		
+
+
 		// META
 		if ($this->params->get('menu-meta_description'))
 		{
@@ -221,13 +217,11 @@ class JemViewEventslist extends JEMView
 		{
 			$this->document->setMetadata('keywords', $this->params->get('menu-meta_keywords'));
 		}
-	
+
 		// ROBOTS
 		if ($this->params->get('robots'))
 		{
 			$this->document->setMetadata('robots', $this->params->get('robots'));
 		}
-		
 	}
 }
-?>

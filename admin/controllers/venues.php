@@ -1,13 +1,11 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
-defined( '_JEXEC' ) or die;
-
+defined('_JEXEC') or die;
 
 /**
  * Controller: Venues
@@ -20,7 +18,6 @@ class JemControllerVenues extends JControllerAdmin
 	 */
 	protected $text_prefix = 'COM_JEM_VENUES';
 
-
 	/**
 	 * Proxy for getModel.
 	 *
@@ -30,7 +27,6 @@ class JemControllerVenues extends JControllerAdmin
 		$model = parent::getModel($name, $prefix, $config);
 		return $model;
 	}
-
 
 	/**
 	 * logic for remove venues
@@ -58,4 +54,3 @@ class JemControllerVenues extends JControllerAdmin
 		$this->setRedirect( 'index.php?option=com_jem&view=venues', $msg );
 	}
 }
-?>

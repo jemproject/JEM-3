@@ -1,6 +1,5 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -8,21 +7,22 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * Table: Events
  */
 class JemTableEvents extends JTable
 {
-	public function __construct(&$db) {
+	public function __construct(&$db)
+    {
 		parent::__construct('#__jem_events', 'id', $db);
-	}
+    }
 
 	/**
 	 * Overloaded bind method for the Event table.
 	 */
-	public function bind($array, $ignore = ''){
-		
+	public function bind($array, $ignore = '')
+	{
+
 		// in here we are checking for the empty value of the checkbox
 
 		if (!isset($array['registra'])) {
@@ -73,11 +73,10 @@ class JemTableEvents extends JTable
 		return parent::bind($array, $ignore);
 	}
 
-
 	/**
 	 * overloaded check function
 	 */
-	function check()
+	public function check()
 	{
 		$jinput = JFactory::getApplication()->input;
 
@@ -98,14 +97,13 @@ class JemTableEvents extends JTable
 			}
 		}
 
-
 		###############
 		## DATE-TIME ##
 		###############
-		
+
 		// default empty values to null
 		# user didn't select a value for it
-		
+
 		if (empty($this->times)) {
 			$this->times = null;
 		}
@@ -118,19 +116,21 @@ class JemTableEvents extends JTable
 		if (empty($this->enddates) || $this->enddates == '0000-00-00') {
 			$this->enddates = null;
 		}
-		
+
 		// opendate
 		# do we have a startdate?
 		# if no then we consider it an "open date"
 		$this->opendate = 0;
+		$opendate = false;
 		if ($this->dates == null) {
-			$this->times 	= null;
+			// $this->times 	= null;
 			$this->enddates = null;
-			$this->endtimes = null;
-				
+			// $this->endtimes = null;
+
 			$this->opendate = 1;
+			$opendate = true;
 		}
-		
+
 		// combine DateTime
 		# startDateTime
 		if ($this->dates == null) {
@@ -144,7 +144,7 @@ class JemTableEvents extends JTable
 			$startTime = $this->times.':00';
 		}
 		$this->startDateTime	= $startDate.' '.$startTime;
-		
+
 		# endDateTime
 		if ($this->enddates == null) {
 			$endDate = '0000-00-00';
@@ -165,18 +165,18 @@ class JemTableEvents extends JTable
 		} else {
 			$this->endDateTime		= $endDate.' '.$endTime;
 		}
-		
+
 		// check if endDateTime is before startDateTime
-		if ($startDate != '0000-00-00') {
+		if ($startDate != '0000-00-00' && !$opendate) {
 			if ($this->startDateTime > $this->endDateTime) {
 				$this->setError(JText::_('COM_JEM_EVENT_ERROR_END_BEFORE_START'));
 			}
 		}
-		
+
 		if (!$this->getErrors()) {
 			return true;
 		}
-		
+
 	}
 
 	/**
@@ -256,7 +256,6 @@ class JemTableEvents extends JTable
 			$this->datimage = '';
 		}
 
-
 		if (!$backend) {
 			/*	check if the user has the required rank for autopublish	*/
 			$maintainer = JEMUser::ismaintainer('publish');
@@ -267,7 +266,7 @@ class JemTableEvents extends JTable
 				} else {
 					$this->published = 0;
 				}
-					
+
 			}
 		}
 
@@ -280,7 +279,6 @@ class JemTableEvents extends JTable
 
 		if ($rec_groupcheck) {
 			# the check returned true, so it's considered as an edit
-
 
 			# Retrieve id of current event from recurrence_table
 			# as the check was true we can skip the groupid=groupid_ref from the where statement
@@ -327,7 +325,6 @@ class JemTableEvents extends JTable
 		## END RECURRENCE ##
 
 		return parent::store($updateNulls);
-
 	}
 
 	/**
@@ -386,4 +383,3 @@ class JemTableEvents extends JTable
 		return $this->_db->getAffectedRows();
 	}
 }
-?>

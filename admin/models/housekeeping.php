@@ -1,13 +1,11 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 defined('_JEXEC') or die;
-
 
 jimport('joomla.filesystem.folder');
 jimport('joomla.filesystem.file');
@@ -60,7 +58,6 @@ class JemModelHousekeeping extends JModelLegacy
 		$this->map = $map;
 	}
 
-
 	/**
 	 * Method to delete the images
 	 *
@@ -74,6 +71,7 @@ class JemModelHousekeeping extends JModelLegacy
 
 		// Get some data from the request
 		$images	= $this->getImages($type);
+		
 		$folder = $this->map[$type]['folder'];
 
 		$count = count($images);
@@ -104,7 +102,6 @@ class JemModelHousekeeping extends JModelLegacy
 
 		return $deleted;
 	}
-
 
 	/**
 	 * Deletes zombie cats_event_relations with no existing event or category
@@ -147,9 +144,9 @@ class JemModelHousekeeping extends JModelLegacy
 
 		$db = JFactory::getDbo();
 
-		foreach ($tables as $table) {			
+		foreach ($tables as $table) {
 			$db->truncateTable("#__jem_".$table);
-			
+
 			if(!$db->execute()) {
 				return false;
 			}
@@ -160,7 +157,6 @@ class JemModelHousekeeping extends JModelLegacy
 
 		return true;
 	}
-
 
 	/**
 	 * Method to determine the images to delete
@@ -218,60 +214,168 @@ class JemModelHousekeeping extends JModelLegacy
 
 		return $this->_unassigned;
 	}
-	
-	
-	
-	
+
 	/**
-	 * Remove obsolete images
+	 * Cleanup images
 	 */
-	function rmObsImages() {
+	function CleanupImages() {
+
+		$app = JFactory::getApplication();
 		
 		# retrieve images from tables
 		$event		= $this->retrieveTableImages('events','datimage');
 		$category	= $this->retrieveTableImages('categories','image');
 		$venue		= $this->retrieveTableImages('venues','locimage');
-		
+
 		# merge the arrays
 		$tableImages = array_merge($event,$category,$venue);
-		
+
 		# make it unqiue
 		$tableImages = array_unique($tableImages);
-		
+
 		# retrieve images from JEM folder
 		$folderImages = $this->retrieveFolderImages();
-		
+
 		# compare table and folder
 		$same	= array_intersect($tableImages,$folderImages);
 		$diff	= array_diff($folderImages,$tableImages);
-	
-		$pass = array();
-		foreach ($diff AS $item) {
-			$pass[] = JFile::delete($item);
-		}
 		
-		# retrieve folders within image/jem directory
-		$arrayFolders = $this->retrieveFolders();
-		
-		# remove folders when they're empty
-		$pass2 = array();
-		foreach ($arrayFolders AS $item) {
-			$path = realpath($item);
-			$check = $this->is_dir_empty($path);
+		$settings 		= JemHelper::globalattribs();
+		$trash_path		= $settings->get('trashedimages_path','/trashedimages');
 			
-			if ($check){
-				$pass2[] = JFolder::delete($path);
-			} 
+		// "trashed" folder
+		$trash_folder		= JPATH_SITE . $trash_path;
+		if(!JFolder::exists($trash_folder)){
+			if (!JFolder::create($trash_folder)) {
+				$app->enqueueMessage(JText::_('COM_JEM_HOUSEKEEPING_ERROR_TRASHEDFOLDER'), 'error');
+				return false;
+			}
+		} 
+		$trash_foldersmall	= JPATH_SITE . $trash_path.'/small';
+		if(!JFolder::exists($trash_foldersmall)){
+			if (!JFolder::create($trash_foldersmall)) {
+				$app->enqueueMessage(JText::_('COM_JEM_HOUSEKEEPING_ERROR_TRASHEDFOLDER'), 'error');
+				return false;
+			}
 		}
 		
-		return count($pass);
+		
+		// loop trough items
+		$thumbs = array();
+		$array_folders = array();
+		foreach ($diff AS $item) {
+			
+			if (strpos($item,'images/jem/') !== false) {
+				$array_folders[] = (dirname($item));
+			}
+			$filename = basename($item);
+			
+			//  check for thumb
+			if (strpos($item,'small/') !== false) {
+				$thumb = true;
+				$folder = $trash_foldersmall;
+			} else {
+				$thumb = false;
+				$folder = $trash_folder;
+			}
+			if (JFile::exists($folder.'/'.$filename)) {
+				$filename = self::file_newname($folder, $filename);
+				
+				if (JFile::move($item, $folder.'/'.$filename)) {
+					if ($thumb) {
+						$thumbs[] = true;
+					} else {
+						$thumbs[] = false;
+					}
+				} 
+				
+			} else {
+				if (JFile::move($item, $folder.'/'.$filename)) {
+					if ($thumb) {
+						$thumbs[] = true;
+					} else {
+						$thumbs[] = false;
+					}
+				} 
+			}					
+		}
+
+		// loop trough the folders
+		$pass2 = array();
+		foreach ($array_folders AS $item) {
+			$path = realpath($item);
+			
+			$files = JFolder::files($path, $filter = '.', false, true , array('index.html'));
+			if (!$files) {
+				$pass2[] = JFolder::delete($path);
+					
+			}
+		}
+		
+		return $thumbs;
+	}
+
+	/**
+	 * Remove images
+	 */
+	
+	function rmObsImages() {
+		$settings 		= JemHelper::globalattribs();
+		$trash_path		= $settings->get('trashedimages_path','/trashedimages');
+			
+		
+		$trash_folder		= JPATH_SITE . $trash_path;
+		$trash_foldersmall	= JPATH_SITE . $trash_path.'/small';
+		
+		if(JFolder::exists($trash_folder)){
+			$files = JFolder::files($trash_folder, $filter = '.', false, true , array('index.html'));
+			if ($files) {
+				JFile::delete($files);
+			}
+		}
+		
+		if(JFolder::exists($trash_foldersmall)){
+			$files = JFolder::files($trash_foldersmall, $filter = '.', false, true , array('index.html'));
+			if ($files) {
+				JFile::delete($files);
+			}
+		}
+		
+		return;
+	}
+	
+	
+	
+	
+	/**
+	 * @author http://css-tricks.com/snippets/
+	 */
+	
+	function file_newname($path, $filename){
+		if ($pos = strrpos($filename, '.')) {
+			$name = substr($filename, 0, $pos);
+			$ext = substr($filename, $pos);
+		} else {
+			$name = $filename;
+		}
+	
+		$newpath = $path.'/'.$filename;
+		$newname = $filename;
+		$counter = 0;
+		while (file_exists($newpath)) {
+			$newname = $name .'_'. $counter . $ext;
+			$newpath = $path.'/'.$newname;
+			$counter++;
+		}
+	
+		return $newname;
 	}
 	
 	
 	
 	/**
-	 * 
-	 * 
+	 *
+	 *
 	 */
 	function is_dir_empty($dir) {
 		if (!is_readable($dir)) return NULL;
@@ -283,27 +387,25 @@ class JemModelHousekeeping extends JModelLegacy
 		}
 		return TRUE;
 	}
-	
-	
-	
+
 	/**
-	 * 
+	 *
 	 */
-	function retrieveTableImages($table,$field) 
-	{		
+	function retrieveTableImages($table,$field)
+	{
 		$db = JFactory::getDbo();
 		$query = $db->getQuery(true);
 		$query->select($field);
 		$query->from('#__jem_'.$table);
 		$db->setQuery($query);
 		$db->execute();
-		
+
 		# output array
 		$array = $db->loadColumn(0);
-		
+
 		# strip empty values
 		$array = array_filter($array, 'strlen' );
-		
+
 		# append images to results without the images/ path
 		$images = array();
 		$thumbs = array();
@@ -312,9 +414,9 @@ class JemModelHousekeeping extends JModelLegacy
 				# check if we're in the JEM directory
 				if (strpos($item,'images/jem') !== false) {
 					$images[] = JPATH_SITE.'/'.$item;
-					
+
 					if (strpos($item,'small/') !== false) {
-			
+
 					} else {
 						$thumbs[] = JPATH_SITE.'/'.$item;
 					}
@@ -322,21 +424,21 @@ class JemModelHousekeeping extends JModelLegacy
 			} else {
 				$images[] = JPATH_SITE.'/images/jem/'.$table.'/'.$item;
 				if (strpos($item,'small/') !== false) {
-						
+
 				} else {
 					$thumbs[] = JPATH_SITE.'/images/jem/'.$table.'/small/'.$item;
 				}
 			}
-		}	
+		}
 
 		# merge the arrays
 		$result = array_merge($images,$thumbs);
-		
+
 		return $result;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 */
 	function retrieveFolderImages()
 	{
@@ -344,16 +446,16 @@ class JemModelHousekeeping extends JModelLegacy
 		$recurse = true;
 		$fullpath = true;
 		$exclude = false;
-	
-		$array = JFolder::files($path, $filter = '.', $recurse, $fullpath);
-		
+
+		$array = JFolder::files($path, $filter = '.', $recurse, $fullpath,array('index.html'));
+
 		foreach($array AS $item) {
 			$result[] = str_replace('\images\jem\/','/images/jem/',$item);
 		}
-		
+
 		return $result;
 	}
-	
+
 	/**
 	 *
 	 */
@@ -363,15 +465,13 @@ class JemModelHousekeeping extends JModelLegacy
 		$recurse = true;
 		$fullpath = true;
 		$exclude = false;
-	
+
 		$array = JFolder::folders($path, $filter = '.', $recurse, $fullpath);
-	
+
 		foreach($array AS $item) {
 			$result[] = str_replace('\images\jem\/','/images/jem/',$item);
 		}
-	
+
 		return $result;
 	}
-	
 }
-?>

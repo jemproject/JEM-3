@@ -1,6 +1,5 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -8,7 +7,7 @@
  */
 defined('_JEXEC') or die;
 ?>
-
+<div class="editform_content">
 	<!-- CUSTOMFIELDS -->
 	<fieldset class="form-horizontal">
 	<legend><span class="legendcolor"><?php echo JText::_('COM_JEM_EDITVENUE_CUSTOMFIELDS'); ?></span></legend>
@@ -23,7 +22,7 @@ defined('_JEXEC') or die;
 	<!-- IMAGE -->
 	<fieldset class="form-horizontal">
 	<legend><span class="legendcolor"><?php echo JText::_('COM_JEM_IMAGE'); ?></span></legend>
-	<?php 
+	<?php
 	if (JFactory::getUser()->authorise('core.manage', 'com_jem')) {
 		echo $this->form->renderField('locimage');
 	}
@@ -34,3 +33,4 @@ defined('_JEXEC') or die;
 		endif;
 		?>
 	</fieldset>
+</div>

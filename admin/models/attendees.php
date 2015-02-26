@@ -1,13 +1,11 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 defined('_JEXEC') or die;
-
 
 /**
  * Model: Attendees
@@ -19,35 +17,35 @@ class JemModelAttendees extends JModelList
 	 *
 	 * @var array
 	 */
-	var $_data = null;
+	public $_data = null;
 
 	/**
 	 * Events total
 	 *
 	 * @var integer
 	 */
-	var $_total = null;
+	public $_total = null;
 
 	/**
 	 * Events total
 	 *
 	 * @var integer
 	 */
-	var $_event = null;
+	public $_event = null;
 
 	/**
 	 * Pagination object
 	 *
 	 * @var object
 	 */
-	var $_pagination = null;
+	public $_pagination = null;
 
 	/**
 	 * Events id
 	 *
 	 * @var int
 	 */
-	var $_eid = null;
+	public $_eid = null;
 
 	/**
 	 * Constructor
@@ -67,18 +65,18 @@ class JemModelAttendees extends JModelList
 					'waiting','filtertype',
 			);
 		}
-		
+
 		$app 	= JFactory::getApplication();
 		$jinput = $app->input;
-		
+
 		# retrieve event-id
 		$eid		= $jinput->getInt('eid');
 		$this->setId($eid);
-	
+
 		parent::__construct($config);
 	}
-	
-	
+
+
 	/**
 	 * Method to auto-populate the model state.
 	 *
@@ -88,12 +86,11 @@ class JemModelAttendees extends JModelList
 	{
 		$app 			= JFactory::getApplication();
 		$jemsettings	= JemHelper::config();
-		
+
 		# it's needed to set the parent option
 		parent::populateState('a.dates', 'asc');
 	}
-	
-	
+
 	/**
 	 * Build an SQL query to load the list data.
 	 *
@@ -109,30 +106,30 @@ class JemModelAttendees extends JModelList
 		$jinput = $app->input;
 		$layout = $jinput->getWord('layout');
 		$eid	= $jinput->getInt('eid');
-		
-		
+
+
 		$query->select(array('r.*','u.username','u.name','u.email'));
 		$query->from('#__jem_register AS r');
 		$query->join('LEFT', '#__jem_events AS a ON (r.event = a.id)');
 		$query->join('LEFT', '#__users AS u ON (u.id = r.uid)');
 		$query->where('r.event = '.$this->_eid);
-		
+
 		$filter_waiting = $this->getState('filter.waiting');
-		
+
 		if (!empty($filter_waiting)) {
 			$query->where('(a.waitinglist = 0 OR r.waiting = '.$db->quote($filter_waiting-1).')');
 		}
-		
+
 		// Filter by search in title
 		$filter = $this->getState('filter.filtertype');
 		$search = $this->getState('filter.search');
-		
+
 		if (!empty($search)) {
 			if (stripos($search, 'id:') === 0) {
 				$query->where('a.id = '.(int) substr($search, 3));
 			} else {
 				$search = $db->Quote('%'.$db->escape($search, true).'%');
-		
+
 				if($search) {
 					switch($filter) {
 						case 1:
@@ -149,17 +146,16 @@ class JemModelAttendees extends JModelList
 				}
 			}
 		}
-		
+
 		# ordering
 		$orderCol	= $this->state->get('list.ordering','u.username');
 		$orderDirn	= $this->state->get('list.direction','asc');
-		
+
 		$query->order($db->escape($orderCol.' '.$orderDirn));
 
 		return $query;
-		
 	}
-	
+
 
 	/**
 	 * Method to set the category identifier
@@ -222,4 +218,3 @@ class JemModelAttendees extends JModelList
 		return true;
 	}
 }
-?>

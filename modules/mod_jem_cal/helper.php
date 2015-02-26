@@ -1,8 +1,7 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
- * @subpackage JEM Calendar Module
+ * @subpackage JEM - Module-Calendar
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2008 Toni Smillie www.qivva.com
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
@@ -17,24 +16,24 @@ defined('_JEXEC') or die;
 
 JModelLegacy::addIncludePath(JPATH_SITE.'/components/com_jem/models', 'JemModel');
 
-require_once (JPATH_SITE.'/components/com_jem/helpers/helper.php');
+require_once JPATH_SITE . '/components/com_jem/helpers/helper.php';
 
-# perform cleanup if it wasn't done today (archive, delete)
+// perform cleanup if it wasn't done today (archive, trash)
 JEMHelper::cleanup();
 
 abstract class modjemcalqhelper
 {
-	public static function getdays ($greq_year, $greq_month, &$params)
-	{
+    public static function getdays ($greq_year, $greq_month, &$params)
+    {
 		$db			= JFactory::getDBO();
 
-		# Retrieve Eventslist model for the data
+		// Retrieve Eventslist model for the data
 		$model = JModelLegacy::getInstance('Eventslist', 'JemModel', array('ignore_request' => true));
 
-		# Set params for the model
+		// Set params for the model
 		$model->setState('params', $params);
 
-		# Access filter
+		// Access filter
 		$model->setState('filter.access', true);
 
 		$user		= JFactory::getUser();
@@ -49,34 +48,34 @@ abstract class modjemcalqhelper
 		$FixItemID			= $params->get('FixItemID', '0');
 		$defaultItemid	 	= $settings->get('default_Itemid','');
 
-		# clean parameter data
+		// clean parameter data
 		$catids = $params->get('catid');
 		$venids = $params->get('venid');
 		$eventids = $params->get('eventid');
-		
-		# filter category's
+
+		// filter category's
 		if ($catids) {
 			$model->setState('filter.category_id',$catids);
 			$model->setState('filter.category_id.include',true);
 		}
 
-		# filter venue's
+		// filter venue's
 		if ($venids) {
 			$model->setState('filter.venue_id',$venids);
 			$model->setState('filter.venue_id.include',true);
 		}
 
-		# filter event id's
+		// filter event id's
 		if ($eventids) {
 			$model->setState('filter.event_id',$eventids);
 			$model->setState('filter.event_id.include',true);
 		}
 
-		# filter published
-		#  0: unpublished
-		#  1: published
-		#  2: archived
-		# -2: trashed
+		// filter published
+		//  0: unpublished
+		//  1: published
+		//  2: archived
+		// -2: trashed
 
 		if ($CurrentEvents && $ArchivedEvents) {
 			$model->setState('filter.published',array(1,2));
@@ -95,19 +94,19 @@ abstract class modjemcalqhelper
 
 		$model->setState('filter.groupby','a.id');
 
-		# Retrieve the available Items
+		// Retrieve the available Items
 		$events = $model->getItems();
 
-		# create an array to catch days
+		// create an array to catch days
 		$days = array();
 
 		foreach ($events as $index => $event) {
-			# adding categories
+			// adding categories
 			$nr 		= count($event->categories);
 			$catname 	= '';
 			$ix 		= 0;
 
-			# walk through categories assigned to an event
+			// walk through categories assigned to an event
 			foreach($event->categories AS $category) {
 				$catname .= htmlspecialchars($category->catname);
 
@@ -223,4 +222,3 @@ abstract class modjemcalqhelper
 		return $days;
 	}
 }
-?>

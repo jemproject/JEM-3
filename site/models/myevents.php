@@ -1,13 +1,11 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 defined('_JEXEC') or die;
-
 
 /**
  * Model-MyEvents
@@ -19,21 +17,21 @@ class JemModelMyevents extends JModelLegacy
 	 *
 	 * @var array
 	 */
-	var $_events = null;
+	public $_events = null;
 
 	/**
 	 * Events total
 	 *
 	 * @var integer
 	 */
-	var $_total_events = null;
+	public $_total_events = null;
 
 	/**
 	 * Pagination object
 	 *
 	 * @var object
 	 */
-	var $_pagination_events = null;
+	public $_pagination_events = null;
 
 	/**
 	 * Constructor
@@ -50,10 +48,9 @@ class JemModelMyevents extends JModelLegacy
 
 		$limit		= $app->getUserStateFromRequest('com_jem.myeventst.'.$itemid.'.limit', 'limit', $jemsettings->display_num, 'uint');
 		$this->setState('limit', $limit);
-		
+
 		$limitstart = $app->input->get('limitstart', 0, 'uint');
 		$this->setState('limitstart', $limitstart);
-		
 	}
 
 	/**
@@ -237,14 +234,13 @@ class JemModelMyevents extends JModelLegacy
 		$levels		= $user->getAuthorisedViewLevels();
 		$itemid		= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
 		$db 		= JFactory::getDBO();
-		
 
 		$filter_type 	= $app->getUserStateFromRequest('com_jem.myevents.'.$itemid.'.filter_type', 'filter_type', '', 'int');
-		
+
 		if ($filter_type == 0) {
 			$filter_type = 1;
 		}
-		
+
 		$search 		= $app->getUserStateFromRequest('com_jem.myevents.'.$itemid.'.filter_search', 'filter_search', '', 'string');
 		$search 		= $this->_db->escape(trim(JString::strtolower($search)));
 
@@ -271,17 +267,15 @@ class JemModelMyevents extends JModelLegacy
 		}
 		// === END Excluded categories add === //
 
-		
-		
 		if (!empty($search)) {
 			if (stripos($search, 'id:') === 0) {
 				$query->where('a.id = '.(int) substr($search, 3));
 			} else {
 				$search = $db->Quote('%'.$db->escape($search, true).'%');
-		
+
 				if($search && $settings->get('global_show_filter')) {
 					switch($filter_type) {
-						
+
 						case 1:
 							$where[] = ' LOWER(a.title) LIKE '.$search;
 							break;
@@ -328,4 +322,3 @@ class JemModelMyevents extends JModelLegacy
 		return $this->_cats;
 	}
 }
-?>

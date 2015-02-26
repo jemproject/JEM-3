@@ -1,6 +1,5 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -43,7 +42,7 @@ class JemViewSearch extends JEMView
 		JemHelper::loadCss('jem');
 		JemHelper::loadCustomCss();
 		JemHelper::loadCustomTag();
-		
+
 		// Load Script
 		JHtml::_('script', 'com_jem/search.js', false, true);
 
@@ -232,4 +231,3 @@ class JemViewSearch extends JEMView
 		return $lists;
 	}
 }
-?>

@@ -1,6 +1,5 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -40,19 +39,19 @@ class JemViewCategories extends JEMView
 		JemHelper::loadCss('jem');
 		JemHelper::loadCustomCss();
 		JemHelper::loadCustomTag();
-		
+
 		if ($print) {
-			JemHelper::loadCss('print');			
+			JemHelper::loadCss('print');
 			$document->setMetaData('robots', 'noindex, nofollow');
 		}
-		
+
 		//get menu information
 		$menu		= $app->getMenu();
 		$menuitem	= $menu->getActive();
-		
+
 		$global = new JRegistry;
 		$global->loadString($settings);
-		
+
 		$params = clone $global;
 		$params->merge($global);
 		if ($menu = $app->getMenu()->getActive())
@@ -128,4 +127,3 @@ class JemViewCategories extends JEMView
 		parent::display($tpl);
 	}
 }
-?>

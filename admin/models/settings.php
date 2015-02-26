@@ -1,13 +1,11 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 defined('_JEXEC') or die;
-
 
 /**
  * Model: Settings
@@ -26,13 +24,12 @@ class JEMModelSettings extends JModelForm
 	{
 		// Get the form.
 		$form = $this->loadForm('com_jem.settings', 'settings', array('control' => 'jform', 'load_data' => $loadData));
-		if (empty($form)) {
-			return false;
-		}
+        if (empty($form)) {
+            return false;
+        }
 
-		return $form;
+        return $form;
 	}
-
 
 	/**
 	 * Loading the table data
@@ -94,7 +91,6 @@ class JEMModelSettings extends JModelForm
 		return $data;
 	}
 
-
 	/**
 	 * Method to get the data that should be injected in the form.
 	 *
@@ -110,7 +106,6 @@ class JEMModelSettings extends JModelForm
 
 		return $data;
 	}
-
 
 	/**
 	 * Saves the settings
@@ -165,7 +160,6 @@ class JEMModelSettings extends JModelForm
 		$params = JComponentHelper::getParams('com_jem');
 		$this->setState('params', $params);
 	}
-
 
 	/**
 	 * Return config information
@@ -230,6 +224,4 @@ class JEMModelSettings extends JModelForm
 
 		return $config;
 	}
-
-
 }

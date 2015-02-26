@@ -67,7 +67,7 @@ class Zebra_Image
      *
      *  @var integer
      */
-    var $chmod_value;
+    public $chmod_value;
 
     /**
      *  If set to FALSE, images having both width and height smaller than the required width and height, will be left
@@ -79,7 +79,7 @@ class Zebra_Image
      *
      *  @var boolean
      */
-    var $enlarge_smaller_images;
+    public $enlarge_smaller_images;
 
     /**
      *  In case of an error read this property's value to see the error's code.
@@ -99,7 +99,7 @@ class Zebra_Image
      *
      *  @var integer
      */
-    var $error;
+    public $error;
 
     /**
      *  Indicates the quality of the output image (better quality means bigger file size).
@@ -112,7 +112,7 @@ class Zebra_Image
      *
      *  @var integer
      */
-    var $jpeg_quality;
+    public $jpeg_quality;
 
     /**
      *  Indicates the compression level of the output image (lower compression means bigger file size).
@@ -128,7 +128,7 @@ class Zebra_Image
      *
      *  @var integer
      */
-    var $png_compression;
+    public $png_compression;
 
     /**
      *  Specifies whether, upon resizing, images should preserve their aspect ratio.
@@ -139,7 +139,7 @@ class Zebra_Image
      *
      *  @var boolean
      */
-    var $preserve_aspect_ratio;
+    public $preserve_aspect_ratio;
 
     /**
      *  Indicates whether a target files should preserve the source file's date/time.
@@ -150,7 +150,7 @@ class Zebra_Image
      *
      *  @var boolean
      */
-    var $preserve_time;
+    public $preserve_time;
 
     /**
      *  Indicates whether the target image should have a "sharpen" filter applied to it.
@@ -166,7 +166,7 @@ class Zebra_Image
      *
      *  @var boolean
      */
-    var $sharpen_images;
+    public $sharpen_images;
 
     /**
      *  Path to an image file to apply the transformations to.
@@ -175,7 +175,7 @@ class Zebra_Image
      *
      *  @var    string
      */
-    var $source_path;
+    public $source_path;
 
     /**
      *  Path (including file name) to where to save the transformed image.
@@ -185,7 +185,7 @@ class Zebra_Image
      *
      *  @var    string
      */
-    var $target_path;
+    public $target_path;
 
     /**
      *  Constructor of the class.
@@ -397,7 +397,6 @@ class Zebra_Image
         // note that we do not set the error level as it has been already set
         // by the _create_from_source() method earlier, if the case
         return false;
-
     }
 
     /**
@@ -487,7 +486,6 @@ class Zebra_Image
         // note that we do not set the error level as it has been already set
         // by the _create_from_source() method earlier
         return false;
-
     }
 
     /**
@@ -1011,7 +1009,6 @@ class Zebra_Image
                             );
 
                             break;
-
                     }
 
                 // if aspect ratio doesn't need to be preserved or
@@ -1042,7 +1039,6 @@ class Zebra_Image
 
                     // if script gets this far, write the image to disk
                     return $this->_write_image($target_identifier);
-
                 }
 
             // if we get here it means that
@@ -1056,7 +1052,6 @@ class Zebra_Image
         // note that we do not set the error level as it has been already set
         // by the _create_from_source() method earlier
         return false;
-
     }
 
     /**
@@ -1173,19 +1168,16 @@ class Zebra_Image
 
                 // rotate the image
                 $target_identifier = imagerotate($this->source_identifier, $angle, $background_color);
-
             }
 
             // write image
             $this->_write_image($target_identifier);
-
         }
 
         // if script gets this far return false
         // note that we do not set the error level as it has been already set
         // by the _create_from_source() method earlier
        return false;
-
     }
 
     /**
@@ -1293,9 +1285,7 @@ class Zebra_Image
                     $this->error = 4;
 
                     return false;
-
             }
-
         }
 
         // if target file has to have the same timestamp as the source image
@@ -1306,7 +1296,6 @@ class Zebra_Image
         $this->source_identifier = $identifier;
 
         return true;
-
     }
 
     /**
@@ -1344,7 +1333,6 @@ class Zebra_Image
 
             // the color in it's full, 6 characters length notation
             $color = $tmp;
-
         }
 
         // decimal representation of the color
@@ -1358,7 +1346,6 @@ class Zebra_Image
             'b' =>  0xFF & $int
 
         );
-
     }
 
     /**
@@ -1445,14 +1432,12 @@ class Zebra_Image
 
             // write image
             return $this->_write_image($target_identifier);
-
         }
 
         // if script gets this far, return false
         // note that we do not set the error level as it has been already set
         // by the _create_from_source() method earlier
         return false;
-
     }
 
     /**
@@ -1530,7 +1515,6 @@ class Zebra_Image
 
         // return the image's identifier
         return $identifier;
-
     }
 
     /**
@@ -1567,7 +1551,6 @@ class Zebra_Image
 
             // sharpen image
             imageconvolution($image, $matrix, $divisor, $offset);
-
         }
 
         // return the image's identifier
@@ -1615,7 +1598,6 @@ class Zebra_Image
                     $this->error = 3;
 
                     return false;
-
                 }
 
                 break;
@@ -1639,7 +1621,6 @@ class Zebra_Image
                     $this->error = 3;
 
                     return false;
-
                 }
 
                 break;
@@ -1667,7 +1648,6 @@ class Zebra_Image
                     return false;
 
                 }
-
                 break;
 
             // if not a supported file extension
@@ -1677,7 +1657,6 @@ class Zebra_Image
                 $this->error = 5;
 
                 return false;
-
         }
 
         // get a list of functions disabled via configuration
@@ -1702,7 +1681,5 @@ class Zebra_Image
 
         // return true
         return true;
-
     }
-
 }

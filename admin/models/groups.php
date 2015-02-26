@@ -1,13 +1,11 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 defined('_JEXEC') or die;
-
 
 /**
  * Model: Groups
@@ -106,17 +104,15 @@ class JEMModelGroups extends JModelList
 				}
 			}
 		}
-	
 
 		// Add the list ordering clause.
 		$orderCol	= $this->state->get('list.ordering');
 		$orderDirn	= $this->state->get('list.direction');
-	
+
 		$query->order($db->escape($orderCol.' '.$orderDirn));
-		
+
 		return $query;
 	}
-
 
 	/**
 	 * Method to get the userinformation of edited/submitted venues
@@ -132,7 +128,6 @@ class JEMModelGroups extends JModelList
 		return $items;
 	}
 
-
 	/**
 	 * Method to remove a group
 	 *
@@ -145,13 +140,13 @@ class JEMModelGroups extends JModelList
 		if (count($cid) > 0)
 		{
 			$cids = implode(',', $cid);
-			
+
 			$db = JFactory::getDbo();
 			$query = $db->getQuery(true);
 			$query->delete('#__jem_groups');
 			$query->where(array('id IN ('. $cids .')'));
 			$db->setQuery($query);
-			
+
 			try
 			{
 				$db->execute();
@@ -161,12 +156,12 @@ class JEMModelGroups extends JModelList
 				JError::raiseWarning(500, $e->getMessage());
 				return false;
 			}
-			
+
 			$query = $db->getQuery(true);
 			$query->delete('#__jem_groupmembers');
 			$query->where(array('group_id IN ('. $cids .')'));
 			$db->setQuery($query);
-				
+
 			try
 			{
 				$db->execute();

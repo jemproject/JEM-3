@@ -1,14 +1,11 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
-
 defined('_JEXEC') or die;
-
 
 /**
  * JEM Component Controller
@@ -21,12 +18,10 @@ class JEMController extends JControllerLegacy
 	 */
 	protected $default_view = 'main';
 
-
 	public function __construct()
 	{
 		parent::__construct();
 	}
-
 
 	/**
 	 * Display the view
@@ -42,7 +37,6 @@ class JEMController extends JControllerLegacy
 		parent::display();
 		return $this;
 	}
-
 
 	/**
 	 * Delete attachment
@@ -73,4 +67,3 @@ class JEMController extends JControllerLegacy
 		jexit();
 	}
 }
-?>

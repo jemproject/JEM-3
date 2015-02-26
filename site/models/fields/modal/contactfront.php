@@ -1,6 +1,5 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -8,18 +7,16 @@
  */
 defined('_JEXEC') or die;
 
-
-
 /**
  * Contact select
  */
-class JFormFieldModal_Contact extends JFormField
+class JFormFieldModal_Contactfront extends JFormField
 {
 	/**
 	 * field type
 	 * @var string
 	 */
-	protected $type = 'Modal_Contact';
+	protected $type = 'Modal_Contactfront';
 
 
 	/**
@@ -41,7 +38,6 @@ class JFormFieldModal_Contact extends JFormField
 		$script[] = '		jQuery("#'.$this->id.'_clear").removeClass("hidden");';
 		$script[] = '        SqueezeBox.close();';
 		$script[] = '    }';
-
 
 		// Clear button script
 		static $scriptClear;
@@ -101,7 +97,6 @@ class JFormFieldModal_Contact extends JFormField
 			$value = (int)$this->value;
 		}
 
-
 		// The current contact input field
 		$html[] = '<span class="input-append">';
 		$html[] = '  <input type="text" class="inputbox input-medium" id="'.$this->id.'_name" value="'.$contact.'" disabled="disabled" size="35" />';
@@ -120,4 +115,3 @@ class JFormFieldModal_Contact extends JFormField
 		return implode("\n", $html);
 	}
 }
-?>

@@ -1,6 +1,5 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -8,26 +7,26 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * View: Venues
  */
- class JEMViewVenues extends JViewLegacy {
+class JEMViewVenues extends JViewLegacy
+{
 
 	protected $items;
 	protected $pagination;
 	protected $state;
 
-	public function display($tpl = null)
-	{
+    public function display($tpl = null)
+    {
 		$user 		= JFactory::getUser();
 		$document	= JFactory::getDocument();
 		$url 		= JUri::root();
 		$settings 	= JEMHelper::globalattribs();
 
-		// Initialise variables.
-		$this->items			= $this->get('Items');
-		$this->pagination		= $this->get('Pagination');
+        // Initialise variables.
+        $this->items			= $this->get('Items');
+        $this->pagination		= $this->get('Pagination');
 		$this->state			= $this->get('State');
 		$this->filterForm		= $this->get('FilterForm');
 		$this->activeFilters	= $this->get('ActiveFilters');
@@ -49,14 +48,13 @@ defined('_JEXEC') or die;
 		$this->addToolbar();
 
 		parent::display($tpl);
-		}
-
+	}
 
 	/**
 	 * Add Toolbar
 	 */
-	protected function addToolbar()
-	{
+    protected function addToolbar()
+    {
 		JToolBarHelper::title(JText::_('COM_JEM_VENUES'), 'venues');
 
 		$canDo = JEMHelperBackend::getActions(0);
@@ -92,6 +90,5 @@ defined('_JEXEC') or die;
 
 		JToolBarHelper::divider();
 		JToolBarHelper::help('listvenues', true);
-	}
+    }
 }
-?>

@@ -1,12 +1,10 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
-
 defined('_JEXEC') or die;
 
 
@@ -38,28 +36,26 @@ class JEMCategories
 	 */
 	protected $_checkedCategories;
 
-
-
 	/**
 	 * id
 	 *
 	 * @var int
 	 */
-	var $id = null;
+	public $id = null;
 
 	/**
 	 * Parent Categories (name, slug), with top category first
 	 *
 	 * @var array
 	 */
-	var $parentcats = array();
+	public $parentcats = array();
 
 	/**
 	 * Category data
 	 *
 	 * @var array
 	 */
-	var $category = array();
+	public $category = array();
 
 	/**
 	 * Constructor
@@ -70,7 +66,6 @@ class JEMCategories
 	{
 		$this->id = $cid;
 	}
-
 
 	/**
 	 * Instance
@@ -161,7 +156,6 @@ class JEMCategories
 		# as maintainter someone who is registered can see a category that has special rights
 		# let's see if the user has access to this category.
 
-
 		$query3	= $db->getQuery(true);
 		$query3 = 'SELECT gr.id'
 				. ' FROM #__jem_groups AS gr'
@@ -200,12 +194,10 @@ class JEMCategories
 			}
 		}
 
-
 		$subQuery = ' (SELECT cat.id as id FROM #__jem_categories AS cat JOIN #__jem_categories AS parent ' .
 				'ON cat.lft BETWEEN parent.lft AND parent.rgt WHERE parent.published != 1 GROUP BY cat.id) ';
 		$query->leftJoin($subQuery . 'AS badcats ON badcats.id = c.id');
 		$query->where('badcats.id is null');
-
 
 		// i for item
 		// @todo: alter
@@ -225,7 +217,6 @@ class JEMCategories
 			$query->select('COUNT(i.' . $db->quoteName($this->_key) . ') AS numitems');
 		}
 
-
 		#############
 		## GROUPBY ##
 		#############
@@ -233,14 +224,11 @@ class JEMCategories
 		$query->group('c.id, c.access, c.alias, c.level,
 		 	c.lft, c.parent_id, c.path, c.published, c.rgt, c.catname');
 
-
 		// Get the results
 		$db->setQuery($query);
 		$results = $db->loadObjectList('id');
 
-
 		$childrenLoaded = false;
-
 
 		if (count($results))
 		{
@@ -265,7 +253,6 @@ class JEMCategories
 					// Create the JCategoryNode and add to _nodes
 					$this->_nodes[$result->id] = new JEMCategoryNode($result, $this);
 
-
 					// If this is not root and if the current node's parent is in the list or the current node parent is 0
 					if ($result->id != 'root' && (isset($this->_nodes[$result->parent_id]) || $result->parent_id == 1))
 					{
@@ -281,11 +268,9 @@ class JEMCategories
 						# the unset has been disabled as it was giving errors when pointing to a subcategory of a category
 						# with special rights
 
-
 						//unset($this->_nodes[$result->id]);
 						//continue;
 					}
-
 
 					if ($result->id == $id || $childrenLoaded)
 					{
@@ -324,7 +309,6 @@ class JEMCategories
 			$this->_nodes[$id] = null;
 		}
 	}
-
 
 	/**
 	 * Retrieve Categories
@@ -371,14 +355,12 @@ class JEMCategories
 
 		$query->where('c.published = 1');
 
-
 		###################################
 		## FILTER - MAINTAINER/JEM GROUP ##
 		###################################
 
 		# as maintainter someone who is registered can see a category that has special rights
 		# let's see if the user has access to this category.
-
 
 		$query3	= $db->getQuery(true);
 		$query3 = 'SELECT gr.id'
@@ -410,9 +392,7 @@ class JEMCategories
 			$cats = $db->loadObjectList();
 			}
 			return $cats;
-			}
-
-
+	}
 
 	function getPath()
 	{
@@ -499,7 +479,6 @@ class JEMCategories
 			## special right ##
 			###################
 
-
 			$query3	= $db->getQuery(true);
 			$query3 = 'SELECT gr.id'
 					. ' FROM #__jem_groups AS gr'
@@ -518,7 +497,6 @@ class JEMCategories
 			} else {
 				$query->where('(c.access IN ('.$groups.'))');
 			}
-
 
 			$db->setQuery($query);
 			$row = $db->loadObject();
@@ -550,7 +528,6 @@ class JEMCategories
 
 		return $categories;
 	}
-
 
 	/**
 	 * Get the categorie tree
@@ -611,7 +588,6 @@ class JEMCategories
 
 		return $list;
 	}
-
 
 	/**
 	 * Get the categorie tree
@@ -1218,4 +1194,3 @@ class JEMCategoryNode extends JObject
 		return $this->numitems;
 	}
 }
-?>

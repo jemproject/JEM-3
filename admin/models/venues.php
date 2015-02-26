@@ -1,13 +1,11 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 defined('_JEXEC') or die;
-
 
 /**
  * Model: Venues
@@ -17,8 +15,8 @@ class JemModelVenues extends JModelList
 	/**
 	 * Constructor.
 	 *
-	 * @param	array	An optional associative array of configuration settings.
-	 * @see		JController
+	 * @param	array An optional associative array of configuration settings.
+	 * @see	JController
 	 *
 	 */
 	public function __construct($config = array())
@@ -83,10 +81,10 @@ class JemModelVenues extends JModelList
 	protected function getStoreId($id = '')
 	{
 		// Compile the store id.
-		$id.= ':' . $this->getState('filter.search');	
+		$id.= ':' . $this->getState('filter.search');
 		$id.= ':' . $this->getState('filter.published');
 		$id.= ':' . $this->getState('filter.filtertype');
-		
+
 		return parent::getStoreId($id);
 	}
 
@@ -118,7 +116,7 @@ class JemModelVenues extends JModelList
 		// Join over the users for the checked out user.
 		$query->select('uc.name AS editor');
 		$query->join('LEFT', '#__users AS uc ON uc.id = a.checked_out');
-		
+
 		// Join over the user who modified the event.
 		$query->select('um.name AS modified_by');
 		$query->join('LEFT', '#__users AS um ON um.id = a.modified_by');
@@ -181,12 +179,12 @@ class JemModelVenues extends JModelList
 		$orderDirn	= $this->state->get('list.direction','asc');
 
 		if ($orderCol == 'a.dates')
-		{	
+		{
 			$query->order(array($db->escape('a.dates '.$orderDirn),$db->escape('a.times '.$orderDirn)));
 		} else {
 			$query->order($db->escape($orderCol.' '.$orderDirn));
 		}
-		
+
 		return $query;
 	}
 
@@ -201,10 +199,10 @@ class JemModelVenues extends JModelList
 	function remove($cid)
 	{
 		$cids	= implode(',', $cid);
-		
+
 		$db		= $this->getDbo();
 		$query	= $db->getQuery(true);
-		
+
 		$query->select(array('v.id','v.venue'));
 		$query->select(array('COUNT(e.locid) as AssignedEvents'));
 		$query->from($db->quoteName('#__jem_venues').' AS v');
@@ -212,13 +210,12 @@ class JemModelVenues extends JModelList
 		$query->where(array('v.id IN ('.$cids.')'));
 		$query->group('v.id');
 		$db->setQuery($query);
-		
+
 		if (!($rows = $db->loadObjectList())) {
 			JError::raiseError(500, $db->stderr());
 			return false;
 		}
-		
-		
+
 		$err = array();
 		$cid = array();
 		foreach ($rows as $row) {
@@ -235,11 +232,11 @@ class JemModelVenues extends JModelList
 			$cids	= implode(',', $cid);
 			$db 	= JFactory::getDbo();
 			$query	= $db->getQuery(true);
-			
+
 			$query->delete($db->quoteName('#__jem_venues'));
 			$query->where(array('id IN ('.$cids.')'));
 			$db->setQuery($query);
-			
+
 			if(!$db->execute()) {
 				$this->setError($db->getErrorMsg());
 				return false;

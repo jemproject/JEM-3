@@ -1,13 +1,11 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 defined('_JEXEC') or die;
-
 
 /**
  * Holds the logic for all output related things
@@ -106,7 +104,6 @@ class JEMOutput {
 			} else {
 				$text = JText::_('COM_JEM_DELIVER_NEW_VENUE');
 			}
-
 
 			$url = 'index.php?option=com_jem&task=editvenue.add&return='.base64_encode(urlencode($uri)).'&a_id=0';
 			$title = JText::_('COM_JEM_DELIVER_NEW_VENUE');
@@ -378,6 +375,7 @@ class JEMOutput {
 
 			return $output;
 		}
+
 		return;
 	}
 
@@ -651,7 +649,6 @@ class JEMOutput {
 	 */
 	static function mapicon($data,$view=false,$params)
 	{
-
 		$global = JemHelper::globalattribs();
 
 		//stop if disabled
@@ -661,8 +658,8 @@ class JEMOutput {
 
 		if ($view == 'event') {
 			$mapserv	= $params->get('event_show_mapserv');
-		} else if ($view == 'venues') {
-			# @todo check
+		} elseif ($view == 'venues') {
+			// @todo check
 			$mapserv	= $params->get('show_mapserv');
 		} else {
 			$mapserv	= $params->get('show_mapserv');
@@ -861,7 +858,6 @@ class JEMOutput {
 		return $output;
 	}
 
-
 	/**
 	 * Formats date
 	 *
@@ -936,34 +932,34 @@ class JEMOutput {
 		$output = "";
 
 		if(JemHelper::isValidDate($dateStart)) {
-			$output .= self::formatdate($dateStart, $format);
+			$output .= '<span class="date">'.self::formatdate($dateStart, $format).'</span>';
 
 			if($settings->get('global_show_timedetails','1') && JemHelper::isValidTime($timeStart)) {
-				$output .= ', '.self::formattime($timeStart);
+				$output .= ', <span class="time">'.self::formattime($timeStart).'</span>';
 			}
 
 			// Display end date only when it differs from start date
 			$displayDateEnd = JemHelper::isValidDate($dateEnd) && $dateEnd != $dateStart;
 			if($displayDateEnd) {
-				$output .= ' - '.self::formatdate($dateEnd, $format);
+				$output .= ' - <span class="time">'.self::formatdate($dateEnd, $format).'</span>';
 			}
 
 			// Display end time only when both times are set
 			if($settings->get('global_show_timedetails','1') && JemHelper::isValidTime($timeStart) && JemHelper::isValidTime($timeEnd))
 			{
 				$output .= $displayDateEnd ? ', ' : ' - ';
-				$output .= self::formattime($timeEnd);
+				$output .= '<span class="time">'.self::formattime($timeEnd).'</span>';
 			}
 		} else {
-			$output .= JText::_('COM_JEM_OPEN_DATE');
+			$output .= '<span class="date">'.JText::_('COM_JEM_OPEN_DATE').'</span>';
 
 			if($settings->get('global_show_timedetails','1')) {
 				if(JemHelper::isValidTime($timeStart)) {
-					$output .= ', '.self::formattime($timeStart);
+					$output .= ', <span class="date">'.self::formattime($timeStart).'</span>';
 				}
 				// Display end time only when both times are set
 				if(JemHelper::isValidTime($timeStart) && JemHelper::isValidTime($timeEnd)) {
-					$output .= ' - '.self::formattime($timeEnd);
+					$output .= ' - <span class="time">'.self::formattime($timeEnd).'<span>';
 				}
 			}
 		}
@@ -1091,13 +1087,11 @@ class JEMOutput {
 	 * @param boolean $doLink Link the categories to the respective Category View
 	 * @return string|multitype:
 	 */
-	static function getCategoryList($categories, $doLink,$backend=false) {
+	static function getCategoryList($categories, $doLink,$backend=false,$FixItemID=false) {
 		$output = array_map(
-			function ($category) use ($doLink,$backend) {
+			function ($category) use ($doLink,$backend,$FixItemID) {
 				if ($doLink) {
-
 					if ($backend) {
-
 						$path = $category->path;
 						$path = str_replace('/',' &#187; ',$path);
 
@@ -1106,8 +1100,11 @@ class JEMOutput {
 								$category->catname.'</a>';
 						$value .= '</span>';
 					} else {
-						$value = '<a href="'.JRoute::_(JemHelperRoute::getCategoryRoute($category->catslug)).'">'.
-								$category->catname.'</a>';
+						if ($FixItemID) {
+							$value = '<a href="'.JRoute::_('index.php?option=com_jem&view=category&id='.$category->catslug.'&Itemid='.$FixItemID).'">'.$category->catname.'</a>';
+						} else {
+							$value = '<a href="'.JRoute::_(JemHelperRoute::getCategoryRoute($category->catslug)).'">'.$category->catname.'</a>';
+						}
 					}
 				} else {
 					$value = $category->catname;
@@ -1118,7 +1115,6 @@ class JEMOutput {
 
 		return $output;
 	}
-
 
 	static function statuslabel($published = false) {
 
@@ -1177,6 +1173,8 @@ class JEMOutput {
 			$timeFormat = str_replace('%M','i',$timeFormat);
 			$timeFormat = str_replace('%p','A',$timeFormat);
 			$timeFormat = str_replace('%P','a',$timeFormat);
+			$timeFormat = str_replace('%I','h',$timeFormat);
+			$timeFormat = str_replace('%l','g',$timeFormat);
 		} else {
 			$timeFormat	= "H:i";
 		}
@@ -1205,7 +1203,7 @@ class JEMOutput {
 		$datetimeStart	= new JDate($row->dates.' '.$row->times);
 		$otimeStart		= $datetimeStart->format('H:i');
 		$odateStart		= $datetimeStart->format($dateFormat);
-
+		
 		if ($otimeStart == '00.00' || $otimeStart == '00:00') {
 			if ($rowtime == null) {
 				$otimeStart = "";
@@ -1215,6 +1213,7 @@ class JEMOutput {
 		} else {
 			$otimeStart = $datetimeStart->format($timeFormat);
 		}
+		
 
 		# -- date/time End --
 		# - no enddate + no endtime = blank both variables
@@ -1357,6 +1356,4 @@ class JEMOutput {
 
 		return $result;
 	}
-
-} // end class
-?>
+}

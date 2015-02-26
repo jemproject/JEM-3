@@ -1,13 +1,11 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 defined('_JEXEC') or die;
-
 
 /**
  * View: Categoryelement
@@ -20,7 +18,7 @@ class JemViewCategoryelement extends JViewLegacy {
 		$db			= JFactory::getDBO();
 		$app 		= JFactory::getApplication();
 		$jinput 	= JFactory::getApplication()->input;
-		
+
 		$itemid 	= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
 
 		$filter_order		= $app->getUserStateFromRequest('com_jem.categoryelement.filter_order', 'filter_order', 'c.ordering', 'cmd');
@@ -31,7 +29,7 @@ class JemViewCategoryelement extends JViewLegacy {
 
 		// prepare document
 		$document->setTitle(JText::_('COM_JEM_SELECT_CATEGORY'));
-		
+
 		// Load css
 		JemHelper::loadCss('backend');
 
@@ -58,4 +56,3 @@ class JemViewCategoryelement extends JViewLegacy {
 		parent::display($tpl);
 	}
 }
-?>

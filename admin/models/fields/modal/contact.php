@@ -1,13 +1,11 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 defined('_JEXEC') or die;
-
 
 /**
  * Contact select
@@ -19,15 +17,14 @@ class JFormFieldModal_Contact extends JFormField
 	 */
 	protected $type = 'Modal_Contact';
 
-
 	/**
 	 * Method to get the field input markup
 	 */
 	protected function getInput()
 	{
-		
+
 		$allowClear		= ((string) $this->element['clear'] != 'false') ? true : false;
-		
+
 		// Load modal behavior
 		JHtml::_('behavior.modal', 'a.flyermodal');
 
@@ -39,15 +36,14 @@ class JFormFieldModal_Contact extends JFormField
 		$script[] = '		jQuery("#'.$this->id.'_clear").removeClass("hidden");';
 		$script[] = '        SqueezeBox.close();';
 		$script[] = '    }';
-		
-		
+
 		// Clear button script
 		static $scriptClear;
-		
+
 		if ($allowClear && !$scriptClear)
 		{
 			$scriptClear = true;
-		
+
 			$script[] = '	function jClear(id) {';
 			$script[] = '		document.getElementById(id + "_id").value = "";';
 			$script[] = '		document.getElementById(id + "_name").value = "'.htmlspecialchars(JText::_('COM_JEM_SELECT_CONTACT', true), ENT_COMPAT, 'UTF-8').'";';
@@ -58,7 +54,7 @@ class JFormFieldModal_Contact extends JFormField
 			$script[] = '		return false;';
 			$script[] = '	}';
 		}
-		
+
 		// Add to document head
 		JFactory::getDocument()->addScriptDeclaration(implode("\n", $script));
 
@@ -66,7 +62,6 @@ class JFormFieldModal_Contact extends JFormField
 		$html = array();
 		$link = 'index.php?option=com_jem&amp;view=contactelement&amp;tmpl=component&amp;function=jSelectContact_'.$this->id;
 
-		
 		if ((int) $this->value > 0)
 		{
 			$db = JFactory::getDbo();
@@ -84,7 +79,7 @@ class JFormFieldModal_Contact extends JFormField
 			{
 				JError::raiseWarning(500, $e->getMessage());
 			}
-			
+
 		}
 
 		if (empty($contact)) {
@@ -98,8 +93,7 @@ class JFormFieldModal_Contact extends JFormField
 		} else {
 			$value = (int)$this->value;
 		}
-		
-		
+
 		// The current contact input field
 		$html[] = '<span class="input-append">';
 		$html[] = '  <input type="text" class="input-medium" id="'.$this->id.'_name" value="'.$contact.'" disabled="disabled" size="35" />';
@@ -118,4 +112,3 @@ class JFormFieldModal_Contact extends JFormField
 		return implode("\n", $html);
 	}
 }
-?>

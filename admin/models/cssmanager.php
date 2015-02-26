@@ -1,6 +1,5 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -14,25 +13,24 @@ jimport('joomla.filesystem.file');
  */
 class JemModelCssmanager extends JModelLegacy
 {
-
-	/**
+    /**
 	 * Internal method to get file properties.
 	 *
-	 * @param	string The base path.
-	 * @param	string The file name.
-	 * @return	object
+	 * @param string The base path.
+	 * @param string The file name.
+	 * @return object
 	 *
 	 */
-	protected function getFile($path, $name)
+    protected function getFile($path, $name)
 	{
-		$temp = new stdClass;
+        $temp = new stdClass;
 
-		$temp->name = $name;
-		$temp->exists = file_exists($path.$name);
-		$temp->id = urlencode(base64_encode($name));
+        $temp->name = $name;
+        $temp->exists = file_exists($path.$name);
+        $temp->id = urlencode(base64_encode($name));
 
-		if ($temp->exists) {
-			$ext =  JFile::getExt($path.$name);
+        if ($temp->exists) {
+            $ext =  JFile::getExt($path.$name);
 				if ($ext != 'css') {
 					# the file is valid but the extension not so let's return false
 					$temp->ext = false;
@@ -41,9 +39,8 @@ class JemModelCssmanager extends JModelLegacy
 				}
 		}
 
-		return $temp;
+        return $temp;
 	}
-
 
 	/**
 	 * Internal method to get file properties.
@@ -126,10 +123,8 @@ class JemModelCssmanager extends JModelLegacy
 			}
 
 		}
-
 		return $result;
 	}
-
 
 	/**
 	 * Method to auto-populate the model state.
@@ -146,7 +141,6 @@ class JemModelCssmanager extends JModelLegacy
 		$this->setState('params', $params);
 	}
 
-
 	/**
 	 * Detect if option linenumbers is enabled
 	 * plugin: codemirror
@@ -161,7 +155,6 @@ class JemModelCssmanager extends JModelLegacy
 		$manifest = json_decode($db->loadResult(), true);
 		return $manifest['lineNumbers'];
 	}
-
 
 	/**
 	 * Sets parameter values in the component's row of the extension table
@@ -192,4 +185,3 @@ class JemModelCssmanager extends JModelLegacy
 		$db->execute();
 	}
 }
-?>

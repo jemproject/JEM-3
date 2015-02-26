@@ -1,8 +1,7 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
- * @copyright (C) 2013-2013 joomlaeventmanager.net
+ * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
@@ -22,16 +21,15 @@ class JEMTableRecurrence extends JTable
 	 * Bind
 	 */
 	public function bind($array, $ignore = ''){
-		
+
 
 		return parent::bind($array, $ignore);
 	}
 
-
 	/**
 	 * Check
 	 */
-	function check()
+	public function check()
 	{
 
 		return true;
@@ -45,7 +43,4 @@ class JEMTableRecurrence extends JTable
 
 		return parent::store($updateNulls);
 	}
-
-	
 }
-?>

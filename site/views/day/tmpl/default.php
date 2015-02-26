@@ -1,6 +1,5 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -11,9 +10,9 @@ defined('_JEXEC') or die;
 ?>
 <div id="jem" class="jem_day<?php echo $this->pageclass_sfx;?>">
 <div class="topbox">
-<div class="btn-group pull-right">	
-	<?php 
-	if ($this->print) { 
+<div class="btn-group pull-right">
+	<?php
+	if ($this->print) {
 		echo JemOutput::printbutton($this->print_link, $this->params);
 	} else {
 	?>
@@ -26,7 +25,7 @@ defined('_JEXEC') or die;
 </div></div>
 <div class="clearfix"></div>
 <!-- info -->
-<div class="info_container">	
+<div class="info_container">
 	<?php if ($this->params->get('show_page_heading', 1)) : ?>
 	<h1>
 	<?php echo $this->escape($this->params->get('page_heading')); ?>
@@ -52,7 +51,7 @@ defined('_JEXEC') or die;
 		</p>
 	</form>
 </div>
-	
+
 	<!--footer-->
 	<div class="pagination">
 	<?php echo $this->pagination->getPagesLinks(); ?>

@@ -1,6 +1,5 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -8,12 +7,11 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * View: Updatecheck
  */
-class JEMViewUpdatecheck extends JViewLegacy {
-
+class JEMViewUpdatecheck extends JViewLegacy
+{
 	public function display($tpl = null)
 	{
 		//Get data from the model
@@ -33,7 +31,6 @@ class JEMViewUpdatecheck extends JViewLegacy {
 
 		parent::display($tpl);
 	}
-
 
 	/**
 	 * Add Toolbar

@@ -1,13 +1,11 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 defined('_JEXEC') or die;
-
 
 /**
  * Venues-View
@@ -38,12 +36,12 @@ class JemViewVenues extends JViewLegacy
 		JemHelper::loadCss('jem');
 		JemHelper::loadCustomCss();
 		JemHelper::loadCustomTag();
-		
+
 		if ($print) {
 			JemHelper::loadCss('print');
 			$document->setMetaData('robots', 'noindex, nofollow');
 		}
-		
+
 		// Request variables
 		$task 	= $jinput->getCmd('task');
 		$rows 	= $this->get('Items');
@@ -120,4 +118,3 @@ class JemViewVenues extends JViewLegacy
 		parent::display($tpl);
 	}
 }
-?>

@@ -1,6 +1,5 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -74,25 +73,25 @@ class JemModelCalendar extends JemModelEventslist
 		#####################
 		## FILTER-CATEGORY ##
 		#####################
-		
+
 		$catids = $params->get('catids');
 		$venids = $params->get('venueids');
 		$eventids = $params->get('eventids');
-		
+
 		$catidsfilter = $params->get('catidsfilter');
 		$venidsfilter = $params->get('venueidsfilter');
 		$eventidsfilter = $params->get('eventidsfilter');
-		
+
 		if ($catids) {
 			$this->setState('filter.category_id',$catids);
 			$this->setState('filter.category_id.include',$catidsfilter);
 		}
-		
+
 		if ($venids) {
 			$this->setState('filter.venue_id',$venids);
 			$this->setState('filter.venue_id.include',$venidsfilter);
 		}
-		
+
 		if ($eventids) {
 			$this->setState('filter.event_id',$eventids);
 			$this->setState('filter.event_id.include',$eventidsfilter);
@@ -102,7 +101,6 @@ class JemModelCalendar extends JemModelEventslist
 		$this->setState('filter.calendar_multiday',true);
 		$this->setState('filter.groupby',array('a.id'));
 	}
-
 
 	/**
 	 * Method to get a list of events.
@@ -121,7 +119,6 @@ class JemModelCalendar extends JemModelEventslist
 		return array();
 	}
 
-
 	/**
 	 * @return	JDatabaseQuery
 	 */
@@ -137,12 +134,10 @@ class JemModelCalendar extends JemModelEventslist
 		$query->select('DATEDIFF(a.enddates, a.dates) AS datesdiff,DAYOFMONTH(a.dates) AS start_day, YEAR(a.dates) AS start_year, MONTH(a.dates) AS start_month');
 
 		// here we can extend the query of the Eventslist model
-		
-		
+
 		return $query;
 	}
-	
-	
+
 	/**
 	 * Method to retrieve the dates linked to this calendar
 	 *
@@ -150,15 +145,15 @@ class JemModelCalendar extends JemModelEventslist
 	 * @return integer
 	 */
 	function getSpecialDays () {
-	
+
 		$app 			= JFactory::getApplication();
 		$jinput 		= JFactory::getApplication()->input;
 		$params 		= $app->getParams();
 		$use_dates		= $params->get('use_dates', 1);
 		$itemid 		= $jinput->getInt('Itemid', 0);
-			
+
 		if ($use_dates) {
-	
+
 			# retrieve all linked calendar Itemid's
 			$db = JFactory::getDbo();
 			$query = $db->getQuery(true);
@@ -168,14 +163,13 @@ class JemModelCalendar extends JemModelEventslist
 			$db->setQuery($query);
 			$reference = $db->loadResult();
 			$array_reference = json_decode($reference);
-						
-			
+
 			# do we have Itemid's?
 			if ($array_reference) {
-			
+
 				# let's see if the menu-item of this calendar is linked
 				$needle = in_array($itemid,$array_reference);
-						
+
 				if ($needle) {
 					$db = JFactory::getDbo();
 					$query = $db->getQuery(true);
@@ -189,6 +183,4 @@ class JemModelCalendar extends JemModelEventslist
 			}
 		}
 	}
-
 }
-?>

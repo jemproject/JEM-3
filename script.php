@@ -1,6 +1,5 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -10,7 +9,6 @@ defined('_JEXEC') or die;
 
 $db = JFactory::getDBO();
 jimport('joomla.filesystem.folder');
-
 
 /**
  * Script file of JEM component
@@ -111,7 +109,6 @@ class com_jemInstallerScript
 			</p> <?php
 		}
 
-
 		$param_array = array(
 				"event_comunoption"=>"0",
 				"event_comunsolution"=>"0",
@@ -166,10 +163,9 @@ class com_jemInstallerScript
 		<h2><?php echo JText::_('COM_JEM_UNINSTALL_STATUS'); ?>:</h2>
 		<p><?php echo JText::_('COM_JEM_UNINSTALL_TEXT'); ?></p>
 		<?php
-		
+
 		$globalParams = $this->getGlobalParams();
 		$cleanup = $globalParams->get('global_cleanup_db_on_uninstall', 0);
-		$this->disableJemMenuItems();
 		if (!empty($cleanup)) {
 			// user decided to fully remove JEM - so do it!
 			$this->removeJemMenuItems();
@@ -194,7 +190,7 @@ class com_jemInstallerScript
 		$this->getHeader(); ?>
 		<h2><?php echo JText::_('COM_JEM_UPDATE_STATUS'); ?>:</h2>
 		<p><?php echo JText::sprintf('COM_JEM_UPDATE_TEXT', $parent->get('manifest')->version); ?></p>;
-		
+
 		<?php
 	}
 
@@ -264,7 +260,7 @@ class com_jemInstallerScript
 	 * @return void
 	 */
 	function postflight($type, $parent)
-	{	
+	{
 		// $type is the type of change (install, update or discover_install)
 		echo '<p>' . JText::_('COM_JEM_POSTFLIGHT_' . $type . '_TEXT') . '</p>';
 
@@ -276,7 +272,7 @@ class com_jemInstallerScript
 			}
 
 		}
-		
+
 		if ($type == 'install') {
 			$this->fixJemMenuItems();
 		}
@@ -327,7 +323,7 @@ class com_jemInstallerScript
 			$db->execute();
 		}
 	}
-	
+
 	/**
 	 * Gets globalattrib values from the settings table
 	 *
@@ -425,8 +421,8 @@ class com_jemInstallerScript
 		$db->setQuery($query);
 		$db->execute();
 	}
-	
-	
+
+
 	/**
 	 * Remove all JEM menu items.
 	 *
@@ -438,7 +434,7 @@ class com_jemInstallerScript
 		$db = JFactory::getDbo();
 		$query = $db->getQuery(true);
 		$query->delete('#__menu');
-		$query->where(array('client_id = 0', 'published > 0', 'link LIKE "index.php?option=com_jem%"'));
+		$query->where(array('client_id = 0', 'link LIKE "index.php?option=com_jem%"'));
 		$db->setQuery($query);
 		$db->execute();
 	}
@@ -460,7 +456,7 @@ class com_jemInstallerScript
 		$db->setQuery($query);
 		$db->execute();
 	}
-	
+
 	/**
 	 * Fix all JEM menu items by setting new extension id.
 	 * (usefull on install to let menu items from older installation refer new extension id)
@@ -486,7 +482,7 @@ class com_jemInstallerScript
 			$db->execute();
 		}
 	}
-	
+
 	/**
 	 * Remove all obsolete files and folders of previous versions.
 	 *
@@ -532,7 +528,11 @@ class com_jemInstallerScript
 			'/media/com_jem/js/settings.js',
 			'/media/com_jem/js/unlimited.js',
 			# 3.0.3 -> 3.0.4
-			'/media/com_jem/js/dropdown.js'
+			'/media/com_jem/js/dropdown.js',
+			# 3.0.6 -> 3.0.7
+			'/components/com_jem/models/fields/catoptions.php',
+			'/components/com_jem/models/fields/modal/venuefront.php',
+			'/components/com_jem/models/fields/modal/contactfront.php'
 		);
 		$folders = array();
 
@@ -548,8 +548,7 @@ class com_jemInstallerScript
 			}
 		}
 	}
-	
-	
+
 	/**
 	 * Updating files: 302->303
 	 */
@@ -559,7 +558,7 @@ class com_jemInstallerScript
 		###############################
 		## # update calendar entries ##
 		###############################
-		require_once (JPATH_SITE.'/components/com_jem/classes/categories.class.php');
+		require_once JPATH_SITE . '/components/com_jem/classes/categories.class.php';
 
 		$types = array('calendar','category','venue');
 
@@ -568,27 +567,27 @@ class com_jemInstallerScript
 			$query = $db->getQuery(true);
 			$query->select('id, link, params');
 			$query->from('#__menu');
-			
+
 			if ($type == 'calendar') {
 				$query->where(array("link LIKE 'index.php?option=com_jem&view=calendar'"));
 			} else {
 				$query->where(array("link LIKE 'index.php?option=com_jem&view=".$type."&layout=calendar%'"));
 			}
-			
+
 			$query->order('id');
 			$db->setQuery($query);
 			$items = $db->loadObjectList();
-	
+
 			foreach ($items as $item) :
-			
+
 				# set params
 				$params = json_decode($item->params, true);
-			
+
 				if ($type == 'category' || $type == 'venue') {
 					# get id nr
 					$id = strstr($item->link, '&id=');
 					$id = str_replace('&id=', '', $id);
-	
+
 					if ($type == 'category') {
 						$params['catids'] = $id;
 						$params['catidsfilter'] = 1;
@@ -599,7 +598,7 @@ class com_jemInstallerScript
 						$params['venueidsfilter'] = 1;
 					}
 				}
-			
+
 				if ($type == 'calendar') {
 					# retrieve value 'top_category'
 					if (isset($params['top_category'])) {
@@ -620,28 +619,27 @@ class com_jemInstallerScript
 								$reorder = array_shift($childs);
 								$params['catids'] = $childs;
 								$params['catidsfilter'] = 1;
-							} 
+							}
 						}
 					}	else {
 						$params['catids'] = 1;
 						$params['catidsfilter'] = 0;
 					}
 				}
-				
+
 				# store params + new link value
 				$paramsString = json_encode($params);
-				
+
 				$query = $db->getQuery(true);
 				$query->update('#__menu')
 				->set(array('params = '.$db->quote($paramsString),'link = '.$db->Quote('index.php?option=com_jem&view=calendar')))
 				->where(array("id = ".$item->id));
 				$db->setQuery($query);
-				$db->execute();							
+				$db->execute();
 			endforeach;
-		endforeach;	
+		endforeach;
 	}
-	
-	
+
 	/**
 	 * Deletes all JEM tables on database if option says so.
 	 *
@@ -671,7 +669,4 @@ class com_jemInstallerScript
 			}
 		}
 	}
-	
-	
-	
 }

@@ -1,6 +1,5 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -8,13 +7,14 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * View: Housekeeping
  */
-class JemViewHousekeeping extends JViewLegacy {
+class JemViewHousekeeping extends JViewLegacy
+{
 
-	public function display($tpl = null) {
+    public function display($tpl = null)
+    {
 
 		$app = JFactory::getApplication();
 
@@ -36,7 +36,6 @@ class JemViewHousekeeping extends JViewLegacy {
 		parent::display($tpl);
 	}
 
-
 	/**
 	 * Add Toolbar
 	 */
@@ -49,4 +48,3 @@ class JemViewHousekeeping extends JViewLegacy {
 		JToolBarHelper::help('housekeeping', true);
 	}
 }
-?>

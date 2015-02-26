@@ -1,6 +1,5 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -60,19 +59,19 @@ jQuery( document ).ready(function( $ ) {
 		}
 
 		//for time in tooltip
-		$timehtml = '';
+		$timeTip = '';
 
 		if ($this->settings->get('global_show_timedetails','1')) {
 			$start = JemOutput::formattime($row->times);
 			$end = JemOutput::formattime($row->endtimes);
 
 			if ($start != '') {
-				$timehtml = '<div class="time"><span class="text-label">'.JText::_('COM_JEM_TIME_SHORT').': </span>';
-				$timehtml .= $start;
+				$timeTip = '<div class="time"><span class="text-label">'.JText::_('COM_JEM_TIME_SHORT').': </span>';
+				$timeTip .= $start;
 				if ($end != '') {
-					$timehtml .= ' - '.$end;
+					$timeTip .= ' - '.$end;
 				}
-				$timehtml .= '</div>';
+				$timeTip .= '</div>';
 			}
 		}
 
@@ -86,7 +85,7 @@ jQuery( document ).ready(function( $ ) {
 		$ix = 0;
 		$content = '';
 		$contentend = '';
-		
+
 		$catz = array();
 
 		//walk through categories assigned to an event
@@ -121,13 +120,13 @@ jQuery( document ).ready(function( $ ) {
 					$countcatevents[$category->id]++;
 				}
 			}
-			
+
 			$catinfo[] = array('catid' => $category->id,'color' => $category->color);
 		}
-		
+
 		// end of category-loop
 		$catz = implode(' ',$catz);
-		
+
 		$content    .= '<div id="catz" hidecat="" class="'.$catz.'">';
 		$contentend .= '</div>';
 
@@ -136,7 +135,7 @@ jQuery( document ).ready(function( $ ) {
 		$color .= '</div>';
 
 		//for time in calendar
-		$timetp = '';
+		$timeData = '';
 
 		if ($this->settings->get('global_show_timedetails','1')) {
 			$start = JemOutput::formattime($row->times,'',false);
@@ -147,24 +146,34 @@ jQuery( document ).ready(function( $ ) {
 
 			if ($multi->row) {
 				if ($multi->row == 'first') {
-					$timetp .= $image = JHtml::_("image","com_jem/arrow-left.png",'', NULL, true).' '.$start;
-					$timetp .= '<br />';
+					$timeData .= $image = JHtml::_("image","com_jem/arrow-left.png",'', NULL, true).' '.$start;
+					$timeData .= '<br />';
 				} elseif ($multi->row == 'middle') {
-					$timetp .= JHtml::_("image","com_jem/arrow-middle.png",'', NULL, true);
-					$timetp .= '<br />';
+					$timeData .= JHtml::_("image","com_jem/arrow-middle.png",'', NULL, true);
+					$timeData .= '<br />';
 				} elseif ($multi->row == 'zlast') {
-					$timetp .= JHtml::_("image","com_jem/arrow-right.png",'', NULL, true).' '.$end;
-					$timetp .= '<br />';
+					$timeData .= JHtml::_("image","com_jem/arrow-right.png",'', NULL, true).' '.$end;
+					$timeData .= '<br />';
 				} elseif ($multi->row == 'na') {
 					if ($start != '') {
-						$timetp .= $start;
+						$timeData .= $start;
+						/*
 						if ($end != '') {
 							$timetp .= ' - '.$end;
 						}
 						$timetp .= '<br />';
+						*/
+						$timeData .= ' ';
 					}
 				}
 			}
+		}
+
+		if ($timeData) {
+			$timeHtml  = '<div class="time label label-info">';
+			$timeHtml .= $timeData.'</div><br>';
+		} else {
+			$timeHtml = '';
 		}
 
 		$catname = '<div class="catname">'.$multicatname.'</div>';
@@ -172,7 +181,7 @@ jQuery( document ).ready(function( $ ) {
 		$eventdate = !empty($row->multistartdate) ? JemOutput::formatdate($row->multistartdate) : JemOutput::formatdate($row->dates);
 		if (!empty($row->multienddate)) {
 			$eventdate .= ' - ' . JemOutput::formatdate($row->multienddate);
-		} else if ($row->enddates && $row->dates < $row->enddates) {
+		} elseif ($row->enddates && $row->dates < $row->enddates) {
 			$eventdate .= ' - ' . JemOutput::formatdate($row->enddates);
 		}
 
@@ -186,7 +195,7 @@ jQuery( document ).ready(function( $ ) {
 		}
 
 		//date in tooltip
-		$multidaydate = '<div class="time"><span class="text-label">'.JText::_('COM_JEM_DATE').': </span>';
+		$multidaydate = '<div class="time label label-info"><span class="text-label">'.JText::_('COM_JEM_DATE').': </span>';
 		if ($multi->row == 'first') {
 			$multidaydate .= JemOutput::formatShortDateTime($row->dates, $row->times, $row->enddates, $row->endtimes);
 			$multidaydate .= JemOutput::formatSchemaOrgDateTime($row->dates, $row->times, $row->enddates, $row->endtimes);
@@ -203,15 +212,15 @@ jQuery( document ).ready(function( $ ) {
 		$multidaydate .= '</div>';
 
 		//generate the output
-		$content .= JemHelper::caltooltip($catname.$eventname.$timehtml.$venue, $eventdate, $row->title, $detaillink, 'hasTooltip', $timetp, $category->color);
+		$content .= JemHelper::caltooltip($catname.$eventname.$timeTip.$venue, $eventdate, $row->title, $detaillink, 'hasTooltip', $timeHtml, $category->color);
 		$content .= $colorpic;
 		$content .= $contentend;
 
 		$this->cal->setEventContent($year, $month, $day, $content);
 	endforeach;
-	
+
 	$catinfo	= JemHelper::arrayUnique($catinfo);
-	
+
 	// create hidden input fields
 	foreach ($catinfo as $val) {
 		echo "<input name='category".$val['catid']."' type='hidden' value='".$val['color']."'>";

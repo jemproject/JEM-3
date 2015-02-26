@@ -1,13 +1,11 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 defined('_JEXEC') or die;
-
 
 /**
  * View: Category
@@ -18,7 +16,7 @@ class JemViewCategory extends JViewLegacy
 	protected $item;
 	protected $state;
 
-	/**
+    /**
 	 * Display the view
 	 */
 	public function display($tpl = null)
@@ -43,7 +41,9 @@ class JemViewCategory extends JViewLegacy
 
 		// Load Script
 		JHtml::_('script', 'com_jem/colorpicker.js', array(), true);
+		JHtml::_('script', 'com_jem/slider-state.js', false, true);
 		
+
 		// build grouplist
 		// @todo: make a form-field for this one
 		$groups 	= $this->get('Groups');
@@ -57,7 +57,7 @@ class JemViewCategory extends JViewLegacy
 
 		parent::display($tpl);
 		$jinput->set('hidemainmenu', true);
-		
+
 		$this->addToolbar();
 	}
 

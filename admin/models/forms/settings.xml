@@ -135,34 +135,6 @@
 			<option value="2">COM_JEM_REQUIRED</option>
 		</field>
 	</fieldset>
-
-	<fieldset name="usercontrolregistration"
-		label="COM_JEM_REGISTRATION"
-	>
-		<field name="showfroregistra" type="list"
-			label="COM_JEM_SUBMIT_REGISTER"
-			description="COM_JEM_SUBMIT_REGISTER_DESC"
-			class="inputbox"
-			default="0"
-			required="false"
-		>
-			<option value="0">JNO</option>
-			<option value="1">JYES</option>
-			<option value="2">COM_JEM_OPTIONAL</option>
-		</field>
-		<field name="showfrounregistra" type="list"
-			label="COM_JEM_SUBMIT_UNREGISTER"
-			description="COM_JEM_SUBMIT_UNREGISTER_DESC"
-			class="inputbox"
-			default="0"
-			required="false"
-		>
-			<option value="0">JNO</option>
-			<option value="1">JYES</option>
-			<option value="2">COM_JEM_OPTIONAL</option>
-		</field>
-	</fieldset>
-
 	<fieldset name="evimagehandling"
 		label="COM_JEM_IMAGE_HANDLING"
 	>
@@ -857,6 +829,14 @@
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
+			<field name="trashedimages_path" type="text"
+				label="COM_JEM_SETTINGS_TRASHED_FOLDER_PATH"
+				description="COM_JEM_SETTINGS_TRASHED_FOLDER_PATH_DESC"
+				class="inputbox"
+				size="40"
+				required="true"
+				default="/trashedimages"
+			/>
 		</fieldset>
 
 		<fieldset name="venues"
@@ -942,6 +922,7 @@
 			<field name="event_attendeelist_visiblefor" type="list"
 				label="COM_JEM_EVENT_FIELD_ATTENDEELIST_VISIBLEFOR"
 				description="COM_JEM_EVENT_FIELD_ATTENDEELIST_VISIBLEFOR_DESC"
+				default="1"
 			>
 				<option	value="0">COM_JEM_GLOBAL_FIELD_GUEST</option>
 				<option	value="1">COM_JEM_GLOBAL_FIELD_REGISTERED</option>
@@ -1030,6 +1011,26 @@
 				<option value="0">COM_JEM_LINK_PROFILE</option>
 				<option value="1">COM_JEM_LINK_AVATAR</option>
 			</field>
+		</fieldset>
+		<fieldset name="evregistration_backend"
+			label="COM_JEM_REGISTRATION"
+		>
+			<field name="registering_b" type="checkbox"
+				size="20"
+				class="inputbox"
+				label="COM_JEM_EVENT_FIELD_ENABLE_REGISTRATION"
+				description="COM_JEM_EVENT_FIELD_REGISTERING_DEFAULT_DESC"
+				value="1"
+				default="1"
+			/>
+			<field name="unregistering_b" type="checkbox"
+				size="20"
+				class="inputbox"
+				label="COM_JEM_EVENT_FIELD_ENABLE_UNREGISTRATION"
+				description="COM_JEM_EVENT_FIELD_UNREGISTERING_DEFAULT_DESC"
+				value="1"
+				default="1"
+			/>
 		</fieldset>
 
 		<fieldset name="advanced" label="LABEL2">
@@ -1505,6 +1506,22 @@
 		<option value="0">JNO</option>
 		<option value="1">JYES</option>
 	</field>
+	<field name="registering" type="checkbox"
+		size="20"
+		class="inputbox"
+		label="COM_JEM_EVENT_FIELD_ENABLE_REGISTRATION"
+		description="COM_JEM_EVENT_FIELD_REGISTERING_DEFAULT_DESC"
+		value="1"
+		default="1"
+	/>
+	<field name="unregistering" type="checkbox"
+		size="20"
+		class="inputbox"
+		label="COM_JEM_EVENT_FIELD_ENABLE_UNREGISTRATION"
+		description="COM_JEM_EVENT_FIELD_UNREGISTERING_DEFAULT_DESC"
+		value="1"
+		default="1"
+	/>
 </fieldset>
 </fields>
 </form>

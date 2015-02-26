@@ -1,13 +1,11 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 defined('_JEXEC') or die;
-
 
 /**
  * Model-Search
@@ -19,21 +17,21 @@ class JemModelSearch extends JModelLegacy
 	 *
 	 * @var array
 	 */
-	var $_data = null;
+	public $_data = null;
 
-	var $_total = null;
+	public $_total = null;
 
 	/**
 	 * Pagination object
 	 *
 	 * @var object
 	 */
-	var $_pagination = null;
+	public $_pagination = null;
 
 	/**
 	 * the query
 	 */
-	var $_query = null;
+	public $_query = null;
 
 	/**
 	 * Constructor
@@ -51,10 +49,10 @@ class JemModelSearch extends JModelLegacy
 		//get the number of events from database
 		$limit		= $app->getUserStateFromRequest('com_jem.search.'.$itemid.'.limit', 'limit', $jemsettings->display_num, 'uint');
 		$limitstart = $app->input->get('limitstart', 0, 'uint');
-		
+
 		$this->setState('limit', $limit);
 		$this->setState('limitstart', $limitstart);
-		
+
 		// Get the filter request variables
 		$filter_order = $jinput->getCmd('filter_order', 'a.dates');
 		$this->setState('filter_order', $filter_order);
@@ -238,7 +236,7 @@ class JemModelSearch extends JModelLegacy
 					break;
 			}
 		}
-		
+
 		// filter date
 		if ($params->get('date_filter_type', 0) == 1) // match on all events dates (between start and end)
 		{
@@ -340,8 +338,8 @@ class JemModelSearch extends JModelLegacy
 	function getCityOptions()
 	{
 		$jinput = JFactory::getApplication()->input;
-		
-		
+
+
 		if (!$country = $jinput->request->getString('filter_country', '')) {
 			return array();
 		}
@@ -421,4 +419,3 @@ class JemModelSearch extends JModelLegacy
 		return $list;
 	}
 }
-?>

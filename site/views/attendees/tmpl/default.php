@@ -1,6 +1,5 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -25,10 +24,10 @@ $detaillink = JRoute::_(JemHelperRoute::getEventRoute($this->event->id.':'.$this
 </script>
 
 <div id="jem" class="jem_attendees<?php echo $this->pageclass_sfx;?>">
-	
+
 <div class="topbox">
-<?php 
-	if ($this->print) { 
+<?php
+	if ($this->print) {
 		echo JemOutput::printbutton($this->print_link, $this->params,'btn');
 	} else {
 ?>
@@ -38,8 +37,8 @@ $detaillink = JRoute::_(JemHelperRoute::getEventRoute($this->event->id.':'.$this
 	<?php echo JemOutput::backbutton($this->backlink, $this->view);?>
 </div>
 <?php } ?>
-</div>	
-	
+</div>
+
 
 	<?php if ($this->params->get('show_page_heading', 1)) : ?>
 	<h1>
@@ -47,10 +46,10 @@ $detaillink = JRoute::_(JemHelperRoute::getEventRoute($this->event->id.':'.$this
 	</h1>
 	<?php endif; ?>
 
-	
+
 <br>
 <div class="info_container">
-	
+
 	<?php if ($this->params->get('showintrotext')) : ?>
 	<div class="description no_space clearfix">
 		<?php echo $this->params->get('introtext'); ?>
@@ -83,7 +82,7 @@ $detaillink = JRoute::_(JemHelperRoute::getEventRoute($this->event->id.':'.$this
 					<button class="btn hasTooltip" type="button" title="<?php echo JHtml::tooltipText('JSEARCH_FILTER_CLEAR'); ?>" onclick="document.getElementById('filter_search').value='';this.form.submit();"><i class="icon-remove"></i></button>
 				</div>
 			</div>
-			
+
 			<div class="pull-right">
 			<?php
 			echo $this->pagination->getLimitBox();
@@ -91,7 +90,7 @@ $detaillink = JRoute::_(JemHelperRoute::getEventRoute($this->event->id.':'.$this
 			</div>
 			</div>
 			<div>
-			
+
 			<br>
 			<?php if ($this->event->waitinglist): ?>
 			<div>
@@ -156,8 +155,8 @@ $detaillink = JRoute::_(JemHelperRoute::getEventRoute($this->event->id.':'.$this
 		<input type="hidden" name="filter_order_Dir" value="<?php echo $this->lists['order_Dir']; ?>" />
 		<input type="hidden" name="enableemailaddress" value="<?php echo $this->enableemailaddress; ?>" />
 	</form>
-</div>	
-	
+</div>
+
 	<div class="pagination">
 	<?php echo $this->pagination->getPagesLinks(); ?>
 	</div>

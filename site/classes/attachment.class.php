@@ -1,13 +1,11 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 defined('_JEXEC') or die;
-
 
 /**
  * Holds the logic for attachments manipulation
@@ -22,7 +20,7 @@ abstract class JemAttachment {
 	static function postUpload($post_files, $object) {
 		jimport('joomla.filesystem.file');
 		jimport('joomla.filesystem.folder');
-		require_once JPATH_SITE.'/components/com_jem/classes/image.class.php';
+		require_once JPATH_SITE . '/components/com_jem/classes/image.class.php';
 
 		$user = JFactory::getUser();
 		$jemsettings = JemHelper::config();

@@ -1,6 +1,5 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -8,18 +7,16 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * Controller: Venue
  */
 class JemControllerVenue extends JControllerForm
 {
-	/**
+    /**
 	 * @var    string  The prefix to use with controller messages.
 	 *
 	 */
 	protected $text_prefix = 'COM_JEM_VENUE';
-
 
 	/**
 	 * Constructor.

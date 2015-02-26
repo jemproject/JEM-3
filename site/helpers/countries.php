@@ -1,6 +1,5 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -525,6 +524,7 @@ class JEMHelperCountries
 		$countrycoord['SX'] = array(18.03, -63.07);
 		$countrycoord['SS'] = array(12.86, 30.21);
 		$countrycoord['XK'] = array(41.91, 24.7);
+
 		return $countrycoord;
 	}
 
@@ -793,6 +793,7 @@ class JEMHelperCountries
 		$convert2to3['SX'] = "SXM";
 		$convert2to3['SS'] = "SSD";
 		$convert2to3['XK'] = "XKX";
+
 		if (isset($convert2to3[$iso_code_2])) {
 			return $convert2to3[$iso_code_2];
 		} else {
@@ -1055,6 +1056,7 @@ class JEMHelperCountries
 		$convert3to2['SXM'] = "SX";
 		$convert3to2['SSD'] = "SS";
 		$convert3to2['XKX'] = "XK";
+
 		if (isset($convert3to2[$iso_code_3]))
 		{
 			return $convert3to2[$iso_code_3];
@@ -1151,4 +1153,3 @@ class JEMHelperCountries
 		return JText::_($parts[0]);
 	}
 }
-?>

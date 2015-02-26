@@ -1,13 +1,11 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 defined('_JEXEC') or die;
-
 
 /**
  * View: Eventelement
@@ -36,7 +34,7 @@ class JemViewEventelement extends JViewLegacy {
 
 		//prepare the document
 		$document->setTitle(JText::_('COM_JEM_SELECT_EVENT'));
-		
+
 		// Load css
 		JHtml::_('stylesheet', 'com_jem/backend.css', array(), true);
 
@@ -73,4 +71,3 @@ class JemViewEventelement extends JViewLegacy {
 		parent::display($tpl);
 	}
 }
-?>

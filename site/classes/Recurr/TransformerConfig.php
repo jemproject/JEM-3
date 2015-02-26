@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  * Copyright 2014 Shaun Simmons
  *
  * For the full copyright and license information, please view the LICENSE

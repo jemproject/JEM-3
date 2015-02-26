@@ -1,6 +1,5 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -8,17 +7,16 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * Venue Select
  */
-class JFormFieldModal_Venue extends JFormField
+class JFormFieldModal_Venuefront extends JFormField
 {
 	/**
 	 * field type
 	 * @var string
 	 */
-	protected $type = 'Modal_Venue';
+	protected $type = 'Modal_Venuefront';
 
 	/**
 	 * Method to get the field input markup
@@ -38,7 +36,6 @@ class JFormFieldModal_Venue extends JFormField
 		$script[] = '		jQuery("#'.$this->id.'_clear").removeClass("hidden");';
 		$script[] = '        SqueezeBox.close();';
 		$script[] = '    }';
-
 
 		// Clear button script
 		static $scriptClear;
@@ -90,7 +87,6 @@ class JFormFieldModal_Venue extends JFormField
 		}
 		$venue = htmlspecialchars($venue, ENT_QUOTES, 'UTF-8');
 
-
 		// The active venue id field
 		if (0 == (int)$this->value) {
 			$value = '';
@@ -116,4 +112,3 @@ class JFormFieldModal_Venue extends JFormField
 		return implode("\n", $html);
 	}
 }
-?>

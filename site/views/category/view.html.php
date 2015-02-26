@@ -1,6 +1,5 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -51,7 +50,7 @@ class JemViewCategory extends JEMView
 			JemHelper::loadCss('jem');
 			JemHelper::loadCustomCss();
 			JemHelper::loadCustomTag();
-						
+
 			//get data from model
 			$state		= $this->get('State');
 			$params		= $state->params;
@@ -112,7 +111,7 @@ class JemViewCategory extends JEMView
 			$lists['search']= $search;
 
 			// Add feed links
-			$link = '&format=feed&id='.$category->id.'&limitstart=';
+			$link    = '&format=feed&limitstart=';
 			$attribs = array('type' => 'application/rss+xml', 'title' => 'RSS 2.0');
 			$this->document->addHeadLink(JRoute::_($link . '&type=rss'), 'alternate', 'rel', $attribs);
 			$attribs = array('type' => 'application/atom+xml', 'title' => 'Atom 1.0');
@@ -150,7 +149,7 @@ class JemViewCategory extends JEMView
 			} else {
 				$print_link = JRoute::_(JemHelperRoute::getCategoryRoute($category->id) .'&print=1&tmpl=component');
 			}
-			
+
 			if ($print) {
 				JemHelper::loadCss('print');
 				$document->setMetaData('robots', 'noindex, nofollow');
@@ -181,7 +180,7 @@ class JemViewCategory extends JEMView
 			} else {
 				$dellink = 0;
 			}
-			
+
 			# Check if the user has access to the add-venueform
 			$maintainer2 = JemUser::venuegroups('add');
 			$genaccess2 = JemUser::validate_user($jemsettings->locdelrec, $jemsettings->deliverlocsyes);
@@ -235,4 +234,3 @@ class JemViewCategory extends JEMView
 		parent::display($tpl);
 	}
 }
-?>

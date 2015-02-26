@@ -1,12 +1,11 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die;
 
 require JPATH_COMPONENT_SITE.'/classes/view.class.php';
 
@@ -25,7 +24,7 @@ class JemViewVenue extends JEMView {
 	 * Creates the Venue View
 	 */
 	function display($tpl = null) {
-		
+
 			// initialize variables
 			$app 			= JFactory::getApplication();
 			$jinput 		= $app->input;
@@ -51,12 +50,12 @@ class JemViewVenue extends JEMView {
 			JemHelper::loadCss('jem');
 			JemHelper::loadCustomCss();
 			JemHelper::loadCustomTag();
-			
+
 			if ($print) {
 				JemHelper::loadCss('print');
 				$document->setMetaData('robots', 'noindex, nofollow');
 			}
-				
+
 			// get data from model
 			$rows	= $this->get('Items');
 			$venue	= $this->get('Venue');
@@ -94,7 +93,7 @@ class JemViewVenue extends JEMView {
 			$limage = JemImage::flyercreator($venue->locimage,'venue');
 
 			// Add feed links
-			$link = '&format=feed&id='.$venue->id.'&limitstart=';
+			$link    = '&format=feed&limitstart=';
 			$attribs = array('type' => 'application/rss+xml', 'title' => 'RSS 2.0');
 			$this->document->addHeadLink(JRoute::_($link . '&type=rss'), 'alternate', 'rel', $attribs);
 			$attribs = array('type' => 'application/atom+xml', 'title' => 'Atom 1.0');
@@ -195,7 +194,6 @@ class JemViewVenue extends JEMView {
 				$venue->countryimg = JemHelperCountries::getCountryFlag($venue->country);
 			}
 
-
 			# retrieve mapType setting
 			$settings 		= JemHelper::globalattribs();
 			$mapType 		= $settings->get('mapType','0');
@@ -258,4 +256,3 @@ class JemViewVenue extends JEMView {
 		parent::display($tpl);
 	}
 }
-?>

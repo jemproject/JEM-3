@@ -1,13 +1,11 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 defined('_JEXEC') or die();
-
 
 function add_apostroph($str) {
 	return sprintf("`%s`", $str);
@@ -76,7 +74,7 @@ class JemModelExport extends JModelList
 				$query->where('(a.enddates IS NULL OR a.enddates <= '.$db->Quote($endDate).')');
 			}
 		}
-		
+
 		// check if specific category's have been selected
 		if (! empty($cats)) {
 			$query->where('  (c.id=' . implode(' OR c.id=', $cats) . ')');
@@ -84,73 +82,71 @@ class JemModelExport extends JModelList
 
 		// Group the query
 		$query->group('a.id');
-		
+
 		return $query;
 	}
-	
-	
+
+
 	/**
 	 * Returns a SQL file with Events data
 	 * @return boolean
 	 */
 	public function getSQL()
-	{	
+	{
 		$jinput = JFactory::getApplication()->input;
 		$includecategories = $jinput->getInt('categorycolumn', 0);
-		
+
 		# start output
 		$csv	= fopen('php://output', 'w');
 		$db		= $this->getDbo();
-	
+
 		############
 		## EVENTS ##
 		############
-		
+
 		$eventColumns = array();
 		$eventColumns = array_keys($db->getTableColumns('#__jem_events'));
-		
+
 		$query = $this->getListQuery();
 		$events = $this->_getList($query);
-		
+
 		$result = $events;
-			
+
 		$eventColumns =  implode(',', array_map('add_apostroph', $eventColumns));
-			
+
 		$return = '';
 		$text = '';
 		$text2 = '';
 		$text .= "INSERT INTO `".$db->getPrefix()."jem_events` (".$eventColumns.") VALUES";
 		$text .= "\r\n";
-			
+
 		fwrite($csv,$text);
-			
+
 		foreach ($events as $event) {
 			$values = get_object_vars($event);
 			$values = implode(',',array_map('add_quotes',$values));
-				
-			$return.= '('.$values.')';	
+
+			$return.= '('.$values.')';
 			$return.=",";
 			$return.= "\r\n";
 		}
 
-	
+
 		$return = substr_replace($return ,"",-3);
-		
+
 		fwrite($csv,$return);
-			
+
 		$text2.= ";\n";
 		fwrite($csv,$text2);
-		
-		
-		
+
 		################
 		## CATEGORIES ##
 		################
-		
+
 		$categoryColumns = array();
 		$categoryColumns = array_keys($db->getTableColumns('#__jem_categories'));
 		$categoryColumns =  implode(',', array_map('add_apostroph', $categoryColumns));
-			
+
 		$returnCat = '';
 		$bak = '';
 		$text3 = '';
@@ -158,60 +154,57 @@ class JemModelExport extends JModelList
 		$text3 .= "\r\n\n";
 		$text3 .= "INSERT INTO `".$db->getPrefix()."jem_categories` (".$categoryColumns.") VALUES";
 		$text3 .= "\r\n";
-		
-		
+
 		fwrite($csv,$text3);
-			
+
 		$catid_array = array();
-		
+
 		foreach ($events as $event) {
 			# get the category id's
 			$catids = $this->getCatEvent($event->id);
-			
+
 			# as the catid can have multiple values we're exploding it
 			$catids = explode(',',$catids);
-			
+
 			# now we have the category id's and we can retreive the data that belongs to it
-			foreach ($catids as $catid) {	
+			foreach ($catids as $catid) {
 				$catid_array[] = $catid;
 			}
-			
+
 			# get catEvent data
 			$catEvents	= $this->getCatEventData($event->id);
-			
+
 			# we can have multiple results
 			foreach ($catEvents as $catEvent) {
 				$catEvent = implode(',',array_map('add_quotes',$catEvent));
-			
+
 				$bak.= '('.$catEvent.')';
 				$bak.=",";
 				$bak.= "\r\n";
 			}
-			
 		}
-		
+
 		$catid_array = array_unique($catid_array);
-		
+
 		foreach($catid_array AS $catid_row) {
 			$catValue = $this->getCategoryData($catid_row);
 			$catValue = implode(',',array_map('add_quotes',$catValue));
-		
+
 			$returnCat.= '('.$catValue.')';
 			$returnCat.=",";
 			$returnCat.= "\r\n";
 		}
-		
+
 		$returnCat = substr_replace($returnCat ,"",-3);
 		fwrite($csv,$returnCat);
-			
+
 		$text4.= ";\n";
 		fwrite($csv,$text4);
-		
-		
+
 		##############
 		## CATEVENT ##
 		##############
-		
+
 		$catEventColumns = array();
 		$catEventColumns = array_keys($db->getTableColumns('#__jem_cats_event_relations'));
 		$catEventColumns =  implode(',', array_map('add_apostroph', $catEventColumns));
@@ -220,20 +213,19 @@ class JemModelExport extends JModelList
 		$text6 .= "\r\n\n";
 		$text6 .= "INSERT INTO `".$db->getPrefix()."jem_cats_event_relations` (".$catEventColumns.") VALUES";
 		$text6 .= "\r\n";
-		
+
 		fwrite($csv,$text6);
-		
+
 		$bak = substr_replace($bak ,"",-3);
 		fwrite($csv,$bak);
-			
+
 		$text7	= ";\n";
 		fwrite($csv,$text7);
-					
+
 		# return output
 		return fclose($csv);
 	}
-	
-	
+
 	/**
 	 * Returns a CSV file with Events data
 	 * @return boolean
@@ -362,8 +354,7 @@ class JemModelExport extends JModelList
 
 		return $catids;
 	}
-	
-	
+
 	/**
 	 * Retrieve categoryData
 	 */
@@ -372,17 +363,16 @@ class JemModelExport extends JModelList
 		// Query
 		$db 	= JFactory::getDBO();
 		$query = $db->getQuery(true);
-		
+
 		$query->select(array('*'));
 		$query->from('#__jem_categories');
 		$query->where('id ='.$catid);
 		$db->setQuery($query);
 		$result = $db->loadRow();
-		
+
 		return $result;
 	}
-	
-	
+
 	/**
 	 * Retrieve categoryData
 	 */
@@ -395,10 +385,10 @@ class JemModelExport extends JModelList
 		$query->where('itemid =' . $db->quote($eventid));
 		$db->setQuery($query);
 		$result = $db->loadRowList();
-		
+
 		return $result;
 	}
-	
+
 	/**
 	 * Returns a CSV file with Table data
 	 * @return boolean
@@ -411,16 +401,16 @@ class JemModelExport extends JModelList
 		$header = array();
 		$header = array_keys($db->getTableColumns('#__jem_'.$table));
 		fputcsv($csv, $header, ';');
-	
+
 		$items = $db->setQuery($this->getListQueryTableData($table))->loadObjectList();
-	
+
 		foreach ($items as $lines) {
 			fputcsv($csv, (array) $lines, ';', '"');
 		}
-	
+
 		return fclose($csv);
 	}
-	
+
 	/**
 	 * Build an SQL query to load the Table data.
 	 *
@@ -431,15 +421,14 @@ class JemModelExport extends JModelList
 		// Create a new query object.
 		$db = $this->getDbo();
 		$query = $db->getQuery(true);
-	
+
 		// Select the required fields from the table.
 		$query->select('*');
 		$query->from('#__jem_'.$table);
-	
+
 		return $query;
 	}
-	
-	
+
 	/**
 	 * Returns a SQL file with data
 	 * @return boolean
@@ -449,77 +438,75 @@ class JemModelExport extends JModelList
 		# start output
 		$sql	= fopen('php://output', 'w');
 		$db		= $this->getDbo();
-		
-		
+
 		if (is_array($table)) {
 			$tables	= $table;
 			foreach ($tables as $table) {
-				
+
 				$query = $this->getListQueryTableDataSQL($table);
 				$rows = $this->_getList($query);
-		
+
 				$result	= count($rows);
 				if ($result == 0) {
 					continue;
 				}
-				
+
 				# retrieve columns
 				$columns = array();
-				$columns = array_keys($db->getTableColumns('#__jem_'.$table));	
+				$columns = array_keys($db->getTableColumns('#__jem_'.$table));
 				$columns =  implode(',', array_map('add_apostroph', $columns));
-						
+
 				$data = '';
 				$start = "INSERT INTO `".$db->getPrefix()."jem_".$table."` (".$columns.") VALUES";
 				$start .= "\r\n";
-			
+
 				fwrite($sql,$start);
-		
-		
+
 				foreach ($rows as $row) {
 					$values = get_object_vars($row);
 					$values = implode(',',array_map('add_quotes',$values));
-	
+
 					$data.= '('.$values.')';
 					$data.=",";
 					$data.= "\r\n";
 				}
-	
+
 				$data = substr_replace($data ,"",-3);
-	
+
 				fwrite($sql,$data);
-					
+
 				$end = ";\n\n\n";
 				fwrite($sql,$end);
 			}
-		
+
 		} else {
 			# retrieve columns
 			$columns = array();
 			$columns = array_keys($db->getTableColumns('#__jem_'.$table));
 			$columns =  implode(',', array_map('add_apostroph', $columns));
-			
+
 			$data = '';
 			$start = "INSERT INTO `".$db->getPrefix()."jem_".$table."` (".$columns.") VALUES";
 			$start .= "\r\n";
-				
+
 			fwrite($sql,$start);
-			
+
 			$query = $this->getListQueryTableDataSQL($table);
 			$rows = $this->_getList($query);
-			
+
 			foreach ($rows as $row) {
 				$values = get_object_vars($row);
 				$values = implode(',',array_map('add_quotes',$values));
-			
+
 				$data.= '('.$values.')';
 				$data.=",";
 				$data.= "\r\n";
 			}
-			
+
 			$data = substr_replace($data ,"",-3);
-			
+
 			fwrite($sql,$data);
-				
+
 			$end = ";\n";
 			fwrite($sql,$end);
 		}
@@ -527,8 +514,8 @@ class JemModelExport extends JModelList
 		# return output
 		return fclose($sql);
 	}
-	
-	
+
+
 	/**
 	 * Build an SQL query to load the Table data.
 	 *
@@ -539,12 +526,11 @@ class JemModelExport extends JModelList
 		# Create a new query object.
 		$db = $this->getDbo();
 		$query = $db->getQuery(true);
-	
+
 		# retrieve data
 		$query->select('*');
 		$query->from('#__jem_'.$table);
-		
+
 		return $query;
 	}
-	
 }

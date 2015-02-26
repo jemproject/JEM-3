@@ -2,19 +2,17 @@
 <extension type="package" version="3.1" method="upgrade">
 	<name>pkg_jem</name>
 	<packagename>jem</packagename>
-	<creationDate>January 2015</creationDate>
+	<creationDate>March 2015</creationDate>
 	<copyright>Copyright (C) 2013-2015 joomlaeventmanager.net</copyright>
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
 	<author>JEM Community</author>
 	<authorEmail>info@joomlaeventmanager.net</authorEmail>
 	<authorUrl>http://www.joomlaeventmanager.net</authorUrl>
-	<version>3.0.6</version>
+	<version>3.0.7</version>
 	<description>PKG_JEM_INSTALLATION_DESCRIPTION</description>
 	<url>http://www.joomlaeventmanager.net/</url>
 	<packager>JEM Community</packager>
 	<packagerurl>http://www.joomlaeventmanager.net/</packagerurl>
-	<!-- <update>http://www.updateurl.com/update</update> -->
-
 	<scriptfile>pkg_install.php</scriptfile>
 
 	<files folder="packages">
@@ -35,4 +33,8 @@
 	<languages folder="language">
 		<language tag="en-GB">en-GB/en-GB.pkg_jem.sys.ini</language>
 	</languages>
+	
+	<updateservers>
+      <server type="collection" priority="1" name="pkg_jem"><![CDATA[http://www.joomlaeventmanager.com/updatecheck/3/update.xml]]></server>
+   </updateservers>
 </extension>

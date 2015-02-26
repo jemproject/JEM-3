@@ -1,13 +1,11 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 defined('_JEXEC') or die;
-
 
 /**
  * Table: Groupmembers
@@ -21,12 +19,11 @@ class JEMTableGroupmembers extends JTable
 
 
 	// overloaded check function
-	function check()
+	public function check()
 	{
 
 		return true;
 	}
-
 
 	/**
 	 * Store.
@@ -36,7 +33,6 @@ class JEMTableGroupmembers extends JTable
 		return parent::store($updateNulls);
 	}
 
-
 	public function bind($array, $ignore = '')
 	{
 		// in here we are checking for the empty value of the checkbox
@@ -44,7 +40,7 @@ class JEMTableGroupmembers extends JTable
 		//don't override without calling base class
 		return parent::bind($array, $ignore);
 	}
-	
+
 	/**
 	 * try to insert first, update if fails
 	 *
@@ -63,7 +59,7 @@ class JEMTableGroupmembers extends JTable
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Inserts a row into a table based on an objects properties, ignore if already exists
 	 *
@@ -77,7 +73,7 @@ class JEMTableGroupmembers extends JTable
 	{
 		$fmtsql = 'INSERT IGNORE INTO '.$this->_db->quoteName($table).' (%s) VALUES (%s) ';
 		$fields = array();
-	
+
 		foreach (get_object_vars($object) as $k => $v) {
 			if (is_array($v) or is_object($v) or $v === NULL) {
 				continue;
@@ -88,7 +84,7 @@ class JEMTableGroupmembers extends JTable
 			$fields[] = $this->_db->quoteName($k);
 			$values[] = $this->_db->quote($v);
 		}
-	
+
 		$this->_db->setQuery(sprintf($fmtsql, implode(",", $fields), implode(",", $values)));
 		if (!$this->_db->execute()) {
 			return false;
@@ -97,8 +93,7 @@ class JEMTableGroupmembers extends JTable
 		if ($keyName && $id) {
 			$object->$keyName = $id;
 		}
-	
+
 		return $this->_db->getAffectedRows();
 	}
 }
-?>

@@ -1,13 +1,11 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
- * @copyright (C) 2013-2013 joomlaeventmanager.net
+ * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 defined('_JEXEC') or die;
-
 
 /**
  * View: Dates
@@ -61,8 +59,7 @@ defined('_JEXEC') or die;
 		$this->addToolbar();
 
 		parent::display($tpl);
-		}
-
+	}
 
 	/**
 	 * Add Toolbar
@@ -85,12 +82,12 @@ defined('_JEXEC') or die;
 			JToolBarHelper::editList('date.edit');
 			JToolBarHelper::divider();
 		}
-		
-		
+
+
 		if ($canDo->get('core.delete')) {
 			JToolBarHelper::deleteList('', 'dates.delete', 'JTOOLBAR_EMPTY_TRASH');
 		}
-		
+
 		/*
 		if ($canDo->get('core.edit.state')) {
 			if ($this->state->get('filter_state') != 2) {
@@ -118,9 +115,9 @@ defined('_JEXEC') or die;
 		} elseif ($canDo->get('core.edit.state')) {
 			JToolBarHelper::trash('dates.trash');
 		}
-		
+
 		*/
-		
+
 		//JToolBarHelper::divider();
 		//JToolBarHelper::custom('events.removeRecurrenceset','calendar_delete','','Recurrenceset');
 		//JToolBarHelper::trash('events.removeRecurrenceset','Recurrenceset');
@@ -128,4 +125,3 @@ defined('_JEXEC') or die;
 		JToolBarHelper::help('listevents', true);
 	}
 }
-?>

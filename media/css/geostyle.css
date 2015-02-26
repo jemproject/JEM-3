@@ -1,5 +1,4 @@
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -20,5 +19,5 @@ input.geobutton {
 
 .map_canvas {
 	height:	250px;
-	margin:	10px 20px 10px 0px;
+	margin:	10px 20px 10px 0;
 }

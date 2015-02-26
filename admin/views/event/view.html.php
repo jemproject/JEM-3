@@ -1,13 +1,11 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 defined('_JEXEC') or die;
-
 
 /**
  * View: Event
@@ -18,19 +16,19 @@ class JemViewEvent extends JViewLegacy {
 	protected $item;
 	protected $state;
 
-	public function display($tpl = null)
+    public function display($tpl = null)
 	{
 		// Initialise variables.
 		$this->form	 = $this->get('Form');
 		$this->item	 = $this->get('Item');
 		$this->state = $this->get('State');
 
-		// Check for errors.
-		if (count($errors = $this->get('Errors'))) {
+        // Check for errors.
+        if (count($errors = $this->get('Errors'))) {
 			JError::raiseError(500, implode("\n", $errors));
 			return false;
 		}
-		
+
 		//initialise variables
 		$jemsettings 	= JemHelper::config();
 		$document		= JFactory::getDocument();
@@ -39,7 +37,7 @@ class JemViewEvent extends JViewLegacy {
 		$task			= JFactory::getApplication()->input->get('task');
 		$this->task 	= $task;
 		$url 			= JUri::root();
-		
+
 		$categories 	= JemCategories::getCategoriesTree(1);
 		$selectedcats 	= $this->get('Catsselected');
 
@@ -63,7 +61,6 @@ class JemViewEvent extends JViewLegacy {
 		parent::display($tpl);
 	}
 
-
 	/**
 	 * Add the page title and toolbar.
 	 */
@@ -71,7 +68,7 @@ class JemViewEvent extends JViewLegacy {
 	{
 		$jinput = JFactory::getApplication()->input;
 		$jinput->set('hidemainmenu', true);
-		
+
 		$recurrence = $this->item->recurrence_groupcheck;
 
 		$user		= JFactory::getUser();
@@ -86,7 +83,7 @@ class JemViewEvent extends JViewLegacy {
 			JToolBarHelper::apply('event.apply');
 			JToolBarHelper::save('event.save');
 		}
-		
+
 		if (!$recurrence) {
 			if (!$checkedOut && $canDo->get('core.create')) {
 				JToolBarHelper::save2new('event.save2new');
@@ -107,4 +104,3 @@ class JemViewEvent extends JViewLegacy {
 		JToolBarHelper::help('editevents', true);
 	}
 }
-?>

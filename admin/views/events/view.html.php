@@ -1,6 +1,5 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -8,18 +7,18 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * View: Events
  */
- class JEMViewEvents extends JViewLegacy {
+class JEMViewEvents extends JViewLegacy
+{
 
 	protected $items;
 	protected $pagination;
 	protected $state;
 
-	public function display($tpl = null)
-	{
+    public function display($tpl = null)
+    {
 		$user 		= JFactory::getUser();
 		$document	= JFactory::getDocument();
 		$settings 	= JEMHelper::globalattribs();
@@ -56,8 +55,7 @@ defined('_JEXEC') or die;
 		$this->addToolbar();
 
 		parent::display($tpl);
-		}
-
+	}
 
 	/**
 	 * Add Toolbar
@@ -86,7 +84,7 @@ defined('_JEXEC') or die;
 			JToolBarHelper::unpublishList('events.unpublish', 'JTOOLBAR_UNPUBLISH', true);
 			JToolBarHelper::custom('events.featured', 'featured.png', 'featured_f2.png', 'JFEATURED', true);
 			JToolBarHelper::archiveList('events.archive');
-			JToolBarHelper::checkin('events.checkin');	
+			JToolBarHelper::checkin('events.checkin');
 		}
 
 		if ($this->state->get('filter.published') == -2 && $canDo->get('core.delete')) {
@@ -99,4 +97,3 @@ defined('_JEXEC') or die;
 		JToolBarHelper::help('listevents', true);
 	}
 }
-?>

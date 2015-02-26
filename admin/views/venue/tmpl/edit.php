@@ -1,6 +1,5 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -16,7 +15,7 @@ JHtml::_('behavior.modal', 'a.modal');
 $params = $this->state->get('params');
 $params = $params->toArray();
 
-# defining values for centering default-map
+// defining values for centering default-map
 $location = JemHelper::defineCenterMap($this->form);
 $mapType = $this->mapType;
 

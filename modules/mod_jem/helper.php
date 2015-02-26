@@ -1,8 +1,7 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
- * @subpackage JEM Module
+ * @subpackage JEM - Module-Basic
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
@@ -10,16 +9,16 @@
 defined('_JEXEC') or die;
 
 JModelLegacy::addIncludePath(JPATH_SITE.'/components/com_jem/models', 'JemModel');
-require_once (JPATH_SITE.'/components/com_jem/helpers/helper.php');
+require_once JPATH_SITE . '/components/com_jem/helpers/helper.php';
 
-# perform cleanup if it wasn't done today (archive, delete)
+// perform cleanup if it wasn't done today (archive, trash)
 JEMHelper::cleanup();
+
 /**
  * Module-Basic
  */
 abstract class modJEMHelper
 {
-
 	/**
 	 * Method to get the events
 	 *
@@ -30,15 +29,11 @@ abstract class modJEMHelper
 	{
 		mb_internal_encoding('UTF-8');
 
-		$db		= JFactory::getDBO();
-		$user	= JFactory::getUser();
-		$levels = $user->getAuthorisedViewLevels();
-
-		# Retrieve Eventslist model for the data
+		// Retrieve Eventslist model for the data
 		$model = JModelLegacy::getInstance('Eventslist', 'JemModel', array('ignore_request' => true));
 
-		# Set params for the model
-		# has to go before the getItems function
+		// Set params for the model
+		// has to go before the getItems function
 		$model->setState('params', $params);
 		$model->setState('filter.access',true);
 
@@ -75,7 +70,7 @@ abstract class modJEMHelper
 		$catids = $params->get('catid');
 		$venids = $params->get('venid');
 		$eventids = $params->get('eventid');
-		
+
 		# filter category's
 		if ($catids) {
 			$model->setState('filter.category_id',$catids);
@@ -93,7 +88,7 @@ abstract class modJEMHelper
 			$model->setState('filter.event_id',$eventids);
 			$model->setState('filter.event_id.include',true);
 		}
-		
+
 		# count
 		$count = $params->get('count', '2');
 
@@ -102,24 +97,33 @@ abstract class modJEMHelper
 		# Retrieve the available Events
 		$events = $model->getItems();
 
+		# do we have $events?
+		if (!$events) {
+			return array();
+		}
+
 		# Loop through the result rows and prepare data
 		$i		= 0;
 		$lists	= array();
+
+		$maxlength = $params->get('cuttitle', '18');
+
+		$settings 	= JemHelper::config();
+		$dateformat = $params->get('formatdate', $settings->formatShortDate);
 
 		foreach ($events as $row)
 		{
 			//cut titel
 			$length = mb_strlen($row->title);
 
-			if ($length > $params->get('cuttitle', '18')) {
-				$row->title = mb_substr($row->title, 0, $params->get('cuttitle', '18'));
+			if ($length > $maxlength && $maxlength > 0) {
+				$row->title = mb_substr($row->title, 0, $maxlength);
 				$row->title = $row->title.'...';
 			}
 
 			$lists[$i] = new stdClass;
 			$lists[$i]->link		= JRoute::_(JEMHelperRoute::getEventRoute($row->slug));
-			$lists[$i]->dateinfo 	= JEMOutput::formatShortDateTime($row->dates, $row->times,
-						$row->enddates, $row->endtimes);
+			$lists[$i]->dateinfo 	= JEMOutput::formatDateTime($row->dates, $row->times,$row->enddates, $row->endtimes,$dateformat);
 			$lists[$i]->text		= $params->get('showtitloc', 0) ? $row->title : htmlspecialchars($row->venue, ENT_COMPAT, 'UTF-8');
 			$lists[$i]->venue		= htmlspecialchars($row->venue, ENT_COMPAT, 'UTF-8');
 			$lists[$i]->city		= htmlspecialchars($row->city, ENT_COMPAT, 'UTF-8');
@@ -128,20 +132,5 @@ abstract class modJEMHelper
 		}
 
 		return $lists;
-	}
-
-
-	/**
-	 * Method to get a valid url
-	 *
-	 * @access public
-	 * @return string
-	 */
-	protected static function _format_url($url)
-	{
-		if(!empty($url) && strtolower(substr($url, 0, 7)) != "http://") {
-			$url = 'http://'.$url;
-		}
-		return $url;
 	}
 }

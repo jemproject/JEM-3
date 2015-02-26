@@ -1,13 +1,11 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 defined('_JEXEC') or die;
-
 
 /**
  * Weekcal-View
@@ -54,6 +52,7 @@ class JemViewWeekcal extends JViewLegacy
 		$rows = $this->get('Items');
 		$currentweek = $this->get('Currentweek');
 		$currentyear =  Date("Y");
+		$showweeknr	= $params->get('showweeknr',true);
 
 		//Set Page title
 		$pagetitle = $params->def('page_title', $menuitem->title);
@@ -73,7 +72,7 @@ class JemViewWeekcal extends JViewLegacy
 
 
 		$cal = new activeCalendarWeek($currentyear,1,1);
-		$cal->enableWeekNum(JText::_('COM_JEM_WKCAL_WEEK'),null,''); // enables week number column with linkable week numbers
+		$cal->enableWeekNum(JText::_('COM_JEM_WKCAL_WEEK'),null,'',$showweeknr); // enables week number column with linkable week numbers
 		$cal->setFirstWeekDay($params->get('firstweekday', 0));
 
 		$this->rows 		= $rows;
@@ -87,4 +86,3 @@ class JemViewWeekcal extends JViewLegacy
 		parent::display($tpl);
 	}
 }
-?>

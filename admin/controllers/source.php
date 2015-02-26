@@ -1,6 +1,5 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -100,7 +99,6 @@ class JemControllerSource extends JControllerLegacy
 		$model		= $this->getModel();
 		$recordId	= $jinput->get('id');
 		$context	= 'com_jem.edit.source';
-
 
 		if (preg_match('#\.\.#', base64_decode($recordId))) {
 			return JError::raiseError(500, JText::_('COM_JEM_CSSMANAGER_ERROR_SOURCE_FILE_NOT_FOUND'));

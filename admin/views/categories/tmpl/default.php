@@ -1,6 +1,5 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -20,10 +19,9 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 $ordering 	= ($listOrder == 'a.lft');
 $saveOrder 	= ($listOrder == 'a.lft' && strtolower($listDirn) == 'asc');
 
-if ($saveOrder)
-{
-	$saveOrderingUrl = 'index.php?option=com_categories&task=categories.saveOrderAjax&tmpl=component';
-	JHtml::_('sortablelist.sortable', 'eventList', 'adminForm', strtolower($listDirn), $saveOrderingUrl, false, true);
+if ($saveOrder) {
+    $saveOrderingUrl = 'index.php?option=com_categories&task=categories.saveOrderAjax&tmpl=component';
+    JHtml::_('sortablelist.sortable', 'eventList', 'adminForm', strtolower($listDirn), $saveOrderingUrl, false, true);
 }
 $sortFields = $this->getSortFields();
 ?>
@@ -65,10 +63,10 @@ $sortFields = $this->getSortFields();
 				<th>
 					<?php echo JHtml::_('searchtools.sort', 'JGLOBAL_TITLE', 'a.catname', $listDirn, $listOrder); ?>
 				</th>
-				<th width="5%" nowrap="nowrap">
+				<th width="5%" class="center" nowrap="nowrap">
 					<?php echo JText::_( 'COM_JEM_COLOR' ); ?>
 				</th>
-				<th width="15%"><?php echo JHtml::_('grid.sort', 'COM_JEM_GROUP', 'gr.name', $listDirn, $listOrder ); ?></th>
+				<th width="15%" class="center"><?php echo JHtml::_('grid.sort', 'COM_JEM_GROUP', 'gr.name', $listDirn, $listOrder ); ?></th>
 				<th width="1%" class="center" nowrap="nowrap"><?php echo JText::_( 'COM_JEM_EVENTS' ); ?></th>
 				<th width="5%">
 					<?php echo JHtml::_('searchtools.sort', 'JSTATUS', 'a.published', $listDirn, $listOrder); ?>
@@ -179,7 +177,9 @@ $sortFields = $this->getSortFields();
 						<?php echo $item->assignedevents; ?>
 					</td>
 					<td class="center">
-						<?php echo JHtml::_('jgrid.published', $item->published, $i, 'categories.', $canChange);?>
+						<div class="btn-group">
+						<?php echo JHtml::_('jgrid.published', $item->published, $i, 'categories.', $canChange, 'cb'); ?>
+						</div>
 					</td>
 					<td class="order hidden-phone">
 						<?php

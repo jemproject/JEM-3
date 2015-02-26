@@ -1,6 +1,5 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -11,8 +10,8 @@ defined('_JEXEC') or die;
 
 // Component Helper
 jimport('joomla.application.component.helper');
-require_once(JPATH_SITE.'/components/com_jem/helpers/helper.php');
-require_once(JPATH_SITE.'/components/com_jem/classes/categories.class.php');
+require_once JPATH_SITE . '/components/com_jem/helpers/helper.php';
+require_once JPATH_SITE . '/components/com_jem/classes/categories.class.php';
 
 /**
  * JEM Component Route Helper
@@ -25,6 +24,8 @@ require_once(JPATH_SITE.'/components/com_jem/classes/categories.class.php');
 abstract class JEMHelperRoute
 {
 	protected static $lookup2;
+	protected static $FixedItemid;
+	
 	const ARTIFICALID = 0;
 
 	/**
@@ -71,8 +72,14 @@ abstract class JEMHelperRoute
 
 	public static function getCategoryRoute($id)
 	{
-		$settings 		= JEMHelper::globalattribs();
-		$defaultItemid 	= $settings->get('default_Itemid');
+		if (!isset(self::$FixedItemid)) {
+			$settings 		= JEMHelper::globalattribs();
+			$defaultItemid 	= $settings->get('default_Itemid');
+		} else {
+			if (isset(self::$FixedItemid)) {
+				$defaultItemid = self::$FixedItemid;
+			}
+		}
 		
 		$needles = array(
 			'category' => array((int) $id)
@@ -92,21 +99,27 @@ abstract class JEMHelperRoute
 		if ($item = self::_findItem($needles)) {
 			$link .= '&Itemid='.$item;
 		}
-		elseif ($item = self::_findItem()) {	
+		elseif ($item = self::_findItem()) {
 			if (isset($defaultItemid))
 				{
 					$link .= '&Itemid='.$defaultItemid;
-				} 
+				}
 		}
-		
+
 		return $link;
 	}
 
 	public static function getEventRoute($id, $catid = null)
 	{
-		$settings 		= JEMHelper::globalattribs();
-		$defaultItemid 	= $settings->get('default_Itemid');
-		
+		if (!isset(self::$FixedItemid)) {
+			$settings 		= JEMHelper::globalattribs();
+			$defaultItemid 	= $settings->get('default_Itemid');
+		} else {
+			if (isset(self::$FixedItemid)) {
+				$defaultItemid = self::$FixedItemid;
+			}
+		}
+
 		$needles = array(
 			'event' => array((int) $id)
 		);
@@ -124,18 +137,24 @@ abstract class JEMHelperRoute
 		if ($item = self::_findItem($needles)) {
 			$link .= '&Itemid='.$item;
 		}
-		elseif ($item = self::_findItem()) {	
+		elseif ($item = self::_findItem()) {
 			$link .= '&Itemid='.$item;
 		}
-		
+
 		return $link;
 	}
 
 	public static function getVenueRoute($id)
 	{
-		$settings 		= JEMHelper::globalattribs();
-		$defaultItemid 	= $settings->get('default_Itemid');
-		
+		if (!isset(self::$FixedItemid)) {
+			$settings 		= JEMHelper::globalattribs();
+			$defaultItemid 	= $settings->get('default_Itemid');
+		} else {
+			if (isset(self::$FixedItemid)) {
+				$defaultItemid = self::$FixedItemid;
+			}
+		}
+
 		$needles = array(
 			'venue' => array((int) $id)
 		);
@@ -149,18 +168,24 @@ abstract class JEMHelperRoute
 		if ($item = self::_findItem($needles)) {
 			$link .= '&Itemid='.$item;
 		}
-		elseif ($item = self::_findItem()) {	
+		elseif ($item = self::_findItem()) {
 			$link .= '&Itemid='.$item;
 		}
-		
+
 		return $link;
 	}
 
 	protected static function getRouteWithoutId($my)
 	{
-		$settings 		= JEMHelper::globalattribs();
-		$defaultItemid 	= $settings->get('default_Itemid');
-		
+		if (!isset(self::$FixedItemid)) {
+			$settings 		= JEMHelper::globalattribs();
+			$defaultItemid 	= $settings->get('default_Itemid');
+		} else {
+			if (isset(self::$FixedItemid)) {
+				$defaultItemid = self::$FixedItemid;
+			}
+		}
+
 		$needles = array();
 		$needles[$my] = array(self::ARTIFICALID);
 
@@ -170,10 +195,10 @@ abstract class JEMHelperRoute
 		if ($item = self::_findItem($needles)) {
 			$link .= '&Itemid='.$item;
 		}
-		elseif ($item = self::_findItem()) {	
+		elseif ($item = self::_findItem()) {
 			$link .= '&Itemid='.$item;
 		}
-		
+
 		return $link;
 	}
 
@@ -192,7 +217,6 @@ abstract class JEMHelperRoute
 		return self::getRouteWithoutId('myvenues');
 	}
 
-
 	/**
 	 * Determines the Itemid
 	 *
@@ -208,8 +232,14 @@ abstract class JEMHelperRoute
 	{
 		$app = JFactory::getApplication();
 		$menus = $app->getMenu('site');
-		$settings 		= JEMHelper::globalattribs();
-		$defaultItemid 	= $settings->get('default_Itemid');
+		if (!isset(self::$FixedItemid)) {
+			$settings 		= JEMHelper::globalattribs();
+			$defaultItemid 	= $settings->get('default_Itemid');
+		} else {
+			if (isset(self::$FixedItemid)) {
+				$defaultItemid = self::$FixedItemid;
+			}
+		}
 
 		// Prepare the reverse lookup array.
 		if (!isset(self::$lookup2)) {
@@ -217,7 +247,7 @@ abstract class JEMHelperRoute
 
 			$component = JComponentHelper::getComponent('com_jem');
 			$items = $menus->getItems('component_id', $component->id);
-					
+
 			// loop trough the menu-items of the component
 			if ($items) {
 				foreach ($items as $item)
@@ -225,12 +255,12 @@ abstract class JEMHelperRoute
 					if (isset($item->query) && isset($item->query['view'])) {
 						// skip Calendar-layout
 						if (isset($item->query['layout']) && ($item->query['layout'] == 'calendar')) {
-							continue; 
+							continue;
 						}
-						
+
 						// define $view variable
 						$view = $item->query['view'];
-						
+
 						// skip several views
 						if (isset($item->query['view'])) {
 							if ($view == 'calendar' || $view == 'search' || $view == 'venues') {
@@ -247,19 +277,16 @@ abstract class JEMHelperRoute
 							if (!isset(self::$lookup2[$view][$item->query['id']]))
 							{
 								self::$lookup2[$view][$item->query['id']] = $item->id;
-							} 
-						} else { 
+							}
+						} else {
 							// Some views have no ID, but we have to set one
 							self::$lookup2[$view][self::ARTIFICALID] = $item->id;
 						}
 				}
 			}
-			
-			
 		}
 
 		// at this point we collected itemid's linking to the component
-	
 
 		if ($needles) {
 			foreach ($needles as $view => $ids)
@@ -274,28 +301,20 @@ abstract class JEMHelperRoute
 				}
 			}
 		}
-		
-		
+
 		if ($defaultItemid) {
 			return $defaultItemid;
 		} else {
+			$active = $menus->getActive();
+			if ($active && $active->component == 'com_jem'){
+				return $active->id;
+			}
+
 			$component = JComponentHelper::getComponent('com_jem');
 			$items = $menus->getItems(array('component_id','link'), array($component->id,'index.php?option=com_jem&view=eventslist'),false);
-			
 			$default = reset($items);
-			
+
 			return !empty($default->id) ? $default->id : null;
 		}
-		
-		/*
-		$active = $menus->getActive();
-		
-		if ($active && $active->component == 'com_jem')
-		{
-			return $active->id;
-		}
-		*/
-		
 	}
 }
-?>

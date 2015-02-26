@@ -1,6 +1,5 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -8,13 +7,13 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * View: Main
  */
-class JEMViewMain extends JViewLegacy {
+class JEMViewMain extends JViewLegacy
+{
 
-	public function display($tpl = null)
+    public function display($tpl = null)
 	{
 		//initialise variables
 		$document	= JFactory::getDocument();
@@ -30,7 +29,7 @@ class JEMViewMain extends JViewLegacy {
 
 		JHtml::_('jquery.framework');
 		JHtml::_('script', 'com_jem/slider-state.js', false, true);
-		
+
 		// assign vars to the template
 		$this->events		= $events;
 		$this->venue		= $venue;
@@ -93,4 +92,3 @@ class JEMViewMain extends JViewLegacy {
 		<?php
 	}
 }
-?>

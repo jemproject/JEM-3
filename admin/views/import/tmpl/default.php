@@ -1,6 +1,5 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -14,7 +13,7 @@ defined('_JEXEC') or die;
 <?php if($this->progress->step > 1) : ?>
 	<meta http-equiv="refresh" content="1; url=index.php?option=com_jem&amp;view=import&amp;task=import.eventlistimport&amp;step=<?php
 		echo $this->progress->step; ?>&amp;table=<?php echo $this->progress->table; ?>&amp;prefix=<?php
-		echo $this->progress->prefix; ?>&amp;current=<?php echo $this->progress->current; ?>&amp;total=<?php
+        echo $this->progress->prefix; ?>&amp;current=<?php echo $this->progress->current; ?>&amp;total=<?php
 		echo $this->progress->total; ?>&amp;copyImages=<?php echo $this->progress->copyImages; ?>&amp;copyAttachments=<?php echo $this->progress->copyAttachments; ?>" />
 <?php endif; ?>
 
@@ -51,8 +50,8 @@ defined('_JEXEC') or die;
 	<b><?php echo JText::_('COM_JEM_IMPORT_EL_DETECTED_JEM_TABLES'); ?></b>
 	<ul>
 	<?php
-		foreach($this->jemTables as $table => $rows) {
-			if(!is_null($rows)) {
+		foreach ($this->jemTables as $table => $rows) {
+			if (!is_null($rows)) {
 				echo "<li>".JText::sprintf('COM_JEM_IMPORT_EL_DETECTED_TABLES_NUM_ROWS', $table, $rows)."</li>";
 			}
 		}

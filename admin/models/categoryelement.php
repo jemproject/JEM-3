@@ -1,13 +1,11 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
-defined('_JEXEC') or die();
-
+defined('_JEXEC') or die;
 
 /**
  * Model: Categoryelement
@@ -19,7 +17,7 @@ class JemModelCategoryelement extends JModelLegacy
 	 *
 	 * @var object
 	 */
-	var $_pagination = null;
+	public $_pagination = null;
 
 	/**
 	 * Constructor
@@ -30,16 +28,16 @@ class JemModelCategoryelement extends JModelLegacy
 
 		$app			= JFactory::getApplication();
 		$jinput 		= $app->input;
-		
+
 		$jemsettings	= JemHelper::config();
 		$itemid 		= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
-		
+
 		$limit 			= $app->getUserStateFromRequest('com_jem.categoryelement.limit', 'limit', $jemsettings->display_num, 'int');
 		$limitstart 	= $jinput->getInt('limitstart');
 		$limitstart 	= $limit ? (int)(floor($limitstart / $limit) * $limit) : 0;
-		
+
 		$this->setState('limit', $limit);
-		$this->setState('limitstart', $limitstart);	
+		$this->setState('limitstart', $limitstart);
 	}
 
 	/**
@@ -78,16 +76,16 @@ class JemModelCategoryelement extends JModelLegacy
 		$query->join('LEFT', '#__viewlevels AS g ON g.id = c.access');
 		$query->join('LEFT', '#__users AS u ON u.id = c.checked_out');
 		$query->join('LEFT', '#__jem_groups AS gr ON gr.id = c.groupid');
-		
+
 		if (is_numeric($filter_state)) {
 			$query->where('c.published = '.(int) $filter_state);
 		} else {
 			$query->where('c.published IN (' . implode(',', $state) . ')');
 		}
-		
+
 		$query->order($filter_order . ' ' . $filter_order_Dir);
 
-		
+
 		$db->setQuery($query);
 		$mitems = $db->loadObjectList();
 
@@ -119,19 +117,19 @@ class JemModelCategoryelement extends JModelLegacy
 		// get list of the items
 		$list = JemCategories::treerecurse($parentid, '', array(), $children, 9999, 0, 0);
 
-	
+
 		// note, since this is a tree we have to do the limits code-side
 		if ($search) {
 			$query = $db->getQuery(true);
 			$query->select('c.id');
 			$query->from('#__jem_categories AS c');
 			$query->where(array('LOWER(c.catname) LIKE ' . $db->Quote('%' . $this->_db->escape($search, true) . '%', false),'c.published IN (' . implode(',', $state) . ')'));
-			
+
 			$db->setQuery($query);
 			$search_rows = $db->loadColumn();
 		}
-		
-		
+
+
 		// eventually only pick out the searched items.
 		if ($search) {
 			$list1 = array();
@@ -166,4 +164,3 @@ class JemModelCategoryelement extends JModelLegacy
 		return $this->_pagination;
 	}
 }
-?>

@@ -1,12 +1,10 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
-
 defined('JPATH_PLATFORM') or die;
 
 /**
@@ -18,8 +16,6 @@ class JFormFieldCustomtooltip extends JFormField
 	 * The form field type.
 	 */
 	protected $type = 'Customtooltip';
-
-	
 
 	/**
 	 * Method to get the field input markup.
@@ -40,7 +36,7 @@ class JFormFieldCustomtooltip extends JFormField
 		$pattern      = !empty($this->pattern) ? ' pattern="' . $this->pattern . '"' : '';
 		$inputmode    = !empty($this->inputmode) ? ' inputmode="' . $this->inputmode . '"' : '';
 		$dirname      = !empty($this->dirname) ? ' dirname="' . $this->dirname . '"' : '';
-		
+
 		$tooltiplabel	= JText::_($this->getAttribute('tooltiplabel'));
 		$tooltipdesc	= JText::_($this->getAttribute('tooltipdescription'));
 		$tooltiplink    = JText::_($this->getAttribute('tooltiplink'));
@@ -49,25 +45,25 @@ class JFormFieldCustomtooltip extends JFormField
 		$onchange = !empty($this->onchange) ? ' onchange="' . $this->onchange . '"' : '';
 
 		$tip = JHtml::tooltipText($tooltiplabel, $tooltipdesc, 0);
-		
+
 		if ($tooltiplink) {
 			$attribs = array();
 			$attribs['title']   = $tip;
 			$attribs['target']   = '_blank';
 			$attribs['class'] = 'hasTooltip';
 			$image = JHtml::_('image', 'system/tooltip.png', null, NULL, true);
-			
+
 			$output = ' '.JHtml::_('link', $tooltiplink, $image, $attribs);
-			
+
 		} else {
-			
+
 			$attribs = array();
 			$attribs['title']   = $tip;
 			$attribs['class'] = 'hasTooltip';
-			
+
 			$output	= JHtml::_('image', 'system/tooltip.png', $tooltiplabel, $attribs, true);
 		}
-		
+
 		$html[] = '<input type="text" name="' . $this->name . '" id="' . $this->id . '"' . $dirname . ' value="'
 			. htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8') . '"' . $class . $size . $disabled . $readonly
 			. $hint . $onchange . $maxLength . $required . $inputmode . $pattern . ' />';
@@ -75,5 +71,4 @@ class JFormFieldCustomtooltip extends JFormField
 
 		return implode($html);
 	}
-
 }

@@ -1,12 +1,12 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 defined('_JEXEC') or die;
+
 ?>
 
 <?php if (!$this->params->get('show_page_heading', 1)) :
@@ -107,7 +107,7 @@ defined('_JEXEC') or die;
 					<?php echo JemOutput::formatShortDateTime($row->dates, $row->times,
 						$row->enddates, $row->endtimes); ?>
 				</td>
-				
+
 				<?php if (($this->jemsettings->showtitle == 1) && ($this->jemsettings->showdetails == 2)) : ?>
 				<?php if ($this->escape($row->introtext) != "" ) { ?>
 					<td class="jem_title">
@@ -158,7 +158,7 @@ defined('_JEXEC') or die;
 				<?php endif; ?>
 
 				<?php if ($this->params->get('displayattendeecolumn') == 1) : ?>
-					<td class="attendees">
+					<td class="attendees center">
 					<?php if ($row->registra == 1) {
 						$app = JFactory::getApplication();
 						$menuitem = $app->getMenu()->getActive()->id;

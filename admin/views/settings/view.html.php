@@ -1,6 +1,5 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -8,18 +7,17 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * View: Settings
  */
-class JEMViewSettings extends JViewLegacy {
-
+class JEMViewSettings extends JViewLegacy
+{
 	protected $form;
 	protected $data;
 	protected $state;
 
-
-	public function display($tpl = null) {
+	public function display($tpl = null)
+	{
 		$form	= $this->get('Form');
 		$data	= $this->get('Data');
 		$state	= $this->get('State');
@@ -29,20 +27,20 @@ class JEMViewSettings extends JViewLegacy {
 		$document 	= JFactory::getDocument();
 
 		// Load css
-		JHtml::_('stylesheet', 'com_jem/backend.css', array(), true);
-		JHtml::_('stylesheet', 'com_jem/colorpicker.css', array(), true);
+        JHtml::_('stylesheet', 'com_jem/backend.css', array(), true);
+        JHtml::_('stylesheet', 'com_jem/colorpicker.css', array(), true);
 
-		$style = '
+        $style = '
 		    div.current fieldset.radio input {
 		        cursor: pointer;
 		    }';
 		$document->addStyleDeclaration($style);
 
-		// Check for model errors.
-		if ($errors = $this->get('Errors')) {
-			JError::raiseError(500, implode('<br />', $errors));
-			return false;
-		}
+        // Check for model errors.
+        if ($errors = $this->get('Errors')) {
+            JError::raiseError(500, implode('<br />', $errors));
+            return false;
+        }
 
 		// Bind the form to the data.
 		if ($form && $data) {
@@ -57,9 +55,9 @@ class JEMViewSettings extends JViewLegacy {
 
 		// Load Script
 		JHtml::_('script', 'com_jem/colorpicker.js', false, true);
-		
+
 		JHtml::_('behavior.framework');
-		
+
 		$app = JFactory::getApplication();
 
 		// only admins have access to this view
@@ -82,7 +80,6 @@ class JEMViewSettings extends JViewLegacy {
 		parent::display($tpl);
 	}
 
-
 	/**
 	 * Add the page title and toolbar.
 	 */
@@ -96,7 +93,6 @@ class JEMViewSettings extends JViewLegacy {
 		JToolBarHelper::divider();
 		JToolBarHelper::help('settings', true);
 	}
-
 
 	function WarningIcon()
 	{

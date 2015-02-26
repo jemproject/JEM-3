@@ -1,13 +1,11 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 defined('_JEXEC') or die;
-
 
 /**
  * Table: Register
@@ -18,21 +16,22 @@ class JEMTableRegister extends JTable
 	 * Primary Key
 	 * @var int
 	 */
-	var $id 		= null;
+	public $id 		= null;
 	/** @var int */
-	var $event 		= null;
+	public $event 		= null;
 	/** @var int */
-	var $uid 		= null;
+	public $uid 		= null;
 	/** @var date */
-	var $uregdate 	= null;
+	public $uregdate 	= null;
 	/** @var string */
-	var $uip 		= null;
+	public $uip 		= null;
 	/** @var int */
-	var $waiting 	= 0;
+	public $waiting 	= 0;
 
-	public function __construct(& $db) {
-		parent::__construct('#__jem_register', 'id', $db);
-	}
+    public function __construct(& $db)
+    {
+        parent::__construct('#__jem_register', 'id', $db);
+    }
 
 	/**
 	 * try to insert first, update if fails
@@ -87,4 +86,3 @@ class JEMTableRegister extends JTable
 		return $this->_db->getAffectedRows();
 	}
 }
-?>

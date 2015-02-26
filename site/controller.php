@@ -1,13 +1,11 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 defined('_JEXEC') or die;
-
 
 /**
  * Controller
@@ -42,7 +40,7 @@ class JemController extends JControllerLegacy
 			// Somehow the person just went to the form - we don't allow that.
 			return JError::raiseError(403, JText::sprintf('JLIB_APPLICATION_ERROR_UNHELD_ID', $id));
 		}
-		
+
 		// Check for edit form.
 		if ($viewName == 'editvenue' && !$this->checkEditId('com_jem.edit.editvenue', $id)) {
 			// Somehow the person just went to the form - we don't allow that.
@@ -141,4 +139,3 @@ class JemController extends JControllerLegacy
 		jexit();
 	}
 }
-?>

@@ -1,18 +1,17 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
- * @copyright (C) 2013-2013 joomlaeventmanager.net
+ * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 defined('_JEXEC') or die;
 
-
 /**
  * View: Date
  */
-class JEMViewDate extends JViewLegacy {
+class JEMViewDate extends JViewLegacy
+{
 
 	protected $form;
 	protected $item;
@@ -31,7 +30,7 @@ class JEMViewDate extends JViewLegacy {
 			return false;
 		}
 		JHtml::_('behavior.framework');
-		
+
 		// initialise variables
 		$jemsettings 	= JEMHelper::config();
 		$document		= JFactory::getDocument();
@@ -40,10 +39,8 @@ class JEMViewDate extends JViewLegacy {
 		$this->task 	= $task;
 		$url 			= JUri::root();
 
-		
 		// Load css
 		JHtml::_('stylesheet', 'com_jem/backend.css', array(), true);
-
 
 		// JQuery noConflict
 		$document->addCustomTag('<script type="text/javascript">jQuery.noConflict();</script>');
@@ -55,7 +52,6 @@ class JEMViewDate extends JViewLegacy {
 		$this->addToolbar();
 		parent::display($tpl);
 	}
-
 
 	/**
 	 * Add the page title and toolbar.
@@ -95,4 +91,3 @@ class JEMViewDate extends JViewLegacy {
 		JToolBarHelper::help('editevents', true);
 	}
 }
-?>

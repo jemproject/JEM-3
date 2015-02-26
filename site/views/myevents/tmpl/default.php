@@ -1,13 +1,11 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 defined('_JEXEC') or die;
-
 
 ?>
 <div id="jem" class="jem_myevents<?php echo $this->pageclass_sfx;?>">
@@ -33,7 +31,7 @@ defined('_JEXEC') or die;
 	<?php echo $this->loadTemplate('events');?>
 
 	</div>
-	
+
 	<!--footer-->
 	<div class="poweredby">
 		<?php echo JemOutput::footer( ); ?>

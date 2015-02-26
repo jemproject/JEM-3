@@ -1,13 +1,11 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 defined('_JEXEC') or die;
-
 
 /**
  * Controller-Attendees
@@ -38,7 +36,7 @@ class JEMControllerAttendees extends JControllerLegacy
 	function attendeeremove()
 	{
 		$jinput = JFactory::getApplication()->input;
-		
+
 		$cid = $jinput->post->get('cid', array(0), 'array');
 		$id  = $jinput->getInt('id');
 		$fid = $jinput->getInt('Itemid');
@@ -68,7 +66,7 @@ class JEMControllerAttendees extends JControllerLegacy
 	function attendeetoggle()
 	{
 		$jinput = JFactory::getApplication()->input;
-		
+
 		$id = $jinput->getInt('id');
 		$fid = $jinput->getInt('Itemid');
 
@@ -146,4 +144,3 @@ class JEMControllerAttendees extends JControllerLegacy
 		$app->close();
 	}
 }
-?>

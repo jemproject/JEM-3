@@ -1,6 +1,5 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -303,7 +302,6 @@ class JemControllerImport extends JControllerLegacy {
 
 						# EL-data is transformed, now we'll store it in the jem-table
 						$model->storeTableData("eventlist_cats_event_relations", $data);
-
 					}
 
 					# get data of the categories-table
@@ -324,8 +322,6 @@ class JemControllerImport extends JControllerLegacy {
 
 						# EL-data is transformed, now we'll store it in the jem-tables
 						$model->storeTableData($tables->imptables[$table], $data);
-
-
 					}
 			}
 
@@ -392,8 +388,6 @@ class JemControllerImport extends JControllerLegacy {
 
 		$this->setRedirect($link, $msg);
 	}
-
-
 
 	/**
 	 * Imports data from an old Jem installation
@@ -516,4 +510,3 @@ class JemControllerImport extends JControllerLegacy {
 				$this->setRedirect($link, $msg);
 	}
 }
-?>

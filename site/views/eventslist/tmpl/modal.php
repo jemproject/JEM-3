@@ -1,6 +1,5 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -43,7 +42,7 @@ $function  = $app->input->getCmd('function', 'jSelectEvent');
 		</div>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	</fieldset>
 
 	<table class="table table-striped table-condensed">
@@ -74,20 +73,20 @@ $function  = $app->input->getCmd('function', 'jSelectEvent');
 			</tr>
 		</tfoot>
 		<tbody>
-		<?php foreach ($this->rows as $i => $item) : 
-		
+		<?php foreach ($this->rows as $i => $item) :
+
 		//Prepare date
 		$displaydate = JemOutput::formatLongDateTime($item->dates, null, $item->enddates, null);
 		// Insert a break between date and enddate if possible
 		$displaydate = str_replace(" - ", " -<br />", $displaydate);
-		
+
 		//Prepare time
 		if (!$item->times) {
 			$displaytime = '-';
 		} else {
 			$displaytime = JemOutput::formattime($item->times);
 		}
-		
+
 		if ($item->language && JLanguageMultilang::isEnabled())
 			{
 				$tag = strlen($item->language);

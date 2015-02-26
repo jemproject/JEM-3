@@ -1,6 +1,5 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -8,37 +7,11 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * Table: Attachments
  */
 class JEMTableAttachments extends JTable
 {
-	/**
-	 * Primary Key
-	 * @var int
-	 */
-	var $id 			= null;
-	/** @var int */
-	var $file			= '';
-	/** @var int */
-	var $object			= '';
-	/** @var string */
-	var $name 			= null;
-	/** @var string */
-	var $description 	= null;
-	/** @var string */
-	var $icon 			= null;
-	/** @var int */
-	var $frontend		= 1;
-	/** @var int */
-	var $access 		= 0;
-	/** @var int */
-	var $ordering 		= 0;
-	/** @var string */
-	var $added 			= '';
-	/** @var int */
-	var $added_by 		= 0;
 
 	public function __construct(& $db) {
 		parent::__construct('#__jem_attachments', 'id', $db);
@@ -49,7 +22,7 @@ class JEMTableAttachments extends JTable
 	{
 		return true;
 	}
-	
+
 	/**
 	 * try to insert first, update if fails
 	 *
@@ -68,7 +41,7 @@ class JEMTableAttachments extends JTable
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Inserts a row into a table based on an objects properties, ignore if already exists
 	 *
@@ -103,4 +76,3 @@ class JEMTableAttachments extends JTable
 		return $this->_db->getAffectedRows();
 	}
 }
-?>

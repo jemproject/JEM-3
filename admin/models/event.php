@@ -1,6 +1,5 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -8,13 +7,11 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * Model: Event
  */
 class JemModelEvent extends JModelAdmin
 {
-
 	/**
 	 * Method to delete one or more records. (override)
 	 *
@@ -32,12 +29,9 @@ class JemModelEvent extends JModelAdmin
 		JPluginHelper::importPlugin('content');
 
 		// Iterate the items to delete each one.
-		foreach ($pks as $i => $pk)
-		{
-			if ($table->load($pk))
-			{
-				if ($this->canDelete($table))
-				{
+        foreach ($pks as $i => $pk) {
+            if ($table->load($pk)) {
+                if ($this->canDelete($table)) {
 
 					#####################################################
 					## check if the event is part of a recurrence-set  ##
@@ -81,7 +75,6 @@ class JemModelEvent extends JModelAdmin
 							# if count is 1 the row in the recurrence_table can be deleted completely
 							# and we can also remove the other references linked to the recurrence-set
 							if ($recurrenceid_count == 1) {
-
 
 								# retrieve all id's from recurrence-table that are linked to the recurrence-set
 								$db = JFactory::getDbo();
@@ -138,8 +131,6 @@ class JemModelEvent extends JModelAdmin
 						}
 					} // close recurrence-check
 
-
-
 					# actual deleting of the event.
 					#
 					# first the removal of the item-id from the catevent-table
@@ -171,7 +162,6 @@ class JemModelEvent extends JModelAdmin
 
 					// Trigger the onContentAfterDelete event.
 					$dispatcher->trigger($this->event_after_delete, array($context, $table));
-
 				}
 				else
 				{
@@ -190,7 +180,6 @@ class JemModelEvent extends JModelAdmin
 						return false;
 					}
 				}
-
 			}
 			else
 			{
@@ -259,7 +248,6 @@ class JemModelEvent extends JModelAdmin
 			$files = JEMAttachment::getAttachments('event'.$item->id);
 			$item->attachments = $files;
 
-
 			################
 			## RECURRENCE ##
 			################
@@ -293,24 +281,24 @@ class JemModelEvent extends JModelAdmin
 			##############
 			## HOLIDAYS ##
 			##############
-
+			
 			# Retrieve dates that are holidays and enabled.
 			$db = JFactory::getDbo();
 			$query = $db->getQuery(true);
 			$query->select('holiday');
 			$query->from('#__jem_dates');
 			$query->where(array('enabled = 1', 'holiday = 1'));
-
+			
 			$db->setQuery($query);
 			$holidays = $db->loadColumn();
-
+			
 			if ($holidays) {
 				$item->recurrence_country_holidays = true;
 			} else {
 				$item->recurrence_country_holidays = false;
 			}
-
-
+			
+			
 			$item->author_ip = $jemsettings->storeip ? JemHelper::retrieveIP() : false;
 
 			if (empty($item->id)){
@@ -327,21 +315,15 @@ class JemModelEvent extends JModelAdmin
 				}
 			}
 
-
 			$admin = JFactory::getUser()->authorise('core.manage', 'com_jem');
 			if ($admin) {
 				$item->admin = true;
 			} else {
 				$item->admin = false;
 			}
-
-
 		}
-
 		return $item;
 	}
-
-
 
 	/**
 	 * Method to get the record form.
@@ -360,6 +342,12 @@ class JemModelEvent extends JModelAdmin
 		}
 
 		$jemsettings 	= JemHelper::config();
+		$app 			= JFactory::getApplication();
+		if ($app->isAdmin())
+			$backend = true;
+		else
+			$backend = false;
+		
 
 		if ($this->getState('event.id')) {
 			// existing event
@@ -403,6 +391,23 @@ class JemModelEvent extends JModelAdmin
 
 		} else {
 			// new event
+			
+			
+			// specific backend settings
+			if ($backend) {
+				$settings 		= JemHelper::globalattribs();
+				$registering = $settings->get('registering_b');
+				$form->setFieldAttribute('registra', 'default', $registering);
+				$unregistering = $settings->get('unregistering_b');
+				$form->setFieldAttribute('unregistra', 'default', $unregistering);
+			} else {
+				$veditevent		= JemHelper::viewSettings('veditevent');
+				$registering = $veditevent->get('registering');
+				$form->setFieldAttribute('registra', 'default', $registering);
+				$unregistering = $veditevent->get('unregistering');
+				$form->setFieldAttribute('unregistra', 'default', $unregistering);
+			}
+			
 
 			$meta_keywords = $jemsettings->meta_keywords;
 			$form->setFieldAttribute('meta_keywords', 'default', $meta_keywords);
@@ -434,8 +439,10 @@ class JemModelEvent extends JModelAdmin
 			$form->removeField('captcha');
 			$form->setFieldAttribute('articletext', 'buttons', 'false');
 		}
-
-
+		
+		
+		
+		
 
 		return $form;
 	}
@@ -480,10 +487,10 @@ class JemModelEvent extends JModelAdmin
 		// StartTime
 		if ($starthours != '' && $startminutes != '') {
 			$table->times = $starthours.':'.$startminutes;
-		} else if ($starthours != '' && $startminutes == '') {
+		} elseif ($starthours != '' && $startminutes == '') {
 			$startminutes = "00";
 			$table->times = $starthours.':'.$startminutes;
-		} else if ($starthours == '' && $startminutes != '') {
+		} elseif ($starthours == '' && $startminutes != '') {
 			$starthours = "00";
 			$table->times = $starthours.':'.$startminutes;
 		} else {
@@ -493,10 +500,10 @@ class JemModelEvent extends JModelAdmin
 		// EndTime
 		if ($endhours != '' && $endminutes != '') {
 			$table->endtimes = $endhours.':'.$endminutes;
-		} else if ($endhours != '' && $endminutes == '') {
+		} elseif ($endhours != '' && $endminutes == '') {
 			$endminutes = "00";
 			$table->endtimes = $endhours.':'.$endminutes;
-		} else if ($endhours == '' && $endminutes != '') {
+		} elseif ($endhours == '' && $endminutes != '') {
 			$endhours = "00";
 			$table->endtimes = $endhours.':'.$endminutes;
 		} else {
@@ -542,13 +549,13 @@ class JemModelEvent extends JModelAdmin
 			$hide_othertab = true;
 		}
 
-
 		if ($backend || $hide_othertab == false) {
 
+			
 			##############
 			## HOLIDAYS ##
 			##############
-
+			
 			if (isset($data['activated'])) {
 				if ($data['activated'] == null) {
 					$holidays =	array();
@@ -559,8 +566,8 @@ class JemModelEvent extends JModelAdmin
 				$holidays = array();
 			}
 			$countryholiday		= $jinput->getInt('recurrence_country_holidays','');
-
-
+				
+			
 			################
 			## RECURRENCE ##
 			################
@@ -619,7 +626,6 @@ class JemModelEvent extends JModelAdmin
 			if (isset($data['featured'])){
 				$this->featured($pk, $data['featured']);
 			}
-
 
 			$checkAttachName = $jinput->post->get('attach-name','','array');
 
@@ -723,7 +729,6 @@ class JemModelEvent extends JModelAdmin
 					$recurrence_set = false;
 				}
 
-
 				## check values, pass check before we continue to generate additional events ##
 
 				# - do we have an interval?
@@ -732,15 +737,11 @@ class JemModelEvent extends JModelAdmin
 
 				if ($table->recurrence_interval > 0 && !$table->dates == null && $recurrence_set == null){
 
-
-
 					# recurrence_interval is bigger then 0
 					# we do have a startdate
 					# the event is not part of a recurrence-set
 
 					# we passed the check but now we'll pass some variables to the generating functions
-					#
-					# holidays: the holidays that were checked
 					# exdates: the dates filled
 					# table: the row info
 
@@ -749,7 +750,6 @@ class JemModelEvent extends JModelAdmin
 					}
 				}
 			}
-
 
 			return true;
 		}

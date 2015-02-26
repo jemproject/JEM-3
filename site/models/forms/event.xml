@@ -17,6 +17,14 @@
 			<option value="0">JNO</option>
 			<option value="1">JYES</option>
 		</field>
+		<field
+			name="language"
+			type="contentlanguage"
+			label="JFIELD_LANGUAGE_LABEL"
+			description="COM_JEM_EDITEVENT_LANGUAGE_DESC"
+			class="inputbox">
+			<option value="*">JALL</option>
+		</field>
 		
 		<field name="title" type="text"
 			class="inputbox"
@@ -38,6 +46,7 @@
 			class="inputbox"
 			size="22"
 			format="%Y-%m-%d"
+			filter="no"
 		/>
 		<field name="enddates" type="calendar"
 			label="COM_JEM_EDITEVENT_FIELD_ENDDATE"
@@ -45,6 +54,7 @@
 			class="inputbox"
 			size="22"
 			format="%Y-%m-%d"
+			filter="no"
 		/>
 		<field name="times" type="starttime"
 			class="inputbox"
@@ -60,7 +70,7 @@
 			description="COM_JEM_EDITEVENT_FIELD_END_TIME_DESC"
 			required="false"
 		/>
-		<field name="cats" type="catoptions"
+		<field name="cats" type="catoptionsfront"
 			multiple="true"
 			class="inputbox"
 			size="10"
@@ -69,6 +79,8 @@
 			description="COM_JEM_EDITEVENT_FIELD_CATEGORIES_DESC"
 			required="true"
 			frontedit="true"
+			removeroot="true"
+			action=""
 		/>
 		
 		<field
@@ -150,13 +162,13 @@
 	<fieldset name="request"
 		addfieldpath="/administrator/components/com_jem/models/fields"
 	>
-		<field name="locid" type="modal_venue"
+		<field name="locid" type="modal_venuefront"
 			label="COM_JEM_EDITEVENT_FIELD_VENUE"
 			description="COM_JEM_EDITEVENT_FIELD_VENUE_DESC"
 			size="40"
 			required="false"
 		/>
-		<field name="contactid" type="modal_contact"
+		<field name="contactid" type="modal_contactfront"
 			label="COM_JEM_EDITEVENT_FIELD_CONTACT"
 			description="COM_JEM_EDITEVENT_FIELD_CONTACT_DESC"
 			size="40"

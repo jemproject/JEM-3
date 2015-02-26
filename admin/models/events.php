@@ -1,13 +1,11 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 defined('_JEXEC') or die;
-
 
 /**
  * Model: Events
@@ -33,10 +31,11 @@ class JemModelEvents extends JModelList
 					'id', 'a.id',
 					'catname', 'c.catname',
 					'featured', 'a.featured',
+					'language', 'a.language',
 					'filtertype',
 					'published',
 					'access', 'a.access', 'access_level',
-					# by adding groupset the groupset filter will stay open and it can be used 
+					# by adding groupset the groupset filter will stay open and it can be used
 					'groupset','a.recurrence_group',
 					'ordering',
 			);
@@ -66,16 +65,20 @@ class JemModelEvents extends JModelList
 
 		$end = $this->getUserStateFromRequest($this->context.'.filter.enddates', 'filter.enddates', '', 'string');
 		$this->setState('filter.enddates', $end);
-		
+
 		$end = $this->getUserStateFromRequest($this->context.'.filter.groupset', 'filter.groupset', '', 'string');
 		$this->setState('filter.groupset', $end);
 		
+		$language = $this->getUserStateFromRequest($this->context.'.filter.language', 'filter_language', '');
+		$this->setState('filter.language', $language);
+		
+
 		// Load the parameters.
 		$params = JComponentHelper::getParams('com_jem');
 		$this->setState('params', $params);
 
 		# it's needed to set the parent option
-		parent::populateState('a.dates', 'asc'); 
+		parent::populateState('a.dates', 'asc');
 	}
 
 	/**
@@ -96,7 +99,7 @@ class JemModelEvents extends JModelList
 		$id.= ':' . $this->getState('filter.published');
 		$id.= ':' . $this->getState('filter.filtertype');
 		$id.= ':' . $this->getState('filter.groupset');
-		
+
 		return parent::getStoreId($id);
 	}
 
@@ -121,6 +124,11 @@ class JemModelEvents extends JModelList
 		);
 		$query->from($db->quoteName('#__jem_events').' AS a');
 
+		// Join over the language
+		$query->select('l.title AS language_title')
+		->join('LEFT', $db->quoteName('#__languages') . ' AS l ON l.lang_code = a.language');
+		
+		
 		// Join over venue data.
 		$query->select('loc.venue, loc.city, loc.state, loc.checked_out AS vchecked_out');
 		$query->join('LEFT', '#__jem_venues AS loc ON loc.id = a.locid');
@@ -128,11 +136,11 @@ class JemModelEvents extends JModelList
 		// Join over the users for the checked out user.
 		$query->select('uc.name AS editor');
 		$query->join('LEFT', '#__users AS uc ON uc.id = a.checked_out');
-		
+
 		// Join over the asset groups.
 		$query->select('ag.title AS access_level')
 		->join('LEFT', '#__viewlevels AS ag ON ag.id = a.access');
-		
+
 		// Join over the user who modified the event.
 		$query->select('um.name AS modified_by');
 		$query->join('LEFT', '#__users AS um ON um.id = a.modified_by');
@@ -140,11 +148,11 @@ class JemModelEvents extends JModelList
 		// Join over the author & email.
 		$query->select('u.email, u.name AS author');
 		$query->join('LEFT', '#__users AS u ON u.id = a.created_by');
-		
+
 		# Join over the recurrence table.
 		$query->select('rec.groupidhide, rec.exdate AS exdates, rec.groupid_ref');
 		$query->join('LEFT', '#__jem_recurrence AS rec ON rec.itemid = a.id');
-		
+
 		// Filter by published state
 		$published = $this->getState('filter.published');
 		if (is_numeric($published)) {
@@ -215,30 +223,41 @@ class JemModelEvents extends JModelList
 			}
 		}
 		
+		// Filter on the language.
+		if ($language = $this->getState('filter.language'))
+		{
+			$query->where('a.language = ' . $db->quote($language));
+		}
+
 		# filter events with a recurrence-group
 		$groupset = $this->getState('filter.groupset');
-		
+
 		if (!empty($groupset)) {
 			$query->where('a.recurrence_group = '.$groupset);
 		}
-		
+
 		# group by a.id
 		$query->group('a.id');
 
 		# ordering
 		$orderCol	= $this->state->get('list.ordering','a.title');
 		$orderDirn	= $this->state->get('list.direction','asc');
+		
+		// SQL server change
+		if ($orderCol == 'language')
+		{
+			$orderCol = 'l.title';
+		}
 
 		if ($orderCol == 'a.dates')
-		{	
+		{
 			$query->order(array($db->escape('a.dates '.$orderDirn),$db->escape('a.times '.$orderDirn)));
 		} else {
 			$query->order($db->escape($orderCol.' '.$orderDirn));
 		}
-			
+
 		return $query;
 	}
-
 
 	/**
 	 * Method to get the userinformation of edited/submitted events
@@ -275,13 +294,11 @@ class JemModelEvents extends JModelList
 
 		$items = JEMHelper::getAttendeesNumbers($items);
 
-
 		if ($items) {
 			return $items;
 		}
 
 		return array();
-
 	}
 
 	/**

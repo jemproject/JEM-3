@@ -1,6 +1,5 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -8,20 +7,18 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * Model: Group
  */
 class JemModelGroup extends JModelAdmin
 {
-
 	/**
 	 * Returns a reference to the a Table object, always creating it.
 	 *
-	 * @param	type	The table type to instantiate
-	 * @param	string	A prefix for the table class name. Optional.
-	 * @param	array	Configuration array for model. Optional.
-	 * @return	JTable	A database object
+	 * @param type	The table type to instantiate
+	 * @param string	A prefix for the table class name. Optional.
+	 * @param array	Configuration array for model. Optional.
+	 * @return JTable	A database object
 	 *
 	 */
 	public function getTable($type = 'Groups', $prefix = 'JEMTable', $config = array())
@@ -115,24 +112,26 @@ class JemModelGroup extends JModelAdmin
 		$db->setQuery($query);
 		$db->execute();
 
-		foreach($members as $member)
-		{
-			$member = intval($member);
-
-			$query = $db->getQuery(true);
-			$columns = array('group_id', 'member');
-			$values = array($table->id, $member);
-
-			$query
+		if ($members) {
+			foreach($members as $member)
+			{
+				$member = intval($member);
+			
+				$query = $db->getQuery(true);
+				$columns = array('group_id', 'member');
+				$values = array($table->id, $member);
+			
+				$query
 				->insert($db->quoteName('#__jem_groupmembers'))
 				->columns($db->quoteName($columns))
 				->values(implode(',', $values));
-
-			$db->setQuery($query);
-			$db->execute();
+			
+				$db->setQuery($query);
+				$db->execute();
+			}
 		}
+		
 	}
-
 
 	/**
 	 * Method to get the members data
@@ -169,7 +168,6 @@ class JemModelGroup extends JModelAdmin
 		}
 		return $users;
 	}
-
 
 	/**
 	 * Method to get the selected members

@@ -1,6 +1,5 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -8,13 +7,11 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * Model: Sampledata
  */
 class JemModelSampledata extends JModelLegacy
 {
-
 	/**
 	 * Sample data directory
 	 *
@@ -78,10 +75,10 @@ class JemModelSampledata extends JModelLegacy
 		// assign admin userid to created_events
 		$this->assignAdminId();
 
-		
+
 		# check for required folders
 		$this->checkFolders();
-		
+
 		// move images in proper directory
 		$this->moveImages();
 
@@ -245,25 +242,23 @@ class JemModelSampledata extends JModelLegacy
 		}
 		return true;
 	}
-	
-	
+
 	/**
 	 * check for folders
 	 */
 	private function checkFolders() {
-	
+
 		$folder = array();
 		$folder[] = JPATH_SITE.'/images/jem/events';
 		$folder[] = JPATH_SITE.'/images/jem/categories';
 		$folder[] = JPATH_SITE.'/images/jem/venues';
-		
+
 		foreach ($folder AS $item) {
 			if (!JFolder::exists($item)) {
 				JFolder::create($item);
 			}
 		}
 	}
-
 
 	/**
 	 * Assign admin-id to created events
@@ -291,7 +286,7 @@ class JemModelSampledata extends JModelLegacy
 		$query->where(array('created_by = 62'));
 		$db->setQuery($query);
 		$db->execute();
-		
+
 		$query = $db->getQuery(true);
 		$query->update('#__jem_venues');
 		$query->set('created_by = '.$db->quote((int)$result));
@@ -299,7 +294,13 @@ class JemModelSampledata extends JModelLegacy
 		$db->setQuery($query);
 		$db->execute();
 		
+		$query = $db->getQuery(true);
+		$query->update('#__jem_categories');
+		$query->set('created_user_id = '.$db->quote((int)$result));
+		$query->where(array('created_user_id = 62'));
+		$db->setQuery($query);
+		$db->execute();
+
 		return true;
 	}
 }
-?>

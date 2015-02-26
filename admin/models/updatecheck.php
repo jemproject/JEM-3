@@ -1,6 +1,5 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -31,7 +30,7 @@ class JemModelUpdatecheck extends JModelLegacy
 	function getUpdatedata()
 	{
 		$installedversion	= JemHelper::getParam(1,'version',1,'com_jem');
-		$updateFile			= "http://www.joomlaeventmanager.com/updatecheck/jem-3-update.xml";
+		$updateFile			= "http://www.joomlaeventmanager.com/updatecheck/3/updateview.xml";
 		$checkFile			= self::CheckFile($updateFile);
 		$updatedata 		= new stdClass();
 
@@ -75,4 +74,3 @@ class JemModelUpdatecheck extends JModelLegacy
 		}
 	}
 }
-?>

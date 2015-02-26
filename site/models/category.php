@@ -1,6 +1,5 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -43,8 +42,8 @@ class JemModelCategory extends JemModelEventslist
 					'city', 'l.city', 'venue_city',
 			);
 		}
-		
-		
+
+
 		$app			= JFactory::getApplication();
 		$jinput 		= JFactory::getApplication()->input;
 		$jemsettings	= JEMHelper::config();
@@ -100,8 +99,6 @@ class JemModelCategory extends JemModelEventslist
 		$this->setState('limitstart', (int) $value);
 	}
 
-
-
 	/**
 	 * Method to auto-populate the model state.
 	 */
@@ -121,7 +118,7 @@ class JemModelCategory extends JemModelEventslist
 
 		$global = new JRegistry;
 		$global->loadString($settings);
-		
+
 		$params = clone $global;
 		$params->merge($global);
 		if ($menu = $app->getMenu()->getActive())
@@ -130,7 +127,6 @@ class JemModelCategory extends JemModelEventslist
 		}
 		$this->setState('params', $params);
 
-		
 		$user		= JFactory::getUser();
 		// Create a new query object.
 		$db		= $this->getDbo();
@@ -176,35 +172,34 @@ class JemModelCategory extends JemModelEventslist
 				$this->setState('filter.published',$status);
 			}
 		}
-		
-		
+
 		###############
 		## opendates ##
 		###############
-		
+
 		$this->setState('filter.opendates', $params->get('showopendates', 0));
 
 		###########
 		## ORDER ##
 		###########
-		
+
 		# retrieve default sortDirection + sortColumn
 		$sortDir		= strtoupper($params->get('sortDirection'));
 		$sortDirArchive	= strtoupper($params->get('sortDirectionArchive'));
 		$sortCol		= $params->get('sortColumn');
-				
+
 		$direction	= array('DESC', 'ASC');
-		
+
 		if (!in_array($sortCol, $this->filter_fields))
 		{
 			$sortCol = 'a.dates';
 		}
-		
+
 		if (!in_array($sortDir, $direction))
 		{
 			$sortDir = 'ASC';
 		}
-		
+
 		if (!in_array($sortDirArchive, $direction))
 		{
 			$sortDirArchive = 'DESC';
@@ -227,7 +222,6 @@ class JemModelCategory extends JemModelEventslist
 		}
 
 		$this->setState('filter.orderby',$orderby);
-
 		$this->setState('filter.access', true);
 	}
 
@@ -251,7 +245,6 @@ class JemModelCategory extends JemModelEventslist
 
 		return array();
 	}
-
 
 	/**
 	 * Method to get category data for the current category
@@ -284,7 +277,6 @@ class JemModelCategory extends JemModelEventslist
 					$this->_item->getParams()->set('access-create', true);
 				}
 
-
 				$this->_children = $this->_item->getChildren();
 
 				$this->_parent = false;
@@ -304,7 +296,6 @@ class JemModelCategory extends JemModelEventslist
 
 		return $this->_item;
 	}
-
 
 	/**
 	 * @return	JDatabaseQuery
@@ -379,4 +370,3 @@ class JemModelCategory extends JemModelEventslist
 		return $this->_children;
 	}
 }
-?>

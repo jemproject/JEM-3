@@ -36,7 +36,7 @@ class TextTransformer
         if ($until instanceof \DateTime) {
             $this->addFragment('until');
             $this->addFragment($until->format('F j, Y'));
-        } else if (!empty($count)) {
+        } elseif (!empty($count)) {
             $this->addFragment('for');
             $this->addFragment($count);
             $this->addFragment($this->isPlural($count) ? 'times' : 'time');
@@ -103,7 +103,7 @@ class TextTransformer
         $byDay      = $rule->getByDay();
         if (!empty($byMonthDay)) {
             $this->addByMonthDay($rule);
-        } else if (!empty($byDay)) {
+        } elseif (!empty($byDay)) {
             $this->addByDay($rule);
         }
 
@@ -149,7 +149,7 @@ class TextTransformer
         $byDay      = $rule->getByDay();
         if (!empty($byMonthDay)) {
             $this->addByMonthDay($rule);
-        } else if (!empty($byDay)) {
+        } elseif (!empty($byDay)) {
             $this->addByDay($rule);
         }
     }
@@ -177,7 +177,7 @@ class TextTransformer
         $byDay      = $rule->getByDay();
         if (!empty($byMonthDay)) {
             $this->addByMonthDay($rule);
-        } else if (!empty($byDay)) {
+        } elseif (!empty($byDay)) {
             $this->addByDay($rule);
         }
     }
@@ -202,7 +202,7 @@ class TextTransformer
         $byDay      = $rule->getByDay();
         if (!empty($byMonthDay)) {
             $this->addByMonthDay($rule);
-        } else if (!empty($byDay)) {
+        } elseif (!empty($byDay)) {
             $this->addByDay($rule);
         }
     }

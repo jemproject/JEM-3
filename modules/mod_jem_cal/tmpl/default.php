@@ -1,8 +1,7 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
- * @subpackage JEM Calendar Module
+ * @subpackage JEM - Module-Calendar
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2008 Toni Smillie www.qivva.com
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
@@ -13,21 +12,20 @@
  * see example at http://keithdevens.com/weblog
  * License: http://keithdevens.com/software/license
  */
-
 defined('_JEXEC') or die;
 
-// include tooltip
+// Include tooltip
 JHtml::_('bootstrap.tooltip');
 
 
-//Month Names
+// Month names
 $uxtime_first_of_month = gmmktime(0, 0, 0, $prev_month, 1, $offset_year);
 list($tmp, $year, $prev_month, $weekday) = explode(',', gmstrftime('%m,%Y,%b,%w', $uxtime_first_of_month));
 
 $uxtime_first_of_month = gmmktime(0, 0, 0, $next_month, 1, $offset_year);
 list($tmp, $year, $next_month, $weekday) = explode(',', gmstrftime('%m,%Y,%b,%w', $uxtime_first_of_month));
 
-//Creating switching links
+// Creating switching links
 $pn = array($prev_month=>$prev_link, $next_month=>$next_link);
 
 $document = JFactory::getDocument();
@@ -37,7 +35,7 @@ if ($Default_Stylesheet == 1) {
 	$document->addStyleSheet(JUri::base() . $User_stylesheet);
 }
 
-//Output
+// Output
 echo "<div class='eventcalq'>";
 
 $calendar = '';
@@ -46,11 +44,11 @@ $year = $offset_year;
 $month = $offset_month;
 
 $uxtime_first_of_month = gmmktime(0, 0, 0, $month, 1, $year);
-#remember that mktime will automatically correct if invalid dates are entered
-# for instance, mktime(0,0,0,12,32,1997) will be the date for Jan 1, 1998
-# this provides a built in "rounding" feature to generate_calendar()
+// Remember that mktime will automatically correct if invalid dates are entered
+// for instance, mktime(0,0,0,12,32,1997) will be the date for Jan 1, 1998
+// this provides a built in "rounding" feature to generate_calendar()
 
-$day_names = array(); #generate all the day names according to the current locale
+$day_names = array(); // Generate all the day names according to the current locale
 $day_names_short = array();
 $day_names_long = array();
 if ($UseJoomlaLanguage == 1) {
@@ -62,10 +60,10 @@ if ($UseJoomlaLanguage == 1) {
 		$day_names_short = array(JText::_('SUN'),JText::_('MON'),JText::_('TUE'),JText::_('WED'),JText::_('THU'),JText::_('FRI'),JText::_('SAT'));
 	}
 } else {
-	for($n = 0, $t = (3 + $first_day) *24 *60 *60; $n < 7; ++$n, $t += 24 *60 *60) { #January 4, 1970 was a Sunday
+	for ($n = 0, $t = (3 + $first_day) *24 *60 *60; $n < 7; ++$n, $t += 24 *60 *60) { //January 4, 1970 was a Sunday
 		if (!function_exists('mb_convert_case')) {
-			$day_names_long[$n] = ucfirst(gmstrftime('%A',$t)); #%A means full textual day name
-			$day_names_short[$n] = ucfirst(gmstrftime('%A',$t)); #%a means short day name
+			$day_names_long[$n] = ucfirst(gmstrftime('%A',$t)); //%A means full textual day name
+			$day_names_short[$n] = ucfirst(gmstrftime('%A',$t)); //%a means short day name
 		} else {
 			$day_names_long[$n] = mb_convert_case(gmstrftime('%A',$t),MB_CASE_TITLE, "UTF-8"); #%A means full textual day name
 			$day_names_short[$n] = mb_convert_case(gmstrftime('%A',$t),MB_CASE_TITLE, "UTF-8"); #%a means short day name
@@ -123,16 +121,16 @@ if (!function_exists('mb_convert_case')) {
 	$the_month = mb_convert_case($Month_length ? $month_name_short : $month_name_long ,MB_CASE_TITLE, "UTF-8");
 }
 
-$title = $the_month.'&nbsp;'.$year_length;	#note that some locales don't capitalize month and day names
+$title = $the_month.'&nbsp;'.$year_length;	// Note that some locales don't capitalize month and day names
 
-#Begin calendar. Uses a real <caption>. See http://diveintomark.org/archives/2002/07/03
+// Begin calendar. Uses a real <caption>. See http://diveintomark.org/archives/2002/07/03
 
 // Modified by Toni to display << and >> for previous and next months
 @list($p, $pl) = each($pn); @list($n, $nl) = each($pn); #previous and next links, if applicable
 // Modified by Toni to display << and >> for previous and next months
 
-if($p) $p = ($pl ? '<a href="'.htmlspecialchars($pl).'" rel="nofollow">&lt;&lt; </a>' : $p).'&nbsp;'; //Modified by Toni
-if($n) $n = '&nbsp;'.($nl ? '<a href="'.htmlspecialchars($nl).'" rel="nofollow"> &gt;&gt;</a>' : $n); //Modified by Toni
+if($p) $p = ($pl ? '<a href="'.htmlspecialchars($pl).'" rel="nofollow">&lt;&lt; </a>' : $p).'&nbsp;'; // Modified by Toni
+if($n) $n = '&nbsp;'.($nl ? '<a href="'.htmlspecialchars($nl).'" rel="nofollow"> &gt;&gt;</a>' : $n); // Modified by Toni
 
 $month_href = NULL;
 
@@ -140,8 +138,8 @@ $calendar .= '<table class="mod_jemcalq_calendar" cellspacing="0" cellpadding="0
 	'<caption class="mod_jemcalq_calendar-month">'.$p.($month_href ? '<a href="'.htmlspecialchars($month_href).'" rel="nofollow">'.$title.'</a>' : $title).$n."</caption>\n<tr>";
 
 
-if($day_name_length) { #if the day names should be shown ($day_name_length > 0)
-	#if day_name_length is >3, the full name of the day will be printed
+if($day_name_length) { // If the day names should be shown ($day_name_length > 0)
+	// If day_name_length is >3, the full name of the day will be printed
 	if ($day_name_length >3) {
 		foreach($day_names_long as $d) {
 			$calendar .= '<th class="mod_jemcalq_daynames" abbr="'.$d.'">&nbsp;'.$d.'&nbsp;</th>';
@@ -162,18 +160,18 @@ if($day_name_length) { #if the day names should be shown ($day_name_length > 0)
 // Today
 $config = JFactory::getConfig();
 $tzoffset = $config->get('config.offset');
-$time 		= time() + (($tzoffset + $Time_offset)*60*60); //25/2/08 Change for v 0.6 to incorporate server offset into time;
+$time 		= time() + (($tzoffset + $Time_offset)*60*60); // 25-2-08 Change for v 0.6 to incorporate server offset into time;
 $today 		= date('j', $time);
 $currmonth 	= date('m', $time);
 $curryear 	= date('Y', $time);
 
 for ($counti = 0; $counti < $weekday; $counti++) {
-	$calendar .= '<td class="mod_jemcalq">&nbsp;</td>'; #initial 'empty' days
+	$calendar .= '<td class="mod_jemcalq">&nbsp;</td>'; // Initial 'empty' days
 }
 
 for($day = 1, $days_in_month = gmdate('t', $uxtime_first_of_month); $day <= $days_in_month; $day++, $weekday++) {
 	if($weekday == 7) {
-		$weekday = 0; #start a new week
+		$weekday = 0; // Start a new week
 		$calendar .= "</tr>\n<tr>";
 	}
 
@@ -184,7 +182,7 @@ for($day = 1, $days_in_month = gmdate('t', $uxtime_first_of_month); $day <= $day
 	}
 	$tdbaseclass = ($istoday) ? 'mod_jemcalq_caltoday' : 'mod_jemcalq_calday';
 
-	//space in front of daynumber when day < 10
+	// Space in front of daynumber when day < 10
 	($day < 10) ? $space = '&nbsp;&nbsp;': $space = '';
 
 	if (isset($days[$day][1])) {
@@ -225,10 +223,9 @@ for($day = 1, $days_in_month = gmdate('t', $uxtime_first_of_month); $day <= $day
 }
 
 for ($counti = $weekday; $counti < 7; $counti++) {
-	$calendar .= '<td class="mod_jemcalq">&nbsp;</td>'; #remaining 'empty' days
+	$calendar .= '<td class="mod_jemcalq">&nbsp;</td>'; // Remaining 'empty' days
 }
 
 echo $calendar."</tr>\n</table>\n";
 
 echo "</div>";
-?>

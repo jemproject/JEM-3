@@ -1,6 +1,5 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -18,7 +17,7 @@
 */
 defined('_JEXEC') or die;
 
-require_once('calendar.class.php');
+require_once 'calendar.class.php';
 
 class ActiveCalendarWeek extends JEMCalendar {
 	/*
@@ -26,8 +25,8 @@ class ActiveCalendarWeek extends JEMCalendar {
 	Names of the generated html classes. You may change them to avoid any conflicts with your existing CSS
 	********************************************************************************
 	*/
-	var $cssWeeksTable="week";
-	var $cssMonthWeek="monthweek";
+	public $cssWeeksTable="week";
+	public $cssMonthWeek="monthweek";
 	/*
 	----------------------
 	@START PUBLIC METHODS
@@ -183,4 +182,3 @@ class ActiveCalendarWeek extends JEMCalendar {
 		$this->selectedday = -2; // $this->daytoday;
 	}
 }
-?>

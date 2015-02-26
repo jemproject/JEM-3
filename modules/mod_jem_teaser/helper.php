@@ -1,8 +1,7 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
- * @subpackage JEM Teaser Module
+ * @subpackage JEM - Module-Teaser
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
@@ -11,9 +10,9 @@ defined('_JEXEC') or die;
 
 JModelLegacy::addIncludePath(JPATH_SITE.'/components/com_jem/models', 'JemModel');
 
-require_once (JPATH_SITE.'/components/com_jem/helpers/helper.php');
+require_once JPATH_SITE . '/components/com_jem/helpers/helper.php';
 
-# perform cleanup if it wasn't done today (archive, delete)
+// perform cleanup if it wasn't done today (archive, trash)
 JEMHelper::cleanup();
 
 /**
@@ -31,28 +30,24 @@ abstract class modJEMteaserHelper
 	{
 		mb_internal_encoding('UTF-8');
 
-		$db		= JFactory::getDBO();
-		$user	= JFactory::getUser();
-		$levels = $user->getAuthorisedViewLevels();
-
-		# Retrieve Eventslist model for the data
+		// Retrieve Eventslist model for the data
 		$model = JModelLegacy::getInstance('Eventslist', 'JemModel', array('ignore_request' => true));
 
-		# Set params for the model
-		# has to go before the getItems function
+		// Set params for the model
+		// has to go before the getItems function
 		$model->setState('params', $params);
 		$model->setState('filter.access',true);
 
-		# filter published
-		#  0: unpublished
-		#  1: published
-		#  2: archived
-		# -2: trashed
+		// filter published
+		//  0: unpublished
+		//  1: published
+		//  2: archived
+		// -2: trashed
 
 		$type = $params->get('type');
 		$offset_hourss = $params->get('offset_hours', 0);
 
-		# all upcoming events
+		// all upcoming events
 		if (($type == 0) || ($type == 1)) {
 			$offset_minutes = $offset_hourss * 60;
 
@@ -63,14 +58,14 @@ abstract class modJEMteaserHelper
 			$cal_from .= ($type == 1) ? " OR (TIMESTAMPDIFF(MINUTE, NOW(), CONCAT(IFNULL(a.enddates,a.dates),' ',IFNULL(a.endtimes,'23:59:59'))) > $offset_minutes)) " : ") ";
 		}
 
-		# archived events only
+		// archived events only
 		elseif ($type == 2) {
 			$model->setState('filter.published',2);
 			$model->setState('filter.orderby',array('a.dates DESC','a.times DESC'));
 			$cal_from = "";
 		}
 
-		# currently running events only
+		// currently running events only
 		elseif ($type == 3) {
 			$offset_days = (int)round($offset_hourss / 24);
 
@@ -79,8 +74,8 @@ abstract class modJEMteaserHelper
 
 			$cal_from = " ((DATEDIFF(a.dates, CURDATE()) <= $offset_days) AND (DATEDIFF(IFNULL(a.enddates,a.dates), CURDATE()) >= $offset_days))";
 		}
-		
-		# featured
+
+		// featured
 		elseif ($type == 4) {
 			$offset_minutes = $offset_hourss * 60;
 
@@ -90,55 +85,60 @@ abstract class modJEMteaserHelper
 			$cal_from  = "((TIMESTAMPDIFF(MINUTE, NOW(), CONCAT(a.dates,' ',IFNULL(a.times,'00:00:00'))) > $offset_minutes) ";
 			$cal_from .= " OR (TIMESTAMPDIFF(MINUTE, NOW(), CONCAT(IFNULL(a.enddates,a.dates),' ',IFNULL(a.endtimes,'23:59:59'))) > $offset_minutes)) ";
 		}
-		
+
 		$model->setState('filter.calendar_from',$cal_from);
 		$model->setState('filter.groupby','a.id');
 
-		# clean parameter data
+		// clean parameter data
 		$catids = $params->get('catid');
 		$venids = $params->get('venid');
 		$eventids = $params->get('eventid');
-		
-		# filter category's
+
+		// filter category's
 		if ($catids) {
 			$model->setState('filter.category_id',$catids);
 			$model->setState('filter.category_id.include',true);
 		}
 
-		# filter venue's
+		// filter venue's
 		if ($venids) {
 			$model->setState('filter.venue_id',$venids);
 			$model->setState('filter.venue_id.include',true);
 		}
 
-		# filter event id's
+		// filter event id's
 		if ($eventids) {
 			$model->setState('filter.event_id',$eventids);
 			$model->setState('filter.event_id.include',true);
 		}
-		
-		# count
+
+		// count
 		$count = $params->get('count', '2');
 
 		if ($params->get('use_modal', 0)) {
-		JHtml::_('behavior.modal', 'a.flyermodal');
+			JHtml::_('behavior.modal', 'a.flyermodal');
 		}
 
 		$model->setState('list.limit',$count);
-		
-		
-		# Retrieve the available Events
+
+
+		// Retrieve the available Events
 		$events = $model->getItems();
 
+		if (!$events) {
+			return array();
+		}
 
-		# Loop through the result rows and prepare data
+		// Loop through the result rows and prepare data
 		$i		= 0;
 		$lists	= array();
-
+		$FixItemID = $params->get('FixItemID', '');
+		$eventimg = $params->get('eventimg',1);
+		$venueimg = $params->get('venueimg',1);
 
 		foreach ($events as $row)
 		{
-			# create thumbnails if needed and receive imagedata
+			// create thumbnails if needed and receive imagedata
 			if ($row->datimage) {
 				$dimage = JEMImage::flyercreator($row->datimage, 'event');
 			} else {
@@ -150,44 +150,30 @@ abstract class modJEMteaserHelper
 				$limage = null;
 			}
 
-			# cut titel
+			// cut titel
 			$length = mb_strlen($row->title);
+			$maxlength = $params->get('cuttitle', '18');
 
-			if ($length > $params->get('cuttitle', '25')) {
-				$row->title = mb_substr($row->title, 0, $params->get('cuttitle', '18'));
+			if ($length > $maxlength && $maxlength > 0) {
+				$row->title = mb_substr($row->title, 0, $maxlength);
 				$row->title = $row->title.'...';
 			}
 
-			#################
-			## DEFINE LIST ##
-			#################
+			/**
+			 * DEFINE LIST
+			 **/
 
 			$settings	= JEMHelper::globalattribs();
 			$access		= !$settings->get('show_noauth','0');
 			$authorised = JAccess::getAuthorisedViewLevels(JFactory::getUser()->get('id'));
 
 			$lists[$i] = new stdClass();
-
-			if ($access || in_array($row->access, $authorised))
-			{
-				# We know that user has the privilege to view the event
-				$lists[$i]->link = JRoute::_(JEMHelperRoute::getEventRoute($row->slug));
-				$lists[$i]->linkText = JText::_('MOD_JEM_TEASER_READMORE');
-			}
-			else {
-				$lists[$i]->link = JRoute::_('index.php?option=com_users&view=login');
-				$lists[$i]->linkText = JText::_('MOD_JEM_TEASER_READMORE_REGISTER');
-			}
-
 			$lists[$i]->title			= htmlspecialchars($row->title, ENT_COMPAT, 'UTF-8');
 			$lists[$i]->venue			= htmlspecialchars($row->venue, ENT_COMPAT, 'UTF-8');
-			$lists[$i]->catname			= implode(", ", JemOutput::getCategoryList($row->categories, $params->get('linkcategory', 1)));
 			$lists[$i]->state			= htmlspecialchars($row->state, ENT_COMPAT, 'UTF-8');
 			$lists[$i]->city			= htmlspecialchars( $row->city, ENT_COMPAT, 'UTF-8' );
-			$lists[$i]->eventlink		= $params->get('linkevent', 1) ? JRoute::_(JEMHelperRoute::getEventRoute($row->slug)) : '';
-			$lists[$i]->venuelink		= $params->get('linkvenue', 1) ? JRoute::_(JEMHelperRoute::getVenueRoute($row->venueslug)) : '';
 
-			# time/date
+			// time/date
 			$lists[$i]->date			= modJEMteaserHelper::_format_date($row, $params);
 			$lists[$i]->day 			= modJEMteaserHelper::_format_day($row, $params);
 			$lists[$i]->dayname			= modJEMteaserHelper::_format_dayname($row);
@@ -196,20 +182,62 @@ abstract class modJEMteaserHelper
 			$lists[$i]->year 			= modJEMteaserHelper::_format_year($row);
 			$lists[$i]->time 			= $row->times ? modJEMteaserHelper::_format_time($row->dates, $row->times, $params) : '' ;
 
-			if ($dimage == null) {
-				$lists[$i]->eventimage		= '';
-				$lists[$i]->eventimageorig	= '';
-			} else {
-				$lists[$i]->eventimage		= JURI::base(true).'/'.$dimage['thumb'];
-				$lists[$i]->eventimageorig	= JURI::base(true).'/'.$dimage['original'];
+			if ($access || in_array($row->access, $authorised))
+			{
+				// We know that user has the privilege to view the event
+				if ($FixItemID)
+				{
+					$lists[$i]->link = JRoute::_('index.php?option=com_jem&view=event&id=' . $row->slug . '&Itemid=' . $FixItemID);
+				}
+				else
+				{
+					$lists[$i]->link = JRoute::_(JEMHelperRoute::getEventRoute($row->slug));
+				}
+				$lists[$i]->linkText = JText::_('MOD_JEM_TEASER_READMORE');
+			}
+			else
+			{
+				$lists[$i]->link = JRoute::_('index.php?option=com_users&view=login');
+				$lists[$i]->linkText = JText::_('MOD_JEM_TEASER_READMORE_REGISTER');
 			}
 
-			if ($limage == null) {
+			if ($FixItemID)
+			{
+				$lists[$i]->eventlink = $params->get('linkevent', 1) ? JRoute::_('index.php?option=com_jem&view=event&id=' . $row->slug . '&Itemid=' . $FixItemID) : '';
+				$lists[$i]->venuelink = $params->get('linkvenue', 1) ? JRoute::_('index.php?option=com_jem&view=venue&id=' . $row->venueslug . '&Itemid=' . $FixItemID) : '';
+			}
+			else
+			{
+				$lists[$i]->eventlink = $params->get('linkevent', 1) ? JRoute::_(JEMHelperRoute::getEventRoute($row->slug)) : '';
+				$lists[$i]->venuelink = $params->get('linkvenue', 1) ? JRoute::_(JEMHelperRoute::getVenueRoute($row->venueslug)) : '';
+			}
+			$lists[$i]->catname			= implode(", ", JemOutput::getCategoryList($row->categories, $params->get('linkcategory', 1),false,$FixItemID));
+
+			// images
+			if ($eventimg) {
+				if ($dimage == null) {
+					$lists[$i]->eventimage		= '';
+					$lists[$i]->eventimageorig	= '';
+				} else {
+					$lists[$i]->eventimage		= JURI::base(true).'/'.$dimage['thumb'];
+					$lists[$i]->eventimageorig	= JURI::base(true).'/'.$dimage['original'];
+				}
+			} else {
+				$lists[$i]->eventimage		= '';
+				$lists[$i]->eventimageorig	= '';
+			}
+
+			if ($venueimg) {
+				if ($limage == null) {
+					$lists[$i]->venueimage 		= '';
+					$lists[$i]->venueimageorig 	= '';
+				} else {
+					$lists[$i]->venueimage		= JURI::base(true).'/'.$limage['thumb'];
+					$lists[$i]->venueimageorig	= JURI::base(true).'/'.$limage['original'];
+				}
+			} else {
 				$lists[$i]->venueimage 		= '';
 				$lists[$i]->venueimageorig 	= '';
-			} else {
-				$lists[$i]->venueimage		= JURI::base(true).'/'.$limage['thumb'];
-				$lists[$i]->venueimageorig	= JURI::base(true).'/'.$limage['original'];
 			}
 
 			$length = $params->get('descriptionlength');
@@ -255,7 +283,6 @@ abstract class modJEMteaserHelper
 	protected static function _format_day($row, &$params)
 	{
 		//Get needed timestamps and format
-		//setlocale (LC_TIME, 'de_DE.UTF8');
 		$yesterday_stamp	= mktime(0, 0, 0, date("m") , date("d")-1, date("Y"));
 		$yesterday 			= strftime("%Y-%m-%d", $yesterday_stamp);
 		$today_stamp		= mktime(0, 0, 0, date("m") , date("d"), date("Y"));

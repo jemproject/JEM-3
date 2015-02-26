@@ -1,13 +1,11 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 defined('_JEXEC') or die;
-
 
 /**
  * Holds the logic for image manipulation
@@ -158,7 +156,6 @@ class JemImage {
 				break;
 		}
 
-
 		if ($image) {
 
 			# are we dealing with an image of previous JEM/EL versions
@@ -170,7 +167,6 @@ class JemImage {
 
 			$filename = basename($image);
 			$dirname = dirname($image);
-
 
 			# skip thumb generating if it's a file within a thumb directory
 			if (strpos($dirname,'small/') !== false) {
@@ -275,4 +271,3 @@ class JemImage {
 		return true;
 	}
 }
-?>

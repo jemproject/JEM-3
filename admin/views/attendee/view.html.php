@@ -1,6 +1,5 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -8,12 +7,11 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * View: Attendee
  */
 class JemViewAttendee extends JViewLegacy {
-	
+
 	protected $form;
 	protected $item;
 
@@ -22,7 +20,7 @@ class JemViewAttendee extends JViewLegacy {
 		// initialise variables
 		$document	= JFactory::getDocument();
 		$jinput 	= JFactory::getApplication()->input;
-		
+
 		// get vars
 		$eventid = $jinput->getInt('eid');
 
@@ -30,12 +28,12 @@ class JemViewAttendee extends JViewLegacy {
 		JHtml::_('stylesheet', 'com_jem/backend.css', array(), true);
 
 		// Get data from the model
-		$this->item	 = $this->get('Item');
-		$this->form	 = $this->get('Form');
+		$this->item = $this->get('Item');
+        $this->form = $this->get('Form');
 
 		// build selectlists
 		$lists = array();
-		$lists['users'] = JHtml::_('list.users', 'uid', $this->item->uid, false, NULL, 'name', 0);
+		$lists['users'] = JHtml::_('list.users', 'uid', $this->item->uid, false, null, 'name', 0);
 
 		// assign data to template
 		$this->lists 	= $lists;
@@ -47,7 +45,6 @@ class JemViewAttendee extends JViewLegacy {
 		parent::display($tpl);
 	}
 
-
 	/**
 	 * Add Toolbar
 	 */
@@ -55,7 +52,7 @@ class JemViewAttendee extends JViewLegacy {
 	{
 		$isNew		= ($this->item->id == 0);
 		JToolBarHelper::title($isNew ? JText::_('COM_JEM_ADD_ATTENDEE') : JText::_('COM_JEM_EDIT_ATTENDEE'), 'attendeeedit');
-		
+
 		JToolBarHelper::apply('attendee.apply');
 		JToolBarHelper::save('attendee.save');
 
@@ -69,4 +66,3 @@ class JemViewAttendee extends JViewLegacy {
 		JToolBarHelper::help('editattendee', true);
 	}
 }
-?>

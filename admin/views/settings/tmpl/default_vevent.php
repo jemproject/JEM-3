@@ -1,6 +1,5 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -8,7 +7,8 @@
  */
 defined('_JEXEC') or die;
 
-$group = 'globalattribs';
+$group	= 'globalattribs';
+$group2 = 'vevent'; 
 ?>
 <div class="row-fluid">
 <fieldset class="form-horizontal">
@@ -51,4 +51,28 @@ $group = 'globalattribs';
 			</div>
 		</div>	
 </fieldset>
+</div>
+
+<div class="row-fluid">
+<fieldset class="form-horizontal">
+<legend><?php echo JText::_('COM_JEM_SETTINGS_LEGEND_VEVENT_BACKEND'); ?></legend>
+	<div class="row-fluid">
+		<div class="span6">
+		<fieldset class="form-horizontal">
+			<legend><?php echo JText::_('COM_JEM_REGISTRATION'); ?></legend>
+				<div class="control-group">
+					<div class="control-label"><?php echo $this->form->getLabel('registering_b',$group); ?></div>
+					<div class="controls"><?php echo $this->form->getInput('registering_b',$group); ?></div>
+				</div>
+			<div class="control-group">
+				<div class="control-label"><?php echo $this->form->getLabel('unregistering_b',$group); ?></div>
+				<div class="controls"><?php echo $this->form->getInput('unregistering_b',$group); ?></div>
+			</div>
+			</fieldset>
+		</div>
+		<div class="span6">
+			
+		</div>
+	</div>
+	</fieldset>
 </div>

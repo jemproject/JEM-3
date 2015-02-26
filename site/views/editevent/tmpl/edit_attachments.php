@@ -1,6 +1,5 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -8,7 +7,7 @@
  */
 defined ('_JEXEC') or die;
 ?>
-
+<div class="editform_content">
 <fieldset>
 	<legend><?php echo JText::_('COM_JEM_ATTACHMENTS_LEGEND'); ?></legend>
 
@@ -34,7 +33,7 @@ defined ('_JEXEC') or die;
 				<td>
 					<div>
 						<div class="title"><?php echo JText::_('COM_JEM_ATTACHMENT_ACCESS'); ?></div>
-						<?php echo JHtml::_('select.genericlist', $this->access, 'attached-access[]', array('class'=>'inputbox', 'size'=>'7'), 'value', 'text', $file->access); ?>
+						<?php echo JHtml::_('select.genericlist', $this->access, 'attached-access[]', array('class'=>'inputbox', 'size'=>'1'), 'value', 'text', $file->access); ?>
 					</div>
 				</td>
 				<td>
@@ -58,11 +57,11 @@ defined ('_JEXEC') or die;
 						<div class="title"><?php echo JText::_('COM_JEM_ATTACHMENT_DESCRIPTION'); ?></div>
 						<input type="text" name="attach-desc[]" class="attach-desc" value="" />
 					</div>
-				</td>			
+				</td>
 				<td>
 					<div>
 						<div class="title"><?php echo JText::_('COM_JEM_ATTACHMENT_ACCESS'); ?></div>
-						<?php echo JHtml::_('select.genericlist', $this->access, 'attach-access[]', array('class'=>'inputbox', 'size'=>'7'), 'value', 'text', 0); ?>
+						<?php echo JHtml::_('select.genericlist', $this->access, 'attach-access[]', array('class'=>'inputbox', 'size'=>'1'), 'value', 'text', 0); ?>
 					</div>
 				</td>
 				<td>&nbsp;</td>
@@ -70,3 +69,4 @@ defined ('_JEXEC') or die;
 		</tbody>
 	</table>
 </fieldset>
+</div>

@@ -1,13 +1,11 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 defined('_JEXEC') or die;
-
 
 /**
  * Table: Settings
@@ -19,15 +17,13 @@ class JEMTableSettings extends JTable
 		parent::__construct('#__jem_settings', 'id', $db);
 	}
 
-
 	/**
 	 * check
 	 */
-	function check()
+	public function check()
 	{
 		return true;
 	}
-
 
 	/**
 	 * store
@@ -37,16 +33,22 @@ class JEMTableSettings extends JTable
 		return parent::store($updateNulls);
 	}
 
-
 	/**
 	 * Bind
 	 * @see JTable::bind()
 	 */
 	public function bind($array, $ignore = '')
 	{
-
 		if (isset($array['globalattribs']) && is_array($array['globalattribs']))
 		{
+			if (!isset($array['globalattribs']['registering_b'])) {
+				$array['globalattribs']['registering_b'] = 0 ;
+			}
+			
+			if (!isset($array['globalattribs']['unregistering_b'])) {
+				$array['globalattribs']['unregistering_b'] = 0 ;
+			}
+			
 			$registry = new JRegistry;
 			$registry->loadArray($array['globalattribs']);
 			$array['globalattribs'] = (string) $registry;
@@ -96,6 +98,14 @@ class JEMTableSettings extends JTable
 
 		if (isset($array['veditevent']) && is_array($array['veditevent']))
 		{
+			if (!isset($array['veditevent']['registering'])) {
+				$array['veditevent']['registering'] = 0 ;
+			}
+				
+			if (!isset($array['veditevent']['unregistering'])) {
+				$array['veditevent']['unregistering'] = 0 ;
+			}
+			
 			$registry = new JRegistry;
 			$registry->loadArray($array['veditevent']);
 			$array['veditevent'] = (string) $registry;
@@ -105,4 +115,3 @@ class JEMTableSettings extends JTable
 		return parent::bind($array, $ignore);
 	}
 }
-?>

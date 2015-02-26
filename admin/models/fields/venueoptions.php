@@ -1,6 +1,5 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -40,8 +39,7 @@ class JFormFieldVenueoptions extends JFormFieldList
 
 		$query->select('l.id AS value, l.venue AS text, l.published');
 		$query->from('#__jem_venues AS l');
-		
-		
+
 		// Filter on the published state
 		if (is_numeric($published))
 		{
@@ -68,24 +66,22 @@ class JFormFieldVenueoptions extends JFormFieldList
 			JError::raiseWarning(500, $e->getMessage);
 		}
 
-
 			// Pad the option text with spaces using depth level as a multiplier.
 			for ($i = 0, $n = count($options); $i < $n; $i++)
 			{
 				if ($options[$i]->published == 1)
 				{
-	
+
 				}
 				else
 				{
-			
+
 				}
 			}
 
 
 		// Get the current user object.
 		$user = JFactory::getUser();
-
 
 		// Merge any additional options in the XML definition.
 		$options = array_merge(parent::getOptions(), $options);

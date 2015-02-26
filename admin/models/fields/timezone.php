@@ -1,11 +1,10 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
- * 
+ *
  * Based upon: Joomla-Timezone field
  */
 defined('JPATH_PLATFORM') or die;
@@ -87,7 +86,6 @@ class JFormFieldTimezone extends JFormFieldGroupedList
 		return $return;
 	}
 
-	
 	/**
 	 * Method to get the time zone field option groups.
 	 *
@@ -102,21 +100,21 @@ class JFormFieldTimezone extends JFormFieldGroupedList
 		$keyField = !empty($this->keyField) ? $this->keyField : 'id';
 		$keyValue = $this->form->getValue($keyField);
 		$view 	= $this->element['view'];
-		
+
 		// If the timezone is not set use the server setting.
 		if (strlen($this->value) == 0 && empty($keyValue))
 		{
 			# we didn't select A timezone so we'll take a look at the server setting.
 			# are we in settings-view?
 			if ($view == 'venue') {
-				
+
 				# check if there is a setting filled
 				if ($globalTz) {
 					$this->value = $globalTz;
 				} else {
 					# there is no global value so check the the server setting
 					$serverTz = JFactory::getConfig()->get('offset');
-					
+
 					# UTC is seen as Abidjan and that's not something we want
 					if ($serverTz == 'UTC') {
 						$serverTz = 'Europe/Berlin'; // for the moment it's been set to this
@@ -125,8 +123,7 @@ class JFormFieldTimezone extends JFormFieldGroupedList
 				}
 			}
 		}
-		
-	
+
 		// Get the list of time zones from the server.
 		$zones = DateTimeZone::listIdentifiers();
 

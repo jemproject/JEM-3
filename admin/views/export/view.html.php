@@ -1,6 +1,5 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -8,14 +7,14 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * View: Export
  */
-class JEMViewExport extends JViewLegacy {
+class JEMViewExport extends JViewLegacy
+{
 
-	public function display($tpl = null) {
-		
+	public function display($tpl = null)
+	{
 		// Load pane behavior
 		jimport('joomla.html.pane');
 
@@ -32,7 +31,6 @@ class JEMViewExport extends JViewLegacy {
 		$categories = JEMCategories::buildcatselect($categories, 'cid[]', null, 0, 'multiple="multiple" size="8 class="inputbox"');
 
 		$this->categories		= $categories;
-
 
 		// add toolbar
 		$this->addToolbar();
@@ -52,4 +50,3 @@ class JEMViewExport extends JViewLegacy {
 		JToolBarHelper::help('export', true);
 	}
 }
-?>

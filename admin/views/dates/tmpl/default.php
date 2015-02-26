@@ -1,12 +1,10 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
- * @copyright (C) 2013-2013 joomlaeventmanager.net
+ * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
-
 defined('_JEXEC') or die;
 
 JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
@@ -72,7 +70,7 @@ JHtml::_('bootstrap.tooltip');
 			
 			foreach ($this->items as $i => $row) :
 			
-			if (!$row->date_range){
+			if (!$row->date_range) {
 			
 			?>
 			<tr class="row<?php echo $i % 2; ?>">

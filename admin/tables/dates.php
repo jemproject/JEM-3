@@ -1,39 +1,35 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
- * @copyright (C) 2013-2013 joomlaeventmanager.net
+ * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 defined('_JEXEC') or die;
-
 
 /**
  * Table: Dates
  */
 class JEMTableDates extends JTable
 {
-	public function __construct(&$db) {
+	public function __construct(&$db)
+    {
 		parent::__construct('#__jem_dates', 'id', $db);
-	}
+    }
 
 	/**
 	 * Bind.
 	 */
-	public function bind($array, $ignore = ''){
-		
-
+	public function bind($array, $ignore = '')
+	{
 		return parent::bind($array, $ignore);
 	}
-
 
 	/**
 	 * Check
 	 */
-	function check() {
-		
-	
+	public function check()
+	{
 		return true;
 	}
 
@@ -41,9 +37,7 @@ class JEMTableDates extends JTable
 	 * Store
 	 */
 	public function store($updateNulls = true)
-	{		
-		
-
+	{
 		return parent::store($updateNulls);
 	}
 
@@ -103,4 +97,3 @@ class JEMTableDates extends JTable
 		return $this->_db->getAffectedRows();
 	}
 }
-?>

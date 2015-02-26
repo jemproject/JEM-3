@@ -1,6 +1,5 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @subpackage JEM Comments Plugin
  * @copyright (C) 2013-2015 joomlaeventmanager.net
@@ -14,21 +13,20 @@ jimport('joomla.plugin.plugin');
 
 include_once(JPATH_SITE.'/components/com_jem/helpers/route.php');
 
-class plgJEMComments extends JPlugin {
-
+class plgJEMComments extends JPlugin
+{
 	/**
 	 * Constructor
 	 *
 	 * @param object $subject The object to observe
-	 * @param 	array  $config  An array that holds the plugin configuration
+     * @param 	array  $config  An array that holds the plugin configuration
 	 *
 	 */
-	public function __construct(& $subject, $config)
+    public function __construct(& $subject, $config)
 	{
 		parent::__construct($subject, $config);
 		$this->loadLanguage();
 	}
-
 
 	/**
 	 * This method handles the supported comment systems
@@ -51,7 +49,7 @@ class plgJEMComments extends JPlugin {
 		//jcomments integration
 		if ($this->params->get('commentsystem') == 1) {
 			if (file_exists(JPATH_SITE.'/components/com_jcomments/jcomments.php')) {
-				require_once(JPATH_SITE.'/components/com_jcomments/jcomments.php');
+				require_once JPATH_SITE . '/components/com_jcomments/jcomments.php';
 				$res .= '<div class="jcomments">';
 				$res .= JComments::showComments($event_id, 'com_jem', $event_title);
 				$res .= '</div>';
@@ -61,4 +59,3 @@ class plgJEMComments extends JPlugin {
 		return $res;
 	}
 }
-?>

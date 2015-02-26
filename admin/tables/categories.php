@@ -1,8 +1,7 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
- * @copyright (C) 2013-2013 joomlaeventmanager.net
+ * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
@@ -17,13 +16,13 @@ class JemTableCategories extends JTableNested
 {
 
 	public function __construct(JDatabaseDriver $db)
-	{
+    {
 		parent::__construct('#__jem_categories', 'id', $db);
 
 		if (self::addRoot() !== false) {
 			return;
 		}
-	}
+    }
 
 	/**
 	 * Method to delete a node and, optionally, its child nodes from the table.
@@ -167,7 +166,7 @@ class JemTableCategories extends JTableNested
 	 */
 	public function bind($array, $ignore = '')
 	{
-		
+
 		if (isset($array['params']) && is_array($array['params'])){
 			$registry = new JRegistry;
 			$registry->loadArray($array['params']);

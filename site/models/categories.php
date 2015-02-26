@@ -1,13 +1,11 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 defined('_JEXEC') or die;
-
 
 /**
  * Model-Categories
@@ -19,35 +17,35 @@ class JemModelCategories extends JModelLegacy
 	 *
 	 * @var int
 	 */
-	var $_id = 0;
+	public $_id = 0;
 
 	/**
 	 * Event data array
 	 *
 	 * @var array
 	 */
-	var $_data = null;
+	public $_data = null;
 
 	/**
 	 * Categories total
 	 *
 	 * @var integer
 	 */
-	var $_total = null;
+	public $_total = null;
 
 	/**
 	 * Categories data array
 	 *
 	 * @var array
 	 */
-	var $_categories = null;
+	public $_categories = null;
 
 	/**
 	 * Pagination object
 	 *
 	 * @var object
 	 */
-	var $_pagination = null;
+	public $_pagination = null;
 
 	/**
 	 * Show empty categories in list
@@ -99,7 +97,7 @@ class JemModelCategories extends JModelLegacy
 		//get the number of events from database
 		$limit		= $app->getUserStateFromRequest('com_jem.categories.'.$itemid.'.limit','limit',$params->get('cat_num'),'uint');
 		$limitstart = $app->input->get('limitstart', 0, 'uint');
-		
+
 		$this->setState('limit', $limit);
 		$this->setState('limitstart', $limitstart);
 	}
@@ -164,9 +162,8 @@ class JemModelCategories extends JModelLegacy
 				}
 			}
 		}
-		
-		return $this->_categories;
 
+		return $this->_categories;
 	}
 
 	/**
@@ -296,7 +293,6 @@ class JemModelCategories extends JModelLegacy
 		return $this->_buildQuery($emptycat, $parent_id, true);
 	}
 
-
 	/**
 	 * Method to get the categories query
 	 * @param bool   $emptycat include empty categories
@@ -363,7 +359,6 @@ class JemModelCategories extends JModelLegacy
 		return $query;
 	}
 
-
 	/**
 	 * Method to build the Categories query without subselect
 	 * That's enough to get the total value.
@@ -418,4 +413,3 @@ class JemModelCategories extends JModelLegacy
 		return $this->_pagination;
 	}
 }
-?>

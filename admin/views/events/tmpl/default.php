@@ -1,6 +1,5 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -22,10 +21,9 @@ $trashed	= $this->state->get('filter.published') == -2 ? true : false;
 
 $saveOrder	= $listOrder == 'a.ordering';
 
-if ($saveOrder)
-{
-	$saveOrderingUrl = 'index.php?option=com_jem&task=events.saveOrderAjax&tmpl=component';
-	JHtml::_('sortablelist.sortable', 'eventList', 'adminForm', strtolower($listDirn), $saveOrderingUrl);
+if ($saveOrder) {
+    $saveOrderingUrl = 'index.php?option=com_jem&task=events.saveOrderAjax&tmpl=component';
+    JHtml::_('sortablelist.sortable', 'eventList', 'adminForm', strtolower($listDirn), $saveOrderingUrl);
 }
 
 $params		= (isset($this->state->params)) ? $this->state->params : new JObject();
@@ -67,20 +65,17 @@ $settings	= $this->settings;
 				<th width="1%" class="center"><?php echo JText::_('COM_JEM_NUM'); ?></th>
 				<th width="1%" class="center"><?php echo JHtml::_('grid.checkall'); ?></th>
 				<th class="nowrap"><?php echo JHtml::_('searchtools.sort', 'COM_JEM_DATE', 'a.dates', $listDirn, $listOrder ); ?></th>
-				<th><?php echo JText::_('COM_JEM_EVENT_TIME'); ?></th>
 				<th class="nowrap"><?php echo JHtml::_('searchtools.sort', 'COM_JEM_EVENT_TITLE', 'a.title', $listDirn, $listOrder ); ?></th>
 				<th><?php echo JHtml::_('searchtools.sort', 'COM_JEM_VENUE', 'loc.venue', $listDirn, $listOrder ); ?></th>
 				<th><?php echo JHtml::_('searchtools.sort', 'COM_JEM_CITY', 'loc.city', $listDirn, $listOrder ); ?></th>
 				<th><?php echo JText::_('COM_JEM_CATEGORIES'); ?></th>
 				<th width="1%" class="center nowrap"><?php echo JText::_('JSTATUS'); ?></th>
-				<th width="5%">
-					<?php echo JHtml::_('searchtools.sort', 'JFEATURED', 'a.featured', $listDirn, $listOrder, NULL, 'desc'); ?>
-				</th>
 				<th class="nowrap"><?php echo JText::_('COM_JEM_CREATION'); ?></th>
 				<th class="center"><?php echo JHtml::_('searchtools.sort', 'COM_JEM_HITS', 'a.hits', $listDirn, $listOrder ); ?></th>
 				<th width="1%" class="center nowrap"><?php echo JText::_('COM_JEM_REGISTERED_USERS'); ?></th>
 				<th width="1%" class="center nowrap"><?php echo JHtml::_('searchtools.sort', 'COM_JEM_ID', 'a.id', $listDirn, $listOrder ); ?></th>
 				<th width="1%" class="center nowrap"><?php echo JHtml::_('searchtools.sort', 'COM_JEM_RECURRENCE', 'a.recurrence_group', $listDirn, $listOrder); ?></th>
+				<th width="5%" class="nowrap hidden-phone"><?php echo JHtml::_('searchtools.sort', 'JGRID_HEADING_LANGUAGE', 'language', $listDirn, $listOrder); ?></th>
 			</tr>
 		</thead>
 
@@ -103,9 +98,9 @@ $settings	= $this->settings;
 
 				//Prepare time
 				if (!$row->times) {
-					$displaytime = '-';
+					$displaytime = '';
 				} else {
-					$displaytime = JemOutput::formattime($row->times);
+					$displaytime = '<span class="label label-info">'.JemOutput::formattime($row->times).'</span><br>';
 				}
 
 				$ordering	= ($listOrder == 'ordering');
@@ -121,6 +116,7 @@ $settings	= $this->settings;
 				<td class="center"><?php echo $this->pagination->getRowOffset( $i ); ?></td>
 				<td class="center"><?php echo JHtml::_('grid.id', $i, $row->id); ?></td>
 				<td>
+				<?php echo $displaytime; ?>
 					<?php if ($row->checked_out) : ?>
 						<?php echo JHtml::_('jgrid.checkedout', $i, $row->editor, $row->checked_out_time, 'events.', $canCheckin); ?>
 					<?php endif; ?>
@@ -132,7 +128,6 @@ $settings	= $this->settings;
 						<?php echo $displaydate; ?>
 					<?php endif; ?>
 				</td>
-				<td><?php echo $displaytime; ?></td>
 				<td class="eventtitle">
 					<?php if ($canEdit) : ?>
 						<a href="<?php echo JRoute::_('index.php?option=com_jem&task=event.edit&id='.(int) $row->id); ?>">
@@ -167,9 +162,11 @@ $settings	= $this->settings;
 				<td class="category">
 				<?php echo implode(", ", JemOutput::getCategoryList($row->categories, $this->jemsettings->catlinklist,true)); ?>
 				</td>
-				<td class="center"><?php echo $published; ?></td>
-				<td class="center">
+				<td>
+					<div class="btn-group">
+					<?php echo JHtml::_('jgrid.published', $row->published, $i, 'events.', $canChange, 'cb'); ?>
 					<?php echo JHtml::_('jemhtml.featured', $row->featured, $i, $canChange); ?>
+					</div>
 				</td>
 				<td>
 					<?php echo JText::_('COM_JEM_AUTHOR').': '; ?><a href="<?php echo 'index.php?option=com_users&amp;task=user.edit&id='.$row->created_by; ?>"><?php echo $row->author; ?></a><br />
@@ -214,7 +211,8 @@ $settings	= $this->settings;
 						<?php echo JHtml::_('image', 'com_jem/publish_r.png', NULL, NULL, true); ?>
 					<?php } ?>
 				</td>
-				<td class="center"><?php echo $row->id; ?></td>
+				<td class="center"><?php echo $row->id; ?>
+				</td>
 				<td class="center">
 				<?php 
 				# check if this event has a recurrence_group
@@ -222,6 +220,15 @@ $settings	= $this->settings;
 					# the event belongs to a recurrence_group so we will output the recurrence_group
 					echo $row->recurrence_group;
 				}
+				?>
+				</td>
+				<td class="center small hidden-phone">
+				<?php 
+				if ($row->language == '*') {
+					echo JText::alt('JALL', 'language'); 
+				} else {
+					echo $row->language_title ? $this->escape($row->language_title) : JText::_('JUNDEFINED'); 
+				};
 				?>
 				</td>
 			</tr>

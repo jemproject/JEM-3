@@ -1,6 +1,5 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -40,4 +39,3 @@ class JemControllerSampledata extends JControllerLegacy
 		$this->setRedirect($link, $msg);
  	}
 }
-?>

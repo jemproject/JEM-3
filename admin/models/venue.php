@@ -1,6 +1,5 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -8,13 +7,12 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * Model: Venue
  */
 class JEMModelVenue extends JModelAdmin
 {
-	
+
 	/**
 	 * Returns a reference to the a Table object, always creating it.
 	 *
@@ -69,7 +67,6 @@ class JEMModelVenue extends JModelAdmin
 			$item->country = $jemsettings->defaultCountry;
 		}
 
-		
 		if (!empty($item->locimage)) {
 			if (strpos($item->locimage,'images/') !== false) {
 				# the image selected contains the images path
@@ -79,11 +76,9 @@ class JEMModelVenue extends JModelAdmin
 				$item->locimage = 'images/jem/venues/'.$item->locimage;
 			}
 		}
-		
-		
+
 		return $item;
 	}
-
 
 	/**
 	 * Method to get the data that should be injected in the form.
@@ -100,7 +95,6 @@ class JEMModelVenue extends JModelAdmin
 		return $data;
 	}
 
-
 	/**
 	 * Prepare and sanitise the table data prior to saving.
 	 *
@@ -114,7 +108,6 @@ class JEMModelVenue extends JModelAdmin
 		// Increment version number.
 		$table->version ++;
 	}
-
 
 	/**
 	 * Method to save the form data.
@@ -130,7 +123,7 @@ class JEMModelVenue extends JModelAdmin
 		$user 			= JFactory::getUser();
 		$fileFilter 	= new JInput($_FILES);
 		$table 			= $this->getTable();
-		
+
 		// Check if we're in the front or back
 		if ($app->isAdmin())
 			$backend = true;
@@ -141,10 +134,10 @@ class JEMModelVenue extends JModelAdmin
 		if ($data['country']) {
 			$data['country'] = JString::strtoupper($data['country']);
 		}
-		
+
 		$data['author_ip'] 		= $jinput->getString('author_ip');
-		
-				
+
+
 		if (parent::save($data)){
 			// At this point we do have an id.
 			$pk = $this->getState($this->getName() . '.id');

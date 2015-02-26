@@ -1,6 +1,5 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -8,34 +7,12 @@
  */
 defined('_JEXEC') or die;
 
-
 /**
  * Table: Cats_event_relations
  */
 class JemTableCats_event_relations extends JTable
 {
-	/**
-	 * Primary Key
-	 * @var int
-	 */
-	var $id = null;
-	/**
-	 * Category ID
-	 * @var int
-	 */
-	var $catid = null;
-	/**
-	 * Event ID
-	 * @var int
-	 */
-	var $itemid = null;
-	/**
-	 * Ordering
-	 * @var int
-	 * @todo implement
-	 */
-	var $ordering = null;
-
+	
 	public function __construct(& $db) {
 		parent::__construct('#__jem_cats_event_relations', 'id', $db);
 	}
@@ -101,4 +78,3 @@ class JemTableCats_event_relations extends JTable
 		return $this->_db->getAffectedRows();
 	}
 }
-?>

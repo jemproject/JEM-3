@@ -1,6 +1,5 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -68,7 +67,7 @@ class JemControllerAttendees extends JControllerLegacy
 
 		$model = $this->getModel('attendees');
 		$datas = $model->getItems();
-		
+
 		header('Content-Type: text/csv');
 		header('Expires: ' . gmdate('D, d M Y H:i:s') . ' GMT');
 		header('Content-Disposition: attachment; filename=attendees.csv');
@@ -101,7 +100,6 @@ class JemControllerAttendees extends JControllerLegacy
 		}
 
 		echo $export;
-
 		$app->close();
 	}
 
@@ -115,16 +113,16 @@ class JemControllerAttendees extends JControllerLegacy
 
 	function toggle()
 	{
-		$jinput 	= JFactory::getApplication()->input;	
+		$jinput 	= JFactory::getApplication()->input;
 		$cid 		= $jinput->get('cid',array(),'array');
 		$eventid 	= $jinput->get('eid');
-		
-	
+
+
 		$model 		= $this->getModel('attendee');
 		$res =		 $model->toggle($cid[0]);
-		
+
 		$register_data = $model->getItem($cid[0]);
-		
+
 		$type = 'message';
 
 		if ($res)
@@ -132,7 +130,7 @@ class JemControllerAttendees extends JControllerLegacy
 			JPluginHelper::importPlugin('jem');
 			$dispatcher = JEventDispatcher::getInstance();
 			$res = $dispatcher->trigger('onUserOnOffWaitinglist', array($cid[0]));
-			
+
 			if ($register_data->waiting)
 			{
 				$msg = JText::_('COM_JEM_ADDED_TO_ATTENDING');
@@ -182,7 +180,7 @@ class JemControllerAttendees extends JControllerLegacy
 
 		parent::display();
 	}
-	
+
 	/**
 	 * Proxy for getModel.
 	 */
@@ -192,4 +190,3 @@ class JemControllerAttendees extends JControllerLegacy
 		return $model;
 	}
 }
-?>

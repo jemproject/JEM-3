@@ -1,13 +1,11 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
- * @copyright (C) 2013-2013 joomlaeventmanager.net
+ * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 defined('_JEXEC') or die;
-
 
 /**
  * Model: Date
@@ -24,7 +22,7 @@ class JemModelDate extends JModelAdmin
 	protected function canDelete($record)
 	{
 		if (!empty($record->id)) {
-	
+
 			$user = JFactory::getUser();
 			return $user->authorise('core.delete', 'com_jem');
 		}
@@ -77,7 +75,7 @@ class JemModelDate extends JModelAdmin
 		if (empty($form)) {
 			return false;
 		}
-		
+
 		if ($this->getState('date.id')) {
 			$pk = $this->getState('date.id');
 			$items = $this->getItem($pk);
@@ -98,9 +96,9 @@ class JemModelDate extends JModelAdmin
 		$jemsettings = JEMAdmin::config();
 
 		if ($item = parent::getItem($pk)){
-		
+
 		}
-		
+
 		return $item;
 	}
 
@@ -156,16 +154,12 @@ class JemModelDate extends JModelAdmin
 		else
 			$backend = false;
 
-		
-	
 		if (parent::save($data)){
 			// At this point we do have an id.
 			$pk = $this->getState($this->getName() . '.id');
 
-
 			return true;
 		}
-
 		return false;
 	}
 
@@ -182,15 +176,15 @@ class JemModelDate extends JModelAdmin
 		// Sanitize the ids.
 		$pks = (array) $pks;
 		JArrayHelper::toInteger($pks);
-	
+
 		if (empty($pks)) {
 			$this->setError(JText::_('COM_JEM_DATES_NO_ITEM_SELECTED'));
 			return false;
 		}
-	
+
 		try {
 			$db = $this->getDbo();
-	
+
 			$db->setQuery(
 					'UPDATE #__jem_dates' .
 					' SET enabled = '.(int) $value.
@@ -199,16 +193,14 @@ class JemModelDate extends JModelAdmin
 			if (!$db->execute()) {
 				throw new Exception($db->getErrorMsg());
 			}
-	
+
 		} catch (Exception $e) {
 			$this->setError($e->getMessage());
 			return false;
 		}
-	
+
 		$this->cleanCache();
-	
+
 		return true;
 	}
-	
-	
 }

@@ -1,13 +1,11 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 defined('_JEXEC') or die;
-
 
 /**
  * Model: Source
@@ -38,8 +36,6 @@ class JEMModelSource extends JModelForm
 		// Parse the template id out of the compound reference.
 		$temp = (base64_decode($id));
 		$fileName = $temp;
-
-
 
 		$this->setState('filename', $fileName);
 
@@ -161,7 +157,6 @@ class JEMModelSource extends JModelForm
 			$file = str_replace('custom#:', '', $fileName);
 			$filePath	= JPath::clean(JPATH_SITE.'/'.$file);
 		}
-
 
 		// Include the extension plugins for the save events.
 		JPluginHelper::importPlugin('extension');

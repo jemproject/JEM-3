@@ -1,6 +1,5 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
@@ -46,19 +45,38 @@ class JemControllerHousekeeping extends JControllerLegacy
 
 		$this->setRedirect($link, $msg);
 	}
+
+
+	/**
+	 * Cleanup images
+	 */
+	function CleanupImages() {
+		$jinput	= JFactory::getApplication()->input;
+		$task 	= $jinput->getCmd('task');
+		$model 	= $this->getModel('housekeeping');
+
+		$total = $model->CleanupImages();
+		$total_cnt = count($total);
+		$thumb_cnt = count(array_filter($total));
+		$normal = $total_cnt-$thumb_cnt;
+		
+		$link = 'index.php?option=com_jem&view=housekeeping';
+		$msg = JText::sprintf('COM_JEM_HOUSEKEEPING_IMAGES_MOVED', $thumb_cnt, $normal);
+		$this->setRedirect($link, $msg);
+	}
 	
 	
 	/**
-	 * Remove obsolete images
+	 * Remove images
 	 */
 	function rmObsImages() {
 		$jinput	= JFactory::getApplication()->input;
 		$task 	= $jinput->getCmd('task');
 		$model 	= $this->getModel('housekeeping');
-		
-		$total = $model->rmObsImages();
+		$model->rmObsImages();
+	
 		$link = 'index.php?option=com_jem&view=housekeeping';
-		$msg = JText::sprintf('COM_JEM_HOUSEKEEPING_IMAGES_DELETED', $total);
+		$msg = JText::_('COM_JEM_HOUSEKEEPING_IMAGES_REMOVED');
 		$this->setRedirect($link, $msg);
 	}
 
@@ -81,7 +99,6 @@ class JemControllerHousekeeping extends JControllerLegacy
 		$this->setRedirect($link, $msg);
 	}
 
-
 	/**
 	 * Truncates JEM tables with exception of settings table
 	 */
@@ -94,7 +111,6 @@ class JemControllerHousekeeping extends JControllerLegacy
 
 		$this->setRedirect($link, $msg);
 	}
-
 
 	/**
 	 * Triggerarchive + Recurrences
@@ -113,4 +129,3 @@ class JemControllerHousekeeping extends JControllerLegacy
 		$this->setRedirect($link, $msg);
 	}
 }
-?>

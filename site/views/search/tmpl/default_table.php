@@ -1,12 +1,12 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 defined('_JEXEC') or die;
+
 ?>
 <script type="text/javascript">
 	function tableOrdering(order, dir, view)
@@ -41,7 +41,7 @@ defined('_JEXEC') or die;
 		</tr>
 		<tr>
 		<td>
-		
+
 		<span class="label">End date</span>
 		</td>
 			<td>
@@ -60,7 +60,7 @@ defined('_JEXEC') or die;
 		<td>
 		<span class="label">Continent</span>
 		</td>
-		
+
 			<td>
 			<?php echo $this->lists['continents'];?>
 			</td>

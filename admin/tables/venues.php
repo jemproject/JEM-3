@@ -1,13 +1,11 @@
 <?php
 /**
- * @version 3.0.6
  * @package JEM
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 defined('_JEXEC') or die;
-
 
 /**
  * Table: Venues
@@ -19,15 +17,15 @@ class JEMTableVenues extends JTable
 		parent::__construct('#__jem_venues', 'id', $db);
 	}
 
-
 	/**
 	 * Bind
 	 */
 	public function bind($array, $ignore = ''){
 		// in here we are checking for the empty value of the checkbox
 
-		if (!isset($array['map']))
+		if (!isset($array['map'])) {
 			$array['map'] = 0 ;
+		}
 
 		//don't override without calling base class
 		return parent::bind($array, $ignore);
@@ -36,7 +34,7 @@ class JEMTableVenues extends JTable
 	/**
 	 * Check
 	 */
-	function check(){
+	public function check() {
 
 		$jinput = JFactory::getApplication()->input;
 
@@ -60,20 +58,6 @@ class JEMTableVenues extends JTable
 					$this->setError(JText::_('COM_JEM_VENUE_ERROR_MAP_ADDRESS'));
 					return false;
 				}
-			}
-		}
-
-		if (trim($this->url)) {
-			$this->url = strip_tags($this->url);
-
-			if (strlen($this->url) > 199) {
-				$this->setError(JText::_('COM_JEM_VENUE_ERROR_URL_LENGTH'));
-				return false;
-			}
-			if (!preg_match('/^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}'
-					.'((:[0-9]{1,5})?\/.*)?$/i' , $this->url)) {
-				$this->setError(JText::_('COM_JEM_VENUE_ERROR_URL_FORMAT'));
-				return false;
 			}
 		}
 
@@ -185,7 +169,6 @@ class JEMTableVenues extends JTable
 			$this->locimage = '';
 		}
 
-
 		/*
 		if (!$backend) {
 			#	check if the user has the required rank for autopublish
@@ -254,4 +237,3 @@ class JEMTableVenues extends JTable
 		return $this->_db->getAffectedRows();
 	}
 }
-?>
