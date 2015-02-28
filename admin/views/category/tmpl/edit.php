@@ -26,9 +26,7 @@ $slidesOptions = array(
 			echo $this->form->getField('description')->save();
 			?>
 			Joomla.submitform(task, document.getElementById('item-form'));
-		} else {
-			alert('<?php echo $this->escape(JText::_('JGLOBAL_VALIDATION_FORM_FAILED'));?>');
-		}
+		} 
 	}
 </script>
 		
