@@ -51,9 +51,6 @@ class JFormFieldCatOptionsFront extends JFormFieldList
 		// Selected Categories
 		$currentid = JFactory::getApplication()->input->getInt('a_id');
 		
-		// @todo check, obsolete?
-		// $categories = self::getCategories($currentid);
-		
 		$db = JFactory::getDbo();
 		$query = $db->getQuery(true);
 		
@@ -91,6 +88,7 @@ class JFormFieldCatOptionsFront extends JFormFieldList
 		$jinput = JFactory::getApplication()->input;
 		$db		= JFactory::getDbo();
 		$a_id = $jinput->get('a_id',null);
+		
 		
 		// retrieve data
 		if ($frontedit)
@@ -131,29 +129,9 @@ class JFormFieldCatOptionsFront extends JFormFieldList
 				
 				$validated =false;
 				if($superuser) {
-					// no need to restrict to category's
 					$validated = true;
 				}
-				
-				if (!$validated) {
-					// in this case it's going to be difficult
-					// catch the groupnumber of the user+add rights
-					$query2	= $db->getQuery(true);
-					$query2->select(array('gr.id'));
-					$query2->from($db->quoteName('#__jem_groups').' AS gr');
-					$query2->join('LEFT', '#__jem_groupmembers AS g ON g.group_id = gr.id');
-					$query2->where(array('g.member = '. (int) $user->get('id'),$db->quoteName('gr.addevent').' =1','g.member NOT LIKE 0'));
-					$db->setQuery($query2);
-					$groupnumber = $db->loadColumn();
-					
-					// is the user member of a group with edit rights?
-					if ($groupnumber) {
-						// restrict submission into maintained categories only
-						$query->where(array('a.groupid IN (' . implode(',', $groupnumber) . ')'));
-					} else {
-						return false;
-					}
-				}				
+							
 			} else {
 				// $specified guest category
 				$query->where(array('a.id = '. $guestcat));
@@ -171,7 +149,16 @@ class JFormFieldCatOptionsFront extends JFormFieldList
 		}
 		catch (RuntimeException $e)
 		{		
-			JError::raiseWarning(500, $e->getMessage);
+			if (!$valguest) {
+				JError::raiseWarning(500, $e->getMessage);
+			}
+		}
+		
+		if ($valguest) {
+			// Merge any additional options in the XML definition.
+			$options = array_merge(parent::getOptions(), $options);
+			
+			return $options;
 		}
 		
 					
@@ -198,6 +185,61 @@ class JFormFieldCatOptionsFront extends JFormFieldList
 			{
 				$options[$i]->text = str_repeat('- ', $options[$i]->level) . '[' . $options[$i]->text . ']';
 			}
+		}
+		
+		if (!$validated) {
+			
+			// catch the groupnumber of the user+add rights
+			$query	= $db->getQuery(true);
+			$query->select(array('gr.id'));
+			$query->from($db->quoteName('#__jem_groups').' AS gr');
+			$query->join('LEFT', '#__jem_groupmembers AS g ON g.group_id = gr.id');
+			$query->where(array('g.member = '. (int) $user->get('id'),$db->quoteName('gr.addevent').' =1','g.member NOT LIKE 0'));
+			$db->setQuery($query);
+			$groupnumber = $db->loadColumn();
+				
+			// is the user member of a group with edit rights?
+			if ($groupnumber) {
+				$query = $db->getQuery(true);
+				$query->select('c.id');
+				$query->from($db->quoteName('#__jem_categories').' AS c');
+				$query->where(array('c.groupid IN (' . implode(',', $groupnumber) . ')'));
+				$db->setQuery($query);
+				$cats = $db->loadColumn();
+			} else {
+				$cats = false;
+			}
+		}
+		
+		
+		// Get the current user object.
+		$eventid = $this->form->getValue('id', 0);
+		$user = JFactory::getUser();
+		
+		// For new items we want a list of categories you are allowed to create in.
+		if ($eventid == 0)
+		{
+			foreach ($options as $i => $option)
+			{
+				// To save or create in a category you need to have create rights for that category
+				
+				// check for maintainers
+				if ($user->authorise('core.create', 'com_jem.category.' . $option->value) != true)
+				{
+					if ($cats && !$valguest) {
+						if (!in_array($option->value, $cats)) {
+							unset($options[$i]);
+						}
+					}
+					
+					unset($options[$i]);
+				}
+			}
+		}
+		// Editing, more complex.
+		else
+		{
+			
 		}
 		
 		// Merge any additional options in the XML definition.
