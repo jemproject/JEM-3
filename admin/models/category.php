@@ -205,9 +205,31 @@ class JemModelCategory extends JModelAdmin
 		if (empty($data)) {
 			$data = $this->getItem();
 		}
+		
+		$this->preprocessData('com_jem.category', $data);
 
 		return $data;
 	}
+	
+	
+	/**
+	 * Method to preprocess the form.
+	 *
+	 * @param   JForm   $form   A JForm object.
+	 * @param   mixed   $data   The data expected for the form.
+	 * @param   string  $group  The name of the plugin group to import.
+	 *
+	 * @return  void
+	 *
+	 * @see     JFormField
+	 * @throws  Exception if there is an error in the form event.
+	 */
+	protected function preprocessForm(JForm $form, $data, $group = 'content')
+	{
+		// Trigger the default form events.
+		parent::preprocessForm($form, $data, $group);
+	}
+	
 
 	/**
 	 * Method to save the form data.

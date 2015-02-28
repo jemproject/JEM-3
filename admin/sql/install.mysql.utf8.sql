@@ -230,6 +230,7 @@ CREATE TABLE IF NOT EXISTS `#__jem_categories` (
   `modified_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `modified_user_id` int(10) unsigned NOT NULL DEFAULT '0',
   `email` varchar(200) NOT NULL DEFAULT '',
+  `asset_id` INT( 10 ) UNSIGNED NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM CHARACTER SET `utf8` COLLATE `utf8_general_ci`;
 

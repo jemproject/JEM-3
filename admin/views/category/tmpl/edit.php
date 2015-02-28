@@ -82,6 +82,11 @@ $slidesOptions = array(
 			</div>
 		</fieldset>
 		<?php echo JHtml::_('bootstrap.endTab'); ?>
+		<?php if ($this->canDo->get('core.admin')) : ?>
+			<?php echo JHtml::_('bootstrap.addTab', 'category', 'rules', JText::_('COM_JEM_FIELDSET_RULES', true)); ?>
+			<?php echo $this->form->getInput('rules'); ?>
+			<?php echo JHtml::_('bootstrap.endTab'); ?>
+		<?php endif; ?>
 		<?php echo JHtml::_('bootstrap.endTabSet');?>
 
 		</div><div class="span4">	
