@@ -70,7 +70,7 @@ abstract class JEMHelperRoute
 		return $link;
 	}
 
-	public static function getCategoryRoute($id)
+	public static function getCategoryRoute($id,$language=false)
 	{
 		if (!isset(self::$FixedItemid)) {
 			$settings 		= JEMHelper::globalattribs();
@@ -95,6 +95,12 @@ abstract class JEMHelperRoute
 		if($category) {
 			$needles['categories'] = array_reverse($category->getPath());
 		}
+		
+		if ($language && $language != "*" && JLanguageMultilang::isEnabled())
+		{
+			$link .= '&lang=' . $language;
+			$needles['language'] = $language;
+		}
 
 		if ($item = self::_findItem($needles)) {
 			$link .= '&Itemid='.$item;
@@ -109,7 +115,7 @@ abstract class JEMHelperRoute
 		return $link;
 	}
 
-	public static function getEventRoute($id, $catid = null)
+	public static function getEventRoute($id, $catid = null,$language=false)
 	{
 		if (!isset(self::$FixedItemid)) {
 			$settings 		= JEMHelper::globalattribs();
@@ -133,6 +139,12 @@ abstract class JEMHelperRoute
 			//$needles['categories'] = $needles['category'];
 			$link .= '&catid='.$catid;
 		}
+		
+		if ($language && $language != "*" && JLanguageMultilang::isEnabled())
+		{
+			$link .= '&lang=' . $language;
+			$needles['language'] = $language;
+		}
 
 		if ($item = self::_findItem($needles)) {
 			$link .= '&Itemid='.$item;
@@ -144,7 +156,7 @@ abstract class JEMHelperRoute
 		return $link;
 	}
 
-	public static function getVenueRoute($id)
+	public static function getVenueRoute($id,$language=false)
 	{
 		if (!isset(self::$FixedItemid)) {
 			$settings 		= JEMHelper::globalattribs();
@@ -164,6 +176,12 @@ abstract class JEMHelperRoute
 
 		// If no venue view works try venues
 		$needles['venues'] = array(self::ARTIFICALID);
+		
+		if ($language && $language != "*" && JLanguageMultilang::isEnabled())
+		{
+			$link .= '&lang=' . $language;
+			$needles['language'] = $language;
+		}
 
 		if ($item = self::_findItem($needles)) {
 			$link .= '&Itemid='.$item;
@@ -175,7 +193,7 @@ abstract class JEMHelperRoute
 		return $link;
 	}
 
-	protected static function getRouteWithoutId($my)
+	protected static function getRouteWithoutId($my,$language=false)
 	{
 		if (!isset(self::$FixedItemid)) {
 			$settings 		= JEMHelper::globalattribs();
@@ -191,6 +209,12 @@ abstract class JEMHelperRoute
 
 		// Create the link
 		$link = 'index.php?option=com_jem&view='.$my;
+		
+		if ($language && $language != "*" && JLanguageMultilang::isEnabled())
+		{
+			$link .= '&lang=' . $language;
+			$needles['language'] = $language;
+		}
 
 		if ($item = self::_findItem($needles)) {
 			$link .= '&Itemid='.$item;
