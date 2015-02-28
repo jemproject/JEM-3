@@ -13,7 +13,10 @@ $canDo = JEMHelperBackend::getActions();
 ?>
 
 <form action="<?php echo JRoute::_('index.php?option=com_jem&view=cssmanager'); ?>" method="post" name="adminForm" id="adminForm">
-	
+	<div id="j-sidebar-container" class="span2">
+		<?php echo $this->sidebar; ?>
+	</div>
+	<div id="j-main-container" class="span10">	
 	<div class="row-fluid">	
 		<div class="span6">
 	
@@ -87,4 +90,5 @@ $canDo = JEMHelperBackend::getActions();
 		<input type="hidden" name="task" value="" />
 		<?php echo JHtml::_('form.token'); ?>
 		<?php JHtml::_('behavior.keepalive'); ?>
+		</div>
 </form>

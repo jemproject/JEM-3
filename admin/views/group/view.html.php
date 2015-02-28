@@ -53,6 +53,7 @@ class JEMViewGroup extends JViewLegacy {
 		$this->lists 		= $lists;
 
 		$this->addToolbar();
+		$this->sidebar = JHtmlSidebar::render();
 		parent::display($tpl);
 	}
 

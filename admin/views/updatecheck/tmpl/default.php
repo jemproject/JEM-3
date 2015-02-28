@@ -9,7 +9,10 @@ defined('_JEXEC') or die;
 ?>
 
 <form action="<?php echo JRoute::_('index.php?option=com_jem&view=updatecheck'); ?>" method="post" name="adminForm" id="adminForm">
-
+<div id="j-sidebar-container" class="span2">
+		<?php echo $this->sidebar; ?>
+	</div>
+	<div id="j-main-container" class="span10">	
 <?php
 if ($this->updatedata->failed == 0) {
 		?>
@@ -107,4 +110,5 @@ if ($this->updatedata->failed == 0) {
 
 <input type="hidden" name="task" value="" />
 <?php echo JHtml::_('form.token'); ?>
+</div>
 </form>

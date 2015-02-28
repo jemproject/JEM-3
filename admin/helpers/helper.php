@@ -28,44 +28,44 @@ class JemHelperBackend
 	 */
 	public static function addSubmenu($vName)
 	{
-		JSubMenuHelper::addEntry(
+		JHtmlSidebar::addEntry(
 			JText::_('COM_JEM_SUBMENU_MAIN'),
 			'index.php?option=com_jem&view=main',
 			$vName == 'main'
 		);
 
-		JSubMenuHelper::addEntry(
+		JHtmlSidebar::addEntry(
 			JText::_('COM_JEM_EVENTS'),
 			'index.php?option=com_jem&view=events',
 			$vName == 'events'
 		);
 
-		JSubMenuHelper::addEntry(
+		JHtmlSidebar::addEntry(
 			JText::_('COM_JEM_VENUES'),
 			'index.php?option=com_jem&view=venues',
 			$vName == 'venues'
 		);
 
-		JSubMenuHelper::addEntry(
+		JHtmlSidebar::addEntry(
 			JText::_('COM_JEM_CATEGORIES'),
 			'index.php?option=com_jem&view=categories',
 			$vName == 'categories'
 		);
 
-		JSubMenuHelper::addEntry(
+		JHtmlSidebar::addEntry(
 		JText::_('COM_JEM_GROUPS'),
 		'index.php?option=com_jem&view=groups',
 		$vName == 'groups'
 				);
 
-		JSubMenuHelper::addEntry(
+		JHtmlSidebar::addEntry(
 		JText::_('COM_JEM_HELP'),
 		'index.php?option=com_jem&view=help',
 		$vName == 'help'
 				);
 
 		if (JFactory::getUser()->authorise('core.manage')) {
-			JSubMenuHelper::addEntry(
+			JHtmlSidebar::addEntry(
 			JText::_('COM_JEM_SETTINGS_TITLE'),
 			'index.php?option=com_jem&view=settings',
 			$vName == 'settings'

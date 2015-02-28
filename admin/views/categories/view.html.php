@@ -57,6 +57,7 @@ class JemViewCategories extends JViewLegacy
 		$this->f_levels = $options;
 
 		$this->addToolbar();
+		$this->sidebar = JHtmlSidebar::render();
 		parent::display($tpl);
 	}
 

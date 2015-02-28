@@ -58,6 +58,7 @@ class JemViewEvent extends JViewLegacy {
 		$this->Lists 		= $Lists;
 
 		$this->addToolbar();
+		$this->sidebar = JHtmlSidebar::render();
 		parent::display($tpl);
 	}
 

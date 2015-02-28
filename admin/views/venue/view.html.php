@@ -72,6 +72,7 @@ class JEMViewVenue extends JViewLegacy {
 		JHtml::_('script', 'com_jem/slider-state.js', false, true);
 
 		$this->addToolbar();
+		$this->sidebar = JHtmlSidebar::render();
 		parent::display($tpl);
 	}
 

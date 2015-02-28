@@ -55,10 +55,9 @@ class JemViewCategory extends JViewLegacy
 		$Lists['groups']	= JHtml::_('select.genericlist', $grouplist, 'groupid', array('size'=>'1','class'=>'inputbox'), 'value', 'text', $this->item->groupid);
 		$this->Lists 		= $Lists;
 
-		parent::display($tpl);
-		$jinput->set('hidemainmenu', true);
-
 		$this->addToolbar();
+		$this->sidebar = JHtmlSidebar::render();
+		parent::display($tpl);
 	}
 
 	/**
@@ -69,6 +68,8 @@ class JemViewCategory extends JViewLegacy
 		// Initialise variables.
 		$user		= JFactory::getUser();
 		$userId		= $user->get('id');
+		$jinput = JFactory::getApplication()->input;
+		$jinput->set('hidemainmenu', true);
 
 		$isNew		= ($this->item->id == 0);
 		$checkedOut	= !($this->item->checked_out == 0 || $this->item->checked_out == $userId);

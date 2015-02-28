@@ -28,6 +28,10 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 	}
 </script>
 <form action="<?php echo JRoute::_('index.php?option=com_jem&view=attendees&eid='.$this->eventid); ?>"  method="post" name="adminForm" id="adminForm">
+	<div id="j-sidebar-container" class="span2">
+		<?php echo $this->sidebar; ?>
+	</div>
+	<div id="j-main-container" class="span10">	
 	<table class="tableheader">
 		<tr>
 			<td>
@@ -151,4 +155,5 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 		<input type="hidden" name="task" value="" />
 		<input type="hidden" name="id" value="<?php echo $this->event->id; ?>" />
 		<input type="hidden" name="eid" value="<?php echo $this->eventid; ?>" />
+	</div>
 </form>

@@ -28,7 +28,7 @@ class JEMViewUpdatecheck extends JViewLegacy
 
 		// add toolbar
 		$this->addToolbar();
-
+		$this->sidebar = JHtmlSidebar::render();
 		parent::display($tpl);
 	}
 

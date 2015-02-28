@@ -31,6 +31,10 @@ $slidesOptions = array(
 </script>
 		
 <form action="<?php echo JRoute::_('index.php?option=com_jem&layout=edit&id='.(int) $this->item->id); ?>" method="post" name="adminForm" id="item-form" class="form-validate">
+<div id="j-sidebar-container" class="span2">
+		<?php echo $this->sidebar; ?>
+	</div>
+	<div id="j-main-container" class="span10">
 <div class="form-horizontal">	
 	<div class="span12">
 	
@@ -163,5 +167,5 @@ $slidesOptions = array(
 	
 	</div>
 			</div>
-	</div>	
+	</div>	</div>
 </form>

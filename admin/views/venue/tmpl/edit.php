@@ -189,6 +189,10 @@ $slidesOptions = array(
 <form
 	action="<?php echo JRoute::_('index.php?option=com_jem&layout=edit&id='.(int) $this->item->id); ?>"
 	class="form-validate" method="post" name="adminForm" id="venue-form" enctype="multipart/form-data">
+	<div id="j-sidebar-container" class="span2">
+		<?php echo $this->sidebar; ?>
+	</div>
+	<div id="j-main-container" class="span10">
 <div class="form-horizontal">
 <div class="span12">
 
@@ -392,5 +396,5 @@ $slidesOptions = array(
 		<input type="hidden" name="author_ip" value="<?php echo $this->item->author_ip; ?>" />
 		<?php echo JHtml::_('form.token'); ?>
 		</div></div>
-	</div>
+	</div></div>
 </form>
