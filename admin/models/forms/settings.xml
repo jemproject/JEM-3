@@ -1460,7 +1460,7 @@
 		label="COM_JEM_SETTINGS_FIELD_SHOW_OWNEDVENUESONLY"
 		description="COM_JEM_SETTINGS_FIELD_SHOW_OWNEDVENUESONLY_DESC"
 		class="btn-group btn-group-yesno"
-		default="1"
+		default="0"
 		required="false"
 		>
 		<option value="0">JNO</option>
