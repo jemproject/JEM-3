@@ -90,24 +90,19 @@ class JemViewEventslist extends JEMView
 		}
 
 		// Check if the user has access to the form
-		$maintainer = JemUser::ismaintainer('add');
-		$genaccess 	= JemUser::validate_user($jemsettings->evdelrec, $jemsettings->delivereventsyes );
-
-		if ($maintainer || $genaccess || $user->authorise('core.create','com_jem')) {
+		if (JEMUser::addEvent(true)) {
 			$dellink = 1;
 		} else {
 			$dellink = 0;
 		}
-
-		# Check if the user has access to the add-venueform
-		$maintainer2	= JemUser::venuegroups('add');
-		$genaccess2		= JemUser::validate_user($jemsettings->locdelrec, $jemsettings->deliverlocsyes);
-		if ($maintainer2 || $genaccess2) {
+		
+		// Check if the user has access to the venueform
+		if (JEMUser::addVenue()) {
 			$addvenuelink = 1;
 		} else {
 			$addvenuelink = 0;
 		}
-
+		
 		// search filter
 		$filters = array();
 		$filters[] = JHtml::_('select.option', '0', '&mdash; '.JText::_('COM_JEM_GLOBAL_SELECT_FILTER').' &mdash;');

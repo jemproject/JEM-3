@@ -63,27 +63,12 @@ class JemViewEditevent extends JViewLegacy
 		$this->form = $this->get('Form');
 		$this->return_page = $this->get('ReturnPage');
 
-		if ($valguest == false){
-			// check for guest
-			if (!$user || $user->id == 0) {
-				$app->enqueueMessage(JText::_('JERROR_ALERTNOAUTHOR'), 'error');
-				return false;
-			}
-		}
-
 		if (empty($this->item->id)) {
-			// Check if the user has access to the form
-			$maintainer = JemUser::ismaintainer('add');
-			$genaccess  = JemUser::validate_user($jemsettings->evdelrec, $jemsettings->delivereventsyes );
-
-			if ($maintainer || $genaccess ) {
-				$dellink = true;
+			if (JEMUser::addEvent()) {
+				$authorised = true;
 			} else {
-				$dellink = false;
+				$authorised = false;
 			}
-
-			$valguest = JEMUser::validate_guest();
-			$authorised = $user->authorise('core.create','com_jem') || (count($user->getAuthorisedCategories('com_jem', 'core.create')) || $valguest || $dellink);
 		} else {
 			// Check if user can edit
 			$maintainer5 = JemUser::ismaintainer('edit',$this->item->id);

@@ -50,12 +50,7 @@ class JEMControllerEditevent extends JControllerForm
 			$allow	= $user->authorise('core.create', 'com_jem.category.'.$categoryId);
 		}
 
-		$jemsettings	= JEMHelper::config();
-		$maintainer		= JEMUser::ismaintainer('add');
-		$genaccess		= JEMUser::validate_user($jemsettings->evdelrec, $jemsettings->delivereventsyes);
-		$valguest		= JEMUser::validate_guest();
-
-		if ($maintainer || $genaccess || $valguest) {
+		if (JEMUser::addEvent()) {
 			return true;
 		}
 

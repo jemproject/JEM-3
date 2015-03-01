@@ -187,14 +187,22 @@ class JFormFieldCatOptionsFront extends JFormFieldList
 			}
 		}
 		
+		
+		$eventid = $this->form->getValue('id', 0);
+		
 		if (!$validated) {
+			if ($eventid) {
+				$type = 'editevent';
+			} else {
+				$type = 'addevent';
+			}
 			
 			// catch the groupnumber of the user+add rights
 			$query	= $db->getQuery(true);
 			$query->select(array('gr.id'));
 			$query->from($db->quoteName('#__jem_groups').' AS gr');
 			$query->join('LEFT', '#__jem_groupmembers AS g ON g.group_id = gr.id');
-			$query->where(array('g.member = '. (int) $user->get('id'),$db->quoteName('gr.addevent').' =1','g.member NOT LIKE 0'));
+			$query->where(array('g.member = '. (int) $user->get('id'),$db->quoteName('gr.'.$type).' =1','g.member NOT LIKE 0'));
 			$db->setQuery($query);
 			$groupnumber = $db->loadColumn();
 				
@@ -213,7 +221,6 @@ class JFormFieldCatOptionsFront extends JFormFieldList
 		
 		
 		// Get the current user object.
-		$eventid = $this->form->getValue('id', 0);
 		$user = JFactory::getUser();
 		
 		// For new items we want a list of categories you are allowed to create in.

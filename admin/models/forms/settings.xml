@@ -400,82 +400,6 @@
 			required="false"
 		/>
 	</fieldset>
-
-	<fieldset name="usercontrolacevent"
-		label="COM_JEM_AC_EVENTS"
-	>
-		<field name="delivereventsyes" type="list"
-			label="COM_JEM_AC_EVENT_SUBMIT"
-			description="COM_JEM_AC_EVENT_SUBMIT_DESC"
-			class="inputbox"
-			default="0"
-			required="false"
-		>
-			<option value="-2">COM_JEM_ONLYADMINS</option>
-			<option value="-1">COM_JEM_ALLREGISTERED</option>
-		</field>
-		<field name="evdelrec" type="radio"
-			label="COM_JEM_RECURSIVE"
-			description="COM_JEM_RECURSIVE_DESC"
-			class="btn-group btn-group-yesno"
-			default="0"
-			required="false"
-		>
-			<option value="0">JNO</option>
-			<option value="1">JYES</option>
-		</field>
-		<field name="autopubl" type="list"
-			label="COM_JEM_AUTOPUBLISH"
-			description="COM_JEM_AUTOPUBLISH_DESC"
-			class="inputbox"
-			default="0"
-			required="false"
-		>
-			<option value="-2">COM_JEM_ONLYADMINS</option>
-			<option value="-1">COM_JEM_ALLREGISTERED</option>
-		</field>
-		<field name="evpubrec" type="radio"
-			label="COM_JEM_RECURSIVE"
-			description="COM_JEM_RECURSIVE_DESC"
-			class="btn-group btn-group-yesno"
-			default="0"
-			required="false"
-		>
-			<option value="0">JNO</option>
-			<option value="1">JYES</option>
-		</field>
-		<field name="eventedit" type="list"
-			label="COM_JEM_AC_EVENT_EDIT"
-			description="COM_JEM_AC_EVENT_EDIT_DESC"
-			class="inputbox"
-			default="0"
-			required="false"
-		>
-			<option value="-2">COM_JEM_ONLYADMINS</option>
-			<option value="-1">COM_JEM_ALLREGISTERED</option>
-		</field>
-		<field name="eventeditrec" type="radio"
-			label="COM_JEM_RECURSIVE"
-			description="COM_JEM_RECURSIVE_DESC"
-			class="btn-group btn-group-yesno"
-			default="0"
-			required="false"
-		>
-			<option value="0">JNO</option>
-			<option value="1">JYES</option>
-		</field>
-		<field name="eventowner" type="radio"
-			label="COM_JEM_EDIT_EVENT_FRONTEND_USER"
-			description="COM_JEM_EDIT_EVENT_FRONTEND_USER_DESC"
-			class="btn-group btn-group-yesno"
-			default="0"
-			required="false"
-		>
-			<option value="0">JNO</option>
-			<option value="1">JYES</option>
-		</field>
-	</fieldset>
-
 	<fieldset name="usercontrolacvenue"
 		label="COM_JEM_AC_VENUES"
 	>
@@ -1092,6 +1016,79 @@
 				required="false"
 				clear="true"
 			/>
+	</fieldset>
+	<fieldset name="usercontrolacevent"
+		label="COM_JEM_AC_EVENTS"
+	>
+		<field name="acl_event_add" type="list"
+			label="COM_JEM_AC_EVENT_SUBMIT"
+			description="COM_JEM_AC_EVENT_SUBMIT_DESC"
+			class="inputbox"
+			default="0"
+			size="3"
+			required="false"
+			multiple="true"
+		>
+			<option value="">COM_JEM_ACL_EVENT_NOGROUPS</option>
+			<option value="1">COM_JEM_ACL_EVENT_JEM</option>
+			<option value="2">COM_JEM_ACL_EVENT_JOOMLA</option>
+		</field>
+		<field 
+			name="acl_event_add_joomlagroups" 
+			type="usergroup" 
+			multiple="true"
+			label="COM_JEM_ACL_EVENT_ADD_JOOMLAGROUPS"
+			description="COM_JEM_ACL_EVENT_ADD_JOOMLAGROUPS_DESC"
+		>
+		</field> 
+		<field name="acl_event_show_addicon" type="list"
+			label="COM_JEM_ACL_EVENT_SHOW_ADDICON"
+			description="COM_JEM_ACL_EVENT_SHOW_ADDICON_DESC"
+			class="inputbox"
+			default="0"
+			size="1"
+			required="false"
+			multiple="false"
+		>
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+		<field type="spacer" hr="true"></field>
+		<field name="acl_event_publish" type="list"
+			label="COM_JEM_AUTOPUBLISH"
+			description="COM_JEM_AUTOPUBLISH_DESC"
+			class="inputbox"
+			default="0"
+			size="3"
+			required="false"
+			multiple="true"
+		>
+			<option value="">COM_JEM_ACL_EVENT_NOGROUPS</option>
+			<option value="1">COM_JEM_ACL_EVENT_JEM</option>
+			<option value="2">COM_JEM_ACL_EVENT_JOOMLA</option>
+		</field>
+		<field 
+			name="acl_event_publish_joomlagroups" 
+			type="usergroup" 
+			multiple="true"
+			label="COM_JEM_ACL_EVENT_PUBLISH_JOOMLAGROUPS"
+			description="COM_JEM_ACL_EVENT_PUBLISH_JOOMLAGROUPS_DESC"
+		>
+		</field>
+		<field type="spacer" hr="true"></field>
+		<field name="acl_event_edit" type="list"
+			label="COM_JEM_AC_EVENT_EDIT"
+			description="COM_JEM_AC_EVENT_EDIT_DESC"
+			class="inputbox"
+			default="0"
+			size="3"
+			required="false"
+			multiple="true"
+		>
+			<option value="">COM_JEM_ACL_EVENT_NOGROUPS</option>
+			<option value="1">COM_JEM_ACL_EVENT_JEM</option>
+			<option value="2">COM_JEM_ACL_EVENT_JOOMLA</option>
+		</field>
 	</fieldset>
 	</fields>
 

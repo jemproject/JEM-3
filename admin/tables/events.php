@@ -257,16 +257,19 @@ class JemTableEvents extends JTable
 		}
 
 		if (!$backend) {
-			/*	check if the user has the required rank for autopublish	*/
-			$maintainer = JEMUser::ismaintainer('publish');
-			$autopubev = JEMUser::validate_user($jemsettings->evpubrec, $jemsettings->autopubl);
-			if (!($autopubev || $maintainer || $user->authorise('core.edit','com_jem'))) {
-				if ($valguest) {
-					$this->published = $guest_fldstatus;
+			if ($valguest) {
+				$this->published = $guest_fldstatus;
+			} else {
+				$jinput	= JFactory::getApplication()->input;
+				$data = $jinput->post->get('jform', array(),'array');
+				$cats = $data['cats'];
+				if ($cats) {
+					if (!JEMUser::eventPublish($cats)) {
+						$this->published = 0;
+					}
 				} else {
 					$this->published = 0;
 				}
-
 			}
 		}
 

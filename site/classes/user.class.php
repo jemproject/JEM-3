@@ -66,15 +66,13 @@ class JEMUser {
 	 * @return boolean True on success
 	 */
 	static function superuser() {
-
+		
 		$user = JFactory::getUser();
-
-    	if($user->authorise('core.manage', 'com_jem')) {
-    		return true;
-    	} else {
-    		return false;
-    	}
-
+		if ($user->get('isRoot')) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	/**
@@ -107,57 +105,219 @@ class JEMUser {
 	}
 
 	/**
-	 * Checks if the user is a maintainer of a category
-	 *
-	 * @return NULL int of maintained categories or null
+	 * function to check if the user is allowed to post and if there is a category
+	 * to post in.
 	 */
-	static function ismaintainer($action, $eventid = false)
+	static function addEvent($icon=false) {
+		$user 		= JFactory::getUser();
+		
+		if ($icon) {
+			$settings	= JemHelper::globalattribs();
+			$addicon	= $settings->get('acl_event_show_addicon',false);
+			if (!$addicon) {
+				return false;
+			}
+		}
+	
+		if ($user->get('guest') || $user->get('id') == 0) {
+			if (JEMUser::validate_guest()){
+				return true;
+			} else {
+				return false;
+			}
+		}
+		
+		if (self::superuser()) {
+			return true;
+		}
+		
+		$settings = JemHelper::globalattribs();
+		$options = $settings->get('acl_event_add',false);
+		
+		if (!$options) {
+			return false;
+		}
+		
+		if (in_array(1, $options)) {
+			// check for JEM Groups
+			if (JemUser::ismaintainer('addevent')) {
+				return true;
+			} 
+		}
+		
+		if (in_array(2, $options)) {
+			// check for Joomla Groups
+			if (JEMUser::JoomlaGroup()) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	
+	
+	/**
+	 * function to check if the user is allowed to publish
+	 */
+	static function eventPublish($cats) {
+		$user 		= JFactory::getUser();
+	
+		if ($user->get('guest') || $user->get('id') == 0) {
+			// guest are handled differently	
+			return false;
+		}
+	
+		if (self::superuser()) {
+			return true;
+		}
+	
+		$settings = JemHelper::globalattribs();
+		$options = $settings->get('acl_event_publish',false);
+		
+		if (!$options) {
+			return false;
+		}
+		
+		if (in_array(1, $options)) {
+			// check for JEM Groups
+			if (JemUser::ismaintainer('publishevent',false,$cats)) {
+				return true;
+			}
+		}
+	
+		if (in_array(2, $options)) {
+			// check for Joomla Groups
+			if (JEMUser::JoomlaGroup('publish',$cats)) {
+				return true;
+			}
+		}
+	
+		return false;
+	}
+	
+	
+	
+	/**
+	 * function to check if the user is allowed to post and if there is a category
+	 * to post in.
+	 */
+	
+	static function addVenue() {
+		$user 		= JFactory::getUser();
+	
+		if ($user->get('guest') || $user->get('id') == 0) {
+			return false;
+		}
+	
+		if (self::superuser()) {
+			return true;
+		}
+	
+		$settings = JemHelper::globalattribs();
+		$options = $settings->get('acl_venue_add',false);
+	
+		if (!$options) {
+			return false;
+		}
+		
+		if (in_array(1, $options)) {
+			// check for JEM Groups
+			if (JemUser::venuegroups('add')) {
+				return true;
+			}
+		}
+	
+		if (in_array(2, $options)) {
+			// check for Joomla Groups
+			if (JEMUser::JoomlaGroup()) {
+				return true;
+			}
+		}
+	
+		return false;
+	}
+	
+	
+	
+	
+	/**
+	 * Check if the current user is member of Joomla Group
+	 * with the needed rights and if there is a category available
+	 */
+	
+	static function JoomlaGroup($action=false,$cats=false) {
+		
+		$user 		= JFactory::getUser();
+		$userGroups = $user->getAuthorisedGroups();
+		
+		$settings = JemHelper::globalattribs();
+		$options = $settings->get('acl_event_'.$action.'_joomlagroups',false);
+				
+		if (!$options) {
+			return false;
+		}
+		
+		if ($cats && $action == 'publish') {;
+			foreach ($cats as $i => $cat) {
+				if ($user->authorise('core.edit.state', 'com_jem.category.' . $cat) != true)
+				{
+					unset($cats[$i]);
+				}
+			}
+			
+			if ($cats) {
+				return true;
+			} else {
+				return false;
+			}
+			
+		} else {
+			if (array_intersect($userGroups, $options)) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	
+	/**
+	 * Checks if the user is a maintainer of a category
+	 */
+	static function ismaintainer($action, $eventid = false,$cats=false)
 	{
-
-		// lets look if the user is a maintainer
 		$db = JFactory::getDBO();
 		$user = JFactory::getUser();
-
-		$query = 'SELECT gr.id' . ' FROM #__jem_groups AS gr'
-				. ' LEFT JOIN #__jem_groupmembers AS g ON g.group_id = gr.id'
-				. ' WHERE g.member = ' . (int) $user->get('id')
-				. ' AND ' .$db->quoteName('gr.' . $action . 'event') . ' = 1 '
-				. ' AND g.member NOT LIKE 0';
+		
+		$query	= $db->getQuery(true);
+		$query->select(array('gr.id'));
+		$query->from($db->quoteName('#__jem_groups').' AS gr');
+		$query->join('LEFT', '#__jem_groupmembers AS g ON g.group_id = gr.id');
+		$query->where(array('g.member = '. (int) $user->get('id'),$db->quoteName('gr.'.$action).' =1','g.member NOT LIKE 0'));
 		$db->setQuery($query);
 		$groupnumber = $db->loadColumn();
-
-		// no results, the user is not within a group with the required right
+			
 		if (!$groupnumber) {
 			return false;
-		}
-
-		// the user is in a group with the required right but is there a
-		// published category where he is allowed to post in?
-
-		$categories = implode(' OR groupid = ', $groupnumber);
-
-		if ($action == 'edit') {
-			$query = 'SELECT a.catid' . ' FROM #__jem_cats_event_relations AS a'
-					. ' LEFT JOIN #__jem_categories AS c ON c.id = a.catid'
-					. ' WHERE c.published = 1'
-					. ' AND (c.groupid = ' . $categories . ')'
-					. ' AND a.itemid = ' . $eventid;
-			$db->setQuery($query);
-		}
-		else {
-			$query = 'SELECT id' . ' FROM #__jem_categories'
-					. ' WHERE published = 1'
-					. ' AND (groupid = ' . $categories . ')';
-			$db->setQuery($query);
-		}
-
-		$maintainer = $db->loadResult();
-
-		if (!$maintainer) {
-			return false;
-		}
-		else {
-			return true;
+		} else {
+			if ($action == 'publishevent' && $cats) {
+				$query	= $db->getQuery(true);
+				$query->select(array('c.id'));
+				$query->from($db->quoteName('#__jem_categories').' AS c');
+				$query->where(array('c.groupid='.$groupnumber));
+				$db->setQuery($query);
+				$result = $db->loadColumn();
+				
+				if ($result) {
+					return true;
+				} else {
+					return false;
+				}
+				
+			} else {
+				return true;
+			}
 		}
 	}
 

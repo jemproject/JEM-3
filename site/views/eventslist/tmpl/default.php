@@ -8,8 +8,6 @@
 defined('_JEXEC') or die;
 
 ?>
-
-
 <div id="jem" class="jem_eventslist<?php echo $this->pageclass_sfx;?>">
 
 <div class="topbox">
