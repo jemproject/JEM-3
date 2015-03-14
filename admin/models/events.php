@@ -327,7 +327,7 @@ class JemModelEvents extends JModelList
 		$case_when_c .= ' ELSE ';
 		$case_when_c .= $id_c.' END as catslug';
 
-		$query->select(array('DISTINCT c.id','c.catname','c.access','c.path','c.checked_out AS cchecked_out','c.color',$case_when_c));
+		$query->select(array('DISTINCT c.id','c.id AS catid','c.catname','c.access','c.path','c.checked_out AS cchecked_out','c.color',$case_when_c));
 		$query->from('#__jem_categories as c');
 		$query->join('LEFT', '#__jem_cats_event_relations AS rel ON rel.catid = c.id');
 
