@@ -9,9 +9,9 @@
 defined('_JEXEC') or die;
 
 // Component Helper
-jimport('joomla.application.component.helper');
-require_once JPATH_SITE . '/components/com_jem/helpers/helper.php';
-require_once JPATH_SITE . '/components/com_jem/classes/categories.class.php';
+/* jimport('joomla.application.component.helper'); */
+/* require_once JPATH_SITE . '/components/com_jem/helpers/helper.php'; */
+/* require_once JPATH_SITE . '/components/com_jem/classes/categories.class.php'; */
 
 /**
  * JEM Component Route Helper
@@ -70,48 +70,41 @@ abstract class JEMHelperRoute
 		return $link;
 	}
 
-	public static function getCategoryRoute($id,$language=false)
+	public static function getCategoryRoute($catid,$language=false)
 	{
-		if (!isset(self::$FixedItemid)) {
-			$settings 		= JEMHelper::globalattribs();
-			$defaultItemid 	= $settings->get('default_Itemid');
+		if ($catid instanceof JCategoryNode)
+		{
+			$id       = $catid->id;
+			$category = $catid;
+		}
+		else
+		{
+			$id       = (int) $catid;
+			$category = JCategories::getInstance('Jem')->get($id);
+		}
+		
+		
+		if ($id < 1 || !($category instanceof JCategoryNode))
+		{
+			$link = '';
 		} else {
-			if (isset(self::$FixedItemid)) {
-				$defaultItemid = self::$FixedItemid;
+			$needles               = array();
+			$link = 'index.php?option=com_jem&view=category&id='. $id;
+			$catids                = array_reverse($category->getPath());
+			$needles['category']   = $catids;
+			$needles['categories'] = $catids;
+				
+			if ($language && $language != "*" && JLanguageMultilang::isEnabled())
+			{
+				$link .= '&lang=' . $language;
+				$needles['language'] = $language;
+			}
+			
+			if ($item = self::_findItem($needles)) {
+				$link .= '&Itemid='.$item;
 			}
 		}
-		
-		$needles = array(
-			'category' => array((int) $id)
-		);
-
-		// Create the link
-		$link = 'index.php?option=com_jem&view=category&id='. $id;
-
-		// If no category view works try categories
-		$needles['categories'] = array(self::ARTIFICALID);
-
-		$category = new JEMCategories($id);
-		if($category) {
-			$needles['categories'] = array_reverse($category->getPath());
-		}
-		
-		if ($language && $language != "*" && JLanguageMultilang::isEnabled())
-		{
-			$link .= '&lang=' . $language;
-			$needles['language'] = $language;
-		}
-
-		if ($item = self::_findItem($needles)) {
-			$link .= '&Itemid='.$item;
-		}
-		elseif ($item = self::_findItem()) {
-			if (isset($defaultItemid))
-				{
-					$link .= '&Itemid='.$defaultItemid;
-				}
-		}
-
+	
 		return $link;
 	}
 

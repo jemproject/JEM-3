@@ -285,18 +285,13 @@ class JEMOutput {
 
 				case 'eventslist':
 					# check if we're allowed to edit
-
-					$maintainer = JemUser::ismaintainer('edit',$item->id);
-					$genaccess  = JemUser::editaccess($jemsettings->eventowner, $item->created_by, $jemsettings->eventeditrec, $jemsettings->eventedit);
-
-					if ($maintainer || $genaccess || $user->authorise('core.edit','com_jem')) {
-						# @todo finetune attribs/params
-					if (property_exists($item, 'Checked_out') && property_exists($item, 'Checked_out_time') && $item->Checked_out > 0 && $item->Checked_out != $userId) {
-						$checkoutUser = JFactory::getUser($item->Checked_out);
-						$button = JHtml::_('image', 'system/checked_out.png', NULL, NULL, true);
-						$date = JHtml::_('date', $item->Checked_out_time);
-						$tooltip = JText::_('JLIB_HTML_CHECKED_OUT').' :: '.JText::sprintf('COM_JEM_GLOBAL_CHECKED_OUT_BY', $checkoutUser->name).' <br /> '.$date;
-						return '<span class="hasTooltip" title="'.htmlspecialchars($tooltip, ENT_COMPAT, 'UTF-8').'">'.$button.'</span>';
+					if (JEMUser::eventEdit(false,$item->categories,$view)) {
+						if (property_exists($item, 'Checked_out') && property_exists($item, 'Checked_out_time') && $item->Checked_out > 0 && $item->Checked_out != $userId) {
+							$checkoutUser = JFactory::getUser($item->Checked_out);
+							$button = JHtml::_('image', 'system/checked_out.png', NULL, NULL, true);
+							$date = JHtml::_('date', $item->Checked_out_time);
+							$tooltip = JText::_('JLIB_HTML_CHECKED_OUT').' :: '.JText::sprintf('COM_JEM_GLOBAL_CHECKED_OUT_BY', $checkoutUser->name).' <br /> '.$date;
+							return '<span class="hasTooltip" title="'.htmlspecialchars($tooltip, ENT_COMPAT, 'UTF-8').'">'.$button.'</span>';
 					}
 
 					$text = JHtml::_('image', 'com_jem/calendar_edit.png', JText::_('COM_JEM_EDIT_EVENT'), NULL, true);
@@ -1096,14 +1091,14 @@ class JEMOutput {
 						$path = str_replace('/',' &#187; ',$path);
 
 						$value = '<span class="hasTooltip" title="'.JHtml::tooltipText(JText::_('COM_JEM_EDIT_CATEGORY'), $path, 0).'">';
-						$value .= '<a href="index.php?option=com_jem&amp;task=category.edit&amp;id='. $category->id.'">'.
+						$value .= '<a href="index.php?option=com_jem&amp;task=category.edit&amp;id='. $category->catid.'">'.
 								$category->catname.'</a>';
 						$value .= '</span>';
 					} else {
 						if ($FixItemID) {
 							$value = '<a href="'.JRoute::_('index.php?option=com_jem&view=category&id='.$category->catslug.'&Itemid='.$FixItemID).'">'.$category->catname.'</a>';
 						} else {
-							$value = '<a href="'.JRoute::_(JemHelperRoute::getCategoryRoute($category->catslug)).'">'.$category->catname.'</a>';
+							$value = '<a href="'.JRoute::_(JemHelperRoute::getCategoryRoute($category->catid)).'">'.$category->catname.'</a>';
 						}
 					}
 				} else {

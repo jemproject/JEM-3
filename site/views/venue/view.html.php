@@ -140,10 +140,7 @@ class JemViewVenue extends JEMView {
 			$document->setDescription(strip_tags($venue->meta_description));
 
 			// Check if the user has access to the add-eventform
-			$maintainer = JemUser::ismaintainer('add');
-			$genaccess = JemUser::validate_user($jemsettings->evdelrec, $jemsettings->delivereventsyes);
-
-			if ($maintainer || $genaccess || $user->authorise('core.create','com_jem')) {
+			if (JEMUser::addEvent(true)) {
 				$addeventlink = 1;
 			} else {
 				$addeventlink = 0;

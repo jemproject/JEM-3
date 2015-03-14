@@ -51,8 +51,8 @@ class JemViewEvent extends JEMView
 		$this->jemsettings	= $jemsettings;
 		$this->settings		= $settings;
 
-		$categories			= $this->get('Categories');
-		$this->categories	= $categories;
+		//$categories			= $this->get('Categories');
+		//$this->categories	= $categories;
 
 		$isregistered		= $this->get('UserIsRegistered');
 
@@ -173,10 +173,7 @@ class JemViewEvent extends JEMView
 
 
 		// Check if the user has access to the add-eventform
-		$maintainer = JemUser::ismaintainer('add');
-		$genaccess = JemUser::validate_user($jemsettings->evdelrec, $jemsettings->delivereventsyes);
-
-		if ($maintainer || $genaccess || $user->authorise('core.create','com_jem')) {
+		if (JEMUser::addEvent(true)) {
 			$this->addeventlink = 1;
 		} else {
 			$this->addeventlink = 0;
@@ -191,11 +188,7 @@ class JemViewEvent extends JEMView
 			$this->addvenuelink = 0;
 		}
 
-		// Check if user can edit
-		$maintainer5 = JemUser::ismaintainer('edit',$item->did);
-		$genaccess5  = JemUser::editaccess($jemsettings->eventowner, $item->created_by, $jemsettings->eventeditrec, $jemsettings->eventedit);
-
-		if ($maintainer5 || $genaccess5 || $user->authorise('core.edit','com_jem')) {
+		if (JEMUser::eventEdit(false,$item->categories,'event')) {
 			$this->allowedtoeditevent = 1;
 		} else {
 			$this->allowedtoeditevent = 0;
@@ -250,7 +243,7 @@ class JemViewEvent extends JEMView
 				}
 				if (preg_match("/[\/[\/]/",$keyword)) {
 					$keyword = trim(str_replace("[", "", str_replace("]", "", $keyword)));
-					$buffer = $this->keyword_switcher($keyword, $this->item, $categories, $jemsettings->formattime, $jemsettings->formatdate);
+					$buffer = $this->keyword_switcher($keyword, $this->item, $this->item->categories, $jemsettings->formattime, $jemsettings->formatdate);
 					if ($buffer != "") {
 						$meta_keywords_content .= $buffer;
 					} else {
@@ -270,7 +263,7 @@ class JemViewEvent extends JEMView
 			foreach($description as $desc) {
 				$keyword = substr($desc, 0, strpos($desc,"]",0));
 				if ($keyword != "") {
-					$description_content .= $this->keyword_switcher($keyword, $this->item, $categories, $jemsettings->formattime, $jemsettings->formatdate);
+					$description_content .= $this->keyword_switcher($keyword, $this->item, $this->item->categories, $jemsettings->formattime, $jemsettings->formatdate);
 					$description_content .= substr($desc, strpos($desc,"]",0)+1);
 				} else {
 					$description_content .= $desc;

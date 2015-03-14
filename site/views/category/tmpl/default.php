@@ -22,7 +22,7 @@ JHtml::_('behavior.modal','a.flyermodal');
 	<?php
 		echo JemOutput::submitbutton($this->dellink, $this->params);
 		echo JemOutput::addvenuebutton($this->addvenuelink, $this->params, $this->jemsettings);
-		echo JemOutput::archivebutton($this->params, $this->task, $this->category->slug);
+		echo JemOutput::archivebutton($this->params, $this->task, $this->category->id);
 		echo JemOutput::mailbutton($this->category->slug, 'category', $this->params);
 		echo JemOutput::printbutton($this->print_link, $this->params);
 	?>

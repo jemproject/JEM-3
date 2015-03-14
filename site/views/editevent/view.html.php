@@ -71,10 +71,7 @@ class JemViewEditevent extends JViewLegacy
 			}
 		} else {
 			// Check if user can edit
-			$maintainer5 = JemUser::ismaintainer('edit',$this->item->id);
-			$genaccess5  = JemUser::editaccess($jemsettings->eventowner, $this->item->created_by, $jemsettings->eventeditrec, $jemsettings->eventedit);
-
-			if ($maintainer5 || $genaccess5 ) {
+			if (JEMUser::eventEdit($this->item->id,$this->item->categories)) {
 				$allowedtoeditevent = true;
 			} else {
 				$allowedtoeditevent = false;

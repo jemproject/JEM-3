@@ -166,14 +166,14 @@ $mapType = $this->mapType;
 				 ?>
 			</dd>
 		<?php endif;
-			$n = count($this->categories);
+			$n = count($this->item->categories);
 		?>
 
 		<dt class="category"><?php echo $n < 2 ? JText::_('COM_JEM_CATEGORY') : JText::_('COM_JEM_CATEGORIES'); ?>:</dt>
 		<dd class="category">
 			<?php
 			$i = 0;
-			foreach ($this->categories as $category) :
+			foreach ($this->item->categories as $category) :
 			?>
 				<a
 				href="<?php echo JRoute::_(JemHelperRoute::getCategoryRoute($category->catslug)); ?>">

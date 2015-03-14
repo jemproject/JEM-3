@@ -263,7 +263,8 @@ class JemModelCategory extends JemModelEventslist
 				$options['countItems'] = 0;
 			}
 
-			$categories = new JEMCategories($this->getState('category.id', 'root'));
+			/* $categories = new JEMCategories($this->getState('category.id', 'root')); */
+			$categories = JCategories::getinstance('Jem',$options);
 			$this->_item = $categories->get($this->getState('category.id', 'root'));
 
 			// Compute selected asset permissions.

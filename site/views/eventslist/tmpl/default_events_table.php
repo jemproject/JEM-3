@@ -176,7 +176,7 @@ $admin = $this->admin;
 
 
 				<?php if ($this->jemsettings->showcat == 1) : ?>
-					<td class="jem_category">
+					<td class="jem_category">		
 						<?php echo implode(", ", JemOutput::getCategoryList($row->categories, $this->jemsettings->catlinklist)); ?>
 					</td>
 				<?php endif; ?>

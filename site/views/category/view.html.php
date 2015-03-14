@@ -71,7 +71,7 @@ class JemViewCategory extends JEMView
 			} else {
 				$noevents = 0;
 			}
-
+			
 			// Decide which parameters should take priority
 			$useMenuItemParams = ($menuitem && $menuitem->query['option'] == 'com_jem'
 			                                && $menuitem->query['view']   == 'category'
@@ -110,72 +110,8 @@ class JemViewCategory extends JEMView
 			// search filter
 			$lists['search']= $search;
 
-			// Add feed links
-			$link    = '&format=feed&limitstart=';
-			$attribs = array('type' => 'application/rss+xml', 'title' => 'RSS 2.0');
-			$this->document->addHeadLink(JRoute::_($link . '&type=rss'), 'alternate', 'rel', $attribs);
-			$attribs = array('type' => 'application/atom+xml', 'title' => 'Atom 1.0');
-			$this->document->addHeadLink(JRoute::_($link . '&type=atom'), 'alternate', 'rel', $attribs);
-
-			//create the pathway
-			$cats		= new JEMCategories($category->id);
-			$parents	= $cats->getParentlist();
-
-			foreach($parents as $parent) {
-				$pathway->addItem($this->escape($parent->catname), JRoute::_(JemHelperRoute::getCategoryRoute($parent->slug)) );
-			}
-
-			// Show page heading specified on menu item or category title as heading - idea taken from com_content.
-			//
-			// Check to see which parameters should take priority
-			// If the current view is the active menuitem and an category view for this category, then the menu item params take priority
-			if ($useMenuItemParams) {
-				$pagetitle   = $params->get('page_title', $menuitem->title ? $menuitem->title : $category->catname);
-				$pageheading = $params->get('page_heading', $pagetitle);
-				$pathway->setItemName(1, $menuitem->title);
-			} else {
-				$pagetitle   = $category->catname;
-				$pageheading = $pagetitle;
-				$params->set('show_page_heading', 1); // ensure page heading is shown
-				$pathway->addItem($category->catname, JRoute::_(JemHelperRoute::getCategoryRoute($category->slug)) );
-			}
-			$pageclass_sfx = $params->get('pageclass_sfx');
-
-			if ($task == 'archive') {
-				$pathway->addItem(JText::_('COM_JEM_ARCHIVE'), JRoute::_(JemHelperRoute::getCategoryRoute($category->slug).'&task=archive'));
-				$print_link = JRoute::_(JemHelperRoute::getCategoryRoute($category->id) .'&task=archive&print=1&tmpl=component');
-				$pagetitle   .= ' - '.JText::_('COM_JEM_ARCHIVE');
-				$pageheading .= ' - '.JText::_('COM_JEM_ARCHIVE');
-			} else {
-				$print_link = JRoute::_(JemHelperRoute::getCategoryRoute($category->id) .'&print=1&tmpl=component');
-			}
-
-			if ($print) {
-				JemHelper::loadCss('print');
-				$document->setMetaData('robots', 'noindex, nofollow');
-			}
-
-			$params->set('page_heading', $pageheading);
-
-			// Add site name to title if param is set
-			if ($app->getCfg('sitename_pagetitles', 0) == 1) {
-				$pagetitle = JText::sprintf('JPAGETITLE', $app->getCfg('sitename'), $pagetitle);
-			}
-			elseif ($app->getCfg('sitename_pagetitles', 0) == 2) {
-				$pagetitle = JText::sprintf('JPAGETITLE', $pagetitle, $app->getCfg('sitename'));
-			}
-
-			//Set Page title & Meta data
-			$this->document->setTitle($pagetitle);
-			$document->setMetaData('title', $pagetitle);
-			$document->setMetadata('keywords', $category->meta_keywords);
-			$document->setDescription(strip_tags($category->meta_description));
-
-			//Check if the user has access to the form
-			$maintainer = JemUser::ismaintainer('add');
-			$genaccess 	= JemUser::validate_user($jemsettings->evdelrec, $jemsettings->delivereventsyes);
-
-			if ($maintainer || $genaccess || $user->authorise('core.create','com_jem')) {
+			// Check if the user has access to the form
+			if (JEMUser::addEvent(true)) {
 				$dellink = 1;
 			} else {
 				$dellink = 0;
@@ -193,6 +129,8 @@ class JemViewCategory extends JEMView
 			// Create the pagination object
 			$pagination = $this->get('Pagination');
 
+			
+			/*
 			//Generate Categorydescription
 			if (empty ($category->description)) {
 				$description = JText::_('COM_JEM_NO_DESCRIPTION');
@@ -204,6 +142,7 @@ class JemViewCategory extends JEMView
 				$app->triggerEvent('onContentPrepare', array('com_jem.category', &$category, &$params, 0));
 				$description = $category->text;
 			}
+			*/
 
 			$cimage = JemImage::flyercreator($category->image,'category');
 
@@ -214,16 +153,14 @@ class JemViewCategory extends JEMView
 			$this->cimage			= $cimage;
 			$this->rows				= $items;
 			$this->noevents			= $noevents;
-			$this->print_link		= $print_link;
+			
 			$this->params			= $params;
 			$this->dellink			= $dellink;
 			$this->task				= $task;
-			$this->description		= $description;
 			$this->pagination		= $pagination;
 			$this->jemsettings		= $jemsettings;
 			$this->vsettings		= $vsettings;
 			$this->settings			= $settings;
-			$this->pageclass_sfx	= htmlspecialchars($pageclass_sfx);
 			$this->maxLevel			= $params->get('maxLevel', -1);
 			$this->category			= $category;
 			$this->children			= $children;
@@ -231,6 +168,212 @@ class JemViewCategory extends JEMView
 			$this->user				= $user;
 			$this->print			= $print;
 
+			$this->prepareDocument();
 		parent::display($tpl);
+	}
+	
+	/**
+	 * Prepares the document
+	 */
+	protected function prepareDocument()
+	{
+		$app		= JFactory::getApplication();
+		$menus		= $app->getMenu();
+		$pathway	= $app->getPathway();
+		$jinput 	= JFactory::getApplication()->input;
+		$print		= $jinput->getBool('print');
+		$title		= null;
+		$task 		= $jinput->getCmd('task');
+		if ($task == 'archive') {
+			$archive = true;
+		} else {
+			$archive = false;
+		}
+		
+		/*
+		if ($useMenuItemParams) {
+			$pagetitle   = $params->get('page_title', $menuitem->title ? $menuitem->title : $category->catname);
+			$pageheading = $params->get('page_heading', $pagetitle);
+			$pathway->setItemName(1, $menuitem->title);
+		} else {
+			$pagetitle   = $category->catname;
+			$pageheading = $pagetitle;
+			$params->set('show_page_heading', 1); // ensure page heading is shown
+			$pathway->addItem($category->catname, JRoute::_(JemHelperRoute::getCategoryRoute($category->slug)) );
+		}
+		$pageclass_sfx = $params->get('pageclass_sfx');
+		
+		if ($task == 'archive') {
+			$pathway->addItem(JText::_('COM_JEM_ARCHIVE'), JRoute::_(JemHelperRoute::getCategoryRoute($category->slug).'&task=archive'));
+			$print_link = JRoute::_(JemHelperRoute::getCategoryRoute($category->id) .'&task=archive&print=1&tmpl=component');
+			$pagetitle   .= ' - '.JText::_('COM_JEM_ARCHIVE');
+			$pageheading .= ' - '.JText::_('COM_JEM_ARCHIVE');
+		} else {
+			$print_link = JRoute::_(JemHelperRoute::getCategoryRoute($category->id) .'&print=1&tmpl=component');
+		}
+		
+		$params->set('page_heading', $pageheading);
+
+			// Add site name to title if param is set
+			if ($app->getCfg('sitename_pagetitles', 0) == 1) {
+				$pagetitle = JText::sprintf('JPAGETITLE', $app->getCfg('sitename'), $pagetitle);
+			}
+			elseif ($app->getCfg('sitename_pagetitles', 0) == 2) {
+				$pagetitle = JText::sprintf('JPAGETITLE', $pagetitle, $app->getCfg('sitename'));
+			}
+
+			//Set Page title & Meta data
+			$this->document->setTitle($pagetitle);
+			$document->setMetaData('title', $pagetitle);
+			$document->setMetadata('keywords', $category->meta_keywords);
+			$document->setDescription(strip_tags($category->meta_description));
+		*/
+		
+		// Because the application sets a default page title, we need to get it from the menu item itself
+		$this->menu = $menus->getActive();
+
+		$menu = $this->menu;
+		$id = (int) @$menu->query['id'];
+		$direct = false;
+		
+		if ($menu && ($menu->query['option'] != 'com_jem' || $menu->query['view'] == 'event' || $id != $this->category->id || $menu->query['view'] == 'eventslist'))
+		{
+			$direct = false;
+			$path = array(array('title' => $this->category->catname, 'link' => ''));
+			$category = $this->category->getParent();
+			while (($menu->query['option'] != 'com_jem' || $menu->query['view'] == 'event' || $menu->query['view'] == 'eventslist' || $id != $category->id) && $category->id > 1)
+			{
+				$path[] = array('title' => $category->catname, 'link' => JemHelperRoute::getCategoryRoute($category->id));
+				$category = $category->getParent();
+			}
+		
+			$path = array_reverse($path);
+			
+			$views = array('eventslist');
+			
+			if (in_array($menu->query['view'],$views)) {
+				$pathway->addItem(JText::_('COM_JEM_CATEGORY'), false);
+			} 
+				
+			foreach ($path as $item)
+			{
+				$pathway->addItem($item['title'], $item['link']);
+			}
+		}
+		
+		$names = $pathway->getPathwayNames();
+		
+		if ($this->menu)
+		{
+			if ($direct) {
+				$pagetitle = $this->params->get('page_title', $this->menu->title);
+			} else {
+				$pagetitle = end($names);
+			}
+			
+			if ($archive) {
+				$this->params->def('page_heading', $pagetitle.' - '.JText::_('COM_JEM_ARCHIVE'));
+			} else {
+				$this->params->def('page_heading', $pagetitle);
+			}
+		}
+		else
+		{
+			$this->params->def('page_heading', JText::_($this->defaultPageTitle));
+		}
+		
+		$title = $this->params->get('page_title', '');
+
+		if (empty($title))
+		{
+			$title = $app->get('sitename');
+		}
+		elseif ($app->get('sitename_pagetitles', 0) == 1)
+		{
+			if ($archive) {
+				$title = JText::sprintf('JPAGETITLE', $app->get('sitename'), $title.' - '.JText::_('COM_JEM_ARCHIVE'));
+			} else {
+				$title = JText::sprintf('JPAGETITLE', $app->get('sitename'), $title);
+			}
+			
+		}
+		elseif ($app->get('sitename_pagetitles', 0) == 2)
+		{
+			if ($archive) {
+				$title = JText::sprintf('JPAGETITLE', $title.' - '.JText::_('COM_JEM_ARCHIVE'), $app->get('sitename'));
+			} else {
+				$title = JText::sprintf('JPAGETITLE', $title, $app->get('sitename'));
+			}
+			
+		}
+
+		$this->document->setTitle($title);
+
+		if ($this->params->get('menu-meta_description'))
+		{
+			$this->document->setDescription($this->params->get('menu-meta_description'));
+		}
+
+		if ($this->params->get('menu-meta_keywords'))
+		{
+			$this->document->setMetadata('keywords', $this->params->get('menu-meta_keywords'));
+		}
+
+		if ($this->params->get('robots'))
+		{
+			$this->document->setMetadata('robots', $this->params->get('robots'));
+		}
+		
+		if ($print) {
+			JemHelper::loadCss('print');
+			$this->document->setMetaData('robots', 'noindex, nofollow');
+		}
+		
+		
+		
+		
+		// Add feed links
+		$link    = '&format=feed&limitstart=';
+		$attribs = array('type' => 'application/rss+xml', 'title' => 'RSS 2.0');
+		$this->document->addHeadLink(JRoute::_($link . '&type=rss'), 'alternate', 'rel', $attribs);
+		$attribs = array('type' => 'application/atom+xml', 'title' => 'Atom 1.0');
+		$this->document->addHeadLink(JRoute::_($link . '&type=atom'), 'alternate', 'rel', $attribs);
+		
+		
+		//
+		if ($archive) {
+			$name = end($names);
+			$key = key($names);
+			$pathway->setItemName($key, end($names).' - '.JText::_('COM_JEM_ARCHIVE'));
+			/*$link = JRoute::_(JemHelperRoute::getCategoryRoute($this->category->id.'&task=archive'));*/
+			$print_link = JRoute::_(JemHelperRoute::getCategoryRoute($this->category->id.'&task=archive&print=1&tmpl=component'));
+		} else {
+			$print_link = JRoute::_(JemHelperRoute::getCategoryRoute($this->category->id.'&print=1&tmpl=component'));
+		}
+
+		// Generate Categorydescription
+		if (empty ($this->category->description)) {
+			$description = JText::_('COM_JEM_NO_DESCRIPTION');
+		} else {
+			
+			if (!isset($category)) {
+				$category = new stdClass();
+			}
+			$category->text	= $this->category->description;
+			$category->title 	= $this->category->catname;
+			
+			$dispatcher = JEventDispatcher::getInstance();
+			JPluginHelper::importPlugin('content');
+			$dispatcher->trigger('onContentPrepare', array('com_jem.category', &$category, &$params, 0));
+			$description = $category->text;
+		}
+		
+		//
+		$pageclass_sfx = $this->params->get('pageclass_sfx');
+		
+		$this->print_link		= $print_link;
+		$this->description		= $description;
+		$this->pageclass_sfx	= htmlspecialchars($pageclass_sfx);
+		
 	}
 }

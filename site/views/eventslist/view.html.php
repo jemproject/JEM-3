@@ -153,6 +153,11 @@ class JemViewEventslist extends JEMView
 		$task 	= $jinput->getCmd('task');
 		$pathway = $app->getPathWay();
 		$menu = $menus->getActive();
+		if ($task == 'archive') {
+			$archive = true;
+		} else {
+			$archive = false;
+		}
 
 		// add feed link
 		$link	= 'index.php?option=com_jem&view=eventslist&format=feed';
@@ -162,14 +167,18 @@ class JemViewEventslist extends JEMView
 		$this->document->addHeadLink(JRoute::_($link.'&type=atom'), 'alternate', 'rel', $attribs);
 
 		// PATH-WAY
-		if ($task == 'archive') {
+		if ($archive) {
 			$pathway->addItem(JText::_('COM_JEM_ARCHIVE'), JRoute::_('index.php?view=eventslist&task=archive') );
 		}
 
 		// PAGE-HEADING
 		if ($menu)
 		{
-			$this->params->def('page_heading', $this->params->get('page_title', $menu->title));
+			if ($archive) {
+				$this->params->def('page_heading', $this->params->get('page_title', $menu->title.' - '.JText::_('COM_JEM_ARCHIVE')));
+			} else {
+				$this->params->def('page_heading', $this->params->get('page_title', $menu->title));
+			}
 		}
 		else
 		{

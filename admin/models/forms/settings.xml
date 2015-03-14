@@ -1089,6 +1089,14 @@
 			<option value="1">COM_JEM_ACL_EVENT_JEM</option>
 			<option value="2">COM_JEM_ACL_EVENT_JOOMLA</option>
 		</field>
+		<field 
+			name="acl_event_edit_joomlagroups" 
+			type="usergroup" 
+			multiple="true"
+			label="COM_JEM_ACL_EVENT_EDIT_JOOMLAGROUPS"
+			description="COM_JEM_ACL_EVENT_EDIT_JOOMLAGROUPS_DESC"
+		>
+		</field>
 	</fieldset>
 	</fields>
 

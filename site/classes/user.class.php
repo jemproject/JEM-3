@@ -105,7 +105,7 @@ class JEMUser {
 	}
 
 	/**
-	 * function to check if the user is allowed to post and if there is a category
+	 * function to check if the user is allowed to add a new event
 	 * to post in.
 	 */
 	static function addEvent($icon=false) {
@@ -118,7 +118,7 @@ class JEMUser {
 				return false;
 			}
 		}
-	
+		
 		if ($user->get('guest') || $user->get('id') == 0) {
 			if (JEMUser::validate_guest()){
 				return true;
@@ -158,7 +158,7 @@ class JEMUser {
 	
 	
 	/**
-	 * function to check if the user is allowed to publish
+	 * function to check if the user is allowed to change the state
 	 */
 	static function eventPublish($cats) {
 		$user 		= JFactory::getUser();
@@ -196,6 +196,65 @@ class JEMUser {
 		return false;
 	}
 	
+	
+	
+	/**
+	 * function to check if the user is allowed to edit
+	 */
+	static function eventEdit($eventid=false,$cats=false,$view=false) {
+		
+		$user 		= JFactory::getUser();
+		
+		if ($user->get('guest') || $user->get('id') == 0) {
+			// guest are not allowed to edit
+			return false;
+		}
+	
+		if (self::superuser()) {
+			return true;
+		}
+		
+		if ($view == 'eventslist') {
+			// only superuser should see editicon in eventslist view
+			return false;
+		}
+		
+	
+		if ($cats) {
+			$catids = array();
+			foreach ($cats AS $cat) {
+				$catids[] = $cat->id;
+			}
+		}
+		
+		if (!($catids)) {
+			return false;
+		}
+		
+		
+		$settings = JemHelper::globalattribs();
+		$options = $settings->get('acl_event_edit',false);
+	
+		if (!$options) {
+			return false;
+		}
+	
+		if (in_array(1, $options)) {
+			// check for JEM Groups
+			if (JemUser::ismaintainer('editevent',false,$catids)) {
+				return true;
+			}
+		}
+	
+		if (in_array(2, $options)) {
+			// check for Joomla Groups
+			if (JEMUser::JoomlaGroup('edit',$catids)) {
+				return true;
+			}
+		}
+	
+		return false;
+	}
 	
 	
 	/**
@@ -243,7 +302,6 @@ class JEMUser {
 	
 	/**
 	 * Check if the current user is member of Joomla Group
-	 * with the needed rights and if there is a category available
 	 */
 	
 	static function JoomlaGroup($action=false,$cats=false) {
@@ -258,7 +316,7 @@ class JEMUser {
 			return false;
 		}
 		
-		if ($cats && $action == 'publish') {;
+		if ($cats && $action == 'publish') {
 			foreach ($cats as $i => $cat) {
 				if ($user->authorise('core.edit.state', 'com_jem.category.' . $cat) != true)
 				{
@@ -272,6 +330,21 @@ class JEMUser {
 				return false;
 			}
 			
+		} elseif ($cats && $action == 'edit') {
+			// we don't have event permissions so let's check if the user is allowed to post in a category
+			// attached to the event
+			foreach ($cats as $i => $cat) {
+				if ($user->authorise('core.edit', 'com_jem.category.' . $cat) != true)
+				{
+					unset($cats[$i]);
+				}
+			}
+				
+			if ($cats) {
+				return true;
+			} else {
+				return false;
+			}
 		} else {
 			if (array_intersect($userGroups, $options)) {
 				return true;
@@ -297,7 +370,7 @@ class JEMUser {
 		$query->where(array('g.member = '. (int) $user->get('id'),$db->quoteName('gr.'.$action).' =1','g.member NOT LIKE 0'));
 		$db->setQuery($query);
 		$groupnumber = $db->loadColumn();
-			
+		
 		if (!$groupnumber) {
 			return false;
 		} else {
@@ -305,7 +378,7 @@ class JEMUser {
 				$query	= $db->getQuery(true);
 				$query->select(array('c.id'));
 				$query->from($db->quoteName('#__jem_categories').' AS c');
-				$query->where(array('c.groupid='.$groupnumber));
+				$query->where(array('c.groupid IN (' . implode(',', $groupnumber) . ')'));
 				$db->setQuery($query);
 				$result = $db->loadColumn();
 				
@@ -315,11 +388,37 @@ class JEMUser {
 					return false;
 				}
 				
-			} else {
+			} elseif ($action == 'editevent' && $cats) {
+				$query	= $db->getQuery(true);
+				$query->select(array('c.id'));
+				$query->from($db->quoteName('#__jem_categories').' AS c');
+				$query->where(array('c.groupid IN (' . implode(',', $groupnumber) . ')'));
+				$db->setQuery($query);
+				$result = $db->loadColumn();
+	
+				if ($result) {
+					return true;
+				} else {
+					return false;
+				}
+			
+			} elseif ($action == 'addevent') {
 				return true;
+			} else {
+ 				return false;
 			}
 		}
 	}
+	
+	
+	
+	/**
+	 * get Categories
+	 */
+	
+	
+	
+	
 
 	/**
 	 * Checks if an user is a groupmember and if so
