@@ -52,7 +52,7 @@ class JemViewEditvenue extends JViewLegacy
 
 		// check for guest
 		if (!$user || $user->id == 0) {
-			$app->enqueueMessage(JText::_('JERROR_ALERTNOAUTHOR'), 'error');
+			$app->enqueueMessage(JText::_('COM_JEM_EDITVENUE_NOAUTH'), 'warning');
 			return false;
 		}
 
@@ -83,7 +83,7 @@ class JemViewEditvenue extends JViewLegacy
 		}
 
 		if ($authorised !== true) {
-			$app->enqueueMessage(JText::_('JERROR_ALERTNOAUTHOR'), 'error');
+			$app->enqueueMessage(JText::_('COM_JEM_EDITVENUE_NOAUTH'), 'warning');
 			return false;
 		}
 
