@@ -250,6 +250,16 @@ $params = $params->toArray();
 
 			<?php echo $this->form->renderField('waitinglist'); ?> 
 		</fieldset>
+		
+		<!-- registering field settings -->
+		<fieldset class="form-vertical">
+		<?php foreach($this->form->getGroup('registering') as $field): ?>
+		<div class="control-group">	
+			<div class="control-label"><?php echo $field->label; ?></div>
+			<div class="controls"><?php echo $field->input; ?></div>
+		</div>
+		<?php endforeach; ?>
+		</fieldset>
 <?php echo JHtml::_('bootstrap.endSlide'); ?>
 
 

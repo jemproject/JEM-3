@@ -592,4 +592,17 @@
 				description="JFIELD_META_RIGHTS_DESC" required="false" filter="string"
 				cols="30" rows="2" />
 		</fields>
+
+<fields name="registering">
+	<fieldset name="registering">
+		<field name="enddatereg" type="calendar"
+			label="COM_JEM_EVENT_FIELD_ENDDATEREG"
+			description="COM_JEM_EVENT_FIELD_ENDDATEREG_DESC"
+			class=""
+			size="22"
+			format="%Y-%m-%d %H:%M:%S"
+			filter="no"
+		/>
+	</fieldset>
+</fields>
 </form>

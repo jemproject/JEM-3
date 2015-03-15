@@ -61,6 +61,12 @@ class JemTableEvents extends JTable
 			$registry->loadArray($array['metadata']);
 			$array['metadata'] = (string) $registry;
 		}
+		
+		if (isset($array['registering']) && is_array($array['registering'])) {
+			$registry = new JRegistry;
+			$registry->loadArray($array['registering']);
+			$array['registering'] = (string) $registry;
+		}
 
 		// Bind the rules.
 		/*

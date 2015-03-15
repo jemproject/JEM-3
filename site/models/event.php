@@ -78,7 +78,7 @@ class JemModelEvent extends JModelItem
 										'a.created, a.unregistra, a.published, a.created_by, ' .
 										'CASE WHEN a.modified = 0 THEN a.created ELSE a.modified END as modified, ' . 'a.modified_by, a.checked_out, a.checked_out_time, ' . 'a.datimage,  a.version, ' .
 										'a.meta_keywords, a.created_by_alias, a.introtext, a.fulltext, a.maxplaces, a.waitinglist, a.meta_description, a.hits, a.language, a.recurrence_group,' .
-										'a.recurrence_type, a.recurrence_first_id'));
+										'a.recurrence_type, a.recurrence_first_id,a.registering'));
 				$query->from('#__jem_events AS a');
 
 				// Join on user table.
@@ -139,6 +139,10 @@ class JemModelEvent extends JModelItem
 
 				$data->params = clone $globalregistry;
 				$data->params->merge($registry);
+				
+				$registry = new JRegistry;
+				$registry->loadString($data->registering);
+				$data->registering = $registry;
 
 				 $registry = new JRegistry;
 				 $registry->loadString($data->metadata);
