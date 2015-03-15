@@ -23,11 +23,11 @@ $mapType = $this->mapType;
 	?>
 	<div class="button_flyer icons">
 	<?php
-		echo JemOutput::printbutton($this->print_link, $this->params);
-		echo JemOutput::mailbutton($this->venue->slug, 'venue', $this->params);
 		echo JemOutput::submitbutton($this->addeventlink, $this->params);
 		echo JemOutput::addvenuebutton($this->addvenuelink, $this->params, $this->jemsettings);
 		echo JemOutput::archivebutton($this->params, $this->task, $this->venue->slug);
+		echo JemOutput::mailbutton($this->venue->slug, 'venue', $this->params);
+		echo JemOutput::printbutton($this->print_link, $this->params);
 	?>
 	</div>
 	<?php } ?>
