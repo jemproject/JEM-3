@@ -8,6 +8,8 @@
 
 defined('_JEXEC') or die;
 
+require_once JPATH_SITE . '/components/com_jem/helpers/helper.php';
+
 /**
  * JEM Component Route Helper
  * based on Joomla ContentHelperRoute
