@@ -41,6 +41,16 @@ defined('_JEXEC') or die;
 			<?php endif; ?>
 
 			<?php echo $this->form->renderField('waitinglist');?>
+			
+		<!-- registering field settings -->
+		<fieldset class="form-vertical">
+		<?php foreach($this->form->getGroup('registering') as $field): ?>
+		<div class="control-group">	
+			<div class="control-label"><?php echo $field->label; ?></div>
+			<div class="controls"><?php echo $field->input; ?></div>
+		</div>
+		<?php endforeach; ?>
+		</fieldset>
 	</fieldset>
 
 	<!-- IMAGE -->

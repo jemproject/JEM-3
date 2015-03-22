@@ -219,9 +219,10 @@ class JemModelEditevent extends JEMModelEvent
 			$value->admin = false;
 		}
 		
+		$registry = new JRegistry;
+		$registry->loadString($value->registering);
+		$value->registering = $registry->toArray();
 		
-		
-
 		return $value;
 	}
 

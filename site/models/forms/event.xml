@@ -404,4 +404,16 @@
 			rows="3" cols="30"
 		/>
 	</fieldset>
+	<fields name="registering">
+	<fieldset name="registering">
+		<field name="enddatereg" type="calendar"
+			label="COM_JEM_EDITEVENT_FIELD_ENDDATEREG"
+			description="COM_JEM_EDITEVENT_FIELD_ENDDATEREG_DESC"
+			class=""
+			size="22"
+			format="%Y-%m-%d %H:%M:%S"
+			filter="no"
+		/>
+	</fieldset>
+</fields>
 </form>
