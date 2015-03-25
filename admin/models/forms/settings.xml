@@ -27,16 +27,6 @@
 			maxlength="3"
 			required="true"
 		/>
-		<field name="weekdaystart" type="list"
-			label="COM_JEM_SETTINGS_SELECTFIRSTWEEKDAY"
-			description="COM_JEM_SETTINGS_SELECTFIRSTWEEKDAY_DESC"
-			class="inputbox"
-			default="0"
-			required="false"
-		>
-			<option value="0">COM_JEM_SETTINGS_SUNDAY</option>
-			<option value="1">COM_JEM_SETTINGS_MONDAY</option>
-		</field>
 		<field name="attachments_path" type="text"
 			label="COM_JEM_SETTINGS_ATTACHEMENT_PATH"
 			description="COM_JEM_SETTINGS_ATTACHEMENT_PATH_DESC"

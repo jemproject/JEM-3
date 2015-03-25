@@ -935,7 +935,6 @@ class JemHelper {
 		require_once JPATH_COMPONENT_SITE . '/helpers/route.php';
 
 		$jemsettings			= JemHelper::config();
-		$weekstart 				= $jemsettings->weekdaystart;
 		$anticipation			= $jemsettings->recurrence_anticipation;
 
 		#####################
