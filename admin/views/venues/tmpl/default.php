@@ -66,12 +66,10 @@ $settings	= $this->settings;
 			<th width="1%" class="center"><?php echo JText::_('COM_JEM_NUM'); ?></th>
 			<th width="1%" class="center"><?php echo JHtml::_('grid.checkall'); ?></th>
 			<th class="title"><?php echo JHtml::_('searchtools.sort', 'COM_JEM_VENUE', 'a.venue', $listDirn, $listOrder ); ?></th>
-			<th width="20%"><?php echo JHtml::_('searchtools.sort', 'COM_JEM_ALIAS', 'a.alias', $listDirn, $listOrder ); ?></th>
 			<th><?php echo JHtml::_('searchtools.sort', 'COM_JEM_CITY', 'a.city', $listDirn, $listOrder ); ?></th>
-			<th><?php echo JHtml::_('searchtools.sort', 'COM_JEM_STATE', 'a.state', $listDirn, $listOrder ); ?></th>
-			<th width="1%"><?php echo JHtml::_('searchtools.sort', 'COM_JEM_COUNTRY', 'a.country', $listDirn, $listOrder ); ?></th>
 			<th width="1%" class="center" nowrap="nowrap"><?php echo JText::_('JSTATUS'); ?></th>
 			<th><?php echo JText::_('COM_JEM_CREATION'); ?></th>
+			<th><?php echo JText::_('COM_JEM_GLOBAL_MAP');?></th>
 			<th width="1%" class="center" nowrap="nowrap"><?php echo JHtml::_('searchtools.sort', 'COM_JEM_EVENTS', 'assignedevents', $listDirn, $listOrder ); ?></th>
 			<th width="1%" class="nowrap center hidden-phone">
 				<?php echo JHtml::_('searchtools.sort', '', 'a.ordering', $listDirn, $listOrder, null, 'asc', 'JGRID_HEADING_ORDERING', 'icon-menu-2'); ?>
@@ -99,6 +97,7 @@ $settings	= $this->settings;
 
 			$link 		= 'index.php?option=com_jem&amp;task=venue.edit&amp;id='. $row->id;
 			$published 	= JHtml::_('jgrid.published', $row->published, $i, 'venues.', $canChange, 'cb', $row->publish_up, $row->publish_down);
+			$venuepublished = JHtml::_('jgrid.published', $row->map, $i, 'venues.', $canChange, 'cb', $row->publish_up, $row->publish_down);
 			?>
 			<tr class="row<?php echo $i % 2; ?>">
 				<td class="center"><?php echo $this->pagination->getRowOffset( $i ); ?></td>
@@ -113,18 +112,12 @@ $settings	= $this->settings;
 						</a>
 					<?php else : ?>
 						<?php echo $this->escape($row->venue); ?>
-					<?php endif; ?>
-				</td>
-				<td>
-					<?php if (JString::strlen($row->alias) > 25) : ?>
-						<?php echo $this->escape(JString::substr($row->alias, 0 , 25)).'...'; ?>
-					<?php else : ?>
-						<?php echo $this->escape($row->alias); ?>
-					<?php endif; ?>
+					<?php endif; ?><br />
+					<span class="small break-word">
+						<?php echo JText::sprintf('JGLOBAL_LIST_ALIAS', $this->escape($row->alias)); ?>
+					</span>
 				</td>
 				<td align="left" class="city"><?php echo $row->city ? $this->escape($row->city) : '-'; ?></td>
-				<td align="left" class="state"><?php echo $row->state ? $this->escape($row->state) : '-'; ?></td>
-				<td class="country"><?php echo $row->country ? $this->escape($row->country) : '-'; ?></td>
 				<td class="center"><?php echo $published; ?></td>
 				<td>
 					<?php echo JText::_('COM_JEM_AUTHOR').': '; ?>
@@ -149,6 +142,22 @@ $settings	= $this->settings;
 					<span class="hasTooltip" title="<?php $tooltip = JText::_('COM_JEM_VENUES_STATS').'::'.$overlib;echo JHtml::tooltipText($tooltip,'',true);?>">
 						<?php echo $image; ?>
 					</span>
+				</td>
+				<td>
+				<?php 
+				
+				if ($row->map) {
+					?>
+					<a data-original-title="Disable map" class="btn btn-micro hasTooltip" href="javascript:void(0);" onclick="return listItemTask('cb<?php echo $i?>','venues.disablemap')" title="">
+						<i class="icon-publish"></i>
+					</a>
+				<?php
+				} else {
+				?>
+				<a data-original-title="Enable map" class="btn btn-micro hasTooltip" href="javascript:void(0);" onclick="return listItemTask('cb<?php echo $i?>','venues.enablemap')" title="">
+					<i class="icon-unpublish"></i>
+				</a>
+				<?php } ?>
 				</td>
 				<td class="center"><?php echo $row->assignedevents; ?></td>		
 				<td class="order nowrap center hidden-phone">

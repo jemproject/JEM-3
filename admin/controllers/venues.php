@@ -17,6 +17,14 @@ class JemControllerVenues extends JControllerAdmin
 	 *
 	 */
 	protected $text_prefix = 'COM_JEM_VENUES';
+	
+	
+	public function __construct($config = array()){
+		parent::__construct($config);
+		$this->registerTask('enablemap', 'mapswitch');
+		$this->registerTask('disablemap', 'mapswitch');
+	}
+	
 
 	/**
 	 * Proxy for getModel.
@@ -53,4 +61,21 @@ class JemControllerVenues extends JControllerAdmin
 
 		$this->setRedirect( 'index.php?option=com_jem&view=venues', $msg );
 	}
+	
+	
+	
+	function mapswitch() {
+		$ids = JRequest::getVar('cid', array(), '', 'array');
+		JArrayHelper::toInteger($ids );
+		$cids = implode( ',', $ids);
+		$values = array('enablemap' => 1, 'disablemap' => 0);
+		$task = $this->getTask();
+		$value = JArrayHelper::getValue($values, $task, 0, 'int');
+		$db = JFactory::getDBO();
+		$query = 'UPDATE #__jem_venues' . ' SET map = '.(int) $value . ' WHERE id IN ( '.$cids.' )';
+		$db->setQuery($query);
+		$result = $db->query();
+		$this->setRedirect('index.php?option=com_jem&view=venues');
+	}
+	
 }
