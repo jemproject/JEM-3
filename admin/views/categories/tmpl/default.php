@@ -154,6 +154,7 @@ $sortFields = $this->getSortFields();
 						<?php else : ?>
 							<?php echo $this->escape($item->catname); ?>
 						<?php endif; ?>
+						<br />
 						<span class="small" title="<?php echo $this->escape($item->path);?>">
 							<?php if (empty($item->note)) : ?>
 								<?php echo JText::sprintf('JGLOBAL_LIST_ALIAS', $this->escape($item->alias));?>
@@ -167,14 +168,12 @@ $sortFields = $this->getSortFields();
 						</div>
 					</td>
 					<td class="center">
-						<?php if ($item->catgroup) : ?>
+						<?php if ($item->catgroup) { ?>
 							<span>
 							<a href="<?php echo $grouplink; ?>">
 								<?php echo $this->escape($item->catgroup); ?>
 							</a></span>
-						<?php else : ?>
-							<?php echo '-'; ?>
-						<?php endif; ?>
+						<?php } ?>
 					</td>
 					<td class="center">
 						<?php echo $item->assignedevents; ?>
