@@ -364,21 +364,21 @@ $mapType = $this->mapType;
 				</dd>
 				<?php endif; ?>
 
-				<?php if ($this->item->state) : ?>
+				<?php /* if ($this->item->state) : ?>
 				<dt class="venue_state"><?php echo JText::_('COM_JEM_STATE').':'; ?></dt>
-			<dd class="venue_state" itemprop="addressRegion">
+				<dd class="venue_state" itemprop="addressRegion">
 					<?php echo $this->escape($this->item->state); ?>
 				</dd>
-				<?php endif; ?>
+				<?php endif; */?>
 
-				<?php if ($this->item->country) : ?>
+				<?php /* if ($this->item->country) : ?>
 				<dt class="venue_country"><?php echo JText::_('COM_JEM_COUNTRY').':'; ?></dt>
 			<dd class="venue_country">
 					<?php echo $this->item->countryimg ? $this->item->countryimg : $this->item->country; ?>
 					<meta itemprop="addressCountry"
 					content="<?php echo $this->item->country; ?>" />
 			</dd>
-				<?php endif; ?>
+				<?php endif; */ ?>
 
 				<div id="venue_contactdetails">
 			<?php if ($this->item->phone) : ?>

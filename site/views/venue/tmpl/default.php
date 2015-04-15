@@ -90,20 +90,20 @@ $mapType = $this->mapType;
 			</dd>
 			<?php endif; ?>
 
-			<?php if ($this->venue->state) : ?>
+			<?php /* if ($this->venue->state) : ?>
 			<dt class="venue_state"><?php echo JText::_('COM_JEM_STATE').':'; ?></dt>
 			<dd class="venue_state" itemprop="addressRegion">
 				<?php echo $this->escape($this->venue->state); ?>
 			</dd>
-			<?php endif; ?>
+			<?php endif; */ ?>
 
-			<?php if ($this->venue->country) : ?>
+			<?php /*if ($this->venue->country) : ?>
 			<dt class="venue_country"><?php echo JText::_('COM_JEM_COUNTRY').':'; ?></dt>
 			<dd class="venue_country">
 				<?php echo $this->venue->countryimg ? $this->venue->countryimg : $this->venue->country; ?>
 				<meta itemprop="addressCountry" content="<?php echo $this->venue->country; ?>" />
 			</dd>
-			<?php endif; ?>
+			<?php endif; */ ?>
 
 		<div id="venue_contactdetails">
 			<?php if ($this->venue->phone) : ?>
@@ -190,6 +190,10 @@ $mapType = $this->mapType;
 
 	<!--table-->
 	<form action="<?php echo $this->action; ?>" method="post" id="adminForm">
+	
+	<h2 class="jem">
+		<?php echo JText::_('COM_JEM_EVENTS'); ?>
+	</h2>
 		<?php echo $this->loadTemplate('table'); ?>
 
 		<p>
