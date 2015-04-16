@@ -328,7 +328,7 @@ class JemTableEvents extends JTable
 		# check if the field recurrence_group is filled and if the recurrence_type has been set
 		# if the type has been set then it's part of recurrence and we should have a recurrence_group number
 		if (empty($this->recurrence_group) && $this->recurrence_freq) {
-			$this->recurrence_group = mt_rand(0,9999);
+			$this->recurrence_group = mt_rand(0,9999999);
 		}
 
 		## END RECURRENCE ##
