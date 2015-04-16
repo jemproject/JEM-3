@@ -36,6 +36,14 @@ $group2 = 'vevent';
 							<div class="control-label"><?php echo $this->form->getLabel('event_show_mapserv',$group); ?></div>
 							<div class="controls"><?php echo $this->form->getInput('event_show_mapserv',$group); ?></div>
 						</div>
+						<div class="control-group">	
+							<div class="control-label"><?php echo $this->form->getLabel('show_state', $group); ?></div>
+							<div class="controls"><?php echo $this->form->getInput('show_state', $group); ?></div>
+						</div>
+						<div class="control-group">	
+							<div class="control-label"><?php echo $this->form->getLabel('show_country', $group); ?></div>
+							<div class="controls"><?php echo $this->form->getInput('show_country', $group); ?></div>
+						</div>
 				</fieldset>
 				<fieldset class="form-horizontal">
 					<legend><?php echo JText::_('COM_JEM_REGISTRATION'); ?></legend>

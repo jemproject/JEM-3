@@ -24,3 +24,11 @@ $group = 'vvenues';
 			<div class="controls"><?php echo $this->form->getInput('show_mapserv',$group); ?></div>
 		</div>
 </fieldset>
+
+<fieldset class="form-horizontal">
+	<legend><?php echo JText::_('COM_JEM_SETTINGS_LEGEND_VVENUES_BACKEND'); ?></legend>
+		<div class="control-group">	
+			<div class="control-label"><?php echo $this->form->getLabel('hide_column_backend',$group); ?></div>
+			<div class="controls"><?php echo $this->form->getInput('hide_column_backend',$group); ?></div>
+		</div>
+</fieldset>

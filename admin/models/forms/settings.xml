@@ -495,6 +495,15 @@
 				<option	value="0">JNO</option>
 				<option	value="1">JYES</option>
 			</field>
+			<field name="event_show_category" type="radio"
+				label="COM_JEM_EVENT_FIELD_SHOW_CATEGORY_LABEL"
+				description="COM_JEM_EVENT_FIELD_SHOW_CATEGORY_DESC"
+				class="btn-group btn-group-yesno"
+				default="0"
+			>
+				<option	value="0">JNO</option>
+				<option	value="1">JYES</option>
+			</field>
 			<field name="event_show_hits" type="radio"
 				label="COM_JEM_EVENT_FIELD_SHOW_HITS_LABEL"
 				description="COM_JEM_EVENT_FIELD_SHOW_HITS_DESC"
@@ -899,6 +908,26 @@
 				<option value="2">COM_JEM_GOOGLE_MAP_DISP</option>
 				<option value="3">COM_JEM_GOOGLE_MAP_DISP_API</option>
 			</field>
+			<field name="show_state" type="radio"
+		label="COM_JEM_SHOW_STATE"
+		description="COM_JEM_SHOW_STATE_DESC"
+		class="btn-group btn-group-yesno"
+		default="0"
+		required="false"
+		>
+		<option value="0">JNO</option>
+		<option value="1">JYES</option>
+	</field>		
+	<field name="show_country" type="radio"
+		label="COM_JEM_SHOW_COUNTRY"
+		description="COM_JEM_SHOW_COUNTRY_DESC"
+		class="btn-group btn-group-yesno"
+		default="0"
+		required="false"
+		>
+		<option value="0">JNO</option>
+		<option value="1">JYES</option>
+	</field>
 		</fieldset>
 
 		<fieldset name="evregistration"
@@ -1361,6 +1390,28 @@
 				<option value="2">COM_JEM_GOOGLE_MAP_DISP</option>
 				<option value="3">COM_JEM_GOOGLE_MAP_DISP_API</option>
 			</field>
+	
+	
+	<field name="show_state" type="radio"
+		label="COM_JEM_SHOW_STATE"
+		description="COM_JEM_SHOW_STATE_DESC"
+		class="btn-group btn-group-yesno"
+		default="0"
+		required="false"
+		>
+		<option value="0">JNO</option>
+		<option value="1">JYES</option>
+	</field>		
+	<field name="show_country" type="radio"
+		label="COM_JEM_SHOW_COUNTRY"
+		description="COM_JEM_SHOW_COUNTRY_DESC"
+		class="btn-group btn-group-yesno"
+		default="0"
+		required="false"
+		>
+		<option value="0">JNO</option>
+		<option value="1">JYES</option>
+	</field>		
 </fieldset>
 </fields>
 <!-- settings for Venues-view -->
@@ -1397,6 +1448,21 @@
 				<option value="1">COM_JEM_GOOGLE_MAP_LINK</option>
 				<option value="2">COM_JEM_GOOGLE_MAP_DISP</option>
 			</field>
+</fieldset>
+<fieldset name="vvenues_backend">
+	<field name="hide_column_backend" type="list"
+		label="COM_JEM_HIDE_COLUMN_BACKEND"
+		description="COM_JEM_HIDE_COLUMN_BACKEND_DESC"
+		default="1"
+		required="false"
+		multiple="true"
+		>
+		<option value="">JSELECT</option>
+		<option value="1">COM_JEM_CITY</option>
+		<option value="2">JSTATUS</option>
+		<option value="3">COM_JEM_CREATION</option>
+		<option value="4">COM_JEM_GLOBAL_MAP</option>
+	</field>
 </fieldset>
 </fields>
 

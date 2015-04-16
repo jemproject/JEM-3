@@ -30,6 +30,9 @@ class JEMViewVenues extends JViewLegacy
 		$this->state			= $this->get('State');
 		$this->filterForm		= $this->get('FilterForm');
 		$this->activeFilters	= $this->get('ActiveFilters');
+		
+		$this->columns			= $this->get('Columns');
+
 		$this->settings			= $settings;
 		$params 				= $this->state->get('params');
 

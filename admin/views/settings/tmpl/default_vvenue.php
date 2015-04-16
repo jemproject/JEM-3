@@ -28,4 +28,12 @@ $group = 'vvenue';
 			<div class="control-label"><?php echo $this->form->getLabel('show_mapserv',$group); ?></div>
 			<div class="controls"><?php echo $this->form->getInput('show_mapserv',$group); ?></div>
 		</div>
+		<div class="control-group">		
+			<div class="control-label"><?php echo $this->form->getLabel('show_country',$group); ?></div>
+			<div class="controls"><?php echo $this->form->getInput('show_country',$group); ?></div>
+		</div>
+		<div class="control-group">		
+			<div class="control-label"><?php echo $this->form->getLabel('show_state',$group); ?></div>
+			<div class="controls"><?php echo $this->form->getInput('show_state',$group); ?></div>
+		</div>
 </fieldset>

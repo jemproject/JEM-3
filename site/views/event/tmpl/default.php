@@ -165,10 +165,16 @@ $mapType = $this->mapType;
 				}
 				 ?>
 			</dd>
-		<?php endif;
-			$n = count($this->item->categories);
-		?>
-
+		<?php endif; 	?>
+		
+		
+		
+	<?php 
+	
+	if ($params->get('event_show_category')) {
+	
+	$n = count($this->item->categories);
+	?>
 		<dt class="category"><?php echo $n < 2 ? JText::_('COM_JEM_CATEGORY') : JText::_('COM_JEM_CATEGORIES'); ?>:</dt>
 		<dd class="category">
 			<?php
@@ -188,6 +194,8 @@ $mapType = $this->mapType;
 			?>
 		</dd>
 
+		<?php } ?>
+		
 		<?php
 		for($cr = 1; $cr <= 10; $cr++) {
 			$currentRow = $this->item->{'custom'.$cr};
@@ -364,21 +372,21 @@ $mapType = $this->mapType;
 				</dd>
 				<?php endif; ?>
 
-				<?php /* if ($this->item->state) : ?>
+				<?php if ($params->get('show_state') && $this->item->state) : ?>
 				<dt class="venue_state"><?php echo JText::_('COM_JEM_STATE').':'; ?></dt>
 				<dd class="venue_state" itemprop="addressRegion">
 					<?php echo $this->escape($this->item->state); ?>
 				</dd>
-				<?php endif; */?>
+				<?php endif; ?>
 
-				<?php /* if ($this->item->country) : ?>
+				<?php if ($params->get('show_country') && $this->item->country) : ?>
 				<dt class="venue_country"><?php echo JText::_('COM_JEM_COUNTRY').':'; ?></dt>
 			<dd class="venue_country">
 					<?php echo $this->item->countryimg ? $this->item->countryimg : $this->item->country; ?>
 					<meta itemprop="addressCountry"
 					content="<?php echo $this->item->country; ?>" />
 			</dd>
-				<?php endif; */ ?>
+				<?php endif; ?>
 
 				<div id="venue_contactdetails">
 			<?php if ($this->item->phone) : ?>

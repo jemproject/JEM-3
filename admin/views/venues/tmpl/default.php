@@ -66,10 +66,18 @@ $settings	= $this->settings;
 			<th width="1%" class="center"><?php echo JText::_('COM_JEM_NUM'); ?></th>
 			<th width="1%" class="center"><?php echo JHtml::_('grid.checkall'); ?></th>
 			<th class="title"><?php echo JHtml::_('searchtools.sort', 'COM_JEM_VENUE', 'a.venue', $listDirn, $listOrder ); ?></th>
+			<?php if (!in_array('1',$this->columns)) { ?>
 			<th><?php echo JHtml::_('searchtools.sort', 'COM_JEM_CITY', 'a.city', $listDirn, $listOrder ); ?></th>
+			<?php } ?>
+			<?php if (!in_array('2',$this->columns)) { ?>
 			<th width="1%" class="center" nowrap="nowrap"><?php echo JText::_('JSTATUS'); ?></th>
+			<?php } ?>
+			<?php if (!in_array('3',$this->columns)) { ?>
 			<th><?php echo JText::_('COM_JEM_CREATION'); ?></th>
+			<?php } ?>
+			<?php if (!in_array('4',$this->columns)) { ?>
 			<th><?php echo JText::_('COM_JEM_GLOBAL_MAP');?></th>
+			<?php } ?>
 			<th width="1%" class="center" nowrap="nowrap"><?php echo JHtml::_('searchtools.sort', 'COM_JEM_EVENTS', 'assignedevents', $listDirn, $listOrder ); ?></th>
 			<th width="1%" class="nowrap center hidden-phone">
 				<?php echo JHtml::_('searchtools.sort', '', 'a.ordering', $listDirn, $listOrder, null, 'asc', 'JGRID_HEADING_ORDERING', 'icon-menu-2'); ?>
@@ -117,8 +125,13 @@ $settings	= $this->settings;
 						<?php echo JText::sprintf('JGLOBAL_LIST_ALIAS', $this->escape($row->alias)); ?>
 					</span>
 				</td>
+				<?php if (!in_array('1',$this->columns)) { ?>
 				<td align="left" class="city"><?php echo $row->city ? $this->escape($row->city) : '-'; ?></td>
+				<?php } ?>
+				<?php if (!in_array('2',$this->columns)) { ?>
 				<td class="center"><?php echo $published; ?></td>
+				<?php } ?>
+				<?php if (!in_array('3',$this->columns)) { ?>
 				<td>
 					<?php echo JText::_('COM_JEM_AUTHOR').': '; ?>
 					<a href="<?php echo 'index.php?option=com_users&amp;task=user.edit&id='.$row->created_by; ?>">
@@ -143,6 +156,8 @@ $settings	= $this->settings;
 						<?php echo $image; ?>
 					</span>
 				</td>
+				<?php } ?>
+				<?php if (!in_array('4',$this->columns)) { ?>
 				<td>
 				<?php 
 				
@@ -159,6 +174,7 @@ $settings	= $this->settings;
 				</a>
 				<?php } ?>
 				</td>
+				<?php } ?>
 				<td class="center"><?php echo $row->assignedevents; ?></td>		
 				<td class="order nowrap center hidden-phone">
 							<?php
