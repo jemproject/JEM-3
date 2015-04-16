@@ -108,6 +108,10 @@ defined('_JEXEC') or die;
 					<td><?php echo $this->config->vs_mod_jem_cal; ?></td>
 				</tr>
 				<tr>
+					<td><?php echo JText::_('COM_JEM_SETTINGS_CONFIG_VS_MOD_JEM_CALAJAX').': '; ?></td>
+					<td><?php echo $this->config->vs_mod_jem_calajax; ?></td>
+				</tr>
+				<tr>
 					<td><?php echo JText::_('COM_JEM_SETTINGS_CONFIG_VS_MOD_JEM').': '; ?></td>
 					<td><?php echo $this->config->vs_mod_jem; ?></td>
 				</tr>

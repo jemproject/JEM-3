@@ -214,6 +214,7 @@ class JEMModelSettings extends JModelForm
 		$config->vs_plg_xtdevent	= JemHelper::getParam(1,'version',2,'plg_editors_xtd_event');
 		$config->vs_plg_quickicon	= JemHelper::getParam(1,'version',2,'plg_quickicon_jemquickicon');
 		$config->vs_mod_jem_cal		= JemHelper::getParam(1,'version',3,'mod_jem_cal');
+		$config->vs_mod_jem_calajax	= JemHelper::getParam(1,'version',3,'mod_jem_calajax');
 		$config->vs_mod_jem			= JemHelper::getParam(1,'version',3,'mod_jem');
 		$config->vs_mod_jem_wide	= JemHelper::getParam(1,'version',3,'mod_jem_wide');
 		$config->vs_mod_jem_teaser	= JemHelper::getParam(1,'version',3,'mod_jem_teaser');
