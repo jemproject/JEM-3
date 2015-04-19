@@ -37,10 +37,9 @@ require_once ( JPATH_BASE.'/includes/framework.php' );
 
 jimport('joomla.language.language');
 
-// $lng = JComponentHelper::getParams('com_languages')->get('site');
-
 $mainframe 	= JFactory::getApplication('site');
 $mainframe->initialise();
+
 
 // Get the module properties and render the module in a minimal HTML page
 $document	= JFactory::getDocument();

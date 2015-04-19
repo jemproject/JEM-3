@@ -57,6 +57,19 @@ if (!defined('_IN_AJAXCALL')) {
     $day_names = array(); #generate all the day names according to the current locale
 	$day_names_short = array();
 	$day_names_long = array();
+	
+	$user = JFactory::getUser();
+	$userLanguage = $user->getParam('language');
+	
+	if ($userLanguage) {
+		$lng = $userLanguage;
+	} else {
+		$lng = JComponentHelper::getParams('com_languages')->get('site');
+	}
+	$lang = JFactory::getLanguage();
+	$lang->setLanguage($lng);
+	$lang->load();
+	
 	if ($UseJoomlaLanguage == 1)
 	{
 		if ($first_day ==1)
