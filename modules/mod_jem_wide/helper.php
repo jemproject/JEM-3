@@ -199,8 +199,8 @@ abstract class modJEMwideHelper
 				$lists[$i]->venueimageorig 	= '';
 			}
 
-			$lists[$i]->eventdescription= strip_tags($row->fulltext);
-			$lists[$i]->venuedescription= strip_tags($row->locdescription);
+			$lists[$i]->eventdescription= $row->fulltext;
+			$lists[$i]->venuedescription= $row->locdescription;
 			$i++;
 		}
 
