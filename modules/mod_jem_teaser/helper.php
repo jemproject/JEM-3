@@ -245,8 +245,7 @@ abstract class modJEMteaserHelper
 			$etc = '...';
 			$etc2 = JText::_('MOD_JEM_TEASER_NO_DESCRIPTION');
 
-			//strip html tags but leave <br /> tags
-			$description = strip_tags($row->introtext, "<br>");
+			$description = $row->introtext;
 
 			//switch <br /> tags to space character
 			if ($params->get('br') == 0) {
