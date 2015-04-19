@@ -22,12 +22,12 @@ class JEMModelImport extends JModelLegacy
 	{
 		$jinput 		= JFactory::getApplication()->input;
 
-		$this->prefix	= $jinput->get('prefix', '#__', 'CMD');
+		$this->prefix	= $jinput->getCmd('prefix', '#__');
         if ($this->prefix == "") {
 			$this->prefix = '#__';
 		}
 
-        $this->jemprefix = $jinput->get('jem_prefix', '#__', 'CMD');
+        $this->jemprefix = $jinput->getCmd('jem_prefix', '#__');
         if ($this->jemprefix == "") {
             $this->jemprefix = '#__';
         }
@@ -1256,49 +1256,76 @@ class JEMModelImport extends JModelLegacy
 	public function copyAttachments() {
 		jimport('joomla.filesystem.file');
 		jimport('joomla.filesystem.folder');
-
-		# retrieve all folders
-		$path = JPATH_SITE.'/com_jem/attachments/';
-		$path2 = JPATH_SITE.'/media/com_jem/attachments/';
+	
+		$result = false;
+	
+		// FOLDERS
+		// Within EL1.1 we do have a setting for selecting the attachments folder but for now
+		// let's consider the default option '/media/com_eventlist/attachments'
+		$path = JPATH_SITE.'/media/com_eventlist/attachments';
+	
+		if (!JFolder::exists($path)) {
+			return $result;
+		}
+	
+	
+		// PROCESS FOLDERS
+		// Within JEM we can define a new attachment path but for now take the default
+		$path_input = $path;
+		$path_output = JPATH_SITE.'/media/com_jem/attachments';
+	
+		if (!JFolder::exists($path_output)) {
+			return $result;
+		}
+	
+		$recurse = true;
+		$fullpath = true;
+		$exclude = array();
+		$excludefilter = array();
+		$inputFolders	= JFolder::folders($path_input, $filter = '.', $recurse, $fullpath);
+	
+		$outputFolders	= array();
+		foreach($inputFolders AS $inputfolder) {
+			$outputFolder = str_replace('com_eventlist', 'com_jem', $inputfolder);
+			if (!JFolder::exists($outputFolder)) {
+				JFolder::create($outputFolder);
+			}
+		}
+	
+	
+		// FILES
+		// retrieve all files from attachment folder
+		// in the previous steps we checked if the folders existed
+	
 		$recurse = true;
 		$fullpath = true;
 		$exclude = false;
-
-		$arrayFolders	= JFolder::folders($path, $filter = '.', $recurse, $fullpath);
-
-		$resultFolders	= array();
-		foreach($arrayFolders AS $folder) {
-			if (($pos = strpos($folder, "/")) !== FALSE) {
-				$resultFolders[] = $path2.substr($folder, $pos+1);
+	
+		$inputFiles = JFolder::files($path_input, $filter = '.', $recurse, $fullpath);
+	
+		foreach($inputFiles AS $inputfile) {
+			$outputFile	= str_replace('com_eventlist', 'com_jem', $inputfile);
+				
+			if(!JFile::exists($outputFile)) {
+				JFile::copy($inputfile, $outputFile);
 			}
 		}
-
-		foreach($resultFolders as $cFolder) {
-			if (!JFolder::exists($cFolder)) {
-				JFolder::create($cFolder);
-			}
-		}
-
-		# retrieve all files from attachment folder
-		$path = JPATH_SITE.'/com_jem/attachments/';
-		$path2 = JPATH_SITE.'/media/com_jem/attachments/';
-		$recurse = true;
-		$fullpath = true;
-		$exclude = false;
-
-		$arrayFiles = JFolder::files($path, $filter = '.', $recurse, $fullpath);
-
-		$resultFiles	= array();
-		foreach($arrayFiles AS $file) {
-			if (($pos = strpos($file, "/")) !== FALSE) {
-				$fileName	= substr($file, $pos+1);
-				$fromFile	= $path.$fileName;
-				$toFile		= $path2.$fileName;
-
-				if(!JFile::exists($toFile)) {
-					JFile::copy($fromFile, $toFile);
-				}
-			}
-		}
+	
+		$result = true;
+	
+		return $result;
+	}
+	
+	function getVersion() {
+		$app = JFactory::getApplication();
+		$version = $app->getUserStateFromRequest("import.version", 'import.version');
+	
+		return $version;
+	}
+	
+	function setVersion($version) {
+		$app = JFactory::getApplication();
+		$app->setUserState("import.version",$version);
+		return true;
 	}
 }

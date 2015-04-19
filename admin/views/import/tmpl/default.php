@@ -150,7 +150,7 @@ As we don't have it we can import the EL-data, so we'll check for a version.
 					<?php else : ?>
 						<input type="checkbox" class="inputbox" id="eventlist-copy-attachments" name="copyAttachments" value="1" />
 					<?php endif; ?>
-					<?php echo JText::_('COM_JEM_IMPORT_JEM_COPY_ATTACHMENTS'); ?>
+					<?php echo JText::_('COM_JEM_IMPORT_EL_COPY_ATTACHMENTS'); ?>
 				</p>
 				<?php } ?>
 				
