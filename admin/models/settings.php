@@ -166,11 +166,19 @@ class JEMModelSettings extends JModelForm
 	 */
 	public function getConfigInfo()
 	{
-		if (function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc()) {
-			$quote = "enabled";
-		} else {
-			$quote = "disabled";
+		$config = new stdClass();
+
+		// Get PHP version and optionally if Magic Quotes are enabled or not
+		$phpversion = phpversion();
+
+		if (version_compare($phpversion, '5.4', '<')) {
+			$quote = (function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc()) ? "enabled" : "disabled";
+		} else { // since PHP 5.4 magic quotes has completely removed
+			$quote = '';
 		}
+
+		$config->vs_php = $phpversion;
+		$config->vs_php_magicquotes	= $quote;
 
 		// Get GD version.
 		$gd_version = '?';
@@ -195,33 +203,31 @@ class JEMModelSettings extends JModelForm
 			}
 		}
 
-		// language conflict detection
+		$config->vs_gd = $gd_version;
 
-		$language = null;
-		# retrieve loaded language files
+		// Get info about all JEM parts
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select(array('name', 'type', 'enabled', 'manifest_cache'));
+		$query->from('#__extensions');
+		$query->where(array('name LIKE "%jem%"'));
+		$db->setQuery($query);
+		$extensions = $db->loadObjectList('name');
 
-		$language = JFactory::getLanguage();
+		$known_extensions = array('pkg_jem', 'com_jem',
+		                          'mod_jem', 'mod_jem_cal', 'mod_jem_calajax', 'mod_jem_banner', 'mod_jem_teaser', 'mod_jem_wide',
+		                          'plg_content_jem', 'plg_finder_jem', 'plg_serch_jem',
+		                          'plg_jem_comments', 'plg_jem_mailer', 'plg_jem_demo');
 
-		$paths = count($language->getPaths('com_jem'));
-
-		$config 					= new stdClass();
-		$config->vs_component		= JemHelper::getParam(1,'version',1,'com_jem');
-		$config->vs_plg_comments	= JemHelper::getParam(1,'version',2,'plg_jem_comments');
-		$config->vs_plg_content		= JemHelper::getParam(1,'version',2,'plg_content_jem');
-		$config->vs_plg_mailer		= JemHelper::getParam(1,'version',2,'plg_jem_mailer');
-		$config->vs_plg_search		= JemHelper::getParam(1,'version',2,'plg_search_jem');
-		$config->vs_plg_finder		= JemHelper::getParam(1,'version',2,'plg_finder_jem');
-		$config->vs_plg_xtdevent	= JemHelper::getParam(1,'version',2,'plg_editors_xtd_event');
-		$config->vs_plg_quickicon	= JemHelper::getParam(1,'version',2,'plg_quickicon_jemquickicon');
-		$config->vs_mod_jem_cal		= JemHelper::getParam(1,'version',3,'mod_jem_cal');
-		$config->vs_mod_jem_calajax	= JemHelper::getParam(1,'version',3,'mod_jem_calajax');
-		$config->vs_mod_jem			= JemHelper::getParam(1,'version',3,'mod_jem');
-		$config->vs_mod_jem_wide	= JemHelper::getParam(1,'version',3,'mod_jem_wide');
-		$config->vs_mod_jem_teaser	= JemHelper::getParam(1,'version',3,'mod_jem_teaser');
-		$config->vs_php				= phpversion();
-		$config->vs_php_magicquotes	= $quote;
-		$config->vs_gd				= $gd_version;
-		$config->vs_lng_paths		= $paths;
+		foreach ($extensions as $name => $extension) {
+			if (in_array($name, $known_extensions)) {
+				$manifest = json_decode($extension->manifest_cache, true);
+				$extension->version      = (!empty($manifest) && array_key_exists('version',      $manifest)) ? $manifest['version']      : '?';
+				$extension->creationDate = (!empty($manifest) && array_key_exists('creationDate', $manifest)) ? $manifest['creationDate'] : '?';
+				$extension->author       = (!empty($manifest) && array_key_exists('author',       $manifest)) ? $manifest['author']       : '?';
+				$config->$name = clone $extension;
+			}
+		}
 
 		return $config;
 	}
