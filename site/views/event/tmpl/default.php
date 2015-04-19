@@ -48,6 +48,8 @@ $mapType = $this->mapType;
 	</div>
 	<?php endif; ?>
 
+	<?php echo $this->item->event->beforeDisplayContent; ?>
+	
 <!-- Event -->
 	<h2 class="jem">
 	<?php
@@ -497,4 +499,7 @@ $mapType = $this->mapType;
 		<?php echo JemOutput::footer(); ?>
 	</div>
 </div>
-<?php } ?>
+<?php
+	echo $this->item->event->afterDisplayContent;
+ } 
+ 
