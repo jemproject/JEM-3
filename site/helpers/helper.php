@@ -25,7 +25,7 @@ class JemHelper {
 	{
 		static $settings;
 
-		if (!isset($config)) {
+		if (!isset($settings)) {
 			if (!is_object($settings)) {
 				$db = JFactory::getDBO();
 				$query = $db->getQuery(true);
