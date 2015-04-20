@@ -163,7 +163,7 @@ $settings	= $this->settings;
 				
 				if ($row->map) {
 					?>
-					<a data-original-title="Disable map" class="btn btn-micro hasTooltip" href="javascript:void(0);" onclick="return listItemTask('cb<?php echo $i?>','venues.disablemap')" title="">
+					<a data-original-title="Disable map" class="btn btn-micro active hasTooltip" href="javascript:void(0);" onclick="return listItemTask('cb<?php echo $i?>','venues.disablemap')" title="">
 						<i class="icon-publish"></i>
 					</a>
 				<?php
