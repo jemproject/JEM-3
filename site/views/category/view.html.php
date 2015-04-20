@@ -351,11 +351,15 @@ class JemViewCategory extends JEMView
 			$print_link = JRoute::_(JemHelperRoute::getCategoryRoute($this->category->id.'&print=1&tmpl=component'));
 		}
 
-		// Generate Categorydescription
+		// Generate category-description
 		if (empty ($this->category->description)) {
-			$description = JText::_('COM_JEM_NO_DESCRIPTION');
+			// check option
+			if ($this->vsettings->get('show_empty_category_description',1)) {
+				$description = JText::_('COM_JEM_NO_DESCRIPTION');
+			} else {
+				$description = false;
+			}
 		} else {
-			
 			if (!isset($category)) {
 				$category = new stdClass();
 			}

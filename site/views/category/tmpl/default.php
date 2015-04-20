@@ -65,8 +65,12 @@ JHtml::_('behavior.modal','a.flyermodal');
 		<?php endif; ?>
 
 
+		<?php if ($this->vsettings->get('show_category_description',1)) { ?>
+		<?php if ($this->description) { ?>
 		<h2 class="description"><?php echo JText::_('COM_JEM_EVENT_DESCRIPTION'); ?></h2>
 		<p><?php echo $this->description; ?></p>
+		<?php } ?>
+		<?php } ?>
 
 	<!--subcategories-->
 	<?php
