@@ -39,4 +39,8 @@ $group = 'veditevent';
 			<div class="control-label"><?php echo $this->form->getLabel('unregistering', $group); ?></div>
 			<div class="controls"><?php echo $this->form->getInput('unregistering', $group); ?></div>
 		</div>
+		<div class="control-group">
+			<div class="control-label"><?php echo $this->form->getLabel('customfields', $group); ?></div>
+			<div class="controls"><?php echo $this->form->getInput('customfields', $group); ?></div>
+		</div>
 </fieldset>

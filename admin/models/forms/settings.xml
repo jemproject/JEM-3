@@ -1612,6 +1612,27 @@
 		value="1"
 		default="1"
 	/>
+	<field name="customfields" type="list"
+		label="COM_JEM_SETTINGS_FIELD_EDITEVENT_CUSTOMFIELDS"
+		description="COM_JEM_SETTINGS_FIELD_EDITEVENT_CUSTOMFIELDS_DESC"
+		class="inputbox"
+		multiple="true"
+		default=""
+		required="false"
+		>
+		<option value="">JALL</option>
+		<option value="0">JNONE</option>
+		<option value="1">COM_JEM_EVENT_CUSTOM_FIELD1</option>
+		<option value="2">COM_JEM_EVENT_CUSTOM_FIELD2</option>
+		<option value="3">COM_JEM_EVENT_CUSTOM_FIELD3</option>
+		<option value="4">COM_JEM_EVENT_CUSTOM_FIELD4</option>
+		<option value="5">COM_JEM_EVENT_CUSTOM_FIELD5</option>
+		<option value="6">COM_JEM_EVENT_CUSTOM_FIELD6</option>
+		<option value="7">COM_JEM_EVENT_CUSTOM_FIELD7</option>
+		<option value="8">COM_JEM_EVENT_CUSTOM_FIELD8</option>
+		<option value="9">COM_JEM_EVENT_CUSTOM_FIELD9</option>
+		<option value="10">COM_JEM_EVENT_CUSTOM_FIELD10</option>
+	</field>
 </fieldset>
 </fields>
 </form>

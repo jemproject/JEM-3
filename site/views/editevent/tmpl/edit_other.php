@@ -11,12 +11,22 @@ defined('_JEXEC') or die;
 <!-- CUSTOM FIELDS -->
 	<fieldset class="form-horizontal">
 		<legend><span class="legendcolor"><?php echo JText::_('COM_JEM_EVENT_CUSTOMFIELDS_LEGEND') ?></span></legend>
-			<?php foreach($this->form->getFieldset('custom') as $field): ?>
-			<div class="control-group">
-				<div class="control-label"><?php echo $field->label; ?></div>
-				<div class="controls"><?php echo $field->input; ?></div>
-			</div>
-			<?php endforeach; ?>
+			<?php 
+			$customFields = $this->vsettings->get('customfields');
+			if (empty($customFields)) {
+				foreach($this->form->getFieldset('custom') as $field): ?>
+					<div class="control-group">
+						<div class="control-label"><?php echo $field->label; ?></div>
+						<div class="controls"><?php echo $field->input; ?></div>
+					</div>
+				<?php 
+				endforeach; 
+			} else {
+				foreach ($customFields AS $customField) {
+					echo $this->form->renderField('custom'.$customField);
+				}
+			}
+			?>
 	</fieldset>
 
 	<!-- REGISTRATION -->
