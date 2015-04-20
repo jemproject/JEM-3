@@ -198,9 +198,18 @@ abstract class modJEMwideHelper
 				$lists[$i]->venueimage 		= '';
 				$lists[$i]->venueimageorig 	= '';
 			}
-
-			$lists[$i]->eventdescription= $row->fulltext;
-			$lists[$i]->venuedescription= $row->locdescription;
+			
+			$allowedTags = $params->get('allowed_tags','<a><em><strong>');
+			
+			if ($allowedTags == 'none') {
+				// strip all tags
+				$lists[$i]->eventdescription= strip_tags($row->fulltext);
+				$lists[$i]->venuedescription= strip_tags($row->locdescription);
+			} else {
+				// apply allowed tags
+				$lists[$i]->eventdescription= strip_tags($row->fulltext,$allowedTags);
+				$lists[$i]->venuedescription= strip_tags($row->locdescription,$allowedTags);
+			}
 			$i++;
 		}
 
