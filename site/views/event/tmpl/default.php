@@ -183,10 +183,15 @@ $mapType = $this->mapType;
 			$i = 0;
 			foreach ($this->item->categories as $category) :
 			?>
+			<?php if ($params->get('event_link_category',1)) { ?>
 				<a
 				href="<?php echo JRoute::_(JemHelperRoute::getCategoryRoute($category->catslug)); ?>">
 					<?php echo $this->escape($category->catname); ?>
 				</a>
+			<?php } else { ?>
+					<?php echo $this->escape($category->catname); ?>
+			<?php } ?>	
+				
 			<?php
 				$i++;
 				if ($i != $n) :

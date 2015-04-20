@@ -504,6 +504,15 @@
 				<option	value="0">JNO</option>
 				<option	value="1">JYES</option>
 			</field>
+			<field name="event_link_category" type="radio"
+				label="COM_JEM_EVENT_FIELD_LINK_CATEGORY_LABEL"
+				description="COM_JEM_EVENT_FIELD_LINK_CATEGORY_DESC"
+				class="btn-group btn-group-yesno"
+				default="0"
+			>
+				<option	value="0">JNO</option>
+				<option	value="1">JYES</option>
+			</field>
 			<field name="event_show_hits" type="radio"
 				label="COM_JEM_EVENT_FIELD_SHOW_HITS_LABEL"
 				description="COM_JEM_EVENT_FIELD_SHOW_HITS_DESC"
@@ -1489,6 +1498,26 @@
 	<field name="show_category_image" type="radio"
 		label="COM_JEM_SETTINGS_SHOW_CATEGORY_IMAGES"
 		description="COM_JEM_SETTINGS_SHOW_CATEGORY_IMAGES_DESC"
+		class="btn-group btn-group-yesno"
+		default="0"
+		required="false"
+		>
+		<option value="0">JNO</option>
+		<option value="1">JYES</option>
+	</field>
+	<field name="show_category_description" type="radio"
+		label="COM_JEM_SETTINGS_SHOW_CATEGORY_DESCRIPTION"
+		description="COM_JEM_SETTINGS_SHOW_CATEGORY_DESCRIPTION_DESC"
+		class="btn-group btn-group-yesno"
+		default="0"
+		required="false"
+		>
+		<option value="0">JNO</option>
+		<option value="1">JYES</option>
+	</field>
+	<field name="show_empty_category_description" type="radio"
+		label="COM_JEM_SETTINGS_SHOW_EMPTY_CATEGORY_DESCRIPTION"
+		description="COM_JEM_SETTINGS_SHOW_EMPTY_CATEGORY_DESCRIPTION_DESC"
 		class="btn-group btn-group-yesno"
 		default="0"
 		required="false"
