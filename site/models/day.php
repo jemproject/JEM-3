@@ -98,18 +98,35 @@ class JemModelDay extends JemModelEventslist
 		$requestCategoryId	= $jinput->getInt('catid',null);
 		$item = $jinput->getInt('Itemid');
 		
-		$locid = $app->getUserState('com_jem.calajax.locid'.$item,false);
-		$locid_switch = $app->getUserState('com_jem.calajax.locid_switch'.$item,false);
+		
+		// CALAJAX | CALENDAR
+		$locid = $app->getUserState('com_jem.calendar.locid'.$item,false);
+		$locid_switch = $app->getUserState('com_jem.calendar.locid_switch'.$item,false);
 		if ($locid) {
 			$this->setstate('filter.venue_id',$locid);
 			$this->setstate('filter.venue_id.include',$locid_switch);
+		} else {
+			$locid = $app->getUserState('com_jem.calajax.locid'.$item,false);
+			$locid_switch = $app->getUserState('com_jem.calajax.locid_switch'.$item,false);
+			if ($locid) {
+				$this->setstate('filter.venue_id',$locid);
+				$this->setstate('filter.venue_id.include',$locid_switch);
+			}
 		}
 		
-		$catid = $app->getUserState('com_jem.calajax.catid'.$item,false);
-		$catid_switch = $app->getUserState('com_jem.calajax.catid_switch'.$item,false);
+		$catid = $app->getUserState('com_jem.calendar.catid'.$item,false);
+		$catid_switch = $app->getUserState('com_jem.calendar.catid_switch'.$item,false);
+		
 		if ($catid) {
 			$this->setState('filter.category_id',$catid);
 			$this->setState('filter.category_id.include',$catid_switch);
+		} else {
+			$catid = $app->getUserState('com_jem.calajax.catid'.$item,false);
+			$catid_switch = $app->getUserState('com_jem.calajax.catid_switch'.$item,false);
+			if ($catid) {
+				$this->setState('filter.category_id',$catid);
+				$this->setState('filter.category_id.include',$catid_switch);
+			}
 		}
 
 		# limit/start

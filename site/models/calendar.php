@@ -82,14 +82,26 @@ class JemModelCalendar extends JemModelEventslist
 		$venidsfilter = $params->get('venueidsfilter');
 		$eventidsfilter = $params->get('eventidsfilter');
 
+		$item	= $jinput->getInt('Itemid');
+		
 		if ($catids) {
+			$app->setUserState('com_jem.calendar.catid'.$item,$catids);
+			$app->setUserState('com_jem.calendar.catid_switch'.$item,true);
 			$this->setState('filter.category_id',$catids);
 			$this->setState('filter.category_id.include',$catidsfilter);
+		} else {
+			$app->setUserState('com_jem.calendar.catid'.$item,$catids);
+			$app->setUserState('com_jem.calendar.catid_switch'.$item,true);
 		}
 
 		if ($venids) {
+			$app->setUserState('com_jem.calendar.locid'.$item,$venids);
+			$app->setUserState('com_jem.calendar.locid_switch'.$item,true);
 			$this->setState('filter.venue_id',$venids);
 			$this->setState('filter.venue_id.include',$venidsfilter);
+		} else {
+			$app->setUserState('com_jem.calendar.locid'.$item,$venids);
+			$app->setUserState('com_jem.calendar.locid_switch'.$item,true);
 		}
 
 		if ($eventids) {
