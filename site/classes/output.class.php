@@ -348,8 +348,8 @@ class JEMOutput {
 				//button in popup
 				$overlib = JText::_('COM_JEM_PRINT_DESC');
 				$text = JText::_('COM_JEM_PRINT');
-				$title = 'title='.JText::_('JGLOBAL_PRINT').' class="icon-print"';
-				$pimage = JHtml::_('image','system/printButton.png', JText::_('JGLOBAL_PRINT'), $title, true);
+				$title = 'title='.JText::_('JGLOBAL_PRINT').' class=""';
+				$pimage = JHtml::_('image','com_jem/printer.png', JText::_('JGLOBAL_PRINT'), $title, true);
 				$output = '<a href="#" onclick="window.print();return false;">'.$pimage.'</a>';
 			} else {
 				$overlib = JText::_('COM_JEM_PRINT_DESC');
@@ -1109,35 +1109,6 @@ class JEMOutput {
 			$categories);
 
 		return $output;
-	}
-
-	static function statuslabel($published = false) {
-
-		# @todo check function
-		$user	= JFactory::getUser();
-		$app	= JFactory::getApplication();
-		$userId	= $user->get('id');
-		$admin	= JEMUser::superuser();
-		$status = '';
-
-		if ($published != 1 && $published != 2 && $admin) {
-			# determine the type and set variables
-			switch($published) {
-				case '1':
-					$status = 'JPUBLISHED';
-					break;
-				case '0':
-					$status = 'JUNPUBLISHED';
-					break;
-				case '2':
-					$status = 'JARCHIVED';
-					break;
-				case '-2':
-					$status = 'JTRASHED';
-					break;
-			}
-			return '<span class="label">'.JText::_($status).'</span>';
-		}
 	}
 
 	static function eventDateTime($row, $dateStart = false, $timeStart = false, $dateEnd = false, $timeEnd = false) {
