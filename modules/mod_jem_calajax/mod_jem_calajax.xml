@@ -20,7 +20,7 @@
 	</files>
 	<config>
 	<fields name="params">
-	<fieldset name="basic">
+	<fieldset name="basic" addfieldpath="/administrator/components/com_jem/models/fields">
 			<field name="Default_Stylesheet" 
 			type="radio" 
 			class="btn-group btn-group-yesno"
@@ -134,8 +134,8 @@
 		<field name="spacer4" type="spacer" hr="true" default="" label="" description="" />
 		<field name="moduleclass_sfx" type="text" default="" label="MOD_JEM_CALAJAX_MODULE_CLASSSUFFIX" description="MOD_JEM_CALAJAX_MODULE_CLASSSUFFIX_DESC" />
 		<field name="locale_override" type="text" default="" label="MOD_JEM_CALAJAX_LOCALE" description="MOD_JEM_CALAJAX_LOCALE_DESC" />
-		<field name="catid" type="text" default="" label="MOD_JEM_CALAJAX_CATEGORY_ID" description="MOD_JEM_CALAJAX_CATEGORY_ID_DESC" />
-		<field name="venid" type="text" default="" label="MOD_JEM_CALAJAX_VENUE_ID" description="MOD_JEM_CALAJAX_VENUE_ID_DESC" />
+		<field name="catid" type="categoryedit" default="" multiple="true" label="MOD_JEM_CALAJAX_CATEGORY_ID" description="MOD_JEM_CALAJAX_CATEGORY_ID_DESC" />
+		<field name="venid" type="venueoptions" default="" multiple="true" label="MOD_JEM_CALAJAX_VENUE_ID" description="MOD_JEM_CALAJAX_VENUE_ID_DESC" />
 		<field name="FixItemID" type="text" default="" label="MOD_JEM_CALAJAX_ITEMID" description="MOD_JEM_CALAJAX_ITEMID_DESC" />		
 	</fieldset></fields>
 	</config>
