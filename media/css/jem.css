@@ -6,7 +6,9 @@
  */
 
 
-
+div#jem div#printer_icon {
+ 	display:none;
+ }
 
 div#jem td.attendees {
 	text-align: center;
