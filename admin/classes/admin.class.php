@@ -26,14 +26,18 @@ class JEMAdmin {
 	 */
 	static function config()
 	{
-		$db = JFactory::getDbo();
-		$query = $db->getQuery(true);
-		$query->select(array('*'));
-		$query->from('#__jem_settings');
-		$query->where(array('id= '.$db->quote('1')));
+		static $config;
+		if (!is_object($config)) {
+		
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$query->select(array('*'));
+			$query->from('#__jem_settings');
+			$query->where(array('id= '.$db->quote('1')));
 
-		$db->setQuery($query);
-		$config = $db->loadObject();
+			$db->setQuery($query);
+			$config = $db->loadObject();
+		}
 
 		return $config;
 	}
