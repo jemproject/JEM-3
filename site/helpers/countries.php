@@ -21,8 +21,21 @@ class JEMHelperCountries
 	 *
 	 * @return array
 	 */
-	static function getCountries()
+	static function getCountries($iso=false)
 	{
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select(array('*'));
+		$query->from('#__jem_countries');
+		$query->where(array(
+				'iso3= ' . $db->quote($iso)
+		));
+		$db->setQuery($query);
+		$res = $db->loadObject();
+		
+		return $res;
+		
+		/*
 		$country["AFG"] = array("iso2" => "AF", "name" => "Afghanistan, Islamic Republic of");
 		$country["ALA"] = array("iso2" => "AX", "name" => "Aland Islands");
 		$country["ALB"] = array("iso2" => "AL", "name" => "Albania, Republic of");
@@ -275,6 +288,7 @@ class JEMHelperCountries
 		$country["XKX"] = array("iso2" => "XK", "name" => "Kosov, Republic of");
 		$country["0"] = array("iso2" => "0", "name" => "NO VALID COUNTRY");
 		return $country;
+		*/
 	}
 
 	function getCountrycoordarray()
@@ -530,11 +544,17 @@ class JEMHelperCountries
 
 	static function getCountryOptions($value_tag = 'value', $text_tag = 'text')
 	{
-		$countries = self::getCountries();
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select(array('*'));
+		$query->from('#__jem_countries');
+		$db->setQuery($query);
+		$countries = $db->loadObjectList();
+		
 		$options = array();
 		foreach ($countries as $country) {
-			$name = explode(',', $country['name']);
-			$options[] = JHtml::_('select.option', $country['iso2'], JText::_($name[0]), $value_tag, $text_tag);
+			$name = explode(',', $country->name);
+			$options[] = JHtml::_('select.option', $country->iso2, JText::_($name[0]), $value_tag, $text_tag);
 		}
 		return $options;
 	}
@@ -803,6 +823,27 @@ class JEMHelperCountries
 
 	static function convertIso3to2($iso_code_3)
 	{
+		
+		$db = $this->getDbo();
+		$query = $db->getQuery(true);
+		$query->select(array(
+				'iso2'
+		));
+		$query->from('#__jem_countries');
+		$query->where(array(
+				'iso3= ' . $db->quote($iso_code_3)
+		));
+		$db->setQuery($query);
+		$res = $db->loadResult();
+		
+		if ($res) {
+			return $res;
+		} else {
+			return null;
+		}
+		
+		
+		/*
 		$convert3to2["AFG"] = "AF";
 		$convert3to2["ALA"] = "AX";
 		$convert3to2["ALB"] = "AL";
@@ -1065,6 +1106,8 @@ class JEMHelperCountries
 		{
 			return null;
 		}
+		
+		*/
 	}
 
 	/**
@@ -1097,6 +1140,7 @@ class JEMHelperCountries
 	static function getCountryFlag($countrycode, $attributes = '')
 	{
 		$src = self::getIsoFlag($countrycode);
+		
 		if (!$src) {
 			return '';
 		}
@@ -1114,10 +1158,10 @@ class JEMHelperCountries
 		if (strlen($iso) == 2) {
 			$iso = self::convertIso2to3($iso);
 		}
-		$countries = self::getCountries();
-		if (isset($countries[$iso]['name'])) {
-			$c = explode(',', $countries[$iso]['name']);
-			return JText::_($c[0]);
+		$countries = self::getCountries($iso);
+		if (isset($countries)) {
+			$c = explode(',', $countries->name);
+			return $c[0];
 		}
 		return false;
 	}
