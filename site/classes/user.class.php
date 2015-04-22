@@ -114,7 +114,8 @@ class JEMUser {
 		if ($icon) {
 			$settings	= JemHelper::globalattribs();
 			$addicon	= $settings->get('acl_event_show_addicon',false);
-			if (!$addicon) {
+			
+			if (!$addicon && !(self::superuser())) {
 				return false;
 			}
 		}
@@ -489,4 +490,58 @@ class JEMUser {
 
 		}
 	}
+	
+	
+	/**
+	 * function to check if the user is allowed to edit
+	 */
+	static function venueEdit($eventid=false,$locid=false,$view=false) {
+	
+		$user 		= JFactory::getUser();
+	
+		if ($user->get('guest') || $user->get('id') == 0) {
+			// guest are not allowed to edit
+			return false;
+		}
+		
+		if (!($locid)) {
+			// no locid so return
+			return false;
+		}
+	
+		if (self::superuser()) {
+			// superuser is always able to edit
+			return true;
+		}
+	
+		if ($view == 'eventslist') {
+			// only superuser should see editicon in eventslist view
+			return false;
+		}
+	
+		$settings = JemHelper::globalattribs();
+		$options = $settings->get('acl_venue_edit',false);
+	
+		if (!$options) {
+			return false;
+		}
+	
+		if (in_array(1, $options)) {
+			// check for JEM Groups
+			if (JemUser::ismaintainer('editvenue',false,$locid)) {
+				return true;
+			}
+		}
+	
+		if (in_array(2, $options)) {
+			// check for Joomla Groups
+			if (JEMUser::JoomlaGroup('editvenue',$locid)) {
+				return true;
+			}
+		}
+	
+		return false;
+	}
+	
+	
 }
