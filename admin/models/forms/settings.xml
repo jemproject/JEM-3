@@ -513,6 +513,15 @@
 				<option	value="0">JNO</option>
 				<option	value="1">JYES</option>
 			</field>
+			<field name="event_show_where" type="radio"
+				label="COM_JEM_EVENT_FIELD_SHOW_WHERE"
+				description="COM_JEM_EVENT_FIELD_SHOW_WHERE_DESC"
+				class="btn-group btn-group-yesno"
+				default="1"
+			>
+				<option	value="0">JNO</option>
+				<option	value="1">JYES</option>
+			</field>
 			<field name="event_show_hits" type="radio"
 				label="COM_JEM_EVENT_FIELD_SHOW_HITS_LABEL"
 				description="COM_JEM_EVENT_FIELD_SHOW_HITS_DESC"
@@ -937,6 +946,47 @@
 		<option value="0">JNO</option>
 		<option value="1">JYES</option>
 	</field>
+	
+			<field name="event_show_email" type="radio"
+				label="COM_JEM_SHOW_EMAIL"
+				description="COM_JEM_SHOW_EMAIL_DESC"
+				class="btn-group btn-group-yesno"
+				default="0"
+				required="false"
+				>
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field name="event_show_website" type="radio"
+				label="COM_JEM_SHOW_WEBSITE"
+				description="COM_JEM_SHOW_WEBSITE_DESC"
+				class="btn-group btn-group-yesno"
+				default="0"
+				required="false"
+				>
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field name="event_show_phone" type="radio"
+				label="COM_JEM_SHOW_PHONE"
+				description="COM_JEM_SHOW_PHONE_DESC"
+				class="btn-group btn-group-yesno"
+				default="0"
+				required="false"
+				>
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field name="event_show_fax" type="radio"
+				label="COM_JEM_SHOW_FAX"
+				description="COM_JEM_SHOW_FAX_DESC"
+				class="btn-group btn-group-yesno"
+				default="0"
+				required="false"
+				>
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
 		</fieldset>
 
 		<fieldset name="evregistration"

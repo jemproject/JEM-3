@@ -44,6 +44,22 @@ $group2 = 'vevent';
 							<div class="control-label"><?php echo $this->form->getLabel('show_country', $group); ?></div>
 							<div class="controls"><?php echo $this->form->getInput('show_country', $group); ?></div>
 						</div>
+						<div class="control-group">	
+							<div class="control-label"><?php echo $this->form->getLabel('event_show_website', $group); ?></div>
+							<div class="controls"><?php echo $this->form->getInput('event_show_website', $group); ?></div>
+						</div>
+						<div class="control-group">	
+							<div class="control-label"><?php echo $this->form->getLabel('event_show_fax', $group); ?></div>
+							<div class="controls"><?php echo $this->form->getInput('event_show_fax', $group); ?></div>
+						</div>
+						<div class="control-group">	
+							<div class="control-label"><?php echo $this->form->getLabel('event_show_phone', $group); ?></div>
+							<div class="controls"><?php echo $this->form->getInput('event_show_phone', $group); ?></div>
+						</div>
+						<div class="control-group">	
+							<div class="control-label"><?php echo $this->form->getLabel('event_show_email', $group); ?></div>
+							<div class="controls"><?php echo $this->form->getInput('event_show_email', $group); ?></div>
+						</div>
 				</fieldset>
 				<fieldset class="form-horizontal">
 					<legend><?php echo JText::_('COM_JEM_REGISTRATION'); ?></legend>
