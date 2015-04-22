@@ -1,6 +1,13 @@
-<?php // no direct access
-defined('_JEXEC') or die('Restricted access'); 
+<?php 
+/**
+ * @package JEM
+ * @subpackage JEM - Module-Calendar(AJAX)
+ * @copyright (C) 2015 joomlaeventmanager.net
+ * @copyright (C) 2008-2010 Toni Smillie www.qivva.com
+ * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
+*/
 
+defined('_JEXEC') or die(); 
 JHtml::_('bootstrap.tooltip');
 ?>
 
@@ -32,11 +39,11 @@ function mod_jem_calajax_click<?php print $module->id; ?>(url) {
 $document = JFactory::getDocument(); 
 if ($Default_Stylesheet ==1)
 {
-	$document->addStyleSheet( JURI::base() . 'modules/mod_jem_calajax/mod_jem_calajax.css' );
+	$document->addStyleSheet(JURI::base().'modules/mod_jem_calajax/mod_jem_calajax.css');
 }
 else
 {
-	$document->addStyleSheet( JURI::base() . $User_stylesheet );
+	$document->addStyleSheet(JURI::base().$User_stylesheet);
 }
 
 //Output
@@ -198,8 +205,6 @@ if (!defined('_IN_AJAXCALL')) {
 
     }
 
-
- 
     if($day_name_length){ #if the day names should be shown ($day_name_length > 0)
         #if day_name_length is >3, the full name of the day will be printed
 		if ($day_name_length >3){

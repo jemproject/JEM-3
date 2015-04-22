@@ -2,10 +2,9 @@
 /**
  * @package JEM
  * @subpackage JEM - Module-Calendar(AJAX)
- * @copyright (C) 2013-2015 joomlaeventmanager.net
+ * @copyright (C) 2015 joomlaeventmanager.net
  * @copyright (C) 2008-2010 Toni Smillie www.qivva.com
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
- * Helper class for mod_jemcalq module
  
  * First Ajax version based on 0.94 eventlistcal15q
  * Thanks to Bart Eversdijk for the Ajax conversion and Piotr Konieczny for assistance in porting of changes
