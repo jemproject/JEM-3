@@ -136,9 +136,7 @@ class JemViewEvent extends JEMView
 		$results = $dispatcher->trigger('onContentPrepare', array ('com_jem.event', &$item, &$this->params, $offset));
 
 		$item->event = new stdClass();
-		$results = $dispatcher->trigger('onContentAfterTitle', array('com_jem.event', &$item, &$this->params, $offset));
-		$item->event->afterDisplayTitle = trim(implode("\n", $results));
-
+		
 		$results = $dispatcher->trigger('onContentBeforeDisplay', array('com_jem.event', &$item, &$this->params, $offset));
 		$item->event->beforeDisplayContent = trim(implode("\n", $results));
 
@@ -153,6 +151,7 @@ class JemViewEvent extends JEMView
 		//Escape strings for HTML output
 		$this->pageclass_sfx = htmlspecialchars($this->item->params->get('pageclass_sfx'));
 
+		
 		$this->print_link = JRoute::_(JemHelperRoute::getEventRoute($item->slug).'&print=1&tmpl=component');
 
 		//Get images
@@ -178,11 +177,9 @@ class JemViewEvent extends JEMView
 		} else {
 			$this->addeventlink = 0;
 		}
-
-		// Check if the user has access to the add-venueform
-		$maintainer2 = JemUser::venuegroups('add');
-		$genaccess2 = JemUser::validate_user($jemsettings->locdelrec, $jemsettings->deliverlocsyes);
-		if ($maintainer2 || $genaccess2) {
+		
+		// Check if the user has access to the venueform
+		if (JEMUser::addVenue()) {
 			$this->addvenuelink = 1;
 		} else {
 			$this->addvenuelink = 0;
@@ -193,25 +190,22 @@ class JemViewEvent extends JEMView
 		} else {
 			$this->allowedtoeditevent = 0;
 		}
-
-		//Check if the user has access to the edit-venueform
-		$maintainer3 = JemUser::venuegroups('edit');
-		$genaccess3  = JemUser::editaccess($jemsettings->venueowner, $item->venueowner, $jemsettings->venueeditrec, $jemsettings->venueedit);
-		if ($maintainer3 || $genaccess3 ) {
+		
+		if (JEMUser::venueEdit(false,$item->locid,'event')) {
 			$this->allowedtoeditvenue = 1;
 		} else {
 			$this->allowedtoeditvenue = 0;
 		}
-
-		//Timecheck for registration
+		
+		// Timecheck for registration
 		$now = strtotime(date("Y-m-d"));
 		$date = strtotime($item->dates);
 		$timecheck = $now - $date;
 
-		//let's build the registration handling
+		// let's build the registration handling
 		$formhandler = 0;
 
-		//is the user allready registered at the event
+		// is the user allready registered at the event
 		if ($isregistered) {
 			$formhandler = 3;
 		} elseif ($timecheck > 0 && !is_null($item->dates)) { //check if it is too late to register and overwrite $formhandler
@@ -386,40 +380,8 @@ class JemViewEvent extends JEMView
 			$this->document->setMetaData('robots', 'noindex, nofollow');
 		}
 
-	/*
-		// Because the application sets a default page title,
-		// we need to get it from the menu item itself
-		$menu = $menus->getActive();
-
-		if ($menu) {
-			$this->params->def('page_heading', $this->params->get('page_title', $menu->title));
-		} else {
-			$this->params->def('page_heading', JText::_('JGLOBAL_JEM_EVENT'));
-		}
-	*/
 		$title = $this->params->get('page_title', '');
-	/*
-		$id = (int) @$menu->query['id'];
-
-		// if the menu item does not concern this event
-		if ($menu && ($menu->query['option'] != 'com_jem' || $menu->query['view'] != 'event' || $id != $this->item->id)) {
-			// If this is not a single event menu item, set the page title to the event title
-			if ($this->item->title) {
-				$title = $this->item->title;
-			}
-			$path = array(array('title' => $this->item->title, 'link' => ''));
-			$category = JCategories::getInstance('JEM2')->get($this->item->catid);
-			while ($category && ($menu->query['option'] != 'com_jem' || $menu->query['view'] == 'event'
-					|| $id != $category->id) && $category->id > 1) {
-				$path[] = array('title' => $category->catname, 'link' => JEMHelperRoute::getCategoryRoute($category->id));
-				$category = $category->getParent();
-			}
-			$path = array_reverse($path);
-			foreach($path as $item) {
-				$pathway->addItem($item['title'], $item['link']);
-			}
-		}
-	*/
+	
 		// Check for empty title and add site name if param is set
 		if (empty($title)) {
 			$title = $app->getCfg('sitename');
