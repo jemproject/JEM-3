@@ -12,9 +12,6 @@ $mapType = $this->mapType;
 
 <div id="jem" class="jem_venue<?php echo $this->pageclass_sfx;?>" itemscope="itemscope" itemtype="http://schema.org/Place">
 <div class="topbox">
-	<div class="btn-group pull-left">
-		<?php echo JEMOutput::statuslabel($this->venue->published); ?>
-	</div>
 	<div class="btn-group pull-right hidden-phone">
 	<?php
 	if ($this->print) {
