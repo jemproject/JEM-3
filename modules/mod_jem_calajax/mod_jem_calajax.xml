@@ -124,13 +124,6 @@
 			<option value="0">JNO</option>
 			<option value="1">JYES</option>
 		</field>
-		<field name="UseMooTools" 
-		type="radio" 
-		class="btn-group btn-group-yesno"
-		default="1" label="MOD_JEM_CALAJAX_AJAX" description="MOD_JEM_CALAJAX_AJAX_DESC">
-			<option value="0">JNO</option>
-			<option value="1">JYES</option>
-		</field>
 		<field name="spacer4" type="spacer" hr="true" default="" label="" description="" />
 		<field name="moduleclass_sfx" type="text" default="" label="MOD_JEM_CALAJAX_MODULE_CLASSSUFFIX" description="MOD_JEM_CALAJAX_MODULE_CLASSSUFFIX_DESC" />
 		<field name="locale_override" type="text" default="" label="MOD_JEM_CALAJAX_LOCALE" description="MOD_JEM_CALAJAX_LOCALE_DESC" />

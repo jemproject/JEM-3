@@ -23,8 +23,7 @@ list($tmp, $year, $next_month, $weekday) = explode(',', gmstrftime('%m,%Y,%b,%w'
 $pn = array( $prev_month=>$prev_link, $next_month=>$next_link);
 
 // Use MooTools to navigate through the months
-if ($UseMooTools) {
-    if (!defined('_IN_AJAXCALL')) { ?>
+if (!defined('_IN_AJAXCALL')) { ?>
 <script type="text/javascript">
 function mod_jem_calajax_click<?php print $module->id; ?>(url) {
 	jQuery('#eventcalq<?php echo $module->id.'\'';?>).load(url, function () {
@@ -33,8 +32,7 @@ function mod_jem_calajax_click<?php print $module->id; ?>(url) {
 }
 </script>
 <?php
-    }
-}
+ }
 
 $document = JFactory::getDocument(); 
 if ($Default_Stylesheet ==1)
@@ -165,20 +163,6 @@ if (!defined('_IN_AJAXCALL')) {
 	
     #Begin calendar. Uses a real <caption>. See http://diveintomark.org/archives/2002/07/03
 	
-	if (!$UseMooTools) {
-// Modified by Toni to display << and >> for previous and next months	
-    @list($p, $pl) = each($pn); @list($n, $nl) = each($pn); #previous and next links, if applicable
-// Modified by Toni to display << and >> for previous and next months		
-	
-	if($p) $p = ($pl ? '<a href="'.htmlspecialchars($pl).'" rel="nofollow">&lt;&lt; </a>' : $p).'&nbsp;'; //Modified by Toni
-    if($n) $n = '&nbsp;'.($nl ? '<a href="'.htmlspecialchars($nl).'" rel="nofollow"> &gt;&gt;</a>' : $n); //Modified by Toni	
-	
-	$month_href = NULL;
-    
-    $calendar .= '<table class="mod_jem_calajax_calendar" cellspacing="0" cellpadding="0">'."\n".	  
-       '<caption class="mod_jem_calajax_calendar-month">'.$p.($month_href ? '<a href="'.htmlspecialchars($month_href).'" rel="nofollow">'.$title.'</a>' : $title).$n."</caption>\n<tr>";
-	   
-	} else {
 	#previous and next links, if applicable
 	@list($p, $pl) = each($pn); 
 	@list($n, $nl) = each($pn); 
@@ -203,7 +187,6 @@ if (!defined('_IN_AJAXCALL')) {
 	$calendar .= "</caption>";
 	$calendar .= "<tr>";
 
-    }
 
     if($day_name_length){ #if the day names should be shown ($day_name_length > 0)
         #if day_name_length is >3, the full name of the day will be printed

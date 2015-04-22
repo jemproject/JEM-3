@@ -43,7 +43,6 @@ JHtml::_('bootstrap.tooltip');
 	$UseJoomlaLanguage		= $params->get( 'UseJoomlaLanguage', '1' );
 	$Default_Stylesheet		= $params->get( 'Default_Stylesheet', '1' );
 	$User_stylesheet		= $params->get( 'User_stylesheet', 'modules/mod_jem_calajax/mod_jem_calajax.css' );	
-	$UseMooTools		= $params->get( 'UseMooTools', '0' );
 	$Itemid = JFactory::getApplication()->input->request->getString('Itemid',0);
 	
 	if (empty($LocaleOverride)){
