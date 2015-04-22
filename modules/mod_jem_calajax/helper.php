@@ -42,6 +42,10 @@ abstract class modjemcalajaxhelper
 		$user		= JFactory::getUser();
 		$levels		= $user->getAuthorisedViewLevels();
 		$settings 	= JEMHelper::globalattribs();
+		
+		$app 	= JFactory::getApplication();
+		$jinput	= $app->input;
+		$item	= $jinput->getInt('Itemid');
 
 		$StraightToDetails	= $params->get('StraightToDetails', '1');
 		$DisplayCat			= $params->get('DisplayCat', '0');
@@ -58,14 +62,24 @@ abstract class modjemcalajaxhelper
 
 		// filter category's
 		if ($catids) {
+			$app->setUserState('com_jem.calajax.catid'.$item,$catids);
+			$app->setUserState('com_jem.calajax.catid_switch'.$item,true);
 			$model->setState('filter.category_id',$catids);
 			$model->setState('filter.category_id.include',true);
+		} else {
+			$app->setUserState('com_jem.calajax.catid'.$item,$catids);
+			$app->setUserState('com_jem.calajax.catid_switch'.$item,true);
 		}
 
 		// filter venue's
 		if ($venids) {
+			$app->setUserState('com_jem.calajax.locid'.$item,$venids);
+			$app->setUserState('com_jem.calajax.locid_switch'.$item,true);
 			$model->setState('filter.venue_id',$venids);
 			$model->setState('filter.venue_id.include',true);
+		} else {
+			$app->setUserState('com_jem.calajax.locid'.$item,false);
+			$app->setUserState('com_jem.calajax.locid_switch'.$item,false);
 		}
 
 		// filter event id's

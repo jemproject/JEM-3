@@ -96,16 +96,20 @@ class JemModelDay extends JemModelEventslist
 		$task           	= $jinput->getCmd('task',null);
 		$requestVenueId		= $jinput->getInt('locid',null);
 		$requestCategoryId	= $jinput->getInt('catid',null);
-
 		$item = $jinput->getInt('Itemid');
-		$locid = $app->getUserState('com_jem.venuecal.locid'.$item);
+		
+		$locid = $app->getUserState('com_jem.calajax.locid'.$item,false);
+		$locid_switch = $app->getUserState('com_jem.calajax.locid_switch'.$item,false);
 		if ($locid) {
-			$this->setstate('filter.filter_locid',$locid);
+			$this->setstate('filter.venue_id',$locid);
+			$this->setstate('filter.venue_id.include',$locid_switch);
 		}
-
-		$cal_category_catid = $app->getUserState('com_jem.categorycal.catid'.$item);
-		if ($cal_category_catid) {
-			$this->setState('filter.req_catid',$cal_category_catid);
+		
+		$catid = $app->getUserState('com_jem.calajax.catid'.$item,false);
+		$catid_switch = $app->getUserState('com_jem.calajax.catid_switch'.$item,false);
+		if ($catid) {
+			$this->setState('filter.category_id',$catid);
+			$this->setState('filter.category_id.include',$catid_switch);
 		}
 
 		# limit/start
