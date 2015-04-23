@@ -53,7 +53,7 @@ class JEMViewGroups extends JViewLegacy
 		JToolBarHelper::title(JText::_('COM_JEM_GROUPS'), 'groups');
 
 		/* retrieving the allowed actions for the user */
-		$canDo = JEMHelperBackend::getActions(0);
+		$canDo = JEMHelperBackend::getActions('com_jem', 'group', 0);
 
 		/* create */
 		if (($canDo->get('core.create'))) {

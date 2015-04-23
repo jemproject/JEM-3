@@ -67,6 +67,9 @@ class JEMViewVenue extends JViewLegacy {
 				break;
 		}
 		$this->mapType = $type;
+		
+		$this->canDo	= JEMHelperBackend::getActions('com_jem', 'venue', $this->item->id);
+		
 
 		//JHtml::_('jquery.framework');
 		JHtml::_('script', 'com_jem/slider-state.js', false, true);
@@ -88,8 +91,8 @@ class JEMViewVenue extends JViewLegacy {
 		$user		= JFactory::getUser();
 		$isNew		= ($this->item->id == 0);
 		$checkedOut	= !($this->item->checked_out == 0 || $this->item->checked_out == $user->get('id'));
-		$canDo		= JEMHelperBackend::getActions();
-
+		$canDo		= $this->canDo;
+		
 		JToolBarHelper::title($isNew ? JText::_('COM_JEM_ADD_VENUE') : JText::_('COM_JEM_EDIT_VENUE'), 'venuesedit');
 
 		// If not checked out, can save the item.

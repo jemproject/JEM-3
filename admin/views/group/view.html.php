@@ -51,6 +51,8 @@ class JEMViewGroup extends JViewLegacy {
 
 		$this->jemsettings		= $jemsettings;
 		$this->lists 		= $lists;
+		
+		$this->canDo	= JEMHelperBackend::getActions('com_jem', 'group', $this->item->id);
 
 		$this->addToolbar();
 		$this->sidebar = JHtmlSidebar::render();
@@ -69,7 +71,7 @@ class JEMViewGroup extends JViewLegacy {
 		$user		= JFactory::getUser();
 		$isNew		= ($this->item->id == 0);
 		$checkedOut	= !($this->item->checked_out == 0 || $this->item->checked_out == $user->get('id'));
-		$canDo		= JEMHelperBackend::getActions();
+		$canDo		= $this->canDo;
 
 		JToolBarHelper::title($isNew ? JText::_('COM_JEM_GROUP_ADD') : JText::_('COM_JEM_GROUP_EDIT'), 'groupedit');
 

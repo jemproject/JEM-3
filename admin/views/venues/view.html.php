@@ -60,8 +60,8 @@ class JEMViewVenues extends JViewLegacy
     protected function addToolbar()
     {
 		JToolBarHelper::title(JText::_('COM_JEM_VENUES'), 'venues');
-
-		$canDo = JEMHelperBackend::getActions(0);
+		
+		$canDo = JEMHelperBackend::getActions('com_jem', 'venue', 0);
 
 		/* create */
 		if (($canDo->get('core.create'))) {

@@ -66,7 +66,7 @@ class JEMViewEvents extends JViewLegacy
 		JToolBarHelper::title(JText::_('COM_JEM_EVENTS'), 'events');
 
 		/* retrieving the allowed actions for the user */
-		$canDo = JEMHelperBackend::getActions(0);
+		$canDo = JEMHelperBackend::getActions('com_jem', 'event', 0);
 
 		/* create */
 		if (($canDo->get('core.create'))) {

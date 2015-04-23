@@ -56,6 +56,8 @@ class JemViewEvent extends JViewLegacy {
 		$this->access		= JemHelper::getAccesslevelOptions();
 		$this->jemsettings	= $jemsettings;
 		$this->Lists 		= $Lists;
+		
+		$this->canDo	= JEMHelperBackend::getActions('com_jem', 'event', $this->item->id);
 
 		$this->addToolbar();
 		$this->sidebar = JHtmlSidebar::render();
@@ -75,7 +77,7 @@ class JemViewEvent extends JViewLegacy {
 		$user		= JFactory::getUser();
 		$isNew		= ($this->item->id == 0);
 		$checkedOut	= !($this->item->checked_out == 0 || $this->item->checked_out == $user->get('id'));
-		$canDo		= JemHelperBackend::getActions();
+		$canDo		= $this->canDo;
 
 		JToolBarHelper::title($isNew ? JText::_('COM_JEM_ADD_EVENT') : JText::_('COM_JEM_EDIT_EVENT'), 'eventedit');
 
