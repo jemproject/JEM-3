@@ -21,4 +21,8 @@
 		<action name="core.edit" title="JACTION_EDIT" description="COM_JEM_EVENT_ACCESS_EDIT_DESC" />
 		<action name="core.edit.state" title="JACTION_EDITSTATE" description="COM_JEM_EVENT_ACCESS_EDITSTATE_DESC" />
 	</section>
+	<section name="venue">
+		<action name="core.edit" title="JACTION_EDIT" description="COM_JEM_VENUE_ACCESS_EDIT_DESC" />
+		<action name="core.edit.own" title="JACTION_EDITOWN" description="COM_JEM_VENUE_ACCESS_EDITOWN_DESC" />
+	</section>
 </access>
