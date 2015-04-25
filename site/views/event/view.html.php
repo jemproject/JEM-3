@@ -30,7 +30,6 @@ class JemViewEvent extends JEMView
 	function display($tpl = null)
 	{
 		$jemsettings		= JemHelper::config();
-		$settings			= JemHelper::globalattribs();
 		$app				= JFactory::getApplication();
 		$user				= JFactory::getUser();
 		$userId				= $user->get('id');
@@ -43,13 +42,14 @@ class JemViewEvent extends JEMView
 		$jinput 			= $app->input;
 		$this->KunenaConfig	= $this->get('KunenaConfig');
 
-		$this->params		= $app->getParams('com_jem');
+		$this->state		= $this->get('State');
+		$this->params 		= $this->state->get('params');
+	
 		$this->item			= $this->get('Item');
 		$this->print		= $jinput->getBool('print');
 		$this->state		= $this->get('State');
 		$this->user			= $user;
 		$this->jemsettings	= $jemsettings;
-		$this->settings		= $settings;
 
 		//$categories			= $this->get('Categories');
 		//$this->categories	= $categories;
@@ -168,33 +168,35 @@ class JemViewEvent extends JEMView
 			$this->limage = false;
 		}
 
-		$this->img_position = $settings->get('img_position',1);
+		$this->img_position = $params->get('img_position',1);
 
 
-		// Check if the user has access to the add-eventform
-		if (JEMUser::addEvent(true)) {
-			$this->addeventlink = 1;
+		// Check if the user should see the submit-Event icon
+		if (JEMUser::addEvent($params,true)) {
+			$this->submitEventIcon = 1;
 		} else {
-			$this->addeventlink = 0;
+			$this->submitEventIcon = 0;
 		}
 		
-		// Check if the user has access to the venueform
-		if (JEMUser::addVenue()) {
-			$this->addvenuelink = 1;
+		// Check if the user should see the submit-Venue icon
+		if (JEMUser::addVenue($params,true)) {
+			$this->submitVenueIcon = 1;
 		} else {
-			$this->addvenuelink = 0;
+			$this->submitVenueIcon = 0;
 		}
 
-		if (JEMUser::eventEdit(false,$item->categories,'event')) {
-			$this->allowedtoeditevent = 1;
+		// check if user should the edit-Event icon
+		if (JEMUser::editEvent($params,true,$item->id,$item->categories,'event',$item->created_by)) {
+			$this->editEventIcon = 1;
 		} else {
-			$this->allowedtoeditevent = 0;
+			$this->editEventIcon = 0;
 		}
 		
-		if (JEMUser::venueEdit(false,$item->locid,'event')) {
-			$this->allowedtoeditvenue = 1;
+		// check if user should the edit-Venue icon
+		if (JEMUser::editVenue($params,true,false,$item->locid,'event',$item->created_by)) {
+			$this->editVenueIcon = 1;
 		} else {
-			$this->allowedtoeditvenue = 0;
+			$this->editVenueIcon = 0;
 		}
 		
 		// Timecheck for registration

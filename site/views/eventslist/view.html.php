@@ -33,7 +33,6 @@ class JemViewEventslist extends JEMView
 		$app 			= JFactory::getApplication();
 		$jinput 		= $app->input;
 		$jemsettings	= JemHelper::config();
-		$settings 		= JemHelper::globalattribs();
 		$menu			= $app->getMenu();
 		$menuitem		= $menu->getActive();
 		$params 		= $state->params;
@@ -71,18 +70,18 @@ class JemViewEventslist extends JEMView
 			$noevents = 0;
 		}
 
-		// Check if the user has access to the form
-		if (JEMUser::addEvent(true)) {
-			$dellink = 1;
+		// Check if the user should see the submit-Event icon
+		if (JEMUser::addEvent($params,true)) {
+			$this->submitEventIcon = 1;
 		} else {
-			$dellink = 0;
+			$this->submitEventIcon = 0;
 		}
 		
-		// Check if the user has access to the venueform
-		if (JEMUser::addVenue()) {
-			$addvenuelink = 1;
+		// Check if the user should see the submit-Venue icon
+		if (JEMUser::addVenue($params,true)) {
+			$this->submitVenueIcon = 1;
 		} else {
-			$addvenuelink = 0;
+			$this->submitVenueIcon = 0;
 		}
 		
 		// search filter
@@ -111,10 +110,7 @@ class JemViewEventslist extends JEMView
 		$this->task				= $task;
 		$this->noevents			= $noevents;
 		$this->params			= $params;
-		$this->addvenuelink		= $addvenuelink;
-		$this->dellink			= $dellink;
 		$this->jemsettings		= $jemsettings;
-		$this->settings			= $settings;
 		$this->admin			= $admin;
 
 		$this->_prepareDocument();

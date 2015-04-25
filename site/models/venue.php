@@ -179,7 +179,7 @@ class JemModelVenue extends JemModelEventslist
 		$_venue = array();
 
 		$query->select('id, venue, published, city, state, url, street, custom1, custom2, custom3, custom4, custom5, '.
-				' custom6, custom7, custom8, custom9, custom10, phone, fax, email, locimage, meta_keywords, meta_description, '.
+				' custom6, custom7, custom8, custom9, custom10, phone, fax, email, locimage, meta_keywords, meta_description, created_by, '.
 				' created, locdescription, country, map, latitude, longitude, postalCode, checked_out AS vChecked_out, checked_out_time AS vChecked_out_time, '.
 				' CASE WHEN CHAR_LENGTH(alias) THEN CONCAT_WS(\':\', id, alias) ELSE id END as slug');
 		$query->from($db->quoteName('#__jem_venues'));

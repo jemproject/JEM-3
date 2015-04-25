@@ -24,6 +24,8 @@ class JemViewCategory extends JViewLegacy
 		$this->form		= $this->get('Form');
 		$this->item		= $this->get('Item');
 		$this->state	= $this->get('State');
+		//$this->canDo	= JEMHelperBackend::getActions($this->state->get('category.component'));
+		
 		$this->canDo	= JEMHelperBackend::getActions('com_jem', 'category', $this->item->id);
 
 		$document	= JFactory::getDocument();
@@ -75,6 +77,7 @@ class JemViewCategory extends JViewLegacy
 		$checkedOut	= !($this->item->checked_out == 0 || $this->item->checked_out == $userId);
 
 		// Get the results for each action.
+		// $canDo = JEMHelperBackend::getActions();
 		$canDo		= $this->canDo;
 		
 		

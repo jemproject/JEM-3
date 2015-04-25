@@ -137,6 +137,13 @@ class JEMModelVenue extends JModelAdmin
 
 		$data['author_ip'] 		= $jinput->getString('author_ip');
 
+		
+		// Bind the rules.
+		if (isset($data['rules'])) {
+			$rules = new JAccessRules($data['rules']);
+			$table->setRules($rules);
+		}
+		
 
 		if (parent::save($data)){
 			// At this point we do have an id.

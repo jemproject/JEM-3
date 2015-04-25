@@ -62,6 +62,7 @@ CREATE TABLE IF NOT EXISTS `#__jem_events` (
   `mailing` TEXT NOT NULL,
   `opendate` INT NOT NULL DEFAULT '0',
   `registering` text NOT NULL,
+  `asset_id` INT( 10 ) UNSIGNED NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM CHARACTER SET `utf8` COLLATE `utf8_general_ci`;
 
@@ -108,6 +109,7 @@ CREATE TABLE IF NOT EXISTS `#__jem_venues` (
   `phone` varchar(100) NOT NULL DEFAULT '',
   `fax` varchar(100) NOT NULL DEFAULT '',
   `email` varchar(100) NOT NULL DEFAULT '',
+  `asset_id` INT( 10 ) UNSIGNED NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM CHARACTER SET `utf8` COLLATE `utf8_general_ci`;
 

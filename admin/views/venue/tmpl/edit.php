@@ -230,9 +230,16 @@ $slidesOptions = array(
 <!-- Attachments -->		
 	<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'venue-attachments', JText::_('COM_JEM_EVENT_ATTACHMENTS_TAB', true)); ?>	
 		<?php echo $this->loadTemplate('attachments'); ?>
-	<?php echo JHtml::_('bootstrap.endTab'); ?>		
+	<?php echo JHtml::_('bootstrap.endTab'); ?>	
+	
+<!-- Rules -->
+	<?php if ($this->canDo->get('core.admin')) : ?>
+		<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'venue-permissions', JText::_('COM_JEM_FIELDSET_RULES', true)); ?>
+			<?php echo $this->form->getInput('rules'); ?>
+		<?php echo JHtml::_('bootstrap.endTab'); ?>
+	<?php endif; ?>	
 		
-		<?php echo JHtml::_('bootstrap.endTabSet');?>
+	<?php echo JHtml::_('bootstrap.endTabSet');?>
 </div>
 <div class="span4">		
 	

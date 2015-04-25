@@ -25,6 +25,7 @@ class JemModelEvent extends JModelItem
 	protected function populateState()
 	{
 		$app = JFactory::getApplication('site');
+		$settings = JemHelper::globalattribs();
 		$jinput = $app->input;
 
 		// Load state from the request.
@@ -34,8 +35,16 @@ class JemModelEvent extends JModelItem
 		$offset = $jinput->getUInt('limitstart');
 		$this->setState('list.offset', $offset);
 
-		// Load the parameters.
-		$params = $app->getParams('com_jem');
+		// define params
+		$global = new JRegistry;
+		$global->loadString($settings);
+		
+		$params = clone $global;
+		$params->merge($global);
+		if ($menu = $app->getMenu()->getActive())
+		{
+			$params->merge($menu->params);
+		}
 		$this->setState('params', $params);
 
 		// TODO: Tune these values based on other permissions.

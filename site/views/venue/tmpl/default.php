@@ -8,6 +8,7 @@
 defined('_JEXEC') or die;
 
 $mapType = $this->mapType;
+$params = $this->params;
 ?>
 
 <div id="jem" class="jem_venue<?php echo $this->pageclass_sfx;?>" itemscope="itemscope" itemtype="http://schema.org/Place">
@@ -15,16 +16,16 @@ $mapType = $this->mapType;
 	<div class="btn-group pull-right hidden-phone">
 	<?php
 	if ($this->print) {
-		echo JemOutput::printbutton($this->print_link, $this->params);
+		echo JemOutput::printbutton($this->print_link, $params);
 	} else {
 	?>
 	<div class="button_flyer icons">
 	<?php
-		echo JemOutput::submitbutton($this->addeventlink, $this->params);
-		echo JemOutput::addvenuebutton($this->addvenuelink, $this->params, $this->jemsettings);
-		echo JemOutput::archivebutton($this->params, $this->task, $this->venue->slug);
-		echo JemOutput::mailbutton($this->venue->slug, 'venue', $this->params);
-		echo JemOutput::printbutton($this->print_link, $this->params);
+		echo JemOutput::submitbutton($this->submitEventIcon, $params);
+		echo JemOutput::addvenuebutton($this->submitVenueIcon, $params);
+		echo JemOutput::archivebutton($params, $this->task, $this->venue->slug);
+		echo JemOutput::mailbutton($this->venue->slug, 'venue', $params);
+		echo JemOutput::printbutton($this->print_link, $params);
 	?>
 	</div>
 	<?php } ?>
@@ -34,10 +35,10 @@ $mapType = $this->mapType;
 <!-- info -->
 <div class="info_container">
 
-	<?php if ($this->params->get('show_page_heading', 1)) : ?>
+	<?php if ($params->get('show_page_heading', 1)) : ?>
 	<div class="page-header">
 		<h1>
-			<span itemprop="name"><?php echo $this->escape($this->params->get('page_heading')); ?></span>
+			<span itemprop="name"><?php echo $this->escape($params->get('page_heading')); ?></span>
 		</h1>
 	</div>
 	<?php endif; ?>
@@ -47,7 +48,7 @@ $mapType = $this->mapType;
 
 	<h2 class="jem">
 			<?php echo JText::_('COM_JEM_DETAILS'); ?>
-			<?php echo JemOutput::editbutton($this->venue, $this->params, NULL, $this->allowedtoeditvenue, 'venue'); ?>
+			<?php echo JemOutput::editbutton($this->venue, $params, NULL, $this->editVenueIcon, 'venue'); ?>
 	</h2>
 
 	<?php if ($this->limage) { ?>

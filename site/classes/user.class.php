@@ -105,37 +105,47 @@ class JEMUser {
 	}
 
 	/**
-	 * function to check if the user is allowed to add a new event
-	 * to post in.
+	 * function to check if the user is able to submit Events
+	 * or should be able to see the addEvent icon.
+	 * 
+	 * @todo check if there available category's to post in
 	 */
-	static function addEvent($icon=false) {
-		$user 		= JFactory::getUser();
-		
-		if ($icon) {
-			$settings	= JemHelper::globalattribs();
-			$addicon	= $settings->get('acl_event_show_addicon',false);
-			
-			if (!$addicon && !(self::superuser())) {
-				return false;
-			}
-		}
-		
-		if ($user->get('guest') || $user->get('id') == 0) {
-			if (JEMUser::validate_guest()){
-				return true;
-			} else {
-				return false;
-			}
-		}
+	static function addEvent($settings,$icon=false,$view=false) {
 		
 		if (self::superuser()) {
+			// superuser has admin rights
 			return true;
 		}
 		
-		$settings = JemHelper::globalattribs();
+		if ($icon) {
+			$addicon	= $settings->get('acl_event_show_addicon',false);
+			
+			if (!$addicon) {
+				// no icon to be displayed
+				return false;
+			}
+		}
+		
+		//
+		// let's see if the user is allowed to add events.
+		// if the user is not allowed then the user shouldn't be able to see an icon either
+		//
+		
+		$user 		= JFactory::getUser();
+		if ($user->get('guest') || $user->get('id') == 0) {
+			if (self::validate_guest()){
+				// guest are allowed to add events so return
+				return true;
+			} else {
+				// guest are not allowed to add events
+				return false;
+			}
+		}
+	
 		$options = $settings->get('acl_event_add',false);
 		
 		if (!$options) {
+			// JEM+Joomla groups are not allowed to submit events
 			return false;
 		}
 		
@@ -146,6 +156,7 @@ class JEMUser {
 			} 
 		}
 		
+		// a JEM group was not allowed so continue with Joomla group
 		if (in_array(2, $options)) {
 			// check for Joomla Groups
 			if (JEMUser::JoomlaGroup()) {
@@ -198,85 +209,35 @@ class JEMUser {
 	}
 	
 	
-	
-	/**
-	 * function to check if the user is allowed to edit
-	 */
-	static function eventEdit($eventid=false,$cats=false,$view=false) {
-		
-		$user 		= JFactory::getUser();
-		
-		if ($user->get('guest') || $user->get('id') == 0) {
-			// guest are not allowed to edit
-			return false;
-		}
-	
-		if (self::superuser()) {
-			return true;
-		}
-		
-		if ($view == 'eventslist') {
-			// only superuser should see editicon in eventslist view
-			return false;
-		}
-		
-	
-		if ($cats) {
-			$catids = array();
-			foreach ($cats AS $cat) {
-				$catids[] = $cat->id;
-			}
-		}
-		
-		if (!($catids)) {
-			return false;
-		}
-		
-		
-		$settings = JemHelper::globalattribs();
-		$options = $settings->get('acl_event_edit',false);
-	
-		if (!$options) {
-			return false;
-		}
-	
-		if (in_array(1, $options)) {
-			// check for JEM Groups
-			if (JemUser::ismaintainer('editevent',false,$catids)) {
-				return true;
-			}
-		}
-	
-		if (in_array(2, $options)) {
-			// check for Joomla Groups
-			if (JEMUser::JoomlaGroup('edit',$catids)) {
-				return true;
-			}
-		}
-	
-		return false;
-	}
-	
-	
 	/**
 	 * function to check if the user is allowed to post and if there is a category
 	 * to post in.
 	 */
 	
-	static function addVenue() {
-		$user 		= JFactory::getUser();
 	
+	static function addVenue($settings,$icon=false,$view=false) {
+	
+		if (self::superuser()) {
+			// superuser has admin rights
+			return true;
+		}
+	
+		if ($icon) {
+			$addicon	= $settings->get('acl_venue_show_addicon',false);
+				
+			if (!$addicon) {
+				// no icon to be displayed
+				return false;
+			}
+		}
+		
+		$user 		= JFactory::getUser();
 		if ($user->get('guest') || $user->get('id') == 0) {
 			return false;
 		}
 	
-		if (self::superuser()) {
-			return true;
-		}
-	
-		$settings = JemHelper::globalattribs();
 		$options = $settings->get('acl_venue_add',false);
-	
+		
 		if (!$options) {
 			return false;
 		}
@@ -290,7 +251,7 @@ class JEMUser {
 	
 		if (in_array(2, $options)) {
 			// check for Joomla Groups
-			if (JEMUser::JoomlaGroup()) {
+			if (JEMUser::JoomlaGroup('add',null,'venue')) {
 				return true;
 			}
 		}
@@ -305,19 +266,19 @@ class JEMUser {
 	 * Check if the current user is member of Joomla Group
 	 */
 	
-	static function JoomlaGroup($action=false,$cats=false) {
+	static function JoomlaGroup($params,$action=false,$cats=false,$type=false) {
 		
 		$user 		= JFactory::getUser();
 		$userGroups = $user->getAuthorisedGroups();
 		
-		$settings = JemHelper::globalattribs();
-		$options = $settings->get('acl_event_'.$action.'_joomlagroups',false);
-				
+		$options = $params->get('acl_'.$type.'_'.$action.'_joomlagroups',false);
+
 		if (!$options) {
 			return false;
 		}
 		
-		if ($cats && $action == 'publish') {
+		// cats 
+		if ($action == 'publish') {
 			foreach ($cats as $i => $cat) {
 				if ($user->authorise('core.edit.state', 'com_jem.category.' . $cat) != true)
 				{
@@ -331,9 +292,11 @@ class JEMUser {
 				return false;
 			}
 			
-		} elseif ($cats && $action == 'edit') {
-			// we don't have event permissions so let's check if the user is allowed to post in a category
-			// attached to the event
+		} 
+		
+		if ($action == 'edit') {
+			// check if the user is allowed to post in a category
+			//
 			foreach ($cats as $i => $cat) {
 				if ($user->authorise('core.edit', 'com_jem.category.' . $cat) != true)
 				{
@@ -344,14 +307,15 @@ class JEMUser {
 			if ($cats) {
 				return true;
 			} else {
+				// it's possible that the edit.own permission was configured so let's check that one.
+				$params->get('acl_'.$type.'_'.$action.'_joomlagroups',false);
+				
+				
+				
 				return false;
 			}
-		} else {
-			if (array_intersect($userGroups, $options)) {
-				return true;
-			}
-		}
-		
+		} 
+			
 		return false;
 	}
 	
@@ -359,7 +323,7 @@ class JEMUser {
 	/**
 	 * Checks if the user is a maintainer of a category
 	 */
-	static function ismaintainer($action, $eventid = false,$cats=false)
+	static function ismaintainer($params,$action, $eventid = false,$cats=false)
 	{
 		$db = JFactory::getDBO();
 		$user = JFactory::getUser();
@@ -495,10 +459,104 @@ class JEMUser {
 	/**
 	 * function to check if the user is allowed to edit
 	 */
-	static function venueEdit($eventid=false,$locid=false,$view=false) {
+	static function editEvent($params,$icon=false,$eventid=false,$cats=false,$view=false, $created_by=false) {
 	
+		if (empty($eventid)) {
+			// for editing we need an id
+			return false;
+		}
+		
 		$user 		= JFactory::getUser();
 	
+		if ($user->get('guest') || $user->get('id') == 0) {
+			// guest are not allowed to edit
+			return false;
+		}
+	
+		if (self::superuser()) {
+			return true;
+		}
+	
+		if ($view == 'eventslist') {
+			// only superuser should see editicon in eventslist view
+			return false;
+		}
+		
+		$editown = $params->get('acl_event_editown',false);
+		$userId		= $user->get('id');
+		
+		if ($editown && $user->authorise('core.edit.own', 'com_jem.event.' . $eventid)) {
+		
+			// Now test the owner is the user.
+			$ownerId = (int) isset($created_by) ? $created_by : 0;
+
+			if (empty($ownerId) && $eventid)
+			{
+				// Need to do a lookup from the model.
+				/*
+				 $record = $this->getModel()->getItem($locid);
+		
+				 if (empty($record))
+				 {
+				 return false;
+				 }
+		
+				 $ownerId = $record->created_by;
+				 */
+			}
+		
+			// If the owner matches 'me' then do the test.
+			if ($ownerId == $userId)
+			{
+				return true;
+			}
+		}
+	
+	
+		$catids = array();
+		if ($cats) {
+			foreach ($cats AS $cat) {
+				$catids[] = $cat->id;
+			}
+		}
+	
+		if (!($catids)) {
+			// normally an event is attached to a category
+			return false;
+		}
+	
+		$options = $params->get('acl_event_edit',false);
+	
+		if (!$options) {
+			return false;
+		}
+	
+		if (in_array(1, $options)) {
+			// check for JEM Groups
+			if (JemUser::ismaintainer($params,'editevent',false,$catids)) {
+				return true;
+			}
+		}
+	
+		if (in_array(2, $options)) {
+			// check for Joomla Groups
+			if (JEMUser::JoomlaGroup($params,'edit',$catids,'event')) {
+				return true;
+			}
+		}
+	
+		return false;
+	}
+	
+	
+	/**
+	 * function to check if the user is allowed to edit
+	 */
+	static function editVenue($params,$icon=false, $eventid=false,$locid=false,$view=false,$created_by=false) {
+	
+		$user 		= JFactory::getUser();
+		$userId		= $user->get('id');
+		
 		if ($user->get('guest') || $user->get('id') == 0) {
 			// guest are not allowed to edit
 			return false;
@@ -514,27 +572,50 @@ class JEMUser {
 			return true;
 		}
 	
-		if ($view == 'eventslist') {
-			// only superuser should see editicon in eventslist view
-			return false;
-		}
-	
 		$settings = JemHelper::globalattribs();
+		$editown = $settings->get('acl_venue_editown',false);
+		
+		if ($editown && $user->authorise('core.edit.own', 'com_jem.venue.' . $locid)) {
+		
+			// Now test the owner is the user.
+			$ownerId = (int) isset($created_by) ? $created_by : 0;
+			
+			if (empty($ownerId) && $locid)
+			{
+				// Need to do a lookup from the model.
+				/*
+				$record = $this->getModel()->getItem($locid);
+
+				if (empty($record))
+				{
+					return false;
+				}
+
+				$ownerId = $record->created_by;
+				*/
+			}
+
+			// If the owner matches 'me' then do the test.
+			if ($ownerId == $userId)
+			{
+				return true;
+			}
+		} 
+		
 		$options = $settings->get('acl_venue_edit',false);
-	
 		if (!$options) {
 			return false;
 		}
-	
+		
+		// JEM Groups
 		if (in_array(1, $options)) {
-			// check for JEM Groups
 			if (JemUser::ismaintainer('editvenue',false,$locid)) {
 				return true;
 			}
 		}
 	
+		// Joomla Groups
 		if (in_array(2, $options)) {
-			// check for Joomla Groups
 			if (JEMUser::JoomlaGroup('editvenue',$locid)) {
 				return true;
 			}

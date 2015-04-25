@@ -29,7 +29,7 @@ class JemViewEditevent extends JViewLegacy
 			$this->_displaychoosecontact($tpl);
 			return;
 		}
-
+		
 		// Initialise variables.
 		$jemsettings = JEMHelper::config();
 		$app		= JFactory::getApplication();
@@ -55,7 +55,7 @@ class JemViewEditevent extends JViewLegacy
 		$this->state = $this->get('State');
 		$this->item = $this->get('Item');
 		$this->params = $this->state->get('params');
-
+		
 		// Create a shortcut for $item and params.
 		$item = $this->item;
 		$params = $this->params;
@@ -64,22 +64,23 @@ class JemViewEditevent extends JViewLegacy
 		$this->return_page = $this->get('ReturnPage');
 
 		if (empty($this->item->id)) {
-			if (JEMUser::addEvent()) {
+			// we're submitting a new event
+			if (JEMUser::addEvent($settings)) {
 				$authorised = true;
 			} else {
 				$authorised = false;
 			}
 		} else {
 			// Check if user can edit
-			if (JEMUser::eventEdit($this->item->id,$this->item->categories)) {
-				$allowedtoeditevent = true;
+			if (JEMUser::editEvent($settings,false,$this->item->id,$this->item->categories,false,$this->item->created_by)) {
+				$editEvent = true;
 			} else {
-				$allowedtoeditevent = false;
+				$editEvent = false;
 			}
 
-			$authorised = $this->item->params->get('access-edit') || $allowedtoeditevent ;
+			$authorised = $this->item->params->get('access-edit') || $editEvent ;
 		}
-
+		
 		if ($authorised !== true) {
 			$app->enqueueMessage(JText::_('COM_JEM_EDITEVENT_NOAUTH'), 'warning');
 			return false;
@@ -150,8 +151,7 @@ class JemViewEditevent extends JViewLegacy
 			return false;
 		}
 
-		$access2      = JEMHelper::getAccesslevelOptions();
-		$this->access = $access2;
+		$this->access = JEMHelper::getAccesslevelOptions();
 
 		// add css file
 		JemHelper::loadCss('jem');

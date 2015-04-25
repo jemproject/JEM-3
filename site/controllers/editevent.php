@@ -84,7 +84,7 @@ class JEMControllerEditevent extends JControllerForm
 		if ($user->authorise('core.edit', $asset)) {
 			return true;
 		}
-
+		
 		// Fallback on edit.own.
 		// First test if the permission is available.
 		if ($user->authorise('core.edit.own', $asset)) {
@@ -107,13 +107,13 @@ class JEMControllerEditevent extends JControllerForm
 			}
 		}
 
-		$record			= $this->getModel()->getItem($recordId);
-		$jemsettings 	= JEMHelper::config();
-		$editaccess		= JEMUser::editaccess($jemsettings->eventowner, $record->created_by, $jemsettings->eventeditrec, $jemsettings->eventedit);
-		$maintainer 	= JEMUser::ismaintainer('edit',$record->id);
-
-		if ($maintainer || $editaccess)
-		{
+		$record	= $this->getModel()->getItem($recordId);
+		
+		
+		$params = JemHelper::globalattribs();
+		$check = JEMUser::editEvent($record->params,false,$recordId,$record->categories);
+		
+		if ($check) {
 			return true;
 		}
 

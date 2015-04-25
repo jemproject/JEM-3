@@ -18,6 +18,59 @@ class JEMTableVenues extends JTable
 	}
 
 	/**
+	 * Method to compute the default name of the asset.
+	 * The default name is in the form table_name.id
+	 * where id is the value of the primary key of the table.
+	 *
+	 * @return  string
+	 */
+	protected function _getAssetName()
+	{
+		$k = $this->_tbl_key;
+	
+		return 'com_jem.venue.' . (int) $this->$k;
+	}
+	
+	/**
+	 * Method to return the title to use for the asset table.
+	 *
+	 * @return  string
+	 */
+	protected function _getAssetTitle()
+	{
+		return $this->venue;
+	}
+	
+	/**
+	 * Method to get the parent asset under which to register this one.
+	 * By default, all assets are registered to the ROOT node with ID,
+	 * which will default to 1 if none exists.
+	 * The extended class can define a table and id to lookup.  If the
+	 * asset does not exist it will be created.
+	 *
+	 * @param   JTable   $table  A JTable object for the asset parent.
+	 * @param   integer  $id     Id to look up
+	 *
+	 * @return  integer
+	 *
+	 * @since   11.1
+	 */
+	protected function _getAssetParentId(JTable $table = null, $id = null)
+	{
+		// For simple cases, parent to the asset root.
+		$assets = self::getInstance('Asset', 'JTable', array('dbo' => $this->getDbo()));
+		$rootId = $assets->getRootId();
+
+		if (!empty($rootId))
+		{
+			return $rootId;
+		}
+
+		return 1;
+	}
+	
+	
+	/**
 	 * Bind
 	 */
 	public function bind($array, $ignore = ''){
@@ -25,6 +78,11 @@ class JEMTableVenues extends JTable
 
 		if (!isset($array['map'])) {
 			$array['map'] = 0 ;
+		}
+		
+		if (isset($array['rules']) && is_array($array['rules'])){
+			$rules = new JAccessRules($array['rules']);
+			$this->setRules($rules);
 		}
 
 		//don't override without calling base class

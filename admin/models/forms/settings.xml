@@ -390,80 +390,7 @@
 			required="false"
 		/>
 	</fieldset>
-	<fieldset name="usercontrolacvenue"
-		label="COM_JEM_AC_VENUES"
-	>
-		<field name="deliverlocsyes" type="list"
-			label="COM_JEM_AC_VENUE_SUBMIT"
-			description="COM_JEM_AC_VENUE_SUBMIT"
-			class="inputbox"
-			default="0"
-			required="false"
-		>
-			<option value="-2">COM_JEM_ONLYADMINS</option>
-			<option value="-1">COM_JEM_ALLREGISTERED</option>
-		</field>
-		<field name="locdelrec" type="radio"
-			label="COM_JEM_RECURSIVE"
-			description="COM_JEM_RECURSIVE_DESC"
-			class="btn-group btn-group-yesno"
-			default="0"
-			required="false"
-		>
-			<option value="0">JNO</option>
-			<option value="1">JYES</option>
-		</field>
-		<field name="autopublocate" type="list"
-			label="COM_JEM_AUTOPUBLISH"
-			description="COM_JEM_AUTOPUBLISH_DESC"
-			class="inputbox"
-			default="0"
-			required="false"
-		>
-			<option value="-2">COM_JEM_ONLYADMINS</option>
-			<option value="-1">COM_JEM_ALLREGISTERED</option>
-		</field>
-		<field name="locpubrec" type="radio"
-			label="COM_JEM_RECURSIVE"
-			description="COM_JEM_RECURSIVE_DESC"
-			class="btn-group btn-group-yesno"
-			default="0"
-			required="false"
-		>
-			<option value="0">JNO</option>
-			<option value="1">JYES</option>
-		</field>
-		<field name="venueedit" type="list"
-			label="COM_JEM_AC_VENUE_EDIT"
-			description="COM_JEM_AC_VENUE_EDIT_DESC"
-			class="inputbox"
-			default="0"
-			required="false"
-		>
-			<option value="-2">COM_JEM_ONLYADMINS</option>
-			<option value="-1">COM_JEM_ALLREGISTERED</option>
-		</field>
-		<field name="venueeditrec" type="radio"
-			label="COM_JEM_RECURSIVE"
-			description="COM_JEM_RECURSIVE_DESC"
-			class="btn-group btn-group-yesno"
-			default="0"
-			required="false"
-		>
-			<option value="0">JNO</option>
-			<option value="1">JYES</option>
-		</field>
-		<field name="venueowner" type="radio"
-			label="COM_JEM_EDIT_VENUE_FRONTEND_USER"
-			description="COM_JEM_EDIT_VENUE_FRONTEND_USER_DESC"
-			class="btn-group btn-group-yesno"
-			default="0"
-			required="false"
-		>
-			<option value="0">JNO</option>
-			<option value="1">JYES</option>
-		</field>
-	</fieldset>
+	
 
 	<fields name="globalattribs">
 		<fieldset name="basic"
@@ -1174,6 +1101,110 @@
 			label="COM_JEM_ACL_EVENT_EDIT_JOOMLAGROUPS"
 			description="COM_JEM_ACL_EVENT_EDIT_JOOMLAGROUPS_DESC"
 		>
+		</field>
+		<field 
+			name="acl_event_editown" 
+			type="radio" 
+			label="COM_JEM_ACL_EVENT_EDITOWN"
+			description="COM_JEM_ACL_EVENT_EDITOWN_DESC"
+			class="btn-group btn-group-yesno"
+			default="0"
+			>
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+	</fieldset>
+	<fieldset name="usercontrolacvenue"
+		label="COM_JEM_AC_VENUES"
+	>
+	
+		<field name="acl_venue_add" type="list"
+			label="COM_JEM_AC_VENUE_SUBMIT"
+			description="COM_JEM_AC_VENUE_SUBMIT_DESC"
+			class="inputbox"
+			default="0"
+			size="3"
+			required="false"
+			multiple="true"
+		>
+			<option value="">COM_JEM_ACL_VENUE_NOGROUPS</option>
+			<option value="1">COM_JEM_ACL_VENUE_JEM</option>
+			<option value="2">COM_JEM_ACL_VENUE_JOOMLA</option>
+		</field>
+		<field 
+			name="acl_venue_add_joomlagroups" 
+			type="usergroup" 
+			multiple="true"
+			label="COM_JEM_ACL_VENUE_ADD_JOOMLAGROUPS"
+			description="COM_JEM_ACL_VENUE_ADD_JOOMLAGROUPS_DESC"
+		>
+		</field> 
+		<field name="acl_venue_show_addicon" type="list"
+			label="COM_JEM_ACL_VENUE_SHOW_ADDICON"
+			description="COM_JEM_ACL_VENUE_SHOW_ADDICON_DESC"
+			class="inputbox"
+			default="0"
+			size="1"
+			required="false"
+			multiple="false"
+		>
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+		<field type="spacer" hr="true"></field>
+		<field name="acl_venue_publish" type="list"
+			label="COM_JEM_AUTOPUBLISH"
+			description="COM_JEM_AUTOPUBLISH_DESC"
+			class="inputbox"
+			default="0"
+			size="3"
+			required="false"
+			multiple="true"
+		>
+			<option value="">COM_JEM_ACL_VENUE_NOGROUPS</option>
+			<option value="1">COM_JEM_ACL_VENUE_JEM</option>
+			<option value="2">COM_JEM_ACL_VENUE_JOOMLA</option>
+		</field>
+		<field 
+			name="acl_venue_publish_joomlagroups" 
+			type="usergroup" 
+			multiple="true"
+			label="COM_JEM_ACL_VENUE_PUBLISH_JOOMLAGROUPS"
+			description="COM_JEM_ACL_VENUE_PUBLISH_JOOMLAGROUPS_DESC"
+		>
+		</field>
+		<field type="spacer" hr="true"></field>
+		<field name="acl_venue_edit" type="list"
+			label="COM_JEM_AC_VENUE_EDIT"
+			description="COM_JEM_AC_VENUE_EDIT_DESC"
+			class="inputbox"
+			default="0"
+			size="3"
+			required="false"
+			multiple="true"
+		>
+			<option value="">COM_JEM_ACL_VENUE_NOGROUPS</option>
+			<option value="1">COM_JEM_ACL_VENUE_JEM</option>
+			<option value="2">COM_JEM_ACL_VENUE_JOOMLA</option>
+		</field>
+		<field 
+			name="acl_venue_edit_joomlagroups" 
+			type="usergroup" 
+			multiple="true"
+			label="COM_JEM_ACL_VENUE_EDIT_JOOMLAGROUPS"
+			description="COM_JEM_ACL_VENUE_EDIT_JOOMLAGROUPS_DESC"
+		>
+		</field>
+		<field 
+			name="acl_venue_editown" 
+			type="radio" 
+			label="COM_JEM_ACL_VENUE_EDITOWN"
+			description="COM_JEM_ACL_VENUE_EDITOWN_DESC"
+			class="btn-group btn-group-yesno"
+			default="0"
+			>
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
 		</field>
 	</fieldset>
 	</fields>

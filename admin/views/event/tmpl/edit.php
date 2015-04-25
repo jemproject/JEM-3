@@ -187,7 +187,14 @@ $params = $params->toArray();
 <!-- Settings -->
 	<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'settings', JText::_('COM_JEM_EVENT_SETTINGS_TAB', true)); ?>
 		<?php echo $this->loadTemplate('settings'); ?>
-	<?php echo JHtml::_('bootstrap.endTab'); ?>		
+	<?php echo JHtml::_('bootstrap.endTab'); ?>	
+	
+<!-- Rules -->
+	<?php if ($this->canDo->get('core.admin')) : ?>
+		<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'event-permissions', JText::_('COM_JEM_FIELDSET_RULES', true)); ?>
+			<?php echo $this->form->getInput('rules'); ?>
+		<?php echo JHtml::_('bootstrap.endTab'); ?>
+	<?php endif; ?>		
 	
 			<?php echo JHtml::_('bootstrap.endTabSet');?>
 </div>

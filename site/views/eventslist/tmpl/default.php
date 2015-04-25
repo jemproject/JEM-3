@@ -7,6 +7,7 @@
  */
 defined('_JEXEC') or die;
 
+$params = $this->params;
 ?>
 <div id="jem" class="jem_eventslist<?php echo $this->pageclass_sfx;?>">
 
@@ -15,15 +16,15 @@ defined('_JEXEC') or die;
 
 	<?php
 	if ($this->print) {
-		echo JemOutput::printbutton($this->print_link, $this->params);
+		echo JemOutput::printbutton($this->print_link, $params);
 	} else {
 ?>
 	<div class="button_flyer icons">
 		<?php
-			echo JemOutput::submitbutton($this->dellink, $this->params);
-			echo JemOutput::addvenuebutton($this->addvenuelink, $this->params, $this->jemsettings);
-			echo JemOutput::archivebutton($this->params, $this->task);
-			echo JemOutput::printbutton($this->print_link, $this->params);
+			echo JemOutput::submitbutton($this->submitEventIcon, $params);
+			echo JemOutput::addvenuebutton($this->submitVenueIcon, $params);
+			echo JemOutput::archivebutton($params, $this->task);
+			echo JemOutput::printbutton($this->print_link, $params);
 		?>
 	</div>
 
@@ -33,17 +34,17 @@ defined('_JEXEC') or die;
 </div>
 <!-- info -->
 <div class="info_container">
-	<?php if ($this->params->get('show_page_heading', 1)) : ?>
+	<?php if ($params->get('show_page_heading', 1)) : ?>
 		<h1>
-			<?php echo $this->escape($this->params->get('page_heading')); ?>
+			<?php echo $this->escape($params->get('page_heading')); ?>
 		</h1>
 	<?php endif; ?>
 
 	<div class="clearfix"></div>
 
-	<?php if ($this->params->get('showintrotext')) : ?>
+	<?php if ($params->get('showintrotext')) : ?>
 		<div class="description no_space clearfix">
-			<?php echo $this->params->get('introtext'); ?>
+			<?php echo $params->get('introtext'); ?>
 		</div>
 	<?php endif; ?>
 
@@ -58,9 +59,9 @@ defined('_JEXEC') or die;
 	</div>
 
 <!--footer-->
-	<?php if ($this->params->get('showfootertext')) : ?>
+	<?php if ($params->get('showfootertext')) : ?>
 		<div class="description no_space clearfix">
-			<?php echo $this->params->get('footertext'); ?>
+			<?php echo $params->get('footertext'); ?>
 		</div>
 	<?php endif; ?>
 

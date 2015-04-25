@@ -12,6 +12,9 @@ defined('_JEXEC') or die;
  */
 class JemViewCalendar extends JViewLegacy
 {
+	
+	protected $state = null;
+	
 	/**
 	 * Calendar-View
 	 */
@@ -23,9 +26,9 @@ class JemViewCalendar extends JViewLegacy
 		$menuitem	= $menu->getActive();
 		$jemsettings = JemHelper::config();
 		$vsettings	= JemHelper::viewSettings('vcalendar');
-		$params 	= $app->getParams();
-		$settings 	= JemHelper::globalattribs();
-
+		$state 			= $this->get('State');
+		$params 		= $state->params;
+		
 		// Load css
 		JemHelper::loadCss('jem');
 		JemHelper::loadCss('calendar');
@@ -84,7 +87,6 @@ class JemViewCalendar extends JViewLegacy
 		$this->rows			= $rows;
 		$this->params		= $params;
 		$this->jemsettings	= $jemsettings;
-		$this->settings		= $settings;
 		$this->vsettings	= $vsettings;
 		$this->cal			= $cal;
 		$this->pageclass_sfx = htmlspecialchars($pageclass_sfx);

@@ -73,7 +73,6 @@ class JemHelperBackend
 		}
 
 	}
-
 	
 	/**
 	 * Gets a list of the actions that can be performed.
@@ -83,8 +82,6 @@ class JemHelperBackend
 	 * @param   integer  $id         The item ID.
 	 *
 	 * @return  JObject
-	 *
-	 * @since   3.2
 	 */
 	public static function getActions($component = '', $section = '', $id = 0)
 	{

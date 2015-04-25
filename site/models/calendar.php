@@ -38,13 +38,22 @@ class JemModelCalendar extends JemModelEventslist
 	{
 		# parent::populateState($ordering, $direction);
 		$app 			= JFactory::getApplication();
+		$settings		= JemHelper::globalattribs();
 		$jemsettings	= JemHelper::config();
 		$jinput			= JFactory::getApplication()->input;
 		$itemid 		= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
-		$params 		= $app->getParams();
 		$task           = $jinput->getCmd('task');
 
 		# params
+		$global = new JRegistry;
+		$global->loadString($settings);
+		
+		$params = clone $global;
+		$params->merge($global);
+		if ($menu = $app->getMenu()->getActive())
+		{
+			$params->merge($menu->params);
+		}
 		$this->setState('params', $params);
 
 		# publish state

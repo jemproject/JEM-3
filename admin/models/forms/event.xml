@@ -3,6 +3,13 @@
 	<fieldset name="details"
 		addfieldpath="/administrator/components/com_jem/models/fields"
 	>
+	<field name="asset_id" type="hidden"
+			filter="unset"
+		/>
+		<field name="rules" type="rules" label="JFIELD_RULES_LABEL"
+			translate_label="false" filter="rules"
+			component="com_jem" section="event" validate="rules"
+		/>
 		<field name="articletext" type="editor"
 			class="inputbox"
 			label="COM_JEM_EVENT_FIELD_ARTICLETEXT_LABEL"

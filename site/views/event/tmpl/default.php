@@ -17,6 +17,7 @@ $attribs 	= json_decode($this->item->attribs);
 
 JHtml::_('behavior.modal', 'a.flyermodal');
 $mapType = $this->mapType;
+
 ?>
 <?php if ($params->get('access-view')){?>
 <div id="jem" class="event_id<?php echo $this->item->did; ?> jem_event<?php echo $this->pageclass_sfx;?>" itemscope itemtype="http://schema.org/Event">
@@ -36,8 +37,8 @@ $mapType = $this->mapType;
 	<div class="btn-group pull-right hidden-phone">
 		<div class="button_flyer icons">
 		<?php
-			echo JemOutput::submitbutton($this->addeventlink, $this->params);
-			echo JemOutput::addvenuebutton($this->addvenuelink, $this->params, $this->jemsettings);
+			echo JemOutput::submitbutton($this->submitEventIcon, $this->params);
+			echo JemOutput::addvenuebutton($this->submitVenueIcon, $this->params);
 			if ($params->get('event_show_email_icon',1)) {echo JemOutput::mailbutton($this->item->slug, 'event', $this->params);}
 			if ($params->get('event_show_print_icon',1)) { echo JemOutput::printbutton($this->print_link, $this->params);}
 		?>
@@ -61,7 +62,7 @@ $mapType = $this->mapType;
 	<h2 class="jem">
 	<?php
 		echo JText::_('COM_JEM_EVENT');
-		echo JemOutput::editbutton($this->item, $params, $attribs, $this->allowedtoeditevent, 'editevent');
+		echo JemOutput::editbutton($this->item, $params, $attribs, $this->editEventIcon, 'editevent');
 		?>
 	</h2>
 
@@ -336,7 +337,7 @@ $mapType = $this->mapType;
 			<?php
 			echo JText::_('COM_JEM_VENUE') ;
 			$itemid = $this->item ? $this->item->id : 0 ;
-			echo JemOutput::editbutton($this->item, $params, $attribs, $this->allowedtoeditvenue, 'editvenue');
+			echo JemOutput::editbutton($this->item, $params, $attribs, $this->editVenueIcon, 'editvenue');
 			?>
 		</h2>
 
