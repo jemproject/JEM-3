@@ -73,6 +73,7 @@ class JemHelperBackend
 		}
 
 	}
+
 	
 	/**
 	 * Gets a list of the actions that can be performed.

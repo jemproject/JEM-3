@@ -622,26 +622,6 @@ class JemModelEvent extends JModelAdmin
 		}
 		
 		
-		/*
-		// Bind the rules.
-		if (isset($data['rules'])) {
-			$rules = new JAccessRules($data['rules']);
-		$table->setRules($rules);
-		}
-		*/
-		
-		// Bind the data.
-		if (!$table->bind($data)) {
-			$this->setError($table->getError());
-			return false;
-		}
-		
-		// Store the data.
-		if (!$table->store()) {
-			$this->setError($table->getError());
-			return false;
-		}
-		
 		# parent-Save
 		if (parent::save($data)){
 
