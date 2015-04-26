@@ -88,7 +88,7 @@ class JemViewAttendees extends JViewLegacy {
 	protected function addToolbar()
 	{
 		/* retrieving the allowed actions for the user */
-		$canDo = JEMHelperBackend::getActions(0);
+		$canDo = JEMHelperBackend::getActions('com_jem', 'attendee', 0);
 
 		JToolBarHelper::title(JText::_('COM_JEM_REGISTERED_USERS'), 'users');
 
