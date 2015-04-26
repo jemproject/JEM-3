@@ -35,12 +35,9 @@ class JemViewCategory extends JEMView
 			$document 		= JFactory::getDocument();
 			$vsettings		= JemHelper::viewSettings('vcategory');
 			$jemsettings 	= JemHelper::config();
-			$settings 		= JemHelper::globalattribs();
 			$db  			= JFactory::getDBO();
 			$user			= JFactory::getUser();
 			$print			= $jinput->getBool('print');
-			$state 			= $this->get('State');
-			$params 		= $state->params;
 			$uri 			= JFactory::getURI();
 			$pathway 		= $app->getPathWay();
 			$menu			= $app->getMenu();
@@ -109,27 +106,24 @@ class JemViewCategory extends JEMView
 
 			// search filter
 			$lists['search']= $search;
-
-			// Check if the user has access to the form
-			if (JEMUser::addEvent(true)) {
-				$dellink = 1;
+			
+			// Check if the user should see the submit-Event icon
+			if (JEMUser::addEvent($params,true)) {
+				$this->submitEventIcon = 1;
 			} else {
-				$dellink = 0;
+				$this->submitEventIcon = 0;
 			}
-
-			# Check if the user has access to the add-venueform
-			$maintainer2 = JemUser::venuegroups('add');
-			$genaccess2 = JemUser::validate_user($jemsettings->locdelrec, $jemsettings->deliverlocsyes);
-			if ($maintainer2 || $genaccess2) {
-				$this->addvenuelink = 1;
+			
+			// Check if the user should see the submit-Venue icon
+			if (JEMUser::addVenue($params,true)) {
+				$this->submitVenueIcon = 1;
 			} else {
-				$this->addvenuelink = 0;
+				$this->submitVenueIcon = 0;
 			}
-
+		
 			// Create the pagination object
 			$pagination = $this->get('Pagination');
 
-			
 			/*
 			//Generate Categorydescription
 			if (empty ($category->description)) {
@@ -153,14 +147,11 @@ class JemViewCategory extends JEMView
 			$this->cimage			= $cimage;
 			$this->rows				= $items;
 			$this->noevents			= $noevents;
-			
 			$this->params			= $params;
-			$this->dellink			= $dellink;
 			$this->task				= $task;
 			$this->pagination		= $pagination;
 			$this->jemsettings		= $jemsettings;
 			$this->vsettings		= $vsettings;
-			$this->settings			= $settings;
 			$this->maxLevel			= $params->get('maxLevel', -1);
 			$this->category			= $category;
 			$this->children			= $children;

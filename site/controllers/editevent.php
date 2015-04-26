@@ -35,6 +35,8 @@ class JEMControllerEditevent extends JControllerForm
 	 * @param	array	An array of input data.
 	 *
 	 * @return	boolean
+	 * 
+	 * @todo: Add Category's checking
 	 */
 	protected function allowAdd($data = array())
 	{
@@ -49,8 +51,14 @@ class JEMControllerEditevent extends JControllerForm
 			// If the category has been passed in the data or URL check it.
 			$allow	= $user->authorise('core.create', 'com_jem.category.'.$categoryId);
 		}
+		
+		if ($allow) {
+			return true;
+		}
+		
+		$settings 	= JemHelper::globalattribs();
 
-		if (JEMUser::addEvent()) {
+		if (JEMUser::addEvent($settings)) {
 			return true;
 		}
 

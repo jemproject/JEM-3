@@ -97,7 +97,7 @@ if ( $check && $this->registers|| JFactory::getUser()->authorise('core.manage') 
 // define variables before the foreach
 
 # Community Builder
-if ($this->settings->get('event_comunsolution','0')==1) {
+if ($params->get('event_comunsolution','0')==1) {
 	static $CB_loaded;
 	
 	if (!$CB_loaded) {
@@ -111,7 +111,7 @@ if ($this->settings->get('event_comunsolution','0')==1) {
 
 
 # Kunena
-if ($this->settings->get('event_comunsolution','0')==2) {
+if ($params->get('event_comunsolution','0')==2) {
 	$kconfig = $this->KunenaConfig;
 
 	if ($kconfig->get('username')) {
@@ -133,18 +133,18 @@ if ($this->settings->get('event_comunsolution','0')==2) {
 foreach ($this->registers as $register) :
 
 	// no community component is set so only show the name according to global setting
-	if ($this->settings->get('event_comunsolution','0')==0) {
-		$name = $this->settings->get('global_regname','1') ? 'name' : 'username';
+	if ($params->get('event_comunsolution','0')==0) {
+		$name = $params->get('global_regname','1') ? 'name' : 'username';
 		echo "<li><span class='username'>".$register->$name."</span></li>";
 	}
 
 	// Community Builder
-	if ($this->settings->get('event_comunsolution','0')==1) :
+	if ($params->get('event_comunsolution','0')==1) :
 		$cbUserCreate	= CBuser::getInstance( (int) $register->uid, false );
 		$name 		= $cbUserCreate->getField( 'formatname', null, 'html', 'none', 'list', 0, true );
 
 		# name with avatar + link
-		if ($this->settings->get('event_comunoption','0')==1) {
+		if ($params->get('event_comunoption','0')==1) {
 			$cbUser = CBuser::getInstance($register->uid);
 			if (!$cbUser) {
 				$cbUser = CBuser::getInstance(null);
@@ -154,23 +154,23 @@ foreach ($this->registers as $register) :
 		}
 
 		# name with link
-		if ($this->settings->get('event_comunoption','0')==0) {
+		if ($params->get('event_comunoption','0')==0) {
 			echo "<li><span class='username'><a href='".JRoute::_( 'index.php?option=com_comprofiler&amp;task=userProfile&amp;user='.$register->uid )."'>".$name." </a></span></li>";
 		}
 	endif;
 
 	// Kunena
-	if ($this->settings->get('event_comunsolution','0')==2) {
+	if ($params->get('event_comunsolution','0')==2) {
 		$user	= KunenaFactory::getUser($register->uid);
 		$avatar = $user->getAvatarImage('', '', '');
 
 		# name with avatar + link
-		if ($this->settings->get('event_comunoption','0')==1) {
+		if ($params->get('event_comunoption','0')==1) {
 			echo "<li><a href='".JRoute::_('index.php?option=com_kunena&view=user&userid='.$register->uid )."'>".$avatar."<span class='username'>".$register->$name."</span></a></li>";
 		}
 
 		# name with link
-		if ($this->settings->get('event_comunoption','0')==0) {
+		if ($params->get('event_comunoption','0')==0) {
 			echo "<li><span class='username'><a href='".JRoute::_('index.php?option=com_kunena&view=user&userid='.$register->uid )."'>".$register->$name." </a></span></li>";
 		}
 	}

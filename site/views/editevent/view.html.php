@@ -82,7 +82,12 @@ class JemViewEditevent extends JViewLegacy
 		}
 		
 		if ($authorised !== true) {
+			
+			
 			$app->enqueueMessage(JText::_('COM_JEM_EDITEVENT_NOAUTH'), 'warning');
+			
+			
+			
 			return false;
 		}
 

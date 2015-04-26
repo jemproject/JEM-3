@@ -104,68 +104,7 @@ class JEMUser {
 		return false;
 	}
 
-	/**
-	 * function to check if the user is able to submit Events
-	 * or should be able to see the addEvent icon.
-	 * 
-	 * @todo check if there available category's to post in
-	 */
-	static function addEvent($settings,$icon=false,$view=false) {
-		
-		if (self::superuser()) {
-			// superuser has admin rights
-			return true;
-		}
-		
-		if ($icon) {
-			$addicon	= $settings->get('acl_event_show_addicon',false);
-			
-			if (!$addicon) {
-				// no icon to be displayed
-				return false;
-			}
-		}
-		
-		//
-		// let's see if the user is allowed to add events.
-		// if the user is not allowed then the user shouldn't be able to see an icon either
-		//
-		
-		$user 		= JFactory::getUser();
-		if ($user->get('guest') || $user->get('id') == 0) {
-			if (self::validate_guest()){
-				// guest are allowed to add events so return
-				return true;
-			} else {
-				// guest are not allowed to add events
-				return false;
-			}
-		}
 	
-		$options = $settings->get('acl_event_add',false);
-		
-		if (!$options) {
-			// JEM+Joomla groups are not allowed to submit events
-			return false;
-		}
-		
-		if (in_array(1, $options)) {
-			// check for JEM Groups
-			if (JemUser::ismaintainer('addevent')) {
-				return true;
-			} 
-		}
-		
-		// a JEM group was not allowed so continue with Joomla group
-		if (in_array(2, $options)) {
-			// check for Joomla Groups
-			if (JEMUser::JoomlaGroup()) {
-				return true;
-			}
-		}
-		
-		return false;
-	}
 	
 	
 	
@@ -201,6 +140,70 @@ class JEMUser {
 		if (in_array(2, $options)) {
 			// check for Joomla Groups
 			if (JEMUser::JoomlaGroup('publish',$cats)) {
+				return true;
+			}
+		}
+	
+		return false;
+	}
+	
+	
+	/**
+	 * function to check if the user is able to submit Events
+	 * or should be able to see the addEvent icon.
+	 *
+	 * @todo check if there available category's to post in
+	 */
+	static function addEvent($settings,$icon=false,$view=false) {
+	
+		if (self::superuser()) {
+			// superuser has admin rights
+			return true;
+		}
+	
+		if ($icon) {
+			$addicon	= $settings->get('acl_event_show_addicon',false);
+				
+			if (!$addicon) {
+				// no icon to be displayed
+				return false;
+			}
+		}
+	
+		//
+		// let's see if the user is allowed to add events.
+		// if the user is not allowed then the user shouldn't be able to see an icon either
+		//
+	
+		$user 		= JFactory::getUser();
+		if ($user->get('guest') || $user->get('id') == 0) {
+			if (self::validate_guest()){
+				// guest are allowed to add events so return
+				return true;
+			} else {
+				// guest are not allowed to add events
+				return false;
+			}
+		}
+	
+		$options = $settings->get('acl_event_add',false);
+	
+		if (!$options) {
+			// JEM+Joomla groups are not allowed to submit events
+			return false;
+		}
+	
+		if (in_array(1, $options)) {
+			// check for JEM Groups
+			if (JemUser::ismaintainer($settings,'addevent',false,false,'event')) {
+				return true;
+			}
+		}
+	
+		// a JEM group was not allowed so continue with Joomla group
+		if (in_array(2, $options)) {
+			// check for Joomla Groups
+			if (JEMUser::JoomlaGroup($settings,'add',false,'event')) {
 				return true;
 			}
 		}
@@ -251,7 +254,7 @@ class JEMUser {
 	
 		if (in_array(2, $options)) {
 			// check for Joomla Groups
-			if (JEMUser::JoomlaGroup('add',null,'venue')) {
+			if (JEMUser::JoomlaGroup($settings,'add',null,'venue')) {
 				return true;
 			}
 		}
@@ -272,49 +275,63 @@ class JEMUser {
 		$userGroups = $user->getAuthorisedGroups();
 		
 		$options = $params->get('acl_'.$type.'_'.$action.'_joomlagroups',false);
-
+		
 		if (!$options) {
 			return false;
 		}
 		
 		// cats 
-		if ($action == 'publish') {
-			foreach ($cats as $i => $cat) {
-				if ($user->authorise('core.edit.state', 'com_jem.category.' . $cat) != true)
-				{
-					unset($cats[$i]);
+		if ($cats) {
+			if ($action == 'publish') {
+				foreach ($cats as $i => $cat) {
+					if ($user->authorise('core.edit.state', 'com_jem.category.' . $cat) != true)
+					{
+						unset($cats[$i]);
+					}
+				}
+					
+				if ($cats) {
+					return true;
+				} else {
+					return false;
+				}
+					
+			}
+			
+			if ($action == 'edit') {
+				// check if the user is allowed to post in a category
+				//
+				foreach ($cats as $i => $cat) {
+					if ($user->authorise('core.edit', 'com_jem.category.' . $cat) != true)
+					{
+						unset($cats[$i]);
+					}
+				}
+			
+				if ($cats) {
+					return true;
+				} else {
+					return false;
 				}
 			}
 			
-			if ($cats) {
-				return true;
-			} else {
-				return false;
-			}
-			
-		} 
+			return false;
+		}
 		
-		if ($action == 'edit') {
-			// check if the user is allowed to post in a category
-			//
-			foreach ($cats as $i => $cat) {
-				if ($user->authorise('core.edit', 'com_jem.category.' . $cat) != true)
-				{
-					unset($cats[$i]);
-				}
-			}
-				
-			if ($cats) {
-				return true;
-			} else {
-				// it's possible that the edit.own permission was configured so let's check that one.
-				$params->get('acl_'.$type.'_'.$action.'_joomlagroups',false);
-				
-				
-				
+		if (empty($cats)) {
+			// check for 'add' action
+			if ($action != 'add') {	
+				return false;
+			} 
+			
+			// check if current user is able to add events
+			$result = array_intersect($userGroups, $options);
+			if (empty($result)) {
 				return false;
 			}
-		} 
+			
+			return true;
+		}
 			
 		return false;
 	}
@@ -322,8 +339,12 @@ class JEMUser {
 	
 	/**
 	 * Checks if the user is a maintainer of a category
+	 * 
+	 * @todo 
+	 * when in 1 view it's probably to retrieve all groups to 1 category
+	 * and all maintainer actions for the current user
 	 */
-	static function ismaintainer($params,$action, $eventid = false,$cats=false)
+	static function ismaintainer($params,$action, $eventid = false,$cats=false,$type=false)
 	{
 		$db = JFactory::getDBO();
 		$user = JFactory::getUser();
@@ -353,37 +374,82 @@ class JEMUser {
 					return false;
 				}
 				
-			} elseif ($action == 'editevent' && $cats) {
+			} 
+			
+			if ($action == 'editevent' && $cats) {
+				
+				$result = false;
+				$groupids = array();
+				
+				// Retrieve maintain groups for the category
+				foreach ($cats AS $category) {
+					$query	= $db->getQuery(true);
+					$query->select(array('c.groupid'));
+					$query->from($db->quoteName('#__jem_categories').' AS c');
+					$query->where(array('c.id = '.$category));
+					$db->setQuery($query);
+					$groupid = $db->loadResult();
+					
+					if ($groupid) {
+						// Convert the groupid field to an array.
+						$registry = new JRegistry();
+						$registry->loadString($groupid);
+						$groupids = $registry->toArray();
+
+						if (empty($groupids)) {
+							// the format of the groupid was not JSON so don't
+							// fire up the foreach loop
+							$groupids[] =  $groupid;
+						} else {
+							// add the groupids to the array
+							foreach ($groupids AS $groupid) {
+								$groupids[] =  $groupid;
+							}
+						}
+						
+					}
+				}
+				
+				// maintainer groups attached to this category
+				if ($groupids) {
+					$groupids = array_unique($groupids);
+				} else {
+					// we need groups
+					return false;
+				}
+				
+				// Retrieve the JEM-groups attached to this user with the needed action
 				$query	= $db->getQuery(true);
-				$query->select(array('c.id'));
-				$query->from($db->quoteName('#__jem_categories').' AS c');
-				$query->where(array('c.groupid IN (' . implode(',', $groupnumber) . ')'));
+				$query->select(array('a.id'));
+				$query->from($db->quoteName('#__jem_groups').' AS a');
+				$query->join('LEFT', '#__jem_groupmembers AS gm ON gm.group_id = a.id');
+				
+				$query->where(array($db->quoteName('a.'.$action),'gm.member = '.$user->get('id'),'gm.member NOT LIKE 0'));
 				$db->setQuery($query);
-				$result = $db->loadColumn();
-	
+				$jemgroup = $db->loadColumn();
+				
+				if (empty($jemgroup)) {
+					return false;
+				}
+				
+				$result = array_intersect($groupids, $jemgroup);
+				
 				if ($result) {
 					return true;
 				} else {
 					return false;
 				}
 			
-			} elseif ($action == 'addevent') {
+			} 
+			
+			if ($action == 'addevent') {
 				return true;
 			} else {
  				return false;
 			}
 		}
 	}
-	
-	
-	
-	/**
-	 * get Categories
-	 */
-	
-	
-	
-	
+
 
 	/**
 	 * Checks if an user is a groupmember and if so
@@ -530,10 +596,10 @@ class JEMUser {
 		if (!$options) {
 			return false;
 		}
-	
+		
 		if (in_array(1, $options)) {
 			// check for JEM Groups
-			if (JemUser::ismaintainer($params,'editevent',false,$catids)) {
+			if (JemUser::ismaintainer($params,'editevent',false,$catids,'event')) {
 				return true;
 			}
 		}

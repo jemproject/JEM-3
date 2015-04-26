@@ -12,6 +12,9 @@ defined('_JEXEC') or die;
 */
 class JemViewVenues extends JViewLegacy
 {
+	
+	protected $state = null;
+	
 	/**
 	 * Creates the Venuesview
 	 */
@@ -20,9 +23,10 @@ class JemViewVenues extends JViewLegacy
 		$app 	= JFactory::getApplication();
 		$jinput = $app->input;
 
+		$state 			= $this->get('State');
+		$params 		= $state->params;
 		$document		= JFactory::getDocument();
 		$jemsettings	= JemHelper::config();
-		$settings 		= JemHelper::globalattribs();
 		$vsettings		= JemHelper::viewSettings('vvenues');
 		$user			= JFactory::getUser();
 		$print			= $jinput->getBool('print');
@@ -77,18 +81,18 @@ class JemViewVenues extends JViewLegacy
 		$document->setMetadata('title' , $pagetitle);
 		$document->setMetadata('keywords', $pagetitle);
 
-		// Check if the user has access to the add-eventform
-		if (JEMUser::addEvent(true)) {
-			$addeventlink = 1;
+		// Check if the user should see the submit-Event icon
+		if (JEMUser::addEvent($params,true)) {
+			$this->submitEventIcon = 1;
 		} else {
-			$addeventlink = 0;
+			$this->submitEventIcon = 0;
 		}
-
-		//Check if the user has access to the add-venueform
-		if (JEMUser::addVenue()) {
-			$addvenuelink = 1;
+		
+		// Check if the user should see the submit-Venue icon
+		if (JEMUser::addVenue($params,true)) {
+			$this->submitVenueIcon = 1;
 		} else {
-			$addvenuelink = 0;
+			$this->submitVenueIcon = 0;
 		}
 
 		// Create the pagination object
@@ -97,12 +101,9 @@ class JemViewVenues extends JViewLegacy
 		$this->rows				= $rows;
 		$this->print_link		= $print_link;
 		$this->params			= $params;
-		$this->addvenuelink		= $addvenuelink;
-		$this->addeventlink		= $addeventlink;
 		$this->pagination		= $pagination;
 		$this->item				= $menuitem;
 		$this->jemsettings		= $jemsettings;
-		$this->settings			= $settings;
 		$this->vsettings		= $vsettings;
 		$this->task				= $task;
 		$this->pagetitle		= $pagetitle;

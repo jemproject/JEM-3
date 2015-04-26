@@ -14,6 +14,9 @@ require JPATH_COMPONENT_SITE.'/classes/view.class.php';
  */
 class JemViewDay extends JEMView
 {
+	
+	protected $state = null;
+	
 	function __construct($config = array()) {
 		parent::__construct($config);
 	}
@@ -25,10 +28,9 @@ class JemViewDay extends JEMView
 	{
 		// Initialize variables
 		$app 			= JFactory::getApplication();
-		$jinput 		= JFactory::getApplication()->input;
+		$jinput 		= $app->input;
 		$document 		= JFactory::getDocument();
 		$jemsettings 	= JemHelper::config();
-		$settings 		= JemHelper::globalattribs();
 		$menu 			= $app->getMenu();
 		$menuitem 		= $menu->getActive();
 		$user			= JFactory::getUser();
@@ -39,7 +41,9 @@ class JemViewDay extends JEMView
 		$pathway 		= $app->getPathWay();
 		$jinput 		= $app->input;
 		$print			= $jinput->getBool('print');
-
+		$state 			= $this->get('State');
+		$params 		= $state->params;
+		
 		// Decide which parameters should take priority
 		$useMenuItemParams = ($menuitem && $menuitem->query['option'] == 'com_jem'
 		                                && $menuitem->query['view'] == 'day'
@@ -119,11 +123,11 @@ class JemViewDay extends JEMView
 			$print_link = JRoute::_('index.php?view=day&tmpl=component&print=1&id='.$requestDate);
 		}
 
-		//Check if the user has access to the form
-		if (JEMUser::addEvent(true)) {
-			$dellink = 1;
+		// Check if the user should see the submit-Event icon
+		if (JEMUser::addEvent($params,true)) {
+			$this->submitEventIcon = 1;
 		} else {
-			$dellink = 0;
+			$this->submitEventIcon = 0;
 		}
 
 		//add alternate feed link (w/o specific date)
@@ -162,12 +166,10 @@ class JemViewDay extends JEMView
 		$this->noevents			= $noevents;
 		$this->print_link		= $print_link;
 		$this->params			= $params;
-		$this->dellink			= $dellink;
 		$this->pagination		= $pagination;
 		$this->action			= $uri->toString();
 		$this->task				= $task;
 		$this->jemsettings		= $jemsettings;
-		$this->settings			= $settings;
 		$this->lists			= $lists;
 		$this->daydate			= $daydate;
 		$this->showdaydate		= $showdaydate; // if true daydate will be shown as h2 sub heading

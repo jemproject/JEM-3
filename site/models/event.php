@@ -47,13 +47,14 @@ class JemModelEvent extends JModelItem
 		}
 		$this->setState('params', $params);
 
-		// TODO: Tune these values based on other permissions.
+		// @todo: Tune these values based on other permissions.
 		$user = JFactory::getUser();
+		$userId = $user->get('id');
 		if ((!$user->authorise('core.edit.state', 'com_jem')) && (!$user->authorise('core.edit', 'com_jem'))) {
-			$this->setState('filter.published', 1);
-			$this->setState('filter.archived', 2);
-		}
-
+			/* $this->setState('filter.published', 1); */
+			/* $this->setState('filter.archived', 2); */
+		} 
+		
 		$this->setState('filter.access', true);
 		$this->setState('filter.language', JLanguageMultilang::isEnabled());
 	}

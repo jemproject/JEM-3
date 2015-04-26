@@ -157,11 +157,9 @@ class JFormFieldCatOptionsFront extends JFormFieldList
 		if ($valguest) {
 			// Merge any additional options in the XML definition.
 			$options = array_merge(parent::getOptions(), $options);
-			
 			return $options;
 		}
 		
-					
 		// Pad the option text with spaces using depth level as a multiplier.
 		for ($i = 0, $n = count($options); $i < $n; $i ++)
 		{
@@ -186,7 +184,6 @@ class JFormFieldCatOptionsFront extends JFormFieldList
 				$options[$i]->text = str_repeat('- ', $options[$i]->level) . '[' . $options[$i]->text . ']';
 			}
 		}
-		
 		
 		$eventid = $this->form->getValue('id', 0);
 		
@@ -224,15 +221,16 @@ class JFormFieldCatOptionsFront extends JFormFieldList
 		$user = JFactory::getUser();
 		
 		// For new items we want a list of categories you are allowed to create in.
-		if ($eventid == 0)
+		if ($eventid == 0 || $eventid == 'null')
 		{
 			foreach ($options as $i => $option)
 			{
 				// To save or create in a category you need to have create rights for that category
-				
-				// check for maintainers
+			
+				// check joomla rights
 				if ($user->authorise('core.create', 'com_jem.category.' . $option->value) != true)
 				{
+					// joomla check failed, so check JEM Groups
 					if ($cats && !$valguest) {
 						if (!in_array($option->value, $cats)) {
 							unset($options[$i]);
