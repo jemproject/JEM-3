@@ -127,6 +127,11 @@ class JemModelCategory extends JModelAdmin
 			$registry = new JRegistry();
 			$registry->loadString($result->metadata);
 			$result->metadata = $registry->toArray();
+			
+			// Convert the groupid field to an array.
+			$registry = new JRegistry();
+			$registry->loadString($result->groupid);
+			$result->groupid = $registry->toArray();
 
 			// Convert the created and modified dates to local user time for
 			// display in the form.
@@ -270,9 +275,12 @@ class JemModelCategory extends JModelAdmin
 			$data['alias'] = $alias;
 		}
 
-		$groupid = $jinput->get('groupid', '', 'int');
-		$table->groupid = $groupid;
-
+		$groupid = $jinput->get('groupid',array(),'array');
+		
+		$registry = new JRegistry;
+		$registry->loadArray($groupid);
+		$table->groupid = (string) $registry;
+		
 		$color = $jinput->get('color', '', 'html');
 
 		if (!preg_match('/^#[0-9A-Fa-f]{6}$/', $color)) {

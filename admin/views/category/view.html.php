@@ -24,8 +24,6 @@ class JemViewCategory extends JViewLegacy
 		$this->form		= $this->get('Form');
 		$this->item		= $this->get('Item');
 		$this->state	= $this->get('State');
-		//$this->canDo	= JEMHelperBackend::getActions($this->state->get('category.component'));
-		
 		$this->canDo	= JEMHelperBackend::getActions('com_jem', 'category', $this->item->id);
 
 		$document	= JFactory::getDocument();
@@ -54,7 +52,7 @@ class JemViewCategory extends JViewLegacy
 		$grouplist[] 	= JHtml::_('select.option', '0', JText::_('COM_JEM_CATEGORY_NO_GROUP'));
 		$grouplist 		= array_merge($grouplist, $groups);
 
-		$Lists['groups']	= JHtml::_('select.genericlist', $grouplist, 'groupid', array('size'=>'1','class'=>'inputbox'), 'value', 'text', $this->item->groupid);
+		$Lists['groups']	= JHtml::_('select.genericlist', $grouplist, 'groupid[]', array('size'=>'3','class'=>'inputbox','multiple'=>'multiple'), 'value', 'text', $this->item->groupid);
 		$this->Lists 		= $Lists;
 
 		$this->addToolbar();

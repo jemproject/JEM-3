@@ -242,7 +242,6 @@ class JemTableCategories extends JTableNested
 	 */
 	public function bind($array, $ignore = '')
 	{
-
 		if (isset($array['params']) && is_array($array['params'])){
 			$registry = new JRegistry;
 			$registry->loadArray($array['params']);
