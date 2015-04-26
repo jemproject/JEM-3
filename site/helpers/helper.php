@@ -100,9 +100,7 @@ class JemHelper {
 			$globalregistry->loadString($globalattribs);
 			
 			$globalattribs = $globalregistry;
-		} else {
-			
-		}
+		} 
 
 		return $globalattribs;
 	}
@@ -132,9 +130,7 @@ class JemHelper {
 			
 			$css = $registryCSS;
 			
-		} else {
-					
-		}
+		} 
 			
 		return $css;
 	}
