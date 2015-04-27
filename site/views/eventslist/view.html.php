@@ -188,6 +188,7 @@ class JemViewEventslist extends JEMView
 
 		$names = $pathway->getPathwayNames();
 		
+
 		if ($menu)
 		{
 	
@@ -201,8 +202,12 @@ class JemViewEventslist extends JEMView
 		}
 		else
 		{
-			$this->params->def('page_heading', JText::_($this->defaultPageTitle));
+			// @todo alter code
+			$pagetitle = false;
+			$this->params->def('page_heading', false);
 		}
+		
+		
 		
 		$ign_site = false;
 		$ign_pagetitle = false;
