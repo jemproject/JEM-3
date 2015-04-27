@@ -4,7 +4,7 @@
 	<author>JEM Community</author>
 	<authorEmail>info@joomlaeventmanager.net</authorEmail>
 	<authorUrl>http://www.joomlaeventmanager.net</authorUrl>
-	<creationDate>April 2015</creationDate>
+	<creationDate>May 2015</creationDate>
 	<copyright>copyright (C) 2014-2015 joomlaeventmanager.net</copyright>
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
 	<version>3.0.7</version>
@@ -21,7 +21,7 @@
 
 	<config>
 		<fields name="params">
-			<fieldset name="basic">
+			<fieldset name="basic" addfieldpath="/administrator/components/com_jem/models/fields">
 				<field name="type" type="list"
 					default="1"
 					label="MOD_JEM_BANNER_UPCOMING_ARCHIVED_OR_CURRENT"
@@ -48,11 +48,13 @@
 					default=""
 					label="MOD_JEM_BANNER_OFFSET_HOURS"
 					description="MOD_JEM_BANNER_OFFSET_HOURS_DESC"
+					class="btn-group btn-group-yesno"
 				/>
 				<field name="shuffle" type="radio"
 					default="0"
 					label="MOD_JEM_BANNER_SHUFFLE"
 					description="MOD_JEM_BANNER_SHUFFLE_DESC"
+					class="btn-group btn-group-yesno"
 				>
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
@@ -72,6 +74,7 @@
 					default="1"
 					label="MOD_JEM_BANNER_LINK_TO_DETAILS"
 					description="MOD_JEM_BANNER_LINK_TO_DETAILS_DESC"
+					class="btn-group btn-group-yesno"
 				>
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
@@ -81,6 +84,7 @@
 					default="1"
 					label="MOD_JEM_BANNER_SHOWCALENDAR"
 					description="MOD_JEM_BANNER_SHOWCALENDAR_DESC"
+					class="btn-group btn-group-yesno"
 				>
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
@@ -100,6 +104,7 @@
 					default="1"
 					label="MOD_JEM_BANNER_SHOWFLYER"
 					description="MOD_JEM_BANNER_SHOWFLYER_DESC"
+					class="btn-group btn-group-yesno"
 				>
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
@@ -118,6 +123,7 @@
 					default="1"
 					label="MOD_JEM_BANNER_SHOWDESC"
 					description="MOD_JEM_BANNER_SHOWDESC_DESC"
+					class="btn-group btn-group-yesno"
 				>
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
@@ -131,6 +137,7 @@
 					default="0"
 					label="MOD_JEM_BANNER_ALLOW_LINEBREAK"
 					description="MOD_JEM_BANNER_ALLOW_LINEBREAK_DESC"
+					class="btn-group btn-group-yesno"
 				>
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
@@ -139,6 +146,7 @@
 					default="0"
 					label="MOD_JEM_BANNER_FIELD_READMORE_LABEL"
 					description="MOD_JEM_BANNER_FIELD_READMORE_DESC"
+					class="btn-group btn-group-yesno"
 				>
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
@@ -167,6 +175,7 @@
 					default="0"
 					label="MOD_JEM_BANNER_SHOWCATEGORY"
 					description="MOD_JEM_BANNER_SHOWCATEGORY_DESC"
+					class="btn-group btn-group-yesno"
 				>
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
@@ -175,6 +184,7 @@
 					default="1"
 					label="MOD_JEM_BANNER_LINK_TO_CATEGORY"
 					description="MOD_JEM_BANNER_LINK_TO_CATEGORY_DESC"
+					class="btn-group btn-group-yesno"
 				>
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
@@ -183,6 +193,7 @@
 					default="0"
 					label="MOD_JEM_BANNER_SHOWVENUE"
 					description="MOD_JEM_BANNER_SHOWVENUE_DESC"
+					class="btn-group btn-group-yesno"
 				>
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
@@ -191,23 +202,27 @@
 					default="1"
 					label="MOD_JEM_BANNER_LINK_TO_VENUE"
 					description="MOD_JEM_BANNER_LINK_TO_VENUE_DESC"
+					class="btn-group btn-group-yesno"
 				>
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
 				</field>
 
-				<field name="catid" type="text"
+				<field name="catid" type="categoryedit"
 					default=""
+					multiple="true"
 					label="MOD_JEM_BANNER_CATEGORY_ID"
 					description="MOD_JEM_BANNER_CATEGORY_ID_DESC"
 				/>
-				<field name="venid" type="text"
+				<field name="venid" type="venueoptions"
 					default=""
+					multiple="true"
 					label="MOD_JEM_BANNER_VENUE_ID"
 					description="MOD_JEM_BANNER_VENUE_ID_DESC"
 				/>
-				<field name="eventid" type="text"
+				<field name="eventid" type="eventoptions"
 					default=""
+					multiple="true"
 					label="MOD_JEM_BANNER_EVENT_ID"
 					description="MOD_JEM_BANNER_EVENT_ID_DESC"
 				/>

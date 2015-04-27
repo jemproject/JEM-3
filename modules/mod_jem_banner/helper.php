@@ -116,10 +116,9 @@ abstract class ModJemBannerHelper
 		}
 		$model->setState('filter.groupby', 'a.id');
 
-		# clean parameter data
-		$catids = JemHelper::getValidIds($params->get('catid'));
-		$venids = JemHelper::getValidIds($params->get('venid'));
-		$eventids = JemHelper::getValidIds($params->get('eventid'));
+		$catids = $params->get('catid');
+		$venids = $params->get('venid');
+		$eventids = $params->get('eventid');
 
 		# Open date support
 		if (!empty($eventids)) {
@@ -207,7 +206,6 @@ abstract class ModJemBannerHelper
 				$title = $fulltitle;
 			}
 
-			$lists[$i]->country     = JEMHelperCountries::getCountryName($row->country);
 			$lists[$i]->title       = $title;
 			$lists[$i]->fulltitle   = $fulltitle;
 			$lists[$i]->venue       = htmlspecialchars($row->venue, ENT_COMPAT, 'UTF-8');
