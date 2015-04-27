@@ -24,11 +24,11 @@ $function  = $app->input->getCmd('function', 'jSelectEvent');
 //$listOrder = $this->escape($this->state->get('list.ordering'));
 //$listDirn  = $this->escape($this->state->get('list.direction'));
 ?>
+<div id="jem" class="jem_eventslist_modal_<?php echo $this->pageclass_sfx;?>">
 <form action="<?php echo JRoute::_('index.php?option=com_jem&view=eventslist&layout=modal&tmpl=component&function='.$function.'&'.JSession::getFormToken().'=1');?>" method="post" name="adminForm" id="adminForm" class="form-inline">
 	<fieldset class="filter clearfix">
 		<div class="btn-toolbar">
 			<div class="btn-group pull-left">
-				<?php echo $this->lists['filter'].'&nbsp;'; ?>
 				<input type="text" name="filter_search" id="filter_search" value="<?php echo $this->lists['search'];?>" class="inputbox input-medium" onchange="this.form.submit();" />
 			</div>
 			<div class="btn-group pull-left">
@@ -42,6 +42,10 @@ $function  = $app->input->getCmd('function', 'jSelectEvent');
 		</div>
 			<div class="clearfix"></div>
 		</div>
+		<hr class="hr-condensed" />
+		<div class="filters pull-left">
+			<?php echo $this->lists['filter'].'&nbsp;'; ?>
+		</div>
 
 	</fieldset>
 
@@ -51,14 +55,26 @@ $function  = $app->input->getCmd('function', 'jSelectEvent');
 				<th class="title">
 					<?php echo JHtml::_('grid.sort', 'JGLOBAL_TITLE', 'a.title', $this->lists['order_Dir'], $this->lists['order']); ?>
 				</th>
-				<th width="15%" class="center nowrap">
-					<?php echo JHtml::_('grid.sort', 'JGRID_HEADING_ACCESS', 'access_level', $this->lists['order_Dir'], $this->lists['order']); ?>
-				</th>
-				<th width="15%" class="center nowrap">
-					<?php echo JText::_('JCATEGORY'); ?>
+				<th width="5%" class="center nowrap">
+					<?php echo JHtml::_('grid.sort', 'COM_JEM_DATE', 'a.dates', $this->lists['order_Dir'], $this->lists['order']); ?>
 				</th>
 				<th width="5%" class="center nowrap">
-					<?php echo JHtml::_('grid.sort', 'JDATE', 'a.dates', $this->lists['order_Dir'], $this->lists['order']); ?>
+					<?php echo JHtml::_('grid.sort', 'COM_JEM_TIME_START', 'a.times', $this->lists['order_Dir'], $this->lists['order']); ?>
+				</th>
+				<th width="5%" class="center nowrap">
+					<?php echo JHtml::_('grid.sort', 'COM_JEM_VENUE', 'l.venue', $this->lists['order_Dir'], $this->lists['order']); ?>
+				</th>
+				<th width="5%" class="center nowrap">
+					<?php echo JHtml::_('grid.sort', 'COM_JEM_CITY', 'l.city', $this->lists['order_Dir'], $this->lists['order']); ?>
+				</th>
+				<th class="title">
+					<?php echo JText::_('COM_JEM_CATEGORY'); ?>
+				</th>
+				<th class="center" width="1%" nowrap="nowrap">
+					<?php echo JText::_('JSTATUS'); ?>
+				</th>
+				<th width="15%" class="center nowrap">
+					<?php echo JHtml::_('grid.sort', 'JGRID_HEADING_ACCESS', 'access_level', $this->lists['order_Dir'], $this->lists['order']); ?>
 				</th>
 				<th width="1%" class="center nowrap">
 					<?php echo JHtml::_('grid.sort', 'JGRID_HEADING_ID', 'a.id', $this->lists['order_Dir'], $this->lists['order']); ?>
@@ -112,14 +128,37 @@ $function  = $app->input->getCmd('function', 'jSelectEvent');
 					<a href="javascript:void(0)" onclick="if (window.parent) window.parent.<?php echo $this->escape($function);?>('<?php echo $item->id; ?>', '<?php echo $this->escape(addslashes($item->title)); ?>', '<?php echo $this->escape(JemHelperRoute::getEventRoute($item->slug)); ?>', '<?php echo $this->escape(JemHelperRoute::getEventRoute($item->slug)); ?>', '<?php echo $this->escape($lang); ?>',null);">
 						<?php echo $this->escape($item->title); ?></a>
 				</td>
+				<td>
+				<?php
+					// Format date
+					echo JemOutput::formatLongDateTime($item->dates, null, $item->enddates, null);
+				?>
+				</td>
+				<td>
+				<?php
+					// Prepare time
+					if (!$item->times) {
+						$displaytime = '-';
+					} else {
+						$time = strftime( $this->jemsettings->formattime, strtotime( $item->times ));
+						$displaytime = $time.' '.$this->jemsettings->timename;
+					}
+					echo $displaytime;
+				?>
+				</td>
+				<td><?php echo $item->venue ? $this->escape($item->venue) : '-'; ?></td>
+				<td><?php echo $item->city ? $this->escape($item->city) : '-'; ?></td>
+				<td>
+				<?php
+					# we're referring to the helper due to the multi-cat feature
+					echo implode(", ",JemOutput::getCategoryList($item->categories, false));
+				?>
+				</td>
+				<td class="center">
+				<?php echo JHtml::_('jgrid.published', $item->published, $i,'events.',false,'cb'); ?>
+				</td>
 				<td class="center">
 					<?php echo $this->escape($item->access_level); ?>
-				</td>
-				<td class="center">
-					<?php echo implode(", ", JemOutput::getCategoryList($item->categories, $this->jemsettings->catlinklist,true)); ?>
-				</td>
-				<td class="center nowrap">
-					<?php echo $displaydate; ?>
 				</td>
 				<td class="center">
 					<?php echo (int) $item->id; ?>
@@ -138,3 +177,4 @@ $function  = $app->input->getCmd('function', 'jSelectEvent');
 		<?php echo JHtml::_('form.token'); ?>
 	</div>
 </form>
+</div>
