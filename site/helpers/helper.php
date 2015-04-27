@@ -514,17 +514,21 @@ class JemHelper {
 	 * @param string comma separated list of ids
 	 * @return mixed array of numbers greater zero or false
 	 */
-	static function getValidIds($idstring)
+	static function getValidIds($data)
 	{
-		$ids = array();
-		$tmp = explode(',', $idstring);
-		foreach ($tmp as $id) {
-			if ((int)$id > 0) {
-				$ids[] = (int)$id;
+		// are we an array or a string?
+		if (is_array($data)) {
+			return $data;
+		} else {
+			$ids = array();
+			$tmp = explode(',', $data);
+			foreach ($tmp as $id) {
+				if ((int)$id > 0) {
+					$ids[] = (int)$id;
+				}
 			}
+			return (empty($ids) ? false : $ids);
 		}
-
-		return (empty($ids) ? false : $ids);
 	}
 
 	/**
