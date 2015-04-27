@@ -116,9 +116,10 @@ abstract class ModJemBannerHelper
 		}
 		$model->setState('filter.groupby', 'a.id');
 
-		$catids = $params->get('catid');
-		$venids = $params->get('venid');
-		$eventids = $params->get('eventid');
+		# clean parameter data
+		$catids = JemHelper::getValidIds($params->get('catid'));
+		$venids = JemHelper::getValidIds($params->get('venid'));
+		$eventids = JemHelper::getValidIds($params->get('eventid'));
 
 		# Open date support
 		if (!empty($eventids)) {
