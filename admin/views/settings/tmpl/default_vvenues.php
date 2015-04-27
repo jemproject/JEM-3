@@ -23,6 +23,18 @@ $group = 'vvenues';
 			<div class="control-label"><?php echo $this->form->getLabel('show_mapserv',$group); ?></div>
 			<div class="controls"><?php echo $this->form->getInput('show_mapserv',$group); ?></div>
 		</div>
+		<div class="control-group">		
+			<div class="control-label"><?php echo $this->form->getLabel('show_published',$group); ?></div>
+			<div class="controls"><?php echo $this->form->getInput('show_published',$group); ?></div>
+		</div>
+		<div class="control-group">		
+			<div class="control-label"><?php echo $this->form->getLabel('show_archived',$group); ?></div>
+			<div class="controls"><?php echo $this->form->getInput('show_archived',$group); ?></div>
+		</div>
+		<div class="control-group">		
+			<div class="control-label"><?php echo $this->form->getLabel('show_country',$group); ?></div>
+			<div class="controls"><?php echo $this->form->getInput('show_country',$group); ?></div>
+		</div>
 </fieldset>
 
 <fieldset class="form-horizontal">

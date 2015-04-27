@@ -1538,6 +1538,36 @@
 				<option value="1">COM_JEM_GOOGLE_MAP_LINK</option>
 				<option value="2">COM_JEM_GOOGLE_MAP_DISP</option>
 			</field>
+		<field name="show_published" type="radio"
+			label="COM_JEM_SETTINGS_VIEW_VENUES_SHOW_PUBLISHED"
+			description="COM_JEM_SETTINGS_VIEW_VENUES_SHOW_PUBLISHED_DESC"
+			class="btn-group btn-group-yesno"
+			default="0"
+			required="false"
+			>
+		<option value="0">JNO</option>
+		<option value="1">JYES</option>
+	</field>
+	<field name="show_archived" type="radio"
+			label="COM_JEM_SETTINGS_VIEW_VENUES_SHOW_ARCHIVED"
+			description="COM_JEM_SETTINGS_VIEW_VENUES_SHOW_ARCHIVED_DESC"
+			class="btn-group btn-group-yesno"
+			default="0"
+			required="false"
+			>
+		<option value="0">JNO</option>
+		<option value="1">JYES</option>
+	</field>
+	<field name="show_country" type="radio"
+			label="COM_JEM_SETTINGS_VIEW_VENUES_SHOW_COUNTRY"
+			description="COM_JEM_SETTINGS_VIEW_VENUES_SHOW_COUNTRY_DESC"
+			class="btn-group btn-group-yesno"
+			default="0"
+			required="false"
+			>
+		<option value="0">JNO</option>
+		<option value="1">JYES</option>
+	</field>
 </fieldset>
 <fieldset name="vvenues_backend">
 	<field name="hide_column_backend" type="list"

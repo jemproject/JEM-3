@@ -126,7 +126,7 @@ $params = $this->params;
 				</dd>
 				<?php endif; ?>
 
-				<?php if ($row->country) : ?>
+				<?php if ($this->vsettings->get('show_country') && $row->country) : ?>
 				<dt class="venue_country">
 					<?php echo JText::_('COM_JEM_COUNTRY').':'; ?>
 				</dt>
@@ -139,18 +139,24 @@ $params = $this->params;
 				<?php if ($this->vsettings->get('show_mapserv') == 1) : ?>
 					<?php echo JemOutput::mapicon($row,null,$this->vsettings); ?>
 				<?php endif; ?>
+				
+				
+				<?php if ($this->vsettings->get('show_published')) { ?>
 				<dt class="venue_eventspublished">
 					<?php echo JText::_('COM_JEM_VENUES_EVENTS_PUBLISHED').':'; ?>
 				</dt>
 				<dd class="venue_eventspublished">
 					<a href="<?php echo $row->linkEventsPublished; ?>"><?php echo $row->EventsPublished; ?></a>
 				</dd>
+				<?php } ?>
+				<?php if ($this->vsettings->get('show_archived')) { ?>
 				<dt class="venue_archivedevents">
 					<?php echo JText::_('COM_JEM_VENUES_EVENTS_ARCHIVED').':'; ?>
 				</dt>
 				<dd class="venue_archivedevents">
 					<a href="<?php echo $row->linkEventsArchived; ?>"><?php echo $row->EventsArchived; ?></a>
 				</dd>
+				<?php } ?>
 			<?php if ($this->vsettings->get('show_mapserv') == 2) : ?>
 				<?php echo JemOutput::mapicon($row,null,$this->vsettings); ?>
 			<?php endif; ?>
