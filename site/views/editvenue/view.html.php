@@ -58,14 +58,14 @@ class JemViewEditvenue extends JViewLegacy
 
 		if (empty($this->item->id)) {
 			// we're submitting a new venue
-			if (JEMUser::addEvent($this->settings2)) {
+			if (JEMUser::addVenue($this->settings2)) {
 				$authorised = true;
 			} else {
 				$authorised = false;
 			}
 		} else {
 			// Check if user can edit
-			if (JEMUser::editEvent($this->settings2,false,$this->item->id,false,false,$this->item->created_by)) {
+			if (JEMUser::editVenue($this->settings2,false,$this->item->id,false,false,$this->item->created_by)) {
 				$editVenue = true;
 			} else {
 				$editVenue = false;
