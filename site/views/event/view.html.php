@@ -152,7 +152,7 @@ class JemViewEvent extends JEMView
 		$this->pageclass_sfx = htmlspecialchars($this->item->params->get('pageclass_sfx'));
 
 		
-		$this->print_link = JRoute::_(JemHelperRoute::getEventRoute($item->slug).'&print=1&tmpl=component');
+		$this->print_link = JRoute::_(JemHelperRoute::getRoute($item->slug).'&option=com_jem&view=event&id=' . $item->id . '&print=1&tmpl=component');
 
 		//Get images
 
