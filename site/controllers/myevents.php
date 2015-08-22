@@ -27,7 +27,7 @@ class JEMControllerMyevents extends JControllerLegacy
 	 * @return void
 	 *
 	 */
-	function publish()
+	public function publish()
 	{
 		// Check for request forgeries
 		JSession::checkToken() or jexit('Invalid Token');
@@ -35,29 +35,27 @@ class JEMControllerMyevents extends JControllerLegacy
 		$app = JFactory::getApplication();
 		$input = $app->input;
 
-		$cid = $input->get('cid', array(0), 'post', 'array');
+		// Get items to publish.
+		$cid = $jinput->get('cid',array(),'array');
+		JArrayHelper::toInteger($cid);
 
-		$false = array_search('0', $cid);
-
-		if ($false === 0) {
-			JError::raiseNotice(100, JText::_('COM_JEM_SELECT_ITEM_TO_PUBLISH'));
-			$this->setRedirect(JEMHelperRoute::getMyEventsRoute());
-			return;
+		if (empty($cid)) {
+			$this->setRedirect(JEMHelperRoute::getMyEventsRoute(),JText::_('COM_JEM_SELECT_ITEM_TO_PUBLISH'),'warning');
+		} else {
+			$model = $this->getModel('myevents');
+			if(!$model->publish($cid, 1)) {
+				$this->setRedirect(JEMHelperRoute::getMyEventsRoute(),$msg);
+				return;
+			} else {
+				$total = count($cid);
+				$msg 	= $total.' '.JText::_('COM_JEM_EVENT_PUBLISHED');
+			}
 		}
-
-		$model = $this->getModel('myevents');
-		if(!$model->publish($cid, 1)) {
-			echo "<script> alert('".$model->getError()."'); window.history.go(-1); </script>\n";
-		}
-
-		$total = count($cid);
-		$msg 	= $total.' '.JText::_('COM_JEM_EVENT_PUBLISHED');
-
-		$this->setRedirect(JEMHelperRoute::getMyEventsRoute(), $msg);
+		$this->setRedirect(JEMHelperRoute::getMyEventsRoute(),$msg);
 	}
 
 	/**
-	 * Logic for canceling an event and proceed to add a venue
+	 * Unpublish
 	 */
 	function unpublish()
 	{
@@ -67,19 +65,18 @@ class JEMControllerMyevents extends JControllerLegacy
 		$app = JFactory::getApplication();
 		$input = $app->input;
 
-		$cid = $input->get('cid', array(0), 'post', 'array');
+		$cid = $input->get('cid', array(), 'post', 'array');
+		JArrayHelper::toInteger($cid);
 
-		$false = array_search('0', $cid);
-
-		if ($false === 0) {
-			JError::raiseNotice(100, JText::_('COM_JEM_SELECT_ITEM_TO_UNPUBLISH'));
-			$this->setRedirect(JEMHelperRoute::getMyEventsRoute());
+		if (empty($cid)) {
+			$this->setRedirect(JEMHelperRoute::getMyEventsRoute(),JText::_('COM_JEM_SELECT_ITEM_TO_UNPUBLISH'),'warning');
 			return;
 		}
-
 		$model = $this->getModel('myevents');
 		if(!$model->publish($cid, 0)) {
-			echo "<script> alert('".$model->getError()."'); window.history.go(-1); </script>\n";
+			$msg = $model->getError();
+			$this->setRedirect(JEMHelperRoute::getMyEventsRoute(),$msg);
+			return;
 		}
 
 		$total = count($cid);
@@ -96,25 +93,19 @@ class JEMControllerMyevents extends JControllerLegacy
 	 */
 	function trash()
 	{
-		// Check for request forgeries
-		JSession::checkToken() or jexit('Invalid Token');
+		$cid = $input->get('cid', array(), 'post', 'array');
+		JArrayHelper::toInteger($cid);
 
-		$app = JFactory::getApplication();
-		$input = $app->input;
-
-		$cid = $input->get('cid', array(0), 'post', 'array');
-
-		$false = array_search('0', $cid);
-
-		if ($false === 0) {
-			JError::raiseNotice(100, JText::_('COM_JEM_SELECT_ITEM_TO_TRASH'));
-			$this->setRedirect(JEMHelperRoute::getMyEventsRoute());
+		if (empty($cid)) {
+			$this->setRedirect(JEMHelperRoute::getMyEventsRoute(),JText::_('COM_JEM_SELECT_ITEM_TO_TRASH'),'warning');
 			return;
 		}
 
 		$model = $this->getModel('myevents');
 		if(!$model->publish($cid, -2)) {
-			echo "<script> alert('".$model->getError()."'); window.history.go(-1); </script>\n";
+			$msg = $model->getError();
+			$this->setRedirect(JEMHelperRoute::getMyEventsRoute(),$msg);
+			return;
 		}
 
 		$total = count($cid);
