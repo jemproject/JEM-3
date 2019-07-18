@@ -292,6 +292,11 @@ function commoff()
 </script>
 
 <form action="<?php echo JRoute::_('index.php?option=com_jem&view=settings'); ?>" method="post" id="settings-form" name="adminForm" class="form-validate">
+	<div id="j-sidebar-container" class="span2">
+		<?php echo $this->sidebar; ?>
+	</div>
+	<div id="j-main-container" class="span10">	
+	
 	<div class="row-fluid">
 		<div class="span12">
 			<!-- Tabs -->
@@ -405,4 +410,5 @@ function commoff()
 	<input type="hidden" name="option" value="com_jem">
 	<input type="hidden" name="controller" value="settings">
 	<?php echo JHtml::_('form.token'); ?>
+	</div>
 </form>

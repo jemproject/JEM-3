@@ -8,7 +8,10 @@
 defined('_JEXEC') or die;
 ?>
 <form name="adminForm" method="post" id="adminForm">
-
+<div id="j-sidebar-container" class="span2">
+		<?php echo $this->sidebar; ?>
+	</div>
+	<div id="j-main-container" class="span10">	
 <table style="width:100%">
 	<tr>
 		<td width="10%">
@@ -75,5 +78,5 @@ defined('_JEXEC') or die;
 			<?php echo JText::_('COM_JEM_HOUSEKEEPING_REMOVE_IMAGES_DESC'); ?>
 		</td>
 	</tr>
-</table>
+</table></div>
 </form>

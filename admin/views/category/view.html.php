@@ -24,7 +24,7 @@ class JemViewCategory extends JViewLegacy
 		$this->form		= $this->get('Form');
 		$this->item		= $this->get('Item');
 		$this->state	= $this->get('State');
-		$this->canDo	= JEMHelperBackend::getActions($this->state->get('category.component'));
+		$this->canDo	= JEMHelperBackend::getActions('com_jem', 'category', $this->item->id);
 
 		$document	= JFactory::getDocument();
 		$jinput 	= JFactory::getApplication()->input;
@@ -52,13 +52,12 @@ class JemViewCategory extends JViewLegacy
 		$grouplist[] 	= JHtml::_('select.option', '0', JText::_('COM_JEM_CATEGORY_NO_GROUP'));
 		$grouplist 		= array_merge($grouplist, $groups);
 
-		$Lists['groups']	= JHtml::_('select.genericlist', $grouplist, 'groupid', array('size'=>'1','class'=>'inputbox'), 'value', 'text', $this->item->groupid);
+		$Lists['groups']	= JHtml::_('select.genericlist', $grouplist, 'groupid[]', array('size'=>'3','class'=>'inputbox','multiple'=>'multiple'), 'value', 'text', $this->item->groupid);
 		$this->Lists 		= $Lists;
 
-		parent::display($tpl);
-		$jinput->set('hidemainmenu', true);
-
 		$this->addToolbar();
+		$this->sidebar = JHtmlSidebar::render();
+		parent::display($tpl);
 	}
 
 	/**
@@ -69,12 +68,17 @@ class JemViewCategory extends JViewLegacy
 		// Initialise variables.
 		$user		= JFactory::getUser();
 		$userId		= $user->get('id');
+		$jinput = JFactory::getApplication()->input;
+		$jinput->set('hidemainmenu', true);
 
 		$isNew		= ($this->item->id == 0);
 		$checkedOut	= !($this->item->checked_out == 0 || $this->item->checked_out == $userId);
 
 		// Get the results for each action.
-		$canDo = JEMHelperBackend::getActions();
+		// $canDo = JEMHelperBackend::getActions();
+		$canDo		= $this->canDo;
+		
+		
 
 		$title = JText::_('COM_JEM_CATEGORY_BASE_'.($isNew?'ADD':'EDIT').'_TITLE');
 		// Prepare the toolbar.

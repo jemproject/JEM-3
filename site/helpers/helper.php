@@ -25,7 +25,7 @@ class JemHelper {
 	{
 		static $settings;
 
-		if (!isset($config)) {
+		if (!isset($settings)) {
 			if (!is_object($settings)) {
 				$db = JFactory::getDBO();
 				$query = $db->getQuery(true);
@@ -100,9 +100,7 @@ class JemHelper {
 			$globalregistry->loadString($globalattribs);
 			
 			$globalattribs = $globalregistry;
-		} else {
-			
-		}
+		} 
 
 		return $globalattribs;
 	}
@@ -132,9 +130,7 @@ class JemHelper {
 			
 			$css = $registryCSS;
 			
-		} else {
-					
-		}
+		} 
 			
 		return $css;
 	}
@@ -518,17 +514,21 @@ class JemHelper {
 	 * @param string comma separated list of ids
 	 * @return mixed array of numbers greater zero or false
 	 */
-	static function getValidIds($idstring)
+	static function getValidIds($data)
 	{
-		$ids = array();
-		$tmp = explode(',', $idstring);
-		foreach ($tmp as $id) {
-			if ((int)$id > 0) {
-				$ids[] = (int)$id;
+		// are we an array or a string?
+		if (is_array($data)) {
+			return $data;
+		} else {
+			$ids = array();
+			$tmp = explode(',', $data);
+			foreach ($tmp as $id) {
+				if ((int)$id > 0) {
+					$ids[] = (int)$id;
+				}
 			}
+			return (empty($ids) ? false : $ids);
 		}
-
-		return (empty($ids) ? false : $ids);
 	}
 
 	/**
@@ -935,7 +935,6 @@ class JemHelper {
 		require_once JPATH_COMPONENT_SITE . '/helpers/route.php';
 
 		$jemsettings			= JemHelper::config();
-		$weekstart 				= $jemsettings->weekdaystart;
 		$anticipation			= $jemsettings->recurrence_anticipation;
 
 		#####################

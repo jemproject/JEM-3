@@ -3,10 +3,13 @@
  * @copyright (C) 2013-2015 joomlaeventmanager.net
  * @copyright (C) 2005-2009 Christoph Lukes
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
+ * 
+ * @version 3.0.7
  */
 
-
-
+div#jem div#printer_icon {
+ 	display:none;
+ }
 
 div#jem td.attendees {
 	text-align: center;
@@ -622,6 +625,13 @@ div#jem .btn:focus {
 	-o-transition: background-position .1s linear;
 	transition: background-position .1s linear;
 }
+div#jem table .btn {
+	padding-left: 4px;
+	padding-right: 4px;
+	padding-bottom: 1px;
+	padding-top: 1px;
+	}
+
 div#jem .input-medium {
     width: 150px;
 }
@@ -860,6 +870,7 @@ div#jem [class*=" icon-"] {
     width: 14px;
     height: 14px;
     line-height: 14px;
+    margin:0px;
 }
 div#jem .icon-remove:before {
     content: "I";

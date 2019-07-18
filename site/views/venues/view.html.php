@@ -12,6 +12,9 @@ defined('_JEXEC') or die;
 */
 class JemViewVenues extends JViewLegacy
 {
+	
+	protected $state = null;
+	
 	/**
 	 * Creates the Venuesview
 	 */
@@ -20,9 +23,10 @@ class JemViewVenues extends JViewLegacy
 		$app 	= JFactory::getApplication();
 		$jinput = $app->input;
 
+		$state 			= $this->get('State');
+		$params 		= $state->params;
 		$document		= JFactory::getDocument();
 		$jemsettings	= JemHelper::config();
-		$settings 		= JemHelper::globalattribs();
 		$vsettings		= JemHelper::viewSettings('vvenues');
 		$user			= JFactory::getUser();
 		$print			= $jinput->getBool('print');
@@ -77,23 +81,18 @@ class JemViewVenues extends JViewLegacy
 		$document->setMetadata('title' , $pagetitle);
 		$document->setMetadata('keywords', $pagetitle);
 
-		// Check if the user has access to the add-eventform
-		$maintainer = JemUser::ismaintainer('add');
-		$genaccess 	= JemUser::validate_user($jemsettings->evdelrec, $jemsettings->delivereventsyes);
-
-		if ($maintainer || $genaccess || $user->authorise('core.create','com_jem')) {
-			$addeventlink = 1;
+		// Check if the user should see the submit-Event icon
+		if (JEMUser::addEvent($params,true)) {
+			$this->submitEventIcon = 1;
 		} else {
-			$addeventlink = 0;
+			$this->submitEventIcon = 0;
 		}
-
-		//Check if the user has access to the add-venueform
-		$maintainer2	= JemUser::venuegroups('add');
-		$genaccess2		= JemUser::validate_user($jemsettings->locdelrec, $jemsettings->deliverlocsyes);
-		if ($maintainer2 || $genaccess2) {
-			$addvenuelink = 1;
+		
+		// Check if the user should see the submit-Venue icon
+		if (JEMUser::addVenue($params,true)) {
+			$this->submitVenueIcon = 1;
 		} else {
-			$addvenuelink = 0;
+			$this->submitVenueIcon = 0;
 		}
 
 		// Create the pagination object
@@ -102,12 +101,9 @@ class JemViewVenues extends JViewLegacy
 		$this->rows				= $rows;
 		$this->print_link		= $print_link;
 		$this->params			= $params;
-		$this->addvenuelink		= $addvenuelink;
-		$this->addeventlink		= $addeventlink;
 		$this->pagination		= $pagination;
 		$this->item				= $menuitem;
 		$this->jemsettings		= $jemsettings;
-		$this->settings			= $settings;
 		$this->vsettings		= $vsettings;
 		$this->task				= $task;
 		$this->pagetitle		= $pagetitle;

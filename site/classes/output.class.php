@@ -39,25 +39,23 @@ class JEMOutput {
 	{
 		if ($dellink)
 		{
-			$settings 	= JemHelper::globalattribs();
-			$settings2	= JemHelper::config();
-
-			$uri = JFactory::getURI();
 			$app = JFactory::getApplication();
 
 			# check for print-screen
 			if ($app->input->getInt('print')) {
+				// in print-view we don't need the icon
 				return;
 			}
 
 			# check for icon-setting
-			if ($settings->get('global_show_icons',1)) {
+			if ($params->get('global_show_icons',1)) {
 				$text = JHtml::_('image', 'com_jem/submitevent.png', JText::_('COM_JEM_DELIVER_NEW_EVENT'), NULL, true);
 			} else {
 				$text = JText::_('COM_JEM_DELIVER_NEW_EVENT');
 			}
 
 			JHtml::_('bootstrap.tooltip');
+			$uri = JFactory::getURI();
 
 			$url = 'index.php?option=com_jem&task=editevent.add&return='.base64_encode(urlencode($uri)).'&a_id=0';
 			$desc = JText::_('COM_JEM_SUBMIT_EVENT_DESC');
@@ -80,16 +78,12 @@ class JEMOutput {
 	 * @param int $addvenuelink Access of user
 	 * @param array $params needed params
 	 * @param $settings, retrieved from settings-table
-	 *
-	 * Active in views:
-	 * venue, venues
 	 **/
-	static function addvenuebutton($addvenuelink, $params, $settings2)
+	static function addvenuebutton($addvenuelink, $params)
 	{
 		if ($addvenuelink) {
 			$app 		= JFactory::getApplication();
-			$settings 	= JemHelper::globalattribs();
-
+		
 			# check for print
 			if ($app->input->getInt('print')) {
 				return;
@@ -99,7 +93,7 @@ class JEMOutput {
 			JHtml::_('bootstrap.tooltip');
 
 			# check for icons
-			if ($settings->get('global_show_icons',1)) {
+			if ($params->get('global_show_icons',1)) {
 				$text = JHtml::_('image', 'com_jem/addvenue.png', JText::_('COM_JEM_DELIVER_NEW_VENUE'), NULL, true);
 			} else {
 				$text = JText::_('COM_JEM_DELIVER_NEW_VENUE');
@@ -118,6 +112,8 @@ class JEMOutput {
 
 			return $output;
 		}
+		
+		return false;
 	}
 
 	/**
@@ -132,11 +128,9 @@ class JEMOutput {
 	 */
 	static function archivebutton($params, $task = NULL, $id = NULL)
 	{
-		$settings	= JemHelper::globalattribs();
-		$settings2	= JemHelper::config();
-		$app		= JFactory::getApplication();
-
 		if ($params->get('global_show_archive_icon',1)) {
+			
+			$app		= JFactory::getApplication();
 
 			# check if we're in a print-screen
 			if ($app->input->getInt('print')) {
@@ -150,7 +144,7 @@ class JEMOutput {
 			}
 
 			if ($task == 'archive') {
-				if ($settings->get('global_show_icons',1)) {
+				if ($params->get('global_show_icons',1)) {
 					$text = JHtml::_('image', 'com_jem/el.png', JText::_('COM_JEM_SHOW_EVENTS'), NULL, true);
 				} else {
 					$text = JText::_('COM_JEM_SHOW_EVENTS');
@@ -166,7 +160,7 @@ class JEMOutput {
 			} else {
 				# here we're not in the archive-task
 
-				if ($settings->get('global_show_icons',1)) {
+				if ($params->get('global_show_icons',1)) {
 					$text = JHtml::_('image', 'com_jem/archive_front.png', JText::_('COM_JEM_SHOW_ARCHIVE'), NULL, true);
 				} else {
 					$text = JText::_('COM_JEM_SHOW_ARCHIVE');
@@ -194,6 +188,8 @@ class JEMOutput {
 
 			return $output;
 		}
+		
+		return false;
 	}
 
 	/**
@@ -204,9 +200,6 @@ class JEMOutput {
 	 * @param array $params
 	 * @param int $allowedtoedit
 	 * @param string $view
-	 *
-	 * Views:
-	 * Event, Venue
 	 */
 	static function editbutton($item, $params, $attribs, $allowedtoedit, $view)
 	{
@@ -225,12 +218,9 @@ class JEMOutput {
 
 			// Initialise variables.
 			$user	= JFactory::getUser();
-			$app = JFactory::getApplication();
 			$userId	= $user->get('id');
 			$uri	= JFactory::getURI();
 
-			$settings = JemHelper::globalattribs();
-			$jemsettings		= JemHelper::config();
 			JHtml::_('bootstrap.tooltip');
 
 			switch ($view)
@@ -284,13 +274,13 @@ class JEMOutput {
 					break;
 
 				case 'eventslist':
-					# check if we're allowed to edit
-
-					$maintainer = JemUser::ismaintainer('edit',$item->id);
-					$genaccess  = JemUser::editaccess($jemsettings->eventowner, $item->created_by, $jemsettings->eventeditrec, $jemsettings->eventedit);
-
-					if ($maintainer || $genaccess || $user->authorise('core.edit','com_jem')) {
-						# @todo finetune attribs/params
+					// in eventslist only the admin should be able to edit the event
+					
+					if (!(JEMUser::superuser())) {
+						return false;
+					}
+					
+			
 					if (property_exists($item, 'Checked_out') && property_exists($item, 'Checked_out_time') && $item->Checked_out > 0 && $item->Checked_out != $userId) {
 						$checkoutUser = JFactory::getUser($item->Checked_out);
 						$button = JHtml::_('image', 'system/checked_out.png', NULL, NULL, true);
@@ -298,17 +288,17 @@ class JEMOutput {
 						$tooltip = JText::_('JLIB_HTML_CHECKED_OUT').' :: '.JText::sprintf('COM_JEM_GLOBAL_CHECKED_OUT_BY', $checkoutUser->name).' <br /> '.$date;
 						return '<span class="hasTooltip" title="'.htmlspecialchars($tooltip, ENT_COMPAT, 'UTF-8').'">'.$button.'</span>';
 					}
-
+					
 					$text = JHtml::_('image', 'com_jem/calendar_edit.png', JText::_('COM_JEM_EDIT_EVENT'), NULL, true);
 					$id = $item->id;
 					$desc = JText::_('COM_JEM_EDIT_EVENT_DESC');
 					$title = JText::_('COM_JEM_EDIT_EVENT');
 					$url = 'index.php?option=com_jem&task=editevent.edit&a_id='.$id.'&return='.base64_encode(urlencode($uri));
 					break;
-					} else {
-						return;
-					}
-			}
+					
+				default:
+					return;
+			} 
 
 			if (!$url) {
 				return; // we need at least url to generate useful output
@@ -331,18 +321,16 @@ class JEMOutput {
 	 * @param string $print_link
 	 * @param array $params
 	 */
-	static function printbutton($print_link, &$params,$view=false)
+	static function printbutton($print_link, $params,$view=false)
 	{
-		$app 		= JFactory::getApplication();
-		$settings	= JemHelper::globalattribs();
-
-		if ($settings->get('global_show_print_icon',0)) {
+		if ($params->get('global_show_print_icon',0)) {
+			$app 		= JFactory::getApplication();
+	
 			JHtml::_('bootstrap.tooltip');
-
 			$status = 'status=no,toolbar=no,scrollbars=yes,titlebar=no,menubar=no,resizable=yes,width=800,height=480,directories=no,location=no';
 
 			# check for icon setting
-			if ($settings->get('global_show_icons',1)) {
+			if ($params->get('global_show_icons',1)) {
 				$text = JHtml::_('image','system/printButton.png', JText::_('JGLOBAL_PRINT'), NULL, true);
 			} else {
 				$text = JText::_('JGLOBAL_PRINT');
@@ -353,8 +341,8 @@ class JEMOutput {
 				//button in popup
 				$overlib = JText::_('COM_JEM_PRINT_DESC');
 				$text = JText::_('COM_JEM_PRINT');
-				$title = 'title='.JText::_('JGLOBAL_PRINT').' class="icon-print"';
-				$pimage = JHtml::_('image','system/printButton.png', JText::_('JGLOBAL_PRINT'), $title, true);
+				$title = 'title='.JText::_('JGLOBAL_PRINT').' class=""';
+				$pimage = JHtml::_('image','com_jem/printer.png', JText::_('JGLOBAL_PRINT'), $title, true);
 				$output = '<a href="#" onclick="window.print();return false;">'.$pimage.'</a>';
 			} else {
 				$overlib = JText::_('COM_JEM_PRINT_DESC');
@@ -391,11 +379,10 @@ class JEMOutput {
 	 */
 	static function mailbutton($slug, $view, $params)
 	{
-		$app 		= JFactory::getApplication();
-		$settings	= JemHelper::globalattribs();
-
-		if ($settings->get('global_show_email_icon')) {
-
+		if ($params->get('global_show_email_icon')) {
+			
+			$app 		= JFactory::getApplication();
+			
 			# check for print-screen
 			if ($app->input->getInt('print')) {
 				return;
@@ -413,7 +400,7 @@ class JEMOutput {
 			$status = 'width=400,height=350,menubar=yes,resizable=yes';
 
 			# check for icon-setting
-			if ($settings->get('global_show_icons')) {
+			if ($params->get('global_show_icons')) {
 				$text = JHtml::_('image','system/emailButton.png', JText::_('JGLOBAL_EMAIL'), NULL, true);
 			} else {
 				$text = JText::_('JGLOBAL_EMAIL');
@@ -432,6 +419,8 @@ class JEMOutput {
 			$output = JHtml::_('link', JRoute::_($url), $text, $attribs);
 
 			return $output;
+		} else  {
+			return false;
 		}
 	}
 
@@ -1096,14 +1085,14 @@ class JEMOutput {
 						$path = str_replace('/',' &#187; ',$path);
 
 						$value = '<span class="hasTooltip" title="'.JHtml::tooltipText(JText::_('COM_JEM_EDIT_CATEGORY'), $path, 0).'">';
-						$value .= '<a href="index.php?option=com_jem&amp;task=category.edit&amp;id='. $category->id.'">'.
+						$value .= '<a href="index.php?option=com_jem&amp;task=category.edit&amp;id='. $category->catid.'">'.
 								$category->catname.'</a>';
 						$value .= '</span>';
 					} else {
 						if ($FixItemID) {
 							$value = '<a href="'.JRoute::_('index.php?option=com_jem&view=category&id='.$category->catslug.'&Itemid='.$FixItemID).'">'.$category->catname.'</a>';
 						} else {
-							$value = '<a href="'.JRoute::_(JemHelperRoute::getCategoryRoute($category->catslug)).'">'.$category->catname.'</a>';
+							$value = '<a href="'.JRoute::_(JemHelperRoute::getCategoryRoute($category->catid)).'">'.$category->catname.'</a>';
 						}
 					}
 				} else {
@@ -1114,35 +1103,6 @@ class JEMOutput {
 			$categories);
 
 		return $output;
-	}
-
-	static function statuslabel($published = false) {
-
-		# @todo check function
-		$user	= JFactory::getUser();
-		$app	= JFactory::getApplication();
-		$userId	= $user->get('id');
-		$admin	= JEMUser::superuser();
-		$status = '';
-
-		if ($published != 1 && $published != 2 && $admin) {
-			# determine the type and set variables
-			switch($published) {
-				case '1':
-					$status = 'JPUBLISHED';
-					break;
-				case '0':
-					$status = 'JUNPUBLISHED';
-					break;
-				case '2':
-					$status = 'JARCHIVED';
-					break;
-				case '-2':
-					$status = 'JTRASHED';
-					break;
-			}
-			return '<span class="label">'.JText::_($status).'</span>';
-		}
 	}
 
 	static function eventDateTime($row, $dateStart = false, $timeStart = false, $dateEnd = false, $timeEnd = false) {

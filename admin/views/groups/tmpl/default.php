@@ -45,6 +45,10 @@ $params		= (isset($this->state->params)) ? $this->state->params : new JObject();
 
 
 <form action="<?php echo JRoute::_('index.php?option=com_jem&view=groups'); ?>" method="post" name="adminForm" id="adminForm">
+	<div id="j-sidebar-container" class="span2">
+		<?php echo $this->sidebar; ?>
+	</div>
+	<div id="j-main-container" class="span10">	
 	<?php
 		// Search tools bar
 		echo JLayoutHelper::render('joomla.searchtools.default', array('view' => $this));
@@ -114,4 +118,5 @@ $params		= (isset($this->state->params)) ? $this->state->params : new JObject();
 	<input type="hidden" name="boxchecked" value="0" />
 	<input type="hidden" name="task" value="" />
 	<?php echo JHtml::_('form.token'); ?>
+	</div>
 </form>

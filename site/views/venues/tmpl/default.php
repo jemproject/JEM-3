@@ -7,7 +7,7 @@
  */
 defined('_JEXEC') or die;
 
-
+$params = $this->params;
 ?>
 <div id="jem" class="jem_venues<?php echo $this->pageclass_sfx;?>">
 <div class="topbox">
@@ -15,14 +15,14 @@ defined('_JEXEC') or die;
 
 	<?php
 	if ($this->print) {
-		echo JemOutput::printbutton($this->print_link, $this->params);
+		echo JemOutput::printbutton($this->print_link, $params);
 	} else {
 	?>
 	<div class="button_flyer icons">
 		<?php
-			echo JemOutput::addvenuebutton($this->addvenuelink, $this->params, $this->jemsettings);
-			echo JemOutput::submitbutton($this->addeventlink, $this->params);
-			echo JemOutput::printbutton($this->print_link, $this->params);
+			echo JemOutput::addvenuebutton($this->submitVenueIcon, $params);
+			echo JemOutput::submitbutton($this->submitEventIcon, $params);
+			echo JemOutput::printbutton($this->print_link, $params);
 		?>
 	</div>
 			<?php } ?>
@@ -31,9 +31,9 @@ defined('_JEXEC') or die;
 <div class="clearfix"></div>
 <!-- info -->
 <div class="info_container">
-	<?php if ($this->params->get('show_page_heading', 1)) : ?>
+	<?php if ($params->get('show_page_heading', 1)) : ?>
 		<h1>
-		<?php echo $this->escape($this->params->get('page_heading')); ?>
+		<?php echo $this->escape($params->get('page_heading')); ?>
 		</h1>
 	<?php endif; ?>
 	<div class="clr"> </div>
@@ -126,7 +126,7 @@ defined('_JEXEC') or die;
 				</dd>
 				<?php endif; ?>
 
-				<?php if ($row->country) : ?>
+				<?php if ($this->vsettings->get('show_country') && $row->country) : ?>
 				<dt class="venue_country">
 					<?php echo JText::_('COM_JEM_COUNTRY').':'; ?>
 				</dt>
@@ -139,18 +139,24 @@ defined('_JEXEC') or die;
 				<?php if ($this->vsettings->get('show_mapserv') == 1) : ?>
 					<?php echo JemOutput::mapicon($row,null,$this->vsettings); ?>
 				<?php endif; ?>
+				
+				
+				<?php if ($this->vsettings->get('show_published')) { ?>
 				<dt class="venue_eventspublished">
 					<?php echo JText::_('COM_JEM_VENUES_EVENTS_PUBLISHED').':'; ?>
 				</dt>
 				<dd class="venue_eventspublished">
 					<a href="<?php echo $row->linkEventsPublished; ?>"><?php echo $row->EventsPublished; ?></a>
 				</dd>
+				<?php } ?>
+				<?php if ($this->vsettings->get('show_archived')) { ?>
 				<dt class="venue_archivedevents">
 					<?php echo JText::_('COM_JEM_VENUES_EVENTS_ARCHIVED').':'; ?>
 				</dt>
 				<dd class="venue_archivedevents">
 					<a href="<?php echo $row->linkEventsArchived; ?>"><?php echo $row->EventsArchived; ?></a>
 				</dd>
+				<?php } ?>
 			<?php if ($this->vsettings->get('show_mapserv') == 2) : ?>
 				<?php echo JemOutput::mapicon($row,null,$this->vsettings); ?>
 			<?php endif; ?>

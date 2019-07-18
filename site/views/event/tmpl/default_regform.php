@@ -7,41 +7,57 @@
  */
 defined('_JEXEC') or die;
 
-//the user is not registered allready -> display registration form
+// the user is not registered allready -> display registration form
 ?>
 <?php
 if ($this->item->registra == 1)
 {
+// the event is open for registering
 
-if ($this->print == 0) {
+// let's check if a enddate for registering is available
+$enddatereg = $this->item->registering->get('enddatereg');
+$displayreg = true;
+if ($enddatereg) {
+	if(strtotime($enddatereg) > strtotime('now')) {
+		$displayreg = true;
+	} else {
+		$displayreg = false;
+	}
+}
+
+// are we in print-view?
+if ($this->print == 1) {
+	$displayreg = false;
+}
 ?>
 
+<?php if ($displayreg) { ?>
 
 <?php
 if ($this->item->maxplaces > 0 && ($this->item->booked >= $this->item->maxplaces) && !$this->item->waitinglist):
+// no waitinglist + maxplaces set + maxplaces reached 
 ?>
 
 <!-- Full, not possible to attend -->
 <p></p>
 <p></p>
 <div class="center">
-
 	<span class="label label-warning">
 		<?php echo JText::_('COM_JEM_EVENT_FULL_NOTICE'); ?>
 	</span>
-
 </div>
 <p></p>
-
 
 <?php else: ?>
 <form id="JEM" action="<?php echo JRoute::_('index.php?option=com_jem&view=event&id='.(int) $this->item->id); ?>"  name="adminForm" id="adminForm" method="post">
 	<p>
-		<?php if ($this->item->maxplaces && ($this->item->booked >= $this->item->maxplaces)): // full event ?>
+		<?php 
+			if ($this->item->maxplaces && ($this->item->booked >= $this->item->maxplaces)): 
+			// check if event is full + waitinglist
+		?>
 		<div class="center">
 		<span class="label label-warning"><?php echo JText::_('COM_JEM_EVENT_STATUS_FULL_WAITINGLIST');?></span>
 		</div>
-
 			<?php $text = JText::_('COM_JEM_EVENT_FULL_REGISTER_TO_WAITING_LIST'); ?>
 		<?php else: ?>
 			<?php $text = JText::_('COM_JEM_I_WILL_GO'); ?>
@@ -55,7 +71,6 @@ if ($this->item->maxplaces > 0 && ($this->item->booked >= $this->item->maxplaces
 			<input class="btn btn_button hasTooltip" type="submit" id="jem_send_attend" name="jem_send_attend" value="<?php echo JText::_( 'COM_JEM_REGISTER' ); ?>" disabled="disabled" title="<?php echo JHtml::tooltipText($text); ?>" />
 		</div>
 	</div>
-
 
 <p>
 	<input type="hidden" name="rdid" value="<?php echo $this->item->did; ?>" />

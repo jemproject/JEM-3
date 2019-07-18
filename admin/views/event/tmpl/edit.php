@@ -116,6 +116,11 @@ $params = $params->toArray();
 </script>
 
 <form action="<?php echo JRoute::_('index.php?option=com_jem&layout=edit&id='.(int) $this->item->id); ?>" class="form-validate" method="post" name="adminForm" id="event-form" enctype="multipart/form-data">
+<div id="j-sidebar-container" class="span2">
+		<?php echo $this->sidebar; ?>
+	</div>
+	<div id="j-main-container" class="span10">		
+	
 	<div class="form-horizontal">
 		<div class="span12">
 
@@ -182,7 +187,14 @@ $params = $params->toArray();
 <!-- Settings -->
 	<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'settings', JText::_('COM_JEM_EVENT_SETTINGS_TAB', true)); ?>
 		<?php echo $this->loadTemplate('settings'); ?>
-	<?php echo JHtml::_('bootstrap.endTab'); ?>		
+	<?php echo JHtml::_('bootstrap.endTab'); ?>	
+	
+<!-- Rules -->
+	<?php if ($this->canDo->get('core.admin')) : ?>
+		<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'event-permissions', JText::_('COM_JEM_FIELDSET_RULES', true)); ?>
+			<?php echo $this->form->getInput('rules'); ?>
+		<?php echo JHtml::_('bootstrap.endTab'); ?>
+	<?php endif; ?>		
 	
 			<?php echo JHtml::_('bootstrap.endTabSet');?>
 </div>
@@ -244,6 +256,16 @@ $params = $params->toArray();
 			<?php endif; ?>
 
 			<?php echo $this->form->renderField('waitinglist'); ?> 
+		</fieldset>
+		
+		<!-- registering field settings -->
+		<fieldset class="form-vertical">
+		<?php foreach($this->form->getGroup('registering') as $field): ?>
+		<div class="control-group">	
+			<div class="control-label"><?php echo $field->label; ?></div>
+			<div class="controls"><?php echo $field->input; ?></div>
+		</div>
+		<?php endforeach; ?>
 		</fieldset>
 <?php echo JHtml::_('bootstrap.endSlide'); ?>
 
@@ -327,5 +349,5 @@ $params = $params->toArray();
 			
 			</div>
 			</div>
-	</div>	
+	</div></div>
 </form>

@@ -208,7 +208,8 @@ class JemControllerImport extends JControllerLegacy {
 
 		# some variables
 		$size 				= 50000;
-		$jinput				= JFactory::getApplication()->input;
+		$app				= JFactory::getApplication();
+		$jinput				= $app->input;
 		$step				= $jinput->getInt('step', 0);
 		$current			= $jinput->get->getInt('current', 0);
 		$total 				= $jinput->get->getInt('total', 0);
@@ -232,7 +233,9 @@ class JemControllerImport extends JControllerLegacy {
 			parent::display();
 			return;
 		} elseif($step == 2) {
-
+			if ($version) {
+				$model->setVersion($version);
+			}
 
 		############
 		## import ##
@@ -346,7 +349,7 @@ class JemControllerImport extends JControllerLegacy {
 				$step++;
 				$link .= '&step='.$step.'&copyImages='.$copyImages.'&copyAttachments='.$copyAttachments;
 			}
-			$msg .= JText::sprintf('COM_JEM_IMPORT_EL_IMPORT_WORKING_STEP_COPY_DB', $tables->imptables[$table-1], $current, $total);
+			$app->enqueueMessage(JText::sprintf('COM_JEM_IMPORT_EL_IMPORT_WORKING_STEP_COPY_DB', $tables->imptables[$table-1], $current, $total));
 		} elseif($step == 3) {
 
 			########################
@@ -357,36 +360,40 @@ class JemControllerImport extends JControllerLegacy {
 			JTable::addIncludePath(JPATH_COMPONENT_ADMINISTRATOR.'/tables');
 			$categoryTable = JTable::getInstance('Categories', 'JEMTable');
 			$categoryTable->rebuild();
-			$msg .= JText::_('COM_JEM_IMPORT_EL_IMPORT_WORKING_STEP_REBUILD');
+			$app->enqueueMessage(JText::_('COM_JEM_IMPORT_EL_IMPORT_WORKING_STEP_REBUILD'));
 			$step++;
 			$link .= '&step='.$step.'&copyImages='.$copyImages.'&copyAttachments='.$copyAttachments;
 		} elseif($step == 4) {
+			$version = $model->getVersion();
 
 			# Copy EL images to JEM image destination?
 			if($copyImages) {
-				$model->copyImages();
-				$msg .= JText::_('COM_JEM_IMPORT_EL_IMPORT_WORKING_STEP_COPY_IMAGES');
+				$copyImages = $model->copyImages();
+				if ($copyImages) {
+				} else {
+				}
+				$app->enqueueMessage(JText::_('COM_JEM_IMPORT_EL_IMPORT_WORKING_STEP_COPY_IMAGES'));
 			} else {
-				$msg .= JText::_('COM_JEM_IMPORT_EL_IMPORT_WORKING_STEP_COPY_IMAGES_SKIPPED');
+				$app->enqueueMessage(JText::_('COM_JEM_IMPORT_EL_IMPORT_WORKING_STEP_COPY_IMAGES_SKIPPED'));
 			}
 
 			# Copy Attachments
-			if ($model->getEventlistVersion() == '1.1.x') {
+			if ($version == '1.1.x') {
 				if($copyAttachments) {
 					$model->copyAttachments();
-					$msg .= JText::_('COM_JEM_IMPORT_JEM_IMPORT_WORKING_STEP_COPY_ATTACHMENTS');
+					$app->enqueueMessage(JText::_('COM_JEM_IMPORT_EL_IMPORT_WORKING_STEP_COPY_ATTACHMENTS'));
 				} else {
-					$msg .= JText::_('COM_JEM_IMPORT_JEM_IMPORT_WORKING_STEP_COPY_ATTACHMENTS_SKIPPED');
+					$app->enqueueMessage(JText::_('COM_JEM_IMPORT_EL_IMPORT_WORKING_STEP_COPY_ATTACHMENTS_SKIPPED'));
 				}
 			}
 
 			$step++;
 			$link .= '&step='.$step;
 		} else {
-			$msg = JText::_('COM_JEM_IMPORT_EL_IMPORT_FINISHED');
+			$app->enqueueMessage(JText::_('COM_JEM_IMPORT_EL_IMPORT_FINISHED'));
 		}
 
-		$this->setRedirect($link, $msg);
+		$this->setRedirect($link);
 	}
 
 	/**

@@ -133,11 +133,11 @@ class JemControllerAttendees extends JControllerLegacy
 
 			if ($register_data->waiting)
 			{
-				$msg = JText::_('COM_JEM_ADDED_TO_ATTENDING');
+				$msg = JText::_('COM_JEM_ADDED_TO_WAITING');
 			}
 			else
 			{
-				$msg = JText::_('COM_JEM_ADDED_TO_WAITING');
+				$msg = JText::_('COM_JEM_ADDED_TO_ATTENDING');
 			}
 		}
 		else

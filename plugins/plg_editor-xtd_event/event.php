@@ -28,7 +28,6 @@ class PlgButtonEvent extends JPlugin
 	 * Load the language file on instantiation.
 	 *
 	 * @var    boolean
-	 * @since  3.1
 	 */
 	protected $autoloadLanguage = true;
 
@@ -43,11 +42,6 @@ class PlgButtonEvent extends JPlugin
 	{
 
 		$app = JFactory::getApplication();
-
-		if (!$app->isSite())
-		{
-			return false;
-		}
 
 		/*
 		 * Javascript to insert the link

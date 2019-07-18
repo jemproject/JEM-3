@@ -9,20 +9,29 @@ defined('_JEXEC') or die;
 
 ?>
 <div id="jem" class="jem_day<?php echo $this->pageclass_sfx;?>">
-<div class="topbox">
-<div class="btn-group pull-right">
+<?php if ($this->print) { ?>
+<div id="printer_icon">
+	<div class="printer_icon center">
 	<?php
-	if ($this->print) {
-		echo JemOutput::printbutton($this->print_link, $this->params);
-	} else {
+		echo JemOutput::printbutton($this->print_link, $this->params,'day');
 	?>
-	<div class="button_flyer icons">
-		<?php
-			echo JEMOutput::printbutton($this->print_link, $this->params );
-		?>
 	</div>
-	<?php } ?>
-</div></div>
+</div>
+<?php } ?>
+
+
+
+<div class="topbox">
+<?php if (!$this->print) { ?>
+	<div class="btn-group pull-right hidden-phone">
+		<div class="button_flyer icons">
+		<?php
+			echo JEMOutput::printbutton($this->print_link, $this->params,'day');
+		?>
+		</div>
+	</div>
+<?php } ?>
+</div>
 <div class="clearfix"></div>
 <!-- info -->
 <div class="info_container">

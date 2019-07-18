@@ -30,6 +30,9 @@ class JEMViewVenues extends JViewLegacy
 		$this->state			= $this->get('State');
 		$this->filterForm		= $this->get('FilterForm');
 		$this->activeFilters	= $this->get('ActiveFilters');
+		
+		$this->columns			= $this->get('Columns');
+
 		$this->settings			= $settings;
 		$params 				= $this->state->get('params');
 
@@ -47,6 +50,7 @@ class JEMViewVenues extends JViewLegacy
 		# add toolbar
 		$this->addToolbar();
 
+		$this->sidebar = JHtmlSidebar::render();
 		parent::display($tpl);
 	}
 
@@ -56,8 +60,8 @@ class JEMViewVenues extends JViewLegacy
     protected function addToolbar()
     {
 		JToolBarHelper::title(JText::_('COM_JEM_VENUES'), 'venues');
-
-		$canDo = JEMHelperBackend::getActions(0);
+		
+		$canDo = JEMHelperBackend::getActions('com_jem', 'venue', 0);
 
 		/* create */
 		if (($canDo->get('core.create'))) {

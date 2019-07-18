@@ -6,6 +6,8 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 defined('_JEXEC') or die;
+
+$params = $this->params;
 ?>
 <script type="text/javascript">
 	function tableOrdering(order, dir, view)
@@ -18,9 +20,9 @@ defined('_JEXEC') or die;
 	}
 </script>
 
-<?php if ($this->settings->get('global_show_filter') || $this->settings->get('global_display')) : ?>
+<?php if ($params->get('global_show_filter') || $params->get('global_display')) : ?>
 	<div id="jem_filter" class="clearfix">
-		<?php if ($this->settings->get('global_show_filter')) : ?>
+		<?php if ($params->get('global_show_filter')) : ?>
 			<div class="pull-left">
 				<?php
 					echo $this->lists['filter'].'&nbsp;';
@@ -32,7 +34,7 @@ defined('_JEXEC') or die;
 				</div>
 			</div>
 		<?php endif; ?>
-		<?php if ($this->settings->get('global_display')) : ?>
+		<?php if ($params->get('global_display')) : ?>
 			<div class="pull-right">
 				<?php
 					echo $this->pagination->getLimitBox();

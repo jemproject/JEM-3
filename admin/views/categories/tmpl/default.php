@@ -43,7 +43,10 @@ $sortFields = $this->getSortFields();
 	}
 </script>
 <form action="<?php echo JRoute::_('index.php?option=com_jem&view=categories');?>" method="post" name="adminForm" id="adminForm">
-
+<div id="j-sidebar-container" class="span2">
+		<?php echo $this->sidebar; ?>
+	</div>
+	<div id="j-main-container" class="span10">
 	<?php
 		// Search tools bar
 		echo JLayoutHelper::render('joomla.searchtools.default', array('view' => $this));
@@ -151,6 +154,7 @@ $sortFields = $this->getSortFields();
 						<?php else : ?>
 							<?php echo $this->escape($item->catname); ?>
 						<?php endif; ?>
+						<br />
 						<span class="small" title="<?php echo $this->escape($item->path);?>">
 							<?php if (empty($item->note)) : ?>
 								<?php echo JText::sprintf('JGLOBAL_LIST_ALIAS', $this->escape($item->alias));?>
@@ -164,14 +168,12 @@ $sortFields = $this->getSortFields();
 						</div>
 					</td>
 					<td class="center">
-						<?php if ($item->catgroup) : ?>
+						<?php if ($item->catgroup) { ?>
 							<span>
 							<a href="<?php echo $grouplink; ?>">
 								<?php echo $this->escape($item->catgroup); ?>
 							</a></span>
-						<?php else : ?>
-							<?php echo '-'; ?>
-						<?php endif; ?>
+						<?php } ?>
 					</td>
 					<td class="center">
 						<?php echo $item->assignedevents; ?>
@@ -216,4 +218,5 @@ $sortFields = $this->getSortFields();
 		<input type="hidden" name="task" value="" />
 		<input type="hidden" name="boxchecked" value="0" />
 		<?php echo JHtml::_('form.token'); ?>
+		</div>
 </form>

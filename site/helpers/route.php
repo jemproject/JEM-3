@@ -8,10 +8,7 @@
 
 defined('_JEXEC') or die;
 
-// Component Helper
-jimport('joomla.application.component.helper');
 require_once JPATH_SITE . '/components/com_jem/helpers/helper.php';
-require_once JPATH_SITE . '/components/com_jem/classes/categories.class.php';
 
 /**
  * JEM Component Route Helper
@@ -70,46 +67,45 @@ abstract class JEMHelperRoute
 		return $link;
 	}
 
-	public static function getCategoryRoute($id)
+	public static function getCategoryRoute($catid,$language=false)
 	{
-		if (!isset(self::$FixedItemid)) {
-			$settings 		= JEMHelper::globalattribs();
-			$defaultItemid 	= $settings->get('default_Itemid');
-		} else {
-			if (isset(self::$FixedItemid)) {
-				$defaultItemid = self::$FixedItemid;
-			}
+		if ($catid instanceof JCategoryNode)
+		{
+			$id       = $catid->id;
+			$category = $catid;
+		}
+		else
+		{
+			$id       = (int) $catid;
+			$category = JCategories::getInstance('Jem')->get($id);
 		}
 		
-		$needles = array(
-			'category' => array((int) $id)
-		);
-
-		// Create the link
-		$link = 'index.php?option=com_jem&view=category&id='. $id;
-
-		// If no category view works try categories
-		$needles['categories'] = array(self::ARTIFICALID);
-
-		$category = new JEMCategories($id);
-		if($category) {
-			$needles['categories'] = array_reverse($category->getPath());
+		
+		if ($id < 1 || !($category instanceof JCategoryNode))
+		{
+			$link = '';
+		} else {
+			$needles               = array();
+			$link = 'index.php?option=com_jem&view=category&id='. $id;
+			$catids                = array_reverse($category->getPath());
+			$needles['category']   = $catids;
+			$needles['categories'] = $catids;
+				
+			if ($language && $language != "*" && JLanguageMultilang::isEnabled())
+			{
+				$link .= '&lang=' . $language;
+				$needles['language'] = $language;
+			}
+			
+			if ($item = self::_findItem($needles)) {
+				$link .= '&Itemid='.$item;
+			}
 		}
-
-		if ($item = self::_findItem($needles)) {
-			$link .= '&Itemid='.$item;
-		}
-		elseif ($item = self::_findItem()) {
-			if (isset($defaultItemid))
-				{
-					$link .= '&Itemid='.$defaultItemid;
-				}
-		}
-
+	
 		return $link;
 	}
 
-	public static function getEventRoute($id, $catid = null)
+	public static function getEventRoute($id, $catid = null,$language=false)
 	{
 		if (!isset(self::$FixedItemid)) {
 			$settings 		= JEMHelper::globalattribs();
@@ -133,6 +129,12 @@ abstract class JEMHelperRoute
 			//$needles['categories'] = $needles['category'];
 			$link .= '&catid='.$catid;
 		}
+		
+		if ($language && $language != "*" && JLanguageMultilang::isEnabled())
+		{
+			$link .= '&lang=' . $language;
+			$needles['language'] = $language;
+		}
 
 		if ($item = self::_findItem($needles)) {
 			$link .= '&Itemid='.$item;
@@ -144,7 +146,7 @@ abstract class JEMHelperRoute
 		return $link;
 	}
 
-	public static function getVenueRoute($id)
+	public static function getVenueRoute($id,$language=false)
 	{
 		if (!isset(self::$FixedItemid)) {
 			$settings 		= JEMHelper::globalattribs();
@@ -164,6 +166,12 @@ abstract class JEMHelperRoute
 
 		// If no venue view works try venues
 		$needles['venues'] = array(self::ARTIFICALID);
+		
+		if ($language && $language != "*" && JLanguageMultilang::isEnabled())
+		{
+			$link .= '&lang=' . $language;
+			$needles['language'] = $language;
+		}
 
 		if ($item = self::_findItem($needles)) {
 			$link .= '&Itemid='.$item;
@@ -175,7 +183,7 @@ abstract class JEMHelperRoute
 		return $link;
 	}
 
-	protected static function getRouteWithoutId($my)
+	protected static function getRouteWithoutId($my,$language=false)
 	{
 		if (!isset(self::$FixedItemid)) {
 			$settings 		= JEMHelper::globalattribs();
@@ -191,6 +199,12 @@ abstract class JEMHelperRoute
 
 		// Create the link
 		$link = 'index.php?option=com_jem&view='.$my;
+		
+		if ($language && $language != "*" && JLanguageMultilang::isEnabled())
+		{
+			$link .= '&lang=' . $language;
+			$needles['language'] = $language;
+		}
 
 		if ($item = self::_findItem($needles)) {
 			$link .= '&Itemid='.$item;

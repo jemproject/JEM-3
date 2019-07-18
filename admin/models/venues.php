@@ -264,4 +264,37 @@ class JemModelVenues extends JModelList
 		$items = parent::getItems();
 		return $items;
 	}
+	
+	
+	function getColumns() {
+		
+		static $columns;
+	
+		if (!isset($columns)) {
+			if (!is_object($columns)) {
+				$db = JFactory::getDBO();
+				$query = $db->getQuery(true);
+		
+				$query->select('vvenues');
+				$query->from('#__jem_settings');
+				$query->where('id = 1');
+		
+				$db->setQuery($query);
+				$columns = $db->loadResult();
+				
+				$vregistry = new JRegistry;
+				$vregistry->loadString($columns);
+				$columns = $vregistry;
+				$columns = $columns->get('hide_column_backend');
+				
+				if (is_null($columns)) {
+					$columns = array();
+				}
+			}
+		}
+		
+		return $columns;
+	}
+	
+	
 }

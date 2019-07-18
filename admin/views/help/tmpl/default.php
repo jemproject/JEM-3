@@ -23,6 +23,10 @@ $options = array(
 JHtml::_('bootstrap.tooltip');
 ?>
 <form action="<?php echo JRoute::_('index.php?option=com_jem&view=help'); ?>" method="post" name="adminForm" id="adminForm">
+<div id="j-sidebar-container" class="span2">
+		<?php echo $this->sidebar; ?>
+	</div>
+	<div id="j-main-container" class="span10">	
 <div class="row-fluid">
 		<div id="sidebar" class="span3">
 			<div id="filter-bar" class="btn-toolbar">
@@ -59,9 +63,10 @@ JHtml::_('bootstrap.tooltip');
 		</div>
 	</div>
 <input class="textarea" type="hidden" name="option" value="com_jem" />
-</form>
-
 <?php
 //keep session alive
 JHtml::_('behavior.keepalive');
 ?>
+</div>
+</form>
+

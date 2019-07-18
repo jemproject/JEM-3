@@ -41,19 +41,12 @@ class JEMControllerEditvenue extends JControllerForm
 		// Initialise variables.
 		$user		= JFactory::getUser();
 		$jinput 	= JFactory::getApplication()->input;
-		//$categoryId	= JArrayHelper::getValue($data, 'catid', $jinput->getInt('catid'), 'int');
 		$allow		= null;
 
-		//if ($categoryId) {
-		//	// If the category has been passed in the data or URL check it.
-		//	$allow	= $user->authorise('core.create', 'com_jem.category.'.$categoryId);
-		//}
+		
+		$settings 	= JemHelper::globalattribs();
 
-		$jemsettings	= JemHelper::config();
-		$maintainer 	= JEMUser::venuegroups('add');
-		$delloclink 	= JEMUser::validate_user($jemsettings->locdelrec, $jemsettings->deliverlocsyes);
-
-		if ($maintainer || $delloclink) {
+		if (JEMUser::addVenue($settings)) {
 			return true;
 		}
 

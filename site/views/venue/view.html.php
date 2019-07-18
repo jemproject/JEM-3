@@ -32,7 +32,6 @@ class JemViewVenue extends JEMView {
 			$menu 			= $app->getMenu();
 			$menuitem		= $menu->getActive();
 			$jemsettings 	= JemHelper::config();
-			$settings 		= JemHelper::globalattribs();
 			$vsettings		= JemHelper::viewSettings('vvenue');
 			$db 			= JFactory::getDBO();
 			$state 			= $this->get('State');
@@ -139,34 +138,27 @@ class JemViewVenue extends JEMView {
 			$document->setMetadata('keywords', $venue->meta_keywords);
 			$document->setDescription(strip_tags($venue->meta_description));
 
-			// Check if the user has access to the add-eventform
-			$maintainer = JemUser::ismaintainer('add');
-			$genaccess = JemUser::validate_user($jemsettings->evdelrec, $jemsettings->delivereventsyes);
-
-			if ($maintainer || $genaccess || $user->authorise('core.create','com_jem')) {
-				$addeventlink = 1;
+			// Check if the user should see the submit-Event icon
+			if (JEMUser::addEvent($params,true)) {
+				$this->submitEventIcon = 1;
 			} else {
-				$addeventlink = 0;
+				$this->submitEventIcon = 0;
 			}
-
-			// Check if the user has access to the add-venueform
-			$maintainer2 = JemUser::venuegroups('add');
-			$genaccess2 = JemUser::validate_user($jemsettings->locdelrec, $jemsettings->deliverlocsyes);
-			if ($maintainer2 || $genaccess2) {
-				$addvenuelink = 1;
+			
+			// Check if the user should see the submit-Venue icon
+			if (JEMUser::addVenue($params,true)) {
+				$this->submitVenueIcon = 1;
 			} else {
-				$addvenuelink = 0;
+				$this->submitVenueIcon = 0;
 			}
-
-			// Check if the user has access to the edit-venueform
-			$maintainer3 = JemUser::venuegroups('edit');
-			$genaccess3 = JemUser::editaccess($jemsettings->venueowner, $venue->created, $jemsettings->venueeditrec, $jemsettings->venueedit);
-			if ($maintainer3 || $genaccess3) {
-				$allowedtoeditvenue = 1;
+			
+			// check if user should the edit-Venue icon
+			if (JEMUser::editVenue($params,true,false,$venue->id,'venue',$venue->created_by)) {
+				$this->editVenueIcon = 1;
 			} else {
-				$allowedtoeditvenue = 0;
+				$this->editVenueIcon = 0;
 			}
-
+			
 			// Generate Venuedescription
 			if (!$venue->locdescription == '' || !$venue->locdescription == '<br />') {
 				// execute plugins
@@ -195,8 +187,7 @@ class JemViewVenue extends JEMView {
 			}
 
 			# retrieve mapType setting
-			$settings 		= JemHelper::globalattribs();
-			$mapType 		= $settings->get('mapType','0');
+			$mapType 		= $params->get('mapType','0');
 
 			switch($mapType) {
 				case '0':
@@ -238,18 +229,14 @@ class JemViewVenue extends JEMView {
 			$this->venue 				= $venue;
 			$this->print_link 			= $print_link;
 			$this->params 				= $params;
-			$this->addvenuelink 		= $addvenuelink;
-			$this->addeventlink 		= $addeventlink;
 			$this->limage 				= $limage;
 			$this->venuedescription		= $venuedescription;
 			$this->pagination 			= $pagination;
 			$this->jemsettings 			= $jemsettings;
-			$this->settings				= $settings;
 			$this->vsettings			= $vsettings;
 			$this->item					= $menuitem;
 			$this->pagetitle			= $pagetitle;
 			$this->task					= $task;
-			$this->allowedtoeditvenue 	= $allowedtoeditvenue;
 			$this->pageclass_sfx		= htmlspecialchars($pageclass_sfx);
 			$this->print				= $print;
 

@@ -17,4 +17,14 @@ $group = 'vcategory';
 			<div class="controls"><?php echo $this->form->getInput('show_category_image',$group); ?></div>
 		</div>
 		
+		<div class="control-group">	
+			<div class="control-label"><?php echo $this->form->getLabel('show_category_description',$group); ?></div>
+			<div class="controls"><?php echo $this->form->getInput('show_category_description',$group); ?></div>
+		</div>
+		
+		<div class="control-group">	
+			<div class="control-label"><?php echo $this->form->getLabel('show_empty_category_description',$group); ?></div>
+			<div class="controls"><?php echo $this->form->getInput('show_empty_category_description',$group); ?></div>
+		</div>
+		
 </fieldset>

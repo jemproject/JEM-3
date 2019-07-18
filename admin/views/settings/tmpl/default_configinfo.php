@@ -9,152 +9,53 @@ defined('_JEXEC') or die;
 
 ?>
 <div class="span12">
-	<fieldset class="adminform">
-		<legend><?php echo JText::_('COM_JEM_SETTINGS_LEGEND_CONFIGINFO'); ?></legend>
-		
-		<fieldset>
-		<table id="eventList" class="table table-striped">
-		<thead>
-			<tr>
-				<th width="25%">
-					<?php echo JText::_('COM_JEM_SETTINGS_CONFIG_NAME'); ?>
-				</th>
-				<th>
-					<?php echo JText::_('COM_JEM_SETTINGS_CONFIG_VALUE'); ?>
-				</th>
-			</tr>
-		</thead>
-		<tfoot>
-			<tr>
-				<td colspan="2">&#160;</td>
-			</tr>
-		</tfoot>
-		<tbody>
-				<tr>
-					<td><?php echo JText::_('COM_JEM_SETTINGS_CONFIG_VS_COMPONENT').': '; ?></td>
-					<td><?php echo $this->config->vs_component; ?></td>
-				</tr>
-		</tbody>
-		</table></fieldset>
-	
-		<fieldset>
-		<table id="eventList" class="table table-striped">
-		<thead>
-			<tr>
-				<th width="25%">
-					<?php echo JText::_('COM_JEM_SETTINGS_CONFIG_NAME'); ?>
-				</th>
-				<th>
-					<?php echo JText::_('COM_JEM_SETTINGS_CONFIG_VALUE'); ?>
-				</th>
-			</tr>
-		</thead>
-		<tfoot>
-			<tr>
-				<td colspan="2">&#160;</td>
-			</tr>
-		</tfoot>
-		<tbody>
-				<tr>
-					<td><?php echo JText::_('COM_JEM_SETTINGS_CONFIG_VS_PLG_CONTENT').': '; ?></td>
-					<td><?php echo $this->config->vs_plg_content; ?></td>
-				</tr>
-				<tr>
-					<td><?php echo JText::_('COM_JEM_SETTINGS_CONFIG_VS_PLG_COMMENTS').': '; ?></td>
-					<td><?php echo $this->config->vs_plg_comments; ?></td>
-				</tr>
-				<tr>
-					<td><?php echo JText::_('COM_JEM_SETTINGS_CONFIG_VS_PLG_MAILER').': '; ?></td>
-					<td><?php echo $this->config->vs_plg_mailer; ?></td>
-				</tr>
-				<tr>
-					<td><?php echo JText::_('COM_JEM_SETTINGS_CONFIG_VS_PLG_QUICKICON').': '; ?></td>
-					<td><?php echo $this->config->vs_plg_quickicon; ?></td>
-				</tr>
-				<tr>
-					<td><?php echo JText::_('COM_JEM_SETTINGS_CONFIG_VS_PLG_SEARCH').': '; ?></td>
-					<td><?php echo $this->config->vs_plg_search; ?></td>
-				</tr>
-				<tr>
-					<td><?php echo JText::_('COM_JEM_SETTINGS_CONFIG_VS_PLG_FINDER').': '; ?></td>
-					<td><?php echo $this->config->vs_plg_finder; ?></td>
-				</tr>
-				<tr>
-					<td><?php echo JText::_('COM_JEM_SETTINGS_CONFIG_VS_PLG_XTDEVENT').': '; ?></td>
-					<td><?php echo $this->config->vs_plg_xtdevent; ?></td>
-				</tr>
-			</tbody>
-		</table></fieldset>
-	
-		<fieldset><table id="eventList" class="table table-striped">
-		<thead>
-			<tr>
-				<th width="25%">
-					<?php echo JText::_('COM_JEM_SETTINGS_CONFIG_NAME'); ?>
-				</th>
-				<th>
-					<?php echo JText::_('COM_JEM_SETTINGS_CONFIG_VALUE'); ?>
-				</th>
-			</tr>
-		</thead>
-		<tfoot>
-			<tr>
-				<td colspan="2">&#160;</td>
-			</tr>
-		</tfoot>
-		<tbody>
-				<tr>
-					<td><?php echo JText::_('COM_JEM_SETTINGS_CONFIG_VS_MOD_JEM_CAL').': '; ?></td>
-					<td><?php echo $this->config->vs_mod_jem_cal; ?></td>
-				</tr>
-				<tr>
-					<td><?php echo JText::_('COM_JEM_SETTINGS_CONFIG_VS_MOD_JEM').': '; ?></td>
-					<td><?php echo $this->config->vs_mod_jem; ?></td>
-				</tr>
-				<tr>
-					<td><?php echo JText::_('COM_JEM_SETTINGS_CONFIG_VS_MOD_JEM_WIDE').': '; ?></td>
-					<td><?php echo $this->config->vs_mod_jem_wide; ?></td>
-				</tr>
-				<tr>
-					<td><?php echo JText::_('COM_JEM_SETTINGS_CONFIG_VS_MOD_JEM_TEASER').': '; ?></td>
-					<td><?php echo $this->config->vs_mod_jem_teaser; ?></td>
-				</tr>
-			</tbody>
-		</table>
-	</fieldset>
-	
-	<fieldset><table id="eventList" class="table table-striped">
-		<thead>
-			<tr>
-				<th width="25%">
-					<?php echo JText::_('COM_JEM_SETTINGS_CONFIG_NAME'); ?>
-				</th>
-				<th>
-					<?php echo JText::_('COM_JEM_SETTINGS_CONFIG_VALUE'); ?>
-				</th>
-			</tr>
-		</thead>
-		<tfoot>
-			<tr>
-				<td colspan="2">&#160;</td>
-			</tr>
-		</tfoot>
-		<tbody>
-				<tr>
-					<td><?php echo JText::_('COM_JEM_SETTINGS_CONFIG_VS_PHP').': '; ?></td>
-					<td><?php echo $this->config->vs_php; ?></td>
-				</tr>
-				<tr>
-					<td><?php echo JText::_('COM_JEM_SETTINGS_CONFIG_VS_PHP_MAGICQUOTES').': '; ?></td>
-					<td><?php echo $this->config->vs_php_magicquotes; ?></td>
-				</tr>
-				<tr>
-					<td><?php echo JText::_('COM_JEM_SETTINGS_CONFIG_VS_GD').': '; ?></td>
-					<td><?php echo $this->config->vs_gd; ?></td>
-				</tr>
-			</tbody>
-		</table>
-	</fieldset>
-	
-	</fieldset>
+	<fieldset class=form-horizontal>
+			<legend><?php echo JText::_('COM_JEM_SETTINGS_LEGEND_CONFIGINFO'); ?></legend>
+			<br>
+			<table class="table table-striped">
+				<?php
+				$known_extensions = array('pkg_jem'           => 'COM_JEM_SETTINGS_CONFIG_VS_PACKAGE'
+				                         ,'com_jem'           => 'COM_JEM_SETTINGS_CONFIG_VS_COMPONENT'
+				                         ,'mod_jem'           => 'COM_JEM_SETTINGS_CONFIG_VS_MOD_JEM'
+				                         ,'mod_jem_banner'    => 'COM_JEM_SETTINGS_CONFIG_VS_MOD_JEM_BANNER'
+										 ,'mod_jem_cal'       => 'COM_JEM_SETTINGS_CONFIG_VS_MOD_JEM_CAL'
+										 ,'mod_jem_calajax'   => 'COM_JEM_SETTINGS_CONFIG_VS_MOD_JEM_CALAJAX'
+				                         ,'mod_jem_teaser'    => 'COM_JEM_SETTINGS_CONFIG_VS_MOD_JEM_TEASER'
+				                         ,'mod_jem_wide'      => 'COM_JEM_SETTINGS_CONFIG_VS_MOD_JEM_WIDE'
+				                         ,'plg_content_jem'   => 'COM_JEM_SETTINGS_CONFIG_VS_PLG_CONTENT'
+				                         ,'plg_finder_jem'    => 'COM_JEM_SETTINGS_CONFIG_VS_PLG_FINDER'
+				                         ,'plg_serch_jem'     => 'COM_JEM_SETTINGS_CONFIG_VS_PLG_SEARCH'
+				                         ,'plg_jem_comments'  => 'COM_JEM_SETTINGS_CONFIG_VS_PLG_COMMENTS'
+				                         ,'plg_jem_mailer'    => 'COM_JEM_SETTINGS_CONFIG_VS_PLG_MAILER'
+				                         ,'plg_jem_demo'      => 'COM_JEM_SETTINGS_CONFIG_VS_PLG_DEMO'
+				                         );
+				foreach ($known_extensions as $name => $label) {
+					if (!empty($this->config->$name)) { 
+						?>
+					<tr>
+						<td><?php echo JText::_($label).': '; ?></td>
+						<td><b><?php echo $this->config->$name->version; ?></b></td>
+						<td><?php echo $this->config->$name->creationDate; ?></td>
+						<td><?php echo empty($this->config->$name->enabled) ? JText::_('COM_JEM_DISABLED') : ''; ?></td>
+					</tr>
+					<?php
+					}
+				}
+				?>
+					<tr>
+						<td><?php echo JText::_('COM_JEM_SETTINGS_CONFIG_VS_PHP').': '; ?></td>
+						<td colspan="3"><b><?php echo $this->config->vs_php; ?> </b></td>
+					</tr>
+					<?php if (!empty($this->config->vs_php_magicquotes)) : ?>
+					<tr>
+						<td><?php echo JText::_('COM_JEM_SETTINGS_CONFIG_VS_PHP_MAGICQUOTES').': '; ?></td>
+						<td colspan="3"><b><?php echo $this->config->vs_php_magicquotes; ?> </b></td>
+					</tr>
+					<?php endif; ?>
+					<tr>
+						<td><?php echo JText::_('COM_JEM_SETTINGS_CONFIG_VS_GD').': '; ?></td>
+						<td colspan="3"><b><?php echo $this->config->vs_gd; ?> </b></td>
+					</tr>
+				</table>
+		</fieldset>
 </div>

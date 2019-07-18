@@ -35,7 +35,7 @@ class JEMViewCssmanager extends JViewLegacy
 		JHtml::_('stylesheet', 'com_jem/backend.css', array(), true);
 
 		$this->addToolbar();
-
+		$this->sidebar = JHtmlSidebar::render();
 		parent::display($tpl);
 	}
 
@@ -46,7 +46,7 @@ class JEMViewCssmanager extends JViewLegacy
 	protected function addToolbar()
 	{
 		$jinput = JFactory::getApplication()->input;
-		$jinput->set('hidemainmenu', true);
+		$jinput->set('hidemainmenu', false);
 
 		JToolBarHelper::title(JText::_('COM_JEM_CSSMANAGER_TITLE'), 'thememanager');
 

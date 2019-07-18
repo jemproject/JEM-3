@@ -33,7 +33,6 @@ class JemViewEventslist extends JEMView
 		$app 			= JFactory::getApplication();
 		$jinput 		= $app->input;
 		$jemsettings	= JemHelper::config();
-		$settings 		= JemHelper::globalattribs();
 		$menu			= $app->getMenu();
 		$menuitem		= $menu->getActive();
 		$params 		= $state->params;
@@ -41,20 +40,9 @@ class JemViewEventslist extends JEMView
 		$db 			= JFactory::getDBO();
 		$user			= JFactory::getUser();
 		$itemid 		= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
-		$print			= $jinput->getBool('print');
 		$admin			= JEMUser::superuser();
 		$task 			= $jinput->getCmd('task');
 		$template 		= $app->getTemplate();
-
-		// Load css
-		JemHelper::loadCss('jem');
-		JemHelper::loadCustomCss();
-		JemHelper::loadCustomTag();
-
-		if ($print) {
-			JemHelper::loadCss('print');
-			$document->setMetaData('robots', 'noindex, nofollow');
-		}
 
 		// userstate variables
 		$filter_order		= $app->getUserStateFromRequest('com_jem.eventslist.'.$itemid.'.filter_order', 'filter_order', 'a.dates', 'cmd');
@@ -82,32 +70,20 @@ class JemViewEventslist extends JEMView
 			$noevents = 0;
 		}
 
-		# print-link
-		if ($task == 'archive') {
-			$print_link = JRoute::_('index.php?view=eventslist&task=archive&tmpl=component&print=1');
+		// Check if the user should see the submit-Event icon
+		if (JEMUser::addEvent($params,true)) {
+			$this->submitEventIcon = 1;
 		} else {
-			$print_link = JRoute::_('index.php?view=eventslist&tmpl=component&print=1');
+			$this->submitEventIcon = 0;
 		}
-
-		// Check if the user has access to the form
-		$maintainer = JemUser::ismaintainer('add');
-		$genaccess 	= JemUser::validate_user($jemsettings->evdelrec, $jemsettings->delivereventsyes );
-
-		if ($maintainer || $genaccess || $user->authorise('core.create','com_jem')) {
-			$dellink = 1;
+		
+		// Check if the user should see the submit-Venue icon
+		if (JEMUser::addVenue($params,true)) {
+			$this->submitVenueIcon = 1;
 		} else {
-			$dellink = 0;
+			$this->submitVenueIcon = 0;
 		}
-
-		# Check if the user has access to the add-venueform
-		$maintainer2	= JemUser::venuegroups('add');
-		$genaccess2		= JemUser::validate_user($jemsettings->locdelrec, $jemsettings->deliverlocsyes);
-		if ($maintainer2 || $genaccess2) {
-			$addvenuelink = 1;
-		} else {
-			$addvenuelink = 0;
-		}
-
+		
 		// search filter
 		$filters = array();
 		$filters[] = JHtml::_('select.option', '0', '&mdash; '.JText::_('COM_JEM_GLOBAL_SELECT_FILTER').' &mdash;');
@@ -134,12 +110,7 @@ class JemViewEventslist extends JEMView
 		$this->task				= $task;
 		$this->noevents			= $noevents;
 		$this->params			= $params;
-		$this->addvenuelink		= $addvenuelink;
-		$this->dellink			= $dellink;
 		$this->jemsettings		= $jemsettings;
-		$this->settings			= $settings;
-		$this->print			= $print;
-		$this->print_link		= $print_link;
 		$this->admin			= $admin;
 
 		$this->_prepareDocument();
@@ -151,13 +122,22 @@ class JemViewEventslist extends JEMView
 	 */
 	protected function _prepareDocument()
 	{
-		$app   = JFactory::getApplication();
-		$jinput = $app->input;
-		$menus = $app->getMenu();
-		$title 	= null;
-		$task 	= $jinput->getCmd('task');
-		$pathway = $app->getPathWay();
-		$menu = $menus->getActive();
+		$app		= JFactory::getApplication();
+		$document 	= JFactory::getDocument();
+		$jinput 	= $app->input;
+		$menus 		= $app->getMenu();
+		$title 		= null;
+		$task 		= $jinput->getCmd('task');
+		$pathway 	= $app->getPathWay();
+		$menu 		= $menus->getActive();
+		$print		= $jinput->getBool('print');
+		
+		// define archive
+		if ($task == 'archive') {
+			$archive = true;
+		} else {
+			$archive = false;
+		}
 
 		// add feed link
 		$link	= 'index.php?option=com_jem&view=eventslist&format=feed';
@@ -165,50 +145,105 @@ class JemViewEventslist extends JEMView
 		$this->document->addHeadLink(JRoute::_($link.'&type=rss'), 'alternate', 'rel', $attribs);
 		$attribs = array('type' => 'application/atom+xml', 'title' => 'Atom 1.0');
 		$this->document->addHeadLink(JRoute::_($link.'&type=atom'), 'alternate', 'rel', $attribs);
-
-		// PATH-WAY
+		
+		// Load css
+		JemHelper::loadCss('jem');
+		JemHelper::loadCustomCss();
+		JemHelper::loadCustomTag();
+	
+		// print-link
+		if ($print) {
+			JemHelper::loadCss('print');
+			$document->setMetaData('robots', 'noindex, nofollow');
+		}
+		
 		if ($task == 'archive') {
-			$pathway->addItem(JText::_('COM_JEM_ARCHIVE'), JRoute::_('index.php?view=eventslist&task=archive') );
+			$print_link = JRoute::_('index.php?view=eventslist&task=archive&tmpl=component&print=1');
+		} else {
+			$print_link = JRoute::_('index.php?view=eventslist&tmpl=component&print=1');
 		}
 
-		// PAGE-HEADING
+		$names = $pathway->getPathwayNames();
+		// Pathway
+		if ($archive) {
+			$name = end($names);
+			$key = key($names);
+			$pathway->setItemName($key, end($names).' - '.JText::_('COM_JEM_ARCHIVE'));
+			//$pathway->addItem(JText::_('COM_JEM_ARCHIVE'), JRoute::_('index.php?view=eventslist&task=archive') );
+		}
+
+		// Page-heading
 		if ($menu)
 		{
-			$this->params->def('page_heading', $this->params->get('page_title', $menu->title));
+			if ($archive) {
+				$this->params->def('page_heading', $this->params->get('page_title', $menu->title.' - '.JText::_('COM_JEM_ARCHIVE')));
+			} else {
+				$this->params->def('page_heading', $this->params->get('page_title', $menu->title));
+			}
 		}
 		else
 		{
 			$this->params->def('page_heading', JText::_('COM_JEM_EVENTS'));
 		}
 
-		// PAGE-TITLE
-		$title = $this->params->get('page_title', '');
-		if (empty($title))
+		$names = $pathway->getPathwayNames();
+		
+
+		if ($menu)
 		{
-			$title = $app->get('sitename');
-		}
-
-		if ($title) {
-			if ($task == 'archive') {
-				$title = $title.' - ' . JText::_('COM_JEM_ARCHIVE');
-			}
-			if ($app->get('sitename_pagetitles', 0) == 0)
-			{
-				$title = JText::sprintf('JPAGETITLE', $app->get('sitename'), $title);
-			}
-			elseif ($app->get('sitename_pagetitles', 0) == 1)
-			{
-				$title = JText::sprintf('JPAGETITLE', $app->get('sitename'), $title);
-			}
-			elseif ($app->get('sitename_pagetitles', 0) == 2)
-			{
-				$title = JText::sprintf('JPAGETITLE', $title, $app->get('sitename'));
+	
+			$pagetitle = $this->params->get('page_title', $menu->title);
+			
+			if ($archive) {
+				$this->params->def('page_heading', $pagetitle.' - '.JText::_('COM_JEM_ARCHIVE'));
+			} else {
+				$this->params->def('page_heading', $pagetitle);
 			}
 		}
-		$this->document->setTitle($title);
+		else
+		{
+			// @todo alter code
+			$pagetitle = false;
+			$this->params->def('page_heading', false);
+		}
+		
+		
+		
+		$ign_site = false;
+		$ign_pagetitle = false;
+		$ign_paramhdr = false;
+		$title = $this->params->get('page_title', '');
+		if (empty($title)) {
+			$title = $pagetitle;
+			$ign_pagetitle = true;
+			if (empty($title)) {
+				$title = $app->get('sitename');
+				$ign_site = true;
+			}
+		} else {
+			$ign_paramhdr = true;
+		}
+		
+		if ($app->get('sitename_pagetitles', 0) == 0) {
+			// we don't want to include the sitename
+			if ($ign_site) {
+				$title = false;
+			} 
+		}
+		
+		if ($app->get('sitename_pagetitles', 0) == 1) {
+			$title = JText::sprintf('JPAGETITLE', $app->get('sitename'), $title);
+		}
+		
+		if ($app->get('sitename_pagetitles', 0) == 2) {
+			$title = JText::sprintf('JPAGETITLE', $title, $app->get('sitename'));
+		}
+		
+		if (!$ign_site) {
+			$this->document->setTitle($title);
+		}
 
-
-		// META
+		// Meta
 		if ($this->params->get('menu-meta_description'))
 		{
 			$this->document->setDescription($this->params->get('menu-meta_description'));
@@ -218,10 +253,14 @@ class JemViewEventslist extends JEMView
 			$this->document->setMetadata('keywords', $this->params->get('menu-meta_keywords'));
 		}
 
-		// ROBOTS
+		// Robots
 		if ($this->params->get('robots'))
 		{
 			$this->document->setMetadata('robots', $this->params->get('robots'));
 		}
+		
+		// map variables
+		$this->print_link		= $print_link;
+		$this->print			= $print;
 	}
 }

@@ -226,12 +226,16 @@ class JemModelEvent extends JModelAdmin
 			$registry = new JRegistry;
 			$registry->loadString($item->attribs);
 			$item->attribs = $registry->toArray();
+			
+			$registry = new JRegistry;
+			$registry->loadString($item->registering);
+			$item->registering = $registry->toArray();
 
 			// Convert the metadata field to an array.
 			$registry = new JRegistry;
 			$registry->loadString($item->metadata);
 			$item->metadata = $registry->toArray();
-
+			
 			$item->articletext = trim($item->fulltext) != '' ? $item->introtext . "<hr id=\"system-readmore\" />" . $item->fulltext : $item->introtext;
 
 			$db = JFactory::getDbo();
@@ -616,7 +620,8 @@ class JemModelEvent extends JModelAdmin
 				$exdates = false;
 			}
 		}
-
+		
+		
 		# parent-Save
 		if (parent::save($data)){
 

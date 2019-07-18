@@ -1,0 +1,187 @@
+/**
+ * @package JEM
+ * @copyright (C) 2013-2015 joomlaeventmanager.net
+ * @copyright (C) 2005-2009 Christoph Lukes
+ * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
+ */
+ 
+ 
+ div#jem div#printer_icon {
+    display: block;
+    margin-bottom: 10px;
+    height: 40px;
+    border-bottom: 1px solid #000;
+    background-color: #EFEDEE;
+    padding-top: 8px;
+}
+ 
+ div#jem .printer_icon {
+ 	margin-left: auto;
+ 	margin-right: auto;
+ }
+ 
+div#jem .header_activiteiten {
+	display:none;
+}
+
+div#jem .icon-arrow-up-3 {
+	display:none;
+}
+
+div#jem .icon-print {
+	height: auto;
+	width: auto;
+}
+
+div#jem a {
+	color: white;
+}
+
+div#jem table a {
+       pointer-events: none;
+       cursor: default;
+}
+
+div#jem table.eventtable a {
+	color: white;
+}
+
+div#jem table.eventtable th {
+	color: white;
+	background-color: grey;
+}
+
+div#jem table.eventtable td {
+	color: black;
+	background-color: white;
+}
+
+div#jem table.eventtable td a {
+	color: black;
+	background-color: white;
+}
+
+div#jem table.eventtable tr:hover td {
+	background-color: white;
+}
+
+div#jem table.eventtable tr.sectiontableentry2 td {
+    background-color: white;
+}
+
+div#jem table.eventtable tr.sectiontableentry2 td:hover {
+    background-color: white;
+}
+
+div#jem .image {
+	border: 0 !important;
+	background-color: white !important;
+}
+
+div#jem h2 {
+	border: 0 !important;
+}
+
+div#jem #jem_filter {
+	display:none;
+}
+
+div#jem div.info_container {
+	border: 0 !important;
+}
+
+div#jem	h2 {
+	font-size: 14pt !important;
+	margin-top: 25px !important;
+	background-color: white !important;
+}
+
+header nav, footer {
+display: none;
+}
+
+@page {
+	margin: 0.5cm;
+}
+
+body {
+	font-family: "Arial";
+	line-height: 1.3;
+}
+
+h1 {
+font-size: 24pt;
+}
+
+h2 {
+font-size: 14pt;
+margin-top: 25px;
+}
+
+aside h2 {
+font-size: 18pt;
+}
+
+
+
+#main a:link, #main a:visited {
+	text-decoration: none !important;
+	color: black;
+}
+
+div#jem {
+	border: 0 !important;
+	background-color:white !important;
+}
+
+div#jem .info_container {
+	background-color: white !important;
+}
+
+div#jem .flyerimage {
+    border: none !important;
+}
+
+a[href]:after {
+	content: none !important;
+}
+
+div#jem .buttons {
+	display: none;
+}
+
+a[href]:after {
+	content: none !important;
+}
+
+abbr[title]:after {
+	content: none;
+}
+
+ .ir a:after,
+a[href^="javascript:"]:after,
+a[href^="#"]:after {
+	content: none;
+}
+
+a:link:after, a:visited:after {
+	content: none;
+}
+
+
+div#jem .flyerimage {
+    border: none;
+}
+
+div#jem .pagination {
+		display:none;
+	}
+
+/* additional, actual printing */
+@media print {
+
+	div#jem .icon-print {
+		display:none;
+	}
+
+}

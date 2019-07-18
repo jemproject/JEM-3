@@ -4,7 +4,7 @@
 	<author>JEM Community</author>
 	<authorEmail>info@joomlaeventmanager.net</authorEmail>
 	<authorUrl>http://www.joomlaeventmanager.net</authorUrl>
-	<creationDate>March 2015</creationDate>
+	<creationDate>April 2015</creationDate>
 	<copyright>copyright (C) 2013-2015 joomlaeventmanager.net</copyright>
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
 	<version>3.0.7</version>
@@ -142,6 +142,12 @@
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
 				</field>
+				<field name="allowed_tags" type="text"
+					default="&lt;a&gt;&lt;em&gt;&lt;strong&gt;"
+					label="MOD_JEM_WIDE_FIELD_STRIPTAGS"
+					description="MOD_JEM_WIDE_FIELD_STRIPTAGS_DESC"
+					filter="raw"
+				/>
 			</fieldset>
 
 			<fieldset name="advanced">

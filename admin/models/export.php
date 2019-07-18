@@ -277,11 +277,6 @@ class JemModelExport extends JModelList
 	 */
 	public function getCategories()
 	{
-		$user = JFactory::getUser();
-		$jemsettings = JEMHelper::config();
-		$userid = (int) $user->get('id');
-		$superuser = JEMUser::superuser();
-
 		$db = JFactory::getDbo();
 		$query = $db->getQuery(true);
 		$query->select(array('c.*'));

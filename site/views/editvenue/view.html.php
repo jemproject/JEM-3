@@ -52,38 +52,30 @@ class JemViewEditvenue extends JViewLegacy
 
 		// check for guest
 		if (!$user || $user->id == 0) {
-			$app->enqueueMessage(JText::_('JERROR_ALERTNOAUTHOR'), 'error');
+			$app->enqueueMessage(JText::_('COM_JEM_EDITVENUE_NOAUTH'), 'warning');
 			return false;
 		}
 
 		if (empty($this->item->id)) {
-			// Check if the user has access to the form
-			$maintainer = JemUser::venuegroups('add');
-			$delloclink = JemUser::validate_user($jemsettings->locdelrec, $jemsettings->deliverlocsyes);
-
-			if ($maintainer || $delloclink) {
-				$dellink = true;
+			// we're submitting a new venue
+			if (JEMUser::addVenue($this->settings2)) {
+				$authorised = true;
 			} else {
-				$dellink = false;
+				$authorised = false;
 			}
-
-			$authorised = $user->authorise('core.create','com_jem') || $dellink;
 		} else {
 			// Check if user can edit
-			$maintainer = JemUser::venuegroups('edit');
-			$genaccess  = JemUser::editaccess($jemsettings->venueowner, $this->item->created_by, $jemsettings->venueeditrec, $jemsettings->venueedit);
-
-			if ($maintainer || $genaccess) {
-				$edit = true;
+			if (JEMUser::editVenue($this->settings2,false,$this->item->id,false,false,$this->item->created_by)) {
+				$editVenue = true;
 			} else {
-				$edit = false;
+				$editVenue = false;
 			}
-
-			$authorised = $this->item->params->get('access-edit') || $edit;
+			
+			$authorised = $this->item->params->get('access-edit') || $editVenue;
 		}
 
 		if ($authorised !== true) {
-			$app->enqueueMessage(JText::_('JERROR_ALERTNOAUTHOR'), 'error');
+			$app->enqueueMessage(JText::_('COM_JEM_EDITVENUE_NOAUTH'), 'warning');
 			return false;
 		}
 

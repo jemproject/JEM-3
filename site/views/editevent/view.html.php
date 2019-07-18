@@ -29,7 +29,7 @@ class JemViewEditevent extends JViewLegacy
 			$this->_displaychoosecontact($tpl);
 			return;
 		}
-
+		
 		// Initialise variables.
 		$jemsettings = JEMHelper::config();
 		$app		= JFactory::getApplication();
@@ -55,7 +55,7 @@ class JemViewEditevent extends JViewLegacy
 		$this->state = $this->get('State');
 		$this->item = $this->get('Item');
 		$this->params = $this->state->get('params');
-
+		
 		// Create a shortcut for $item and params.
 		$item = $this->item;
 		$params = $this->params;
@@ -63,43 +63,31 @@ class JemViewEditevent extends JViewLegacy
 		$this->form = $this->get('Form');
 		$this->return_page = $this->get('ReturnPage');
 
-		if ($valguest == false){
-			// check for guest
-			if (!$user || $user->id == 0) {
-				$app->enqueueMessage(JText::_('JERROR_ALERTNOAUTHOR'), 'error');
-				return false;
-			}
-		}
-
 		if (empty($this->item->id)) {
-			// Check if the user has access to the form
-			$maintainer = JemUser::ismaintainer('add');
-			$genaccess  = JemUser::validate_user($jemsettings->evdelrec, $jemsettings->delivereventsyes );
-
-			if ($maintainer || $genaccess ) {
-				$dellink = true;
+			// we're submitting a new event
+			if (JEMUser::addEvent($settings)) {
+				$authorised = true;
 			} else {
-				$dellink = false;
+				$authorised = false;
 			}
-
-			$valguest = JEMUser::validate_guest();
-			$authorised = $user->authorise('core.create','com_jem') || (count($user->getAuthorisedCategories('com_jem', 'core.create')) || $valguest || $dellink);
 		} else {
 			// Check if user can edit
-			$maintainer5 = JemUser::ismaintainer('edit',$this->item->id);
-			$genaccess5  = JemUser::editaccess($jemsettings->eventowner, $this->item->created_by, $jemsettings->eventeditrec, $jemsettings->eventedit);
-
-			if ($maintainer5 || $genaccess5 ) {
-				$allowedtoeditevent = true;
+			if (JEMUser::editEvent($settings,false,$this->item->id,$this->item->categories,false,$this->item->created_by)) {
+				$editEvent = true;
 			} else {
-				$allowedtoeditevent = false;
+				$editEvent = false;
 			}
 
-			$authorised = $this->item->params->get('access-edit') || $allowedtoeditevent ;
+			$authorised = $this->item->params->get('access-edit') || $editEvent ;
 		}
-
+		
 		if ($authorised !== true) {
-			$app->enqueueMessage(JText::_('JERROR_ALERTNOAUTHOR'), 'error');
+			
+			
+			$app->enqueueMessage(JText::_('COM_JEM_EDITEVENT_NOAUTH'), 'warning');
+			
+			
+			
 			return false;
 		}
 
@@ -168,8 +156,7 @@ class JemViewEditevent extends JViewLegacy
 			return false;
 		}
 
-		$access2      = JEMHelper::getAccesslevelOptions();
-		$this->access = $access2;
+		$this->access = JEMHelper::getAccesslevelOptions();
 
 		// add css file
 		JemHelper::loadCss('jem');

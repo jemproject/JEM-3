@@ -175,6 +175,8 @@ class JemModelEditevent extends JEMModelEvent
 		if ($itemId) {
 			// Existing item
 			$value->params->set('access-change', $user->authorise('core.edit.state', $asset));
+			$category_viewable = $this->getCategories($itemId);
+			$value->categories = $category_viewable;
 		}
 		else {
 			// New item.
@@ -216,7 +218,11 @@ class JemModelEditevent extends JEMModelEvent
 		} else {
 			$value->admin = false;
 		}
-
+		
+		$registry = new JRegistry;
+		$registry->loadString($value->registering);
+		$value->registering = $registry->toArray();
+		
 		return $value;
 	}
 
@@ -456,5 +462,124 @@ class JemModelEditevent extends JEMModelEvent
 		$query->order($orderby);
 
 		return $query;
+	}
+	
+	
+	/**
+	 * Retrieve Categories
+	 *
+	 * Due to multi-cat this function is needed
+	 * filter-index (4) is pointing to the cats
+	 */
+	
+	function getCategories($id = 0)
+	{
+	
+		$id = (!empty($id)) ? $id : (int) $this->getState('event.id');
+	
+		$user 			= JFactory::getUser();
+		$userid			= (int) $user->get('id');
+		$levels 		= $user->getAuthorisedViewLevels();
+		$app 			= JFactory::getApplication();
+		$params 		= $app->getParams();
+		$catswitch 		= $params->get('categoryswitch', '0');
+		$settings 		= JemHelper::globalattribs();
+	
+		// Query
+		$db 	= JFactory::getDBO();
+		$query = $db->getQuery(true);
+	
+		$case_when_c = ' CASE WHEN ';
+		$case_when_c .= $query->charLength('c.alias');
+		$case_when_c .= ' THEN ';
+		$id_c = $query->castAsChar('c.id');
+		$case_when_c .= $query->concatenate(array($id_c, 'c.alias'), ':');
+		$case_when_c .= ' ELSE ';
+		$case_when_c .= $id_c.' END as catslug';
+	
+		$query->select(array('DISTINCT c.id','c.catname','c.access','c.checked_out AS cchecked_out','c.color',$case_when_c));
+		$query->from('#__jem_categories as c');
+		$query->join('LEFT', '#__jem_cats_event_relations AS rel ON rel.catid = c.id');
+	
+		$query->select(array('a.id AS multi'));
+		$query->join('LEFT','#__jem_events AS a ON a.id = rel.itemid');
+	
+		$query->where('rel.itemid ='.(int)$id);
+		$query->where('c.published = 1');
+	
+		###################
+		## FILTER-ACCESS ##
+		###################
+	
+		# Filter by access level.
+		$access = $this->getState('filter.access');
+	
+		###################################
+		## FILTER - MAINTAINER/JEM GROUP ##
+		###################################
+	
+		if ($access){
+			$groups = implode(',', $user->getAuthorisedViewLevels());
+			$query->where('(c.access IN ('.$groups.'))');
+		}
+	
+		#######################
+		## FILTER - CATEGORY ##
+		#######################
+	
+		# set filter for top_category
+		$top_cat = $this->getState('filter.category_top');
+	
+		if ($top_cat) {
+		$query->where($top_cat);
+		}
+	
+		# Filter by a single or group of categories.
+		$categoryId = $this->getState('filter.category_id');
+	
+				if (is_numeric($categoryId)) {
+				$type = $this->getState('filter.category_id.include', true) ? '= ' : '<> ';
+						$query->where('c.id '.$type.(int) $categoryId);
+				}
+				elseif (is_array($categoryId)) {
+				JArrayHelper::toInteger($categoryId);
+				$categoryId = implode(',', $categoryId);
+				$type = $this->getState('filter.category_id.include', true) ? 'IN' : 'NOT IN';
+				$query->where('c.id '.$type.' ('.$categoryId.')');
+				}
+	
+				# filter set by day-view
+		$requestCategoryId = $this->getState('filter.req_catid');
+	
+		if ($requestCategoryId) {
+			$query->where('c.id = '.$requestCategoryId);
+		}
+	
+		###################
+		## FILTER-SEARCH ##
+		###################
+	
+		# define variables
+		$filter = $this->getState('filter.filter_type');
+		$search = $this->getState('filter.filter_search');
+	
+		if (!empty($search)) {
+		if (stripos($search, 'id:') === 0) {
+		$query->where('c.id = '.(int) substr($search, 3));
+		} else {
+		$search = $db->Quote('%'.$db->escape($search, true).'%');
+	
+		if($search && $settings->get('global_show_filter')) {
+					if ($filter == 4) {
+						$query->where('c.catname LIKE '.$search);
+		}
+		}
+		}
+		}
+	
+		$db->setQuery($query);
+		$cats = $db->loadObjectList();
+	
+		return $cats;
 	}
 }

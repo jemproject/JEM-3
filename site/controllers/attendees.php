@@ -85,9 +85,9 @@ class JEMControllerAttendees extends JControllerLegacy
 			$res = $dispatcher->trigger('onUserOnOffWaitinglist', array($id));
 
 			if ($attendee->waiting) {
-				$msg = JText::_('COM_JEM_ADDED_TO_ATTENDING');
-			} else {
 				$msg = JText::_('COM_JEM_ADDED_TO_WAITING');
+			} else {
+				$msg = JText::_('COM_JEM_ADDED_TO_ATTENDING');
 			}
 		}
 		else

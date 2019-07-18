@@ -3,6 +3,13 @@
 	<fieldset name="details"
 		addfieldpath="/administrator/components/com_jem/models/fields"
 	>
+	<field name="asset_id" type="hidden"
+			filter="unset"
+		/>
+		<field name="rules" type="rules" label="JFIELD_RULES_LABEL"
+			translate_label="false" filter="rules"
+			component="com_jem" section="event" validate="rules"
+		/>
 		<field name="articletext" type="editor"
 			class="inputbox"
 			label="COM_JEM_EVENT_FIELD_ARTICLETEXT_LABEL"
@@ -592,4 +599,17 @@
 				description="JFIELD_META_RIGHTS_DESC" required="false" filter="string"
 				cols="30" rows="2" />
 		</fields>
+
+<fields name="registering">
+	<fieldset name="registering">
+		<field name="enddatereg" type="calendar"
+			label="COM_JEM_EVENT_FIELD_ENDDATEREG"
+			description="COM_JEM_EVENT_FIELD_ENDDATEREG_DESC"
+			class=""
+			size="22"
+			format="%Y-%m-%d %H:%M:%S"
+			filter="no"
+		/>
+	</fieldset>
+</fields>
 </form>

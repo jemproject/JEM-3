@@ -258,7 +258,7 @@ class JemModelCategories extends JModelLegacy
 		$user	= JFactory::getUser();
 		$levels = $user->getAuthorisedViewLevels();
 
-		$query = 'SELECT DISTINCT c.id, c.catname, c.access, c.checked_out AS cchecked_out,'
+		$query = 'SELECT DISTINCT c.id, c.id AS catid, c.catname, c.access, c.checked_out AS cchecked_out,'
 			.' CASE WHEN CHAR_LENGTH(c.alias) THEN CONCAT_WS(\':\', c.id, c.alias) ELSE c.id END as catslug'
 			.' FROM #__jem_categories AS c'
 			.' LEFT JOIN #__jem_cats_event_relations AS rel ON rel.catid = c.id'

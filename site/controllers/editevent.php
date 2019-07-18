@@ -35,6 +35,8 @@ class JEMControllerEditevent extends JControllerForm
 	 * @param	array	An array of input data.
 	 *
 	 * @return	boolean
+	 * 
+	 * @todo: Add Category's checking
 	 */
 	protected function allowAdd($data = array())
 	{
@@ -49,13 +51,14 @@ class JEMControllerEditevent extends JControllerForm
 			// If the category has been passed in the data or URL check it.
 			$allow	= $user->authorise('core.create', 'com_jem.category.'.$categoryId);
 		}
+		
+		if ($allow) {
+			return true;
+		}
+		
+		$settings 	= JemHelper::globalattribs();
 
-		$jemsettings	= JEMHelper::config();
-		$maintainer		= JEMUser::ismaintainer('add');
-		$genaccess		= JEMUser::validate_user($jemsettings->evdelrec, $jemsettings->delivereventsyes);
-		$valguest		= JEMUser::validate_guest();
-
-		if ($maintainer || $genaccess || $valguest) {
+		if (JEMUser::addEvent($settings)) {
 			return true;
 		}
 
@@ -89,7 +92,7 @@ class JEMControllerEditevent extends JControllerForm
 		if ($user->authorise('core.edit', $asset)) {
 			return true;
 		}
-
+		
 		// Fallback on edit.own.
 		// First test if the permission is available.
 		if ($user->authorise('core.edit.own', $asset)) {
@@ -112,13 +115,13 @@ class JEMControllerEditevent extends JControllerForm
 			}
 		}
 
-		$record			= $this->getModel()->getItem($recordId);
-		$jemsettings 	= JEMHelper::config();
-		$editaccess		= JEMUser::editaccess($jemsettings->eventowner, $record->created_by, $jemsettings->eventeditrec, $jemsettings->eventedit);
-		$maintainer 	= JEMUser::ismaintainer('edit',$record->id);
-
-		if ($maintainer || $editaccess)
-		{
+		$record	= $this->getModel()->getItem($recordId);
+		
+		
+		$params = JemHelper::globalattribs();
+		$check = JEMUser::editEvent($record->params,false,$recordId,$record->categories);
+		
+		if ($check) {
 			return true;
 		}
 

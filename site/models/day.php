@@ -23,8 +23,7 @@ class JemModelDay extends JemModelEventslist
 		parent::__construct();
 
 		$app = JFactory::getApplication();
-		$jemsettings = JemHelper::config();
-		$jinput = JFactory::getApplication()->input;
+		$jinput = $app->input;
 
 		$rawday = $jinput->getInt('id', null);
 		$this->setDate($rawday);
@@ -88,24 +87,55 @@ class JemModelDay extends JemModelEventslist
 		# parent::populateState($ordering, $direction);
 
 		$app 				= JFactory::getApplication();
+		$settings			= JemHelper::globalattribs();
 		$jemsettings		= JemHelper::config();
-		$jinput				= JFactory::getApplication()->input;
+		$jinput				= $app->input;
 		$itemid 			= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
-
-		$params 			= $app->getParams();
 		$task           	= $jinput->getCmd('task',null);
 		$requestVenueId		= $jinput->getInt('locid',null);
 		$requestCategoryId	= $jinput->getInt('catid',null);
-
 		$item = $jinput->getInt('Itemid');
-		$locid = $app->getUserState('com_jem.venuecal.locid'.$item);
-		if ($locid) {
-			$this->setstate('filter.filter_locid',$locid);
+		
+		
+		$global = new JRegistry;
+		$global->loadString($settings);
+		
+		$params = clone $global;
+		$params->merge($global);
+		if ($menu = $app->getMenu()->getActive())
+		{
+			$params->merge($menu->params);
 		}
-
-		$cal_category_catid = $app->getUserState('com_jem.categorycal.catid'.$item);
-		if ($cal_category_catid) {
-			$this->setState('filter.req_catid',$cal_category_catid);
+		$this->setState('params', $params);
+		
+		// CALAJAX | CALENDAR
+		$locid = $app->getUserState('com_jem.calendar.locid'.$item,false);
+		$locid_switch = $app->getUserState('com_jem.calendar.locid_switch'.$item,false);
+		if ($locid) {
+			$this->setstate('filter.venue_id',$locid);
+			$this->setstate('filter.venue_id.include',$locid_switch);
+		} else {
+			$locid = $app->getUserState('com_jem.calajax.locid'.$item,false);
+			$locid_switch = $app->getUserState('com_jem.calajax.locid_switch'.$item,false);
+			if ($locid) {
+				$this->setstate('filter.venue_id',$locid);
+				$this->setstate('filter.venue_id.include',$locid_switch);
+			}
+		}
+		
+		$catid = $app->getUserState('com_jem.calendar.catid'.$item,false);
+		$catid_switch = $app->getUserState('com_jem.calendar.catid_switch'.$item,false);
+		
+		if ($catid) {
+			$this->setState('filter.category_id',$catid);
+			$this->setState('filter.category_id.include',$catid_switch);
+		} else {
+			$catid = $app->getUserState('com_jem.calajax.catid'.$item,false);
+			$catid_switch = $app->getUserState('com_jem.calajax.catid_switch'.$item,false);
+			if ($catid) {
+				$this->setState('filter.category_id',$catid);
+				$this->setState('filter.category_id.include',$catid_switch);
+			}
 		}
 
 		# limit/start
@@ -138,9 +168,6 @@ class JemModelDay extends JemModelEventslist
 		}
 
 		$this->setState('filter.orderby',$orderby);
-
-		# params
-		$this->setState('params', $params);
 
 		# published
 		$this->setState('filter.published',1);

@@ -17,12 +17,64 @@ class JemTableEvents extends JTable
 		parent::__construct('#__jem_events', 'id', $db);
     }
 
+    
+    /**
+     * Method to compute the default name of the asset.
+     * The default name is in the form table_name.id
+     * where id is the value of the primary key of the table.
+     *
+     * @return  string
+     */
+    protected function _getAssetName()
+    {
+    	$k = $this->_tbl_key;
+    	return 'com_jem.event.' . (int) $this->$k;
+    }
+    
+    /**
+     * Method to return the title to use for the asset table.
+     *
+     * @return  string
+     */
+    protected function _getAssetTitle()
+    {
+    	return $this->title;
+    }
+    
+    
+	/**
+	 * Method to get the parent asset under which to register this one.
+	 * By default, all assets are registered to the ROOT node with ID,
+	 * which will default to 1 if none exists.
+	 * The extended class can define a table and id to lookup.  If the
+	 * asset does not exist it will be created.
+	 *
+	 * @param   JTable   $table  A JTable object for the asset parent.
+	 * @param   integer  $id     Id to look up
+	 *
+	 * @return  integer
+	 */
+	protected function _getAssetParentId(JTable $table = null, $id = null)
+	{
+		// For simple cases, parent to the asset root.
+		$assets = self::getInstance('Asset', 'JTable', array('dbo' => $this->getDbo()));
+		$rootId = $assets->getRootId();
+
+		if (!empty($rootId))
+		{
+			return $rootId;
+		}
+
+		return 1;
+	}
+    
+  
+    
 	/**
 	 * Overloaded bind method for the Event table.
 	 */
 	public function bind($array, $ignore = '')
 	{
-
 		// in here we are checking for the empty value of the checkbox
 
 		if (!isset($array['registra'])) {
@@ -61,15 +113,21 @@ class JemTableEvents extends JTable
 			$registry->loadArray($array['metadata']);
 			$array['metadata'] = (string) $registry;
 		}
-
+		
+		if (isset($array['registering']) && is_array($array['registering'])) {
+			$registry = new JRegistry;
+			$registry->loadArray($array['registering']);
+			$array['registering'] = (string) $registry;
+		}
+		
 		// Bind the rules.
-		/*
-		if (isset($array['rules']) && is_array($array['rules'])) {
+		// libraries/legacy/table/content.php
+		if (isset($array['rules']) && is_array($array['rules']))
+		{
 			$rules = new JAccessRules($array['rules']);
 			$this->setRules($rules);
 		}
-		*/
-
+		
 		return parent::bind($array, $ignore);
 	}
 
@@ -172,6 +230,21 @@ class JemTableEvents extends JTable
 				$this->setError(JText::_('COM_JEM_EVENT_ERROR_END_BEFORE_START'));
 			}
 		}
+		
+		
+		/*
+		 * lirbraries/cms/html/rules.php
+		 * 
+		if (!$this->id)
+		{
+			// If we don't have any access rules set at this point just use an empty JAccessRules class
+			if (!isset($this->rules))
+			{
+				$rules = $this->getDefaultAssetValues('com_jem');
+				$this->setRules($rules);
+			}
+		}
+		*/
 
 		if (!$this->getErrors()) {
 			return true;
@@ -257,16 +330,19 @@ class JemTableEvents extends JTable
 		}
 
 		if (!$backend) {
-			/*	check if the user has the required rank for autopublish	*/
-			$maintainer = JEMUser::ismaintainer('publish');
-			$autopubev = JEMUser::validate_user($jemsettings->evpubrec, $jemsettings->autopubl);
-			if (!($autopubev || $maintainer || $user->authorise('core.edit','com_jem'))) {
-				if ($valguest) {
-					$this->published = $guest_fldstatus;
+			if ($valguest) {
+				$this->published = $guest_fldstatus;
+			} else {
+				$jinput	= JFactory::getApplication()->input;
+				$data = $jinput->post->get('jform', array(),'array');
+				$cats = $data['cats'];
+				if ($cats) {
+					if (!JEMUser::eventPublish($cats)) {
+						$this->published = 0;
+					}
 				} else {
 					$this->published = 0;
 				}
-
 			}
 		}
 
@@ -319,12 +395,121 @@ class JemTableEvents extends JTable
 		# check if the field recurrence_group is filled and if the recurrence_type has been set
 		# if the type has been set then it's part of recurrence and we should have a recurrence_group number
 		if (empty($this->recurrence_group) && $this->recurrence_freq) {
-			$this->recurrence_group = mt_rand(0,9999);
+			$this->recurrence_group = mt_rand(0,9999999);
 		}
 
 		## END RECURRENCE ##
 
-		return parent::store($updateNulls);
+		/* return parent::store($updateNulls); */
+
+		// No return to default JTable as it will result into a problem with the assets table
+		// so just in case we're continueing with the code below but with an unset for $assets->alias
+		
+		$k = $this->_tbl_keys;
+		
+		// Implement JObservableInterface: Pre-processing by observers
+		$this->_observers->update('onBeforeStore', array($updateNulls, $k));
+		
+		$currentAssetId = 0;
+		
+		if (!empty($this->asset_id))
+		{
+			$currentAssetId = $this->asset_id;
+		}
+		
+		// The asset id field is managed privately by this class.
+		if ($this->_trackAssets)
+		{
+			unset($this->asset_id);
+		}
+		
+		// If a primary key exists update the object, otherwise insert it.
+		if ($this->hasPrimaryKey())
+		{
+			$result = $this->_db->updateObject($this->_tbl, $this, $this->_tbl_keys, $updateNulls);
+		}
+		else
+		{
+			$result = $this->_db->insertObject($this->_tbl, $this, $this->_tbl_keys[0]);
+		}
+		
+		// If the table is not set to track assets return true.
+		if ($this->_trackAssets)
+		{
+			if ($this->_locked)
+			{
+				$this->_unlock();
+			}
+		
+			/*
+			 * Asset Tracking
+			 */
+			$parentId = $this->_getAssetParentId();
+			$name     = $this->_getAssetName();
+			$title    = $this->_getAssetTitle();
+		
+			$asset = self::getInstance('Asset', 'JTable', array('dbo' => $this->getDbo()));
+			$asset->loadByName($name);
+					
+			// Re-inject the asset id.
+			$this->asset_id = $asset->id;
+		
+			// Check for an error.
+			$error = $asset->getError();
+		
+			if ($error)
+			{
+				$this->setError($error);
+		
+				return false;
+			}
+			else
+			{
+				// Specify how a new or moved node asset is inserted into the tree.
+				if (empty($this->asset_id) || $asset->parent_id != $parentId)
+				{
+					$asset->setLocation($parentId, 'last-child');
+				}
+		
+				// Prepare the asset to be stored.
+				$asset->parent_id = $parentId;
+				$asset->name      = $name;
+				$asset->title     = $title;
+				unset ($asset->alias);
+		
+		
+				if ($this->_rules instanceof JAccessRules)
+				{
+					$asset->rules = (string) $this->_rules;
+				}
+		
+				if (!$asset->check() || !$asset->store($updateNulls))
+				{
+					$this->setError($asset->getError());
+					return false;
+				}
+				else
+				{
+					// Create an asset_id or heal one that is corrupted.
+					if (empty($this->asset_id) || ($currentAssetId != $this->asset_id && !empty($this->asset_id)))
+					{
+						// Update the asset_id field in this table.
+						$this->asset_id = (int) $asset->id;
+		
+						$query = $this->_db->getQuery(true)
+						->update($this->_db->quoteName($this->_tbl))
+						->set('asset_id = ' . (int) $this->asset_id);
+						$this->appendPrimaryKeys($query);
+						$this->_db->setQuery($query)->execute();
+					}
+				}
+			}
+		}
+		
+		// Implement JObservableInterface: Post-processing by observers
+		$this->_observers->update('onAfterStore', array(&$result));
+		
+		return $result;
 	}
 
 	/**
@@ -382,4 +567,26 @@ class JemTableEvents extends JTable
 
 		return $this->_db->getAffectedRows();
 	}
+	
+	/**
+	 * Gets the default asset values for a component.
+	 *
+	 * @param   $string  $component  The component asset name to search for
+	 *
+	 * @return  JAccessRules  The JAccessRules object for the asset
+	 */
+	protected function getDefaultAssetValuesObsolete($component)
+	{
+		// Need to find the asset id by the name of the component.
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true)
+		->select($db->quoteName('id'))
+		->from($db->quoteName('#__assets'))
+		->where($db->quoteName('name') . ' = ' . $db->quote($component));
+		$db->setQuery($query);
+		$assetId = (int) $db->loadResult();
+	
+		return JAccess::getAssetRules($assetId);
+	}
+	
 }

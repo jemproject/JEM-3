@@ -50,9 +50,20 @@ class JEMViewEvents extends JViewLegacy
 		$this->user			= $user;
 		$this->jemsettings  = $jemsettings;
 		$this->settings		= $settings;
+		
+		
+		$filters = array();
+		$filters[] = JHtml::_('select.option', '0', JText::_('COM_JEM_SELECT_FILTERTYPE'));
+		if ($jemsettings->showcat == 1) {
+			$filters[] = JHtml::_('select.option', '4', JText::_('COM_JEM_CATEGORY'));
+		}
+		$lists['filter'] = JHtml::_('select.genericlist', $filters, 'filter[filtertype]', array('size'=>'1','class'=>'inputbox input-medium'), 'value', 'text', $this->state->get('filter.filtertype') );
+		$this->lists			= $lists;
+		
 
 		// add toolbar
 		$this->addToolbar();
+		$this->sidebar = JHtmlSidebar::render();
 
 		parent::display($tpl);
 	}
@@ -65,7 +76,7 @@ class JEMViewEvents extends JViewLegacy
 		JToolBarHelper::title(JText::_('COM_JEM_EVENTS'), 'events');
 
 		/* retrieving the allowed actions for the user */
-		$canDo = JEMHelperBackend::getActions(0);
+		$canDo = JEMHelperBackend::getActions('com_jem', 'event', 0);
 
 		/* create */
 		if (($canDo->get('core.create'))) {

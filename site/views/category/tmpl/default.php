@@ -7,6 +7,8 @@
  */
 defined('_JEXEC') or die;
 
+$params = $this->params;
+
 JHtml::_('bootstrap.tooltip');
 JHtml::_('behavior.modal','a.flyermodal');
 ?>
@@ -15,16 +17,16 @@ JHtml::_('behavior.modal','a.flyermodal');
 	<div class="btn-group pull-right hidden-phone">
 		<?php
 			if ($this->print) {
-				echo JemOutput::printbutton($this->print_link, $this->params);
+				echo JemOutput::printbutton($this->print_link, $params);
 			} else {
 		?>
 	<div class="button_flyer icons">
 	<?php
-		echo JemOutput::submitbutton($this->dellink, $this->params);
-		echo JemOutput::addvenuebutton($this->addvenuelink, $this->params, $this->jemsettings);
-		echo JemOutput::archivebutton($this->params, $this->task, $this->category->slug);
-		echo JemOutput::mailbutton($this->category->slug, 'category', $this->params);
-		echo JemOutput::printbutton($this->print_link, $this->params);
+		echo JemOutput::submitbutton($this->submitEventIcon, $params);
+		echo JemOutput::addvenuebutton($this->submitVenueIcon, $params);
+		echo JemOutput::archivebutton($params, $this->task, $this->category->id);
+		echo JemOutput::mailbutton($this->category->slug, 'category', $params);
+		echo JemOutput::printbutton($this->print_link, $params);
 	?>
 	</div>
 	<?php } ?>
@@ -34,10 +36,10 @@ JHtml::_('behavior.modal','a.flyermodal');
 <!--info-->
 <div class="info_container">
 
-	<?php if ($this->params->get('show_page_heading', 1)) : ?>
+	<?php if ($params->get('show_page_heading', 1)) : ?>
 	<div class="page-header">
 		<h1>
-		<?php echo $this->escape($this->params->get('page_heading')); ?>
+		<?php echo $this->escape($params->get('page_heading')); ?>
 		</h1>
 	</div>
 	<?php endif; ?>
@@ -65,8 +67,12 @@ JHtml::_('behavior.modal','a.flyermodal');
 		<?php endif; ?>
 
 
+		<?php if ($this->vsettings->get('show_category_description',1)) { ?>
+		<?php if ($this->description) { ?>
 		<h2 class="description"><?php echo JText::_('COM_JEM_EVENT_DESCRIPTION'); ?></h2>
 		<p><?php echo $this->description; ?></p>
+		<?php } ?>
+		<?php } ?>
 
 	<!--subcategories-->
 	<?php

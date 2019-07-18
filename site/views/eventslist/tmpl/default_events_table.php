@@ -9,12 +9,14 @@ defined('_JEXEC') or die;
 
 $print = $this->print;
 $admin = $this->admin;
+
+$params = $this->params;
 ?>
 
 <form action="<?php echo $this->action; ?>" method="post" name="adminForm" id="adminForm">
-<?php if ($this->settings->get('global_show_filter',1) || $this->settings->get('global_display',1)) : ?>
+<?php if ($params->get('global_show_filter',1) || $params->get('global_display',1)) : ?>
 <div id="jem_filter" class="clearfix">
-		<?php if ($this->settings->get('global_show_filter',1)) : ?>
+		<?php if ($params->get('global_show_filter',1)) : ?>
 			<div class="pull-left">
 				<?php
 					echo $this->lists['filter'].'&nbsp;';
@@ -26,7 +28,7 @@ $admin = $this->admin;
 				</div>
 			</div>
 		<?php endif; ?>
-		<?php if ($this->settings->get('global_display',1)) : ?>
+		<?php if ($params->get('global_display',1)) : ?>
 			<div class="pull-right">
 				<?php
 					echo $this->pagination->getLimitBox();
@@ -98,7 +100,7 @@ $admin = $this->admin;
 			<?php foreach ($this->rows as $row) : ?>
 
 			<?php
-			$params		= $row->params;
+			$eventParam = $row->params;
 			$images 	= json_decode($row->datimage);
 			$canEdit	= $row->params->get('access-edit');
 			$user		= JFactory::getUser();
@@ -106,9 +108,9 @@ $admin = $this->admin;
 			?>
 
 				<?php if (!empty($row->featured)) :   ?>
-				<tr class="featured featured<?php echo $row->id.$this->params->get('pageclass_sfx'); ?>" itemscope="itemscope" itemtype="http://schema.org/Event" >
+				<tr class="featured featured<?php echo $row->id.$params->get('pageclass_sfx'); ?>" itemscope="itemscope" itemtype="http://schema.org/Event" >
 				<?php else : ?>
-				<tr class="sectiontableentry<?php echo ($row->odd +1) . $this->params->get('pageclass_sfx'); ?>" itemscope="itemscope" itemtype="http://schema.org/Event" >
+				<tr class="sectiontableentry<?php echo ($row->odd +1) . $params->get('pageclass_sfx'); ?>" itemscope="itemscope" itemtype="http://schema.org/Event" >
 				<?php endif; ?>
 
 				<?php if ($this->jemsettings->showeventimage == 1) : ?>
@@ -176,7 +178,7 @@ $admin = $this->admin;
 
 
 				<?php if ($this->jemsettings->showcat == 1) : ?>
-					<td class="jem_category">
+					<td class="jem_category">		
 						<?php echo implode(", ", JemOutput::getCategoryList($row->categories, $this->jemsettings->catlinklist)); ?>
 					</td>
 				<?php endif; ?>

@@ -10,13 +10,30 @@ defined('_JEXEC') or die;
 <div class="editform_content">
 <!-- CUSTOM FIELDS -->
 	<fieldset class="form-horizontal">
-		<legend><span class="legendcolor"><?php echo JText::_('COM_JEM_EVENT_CUSTOMFIELDS_LEGEND') ?></span></legend>
-			<?php foreach($this->form->getFieldset('custom') as $field): ?>
-			<div class="control-group">
-				<div class="control-label"><?php echo $field->label; ?></div>
-				<div class="controls"><?php echo $field->input; ?></div>
-			</div>
-			<?php endforeach; ?>
+			<?php 
+			$customFields = $this->vsettings->get('customfields');
+			if (in_array('',$customFields)) {
+				?>
+			<legend><span class="legendcolor"><?php echo JText::_('COM_JEM_EVENT_CUSTOMFIELDS_LEGEND') ?></span></legend>
+			<?php
+				foreach($this->form->getFieldset('custom') as $field): ?>
+					<div class="control-group">
+						<div class="control-label"><?php echo $field->label; ?></div>
+						<div class="controls"><?php echo $field->input; ?></div>
+					</div>
+				<?php 
+				endforeach; 
+			} else {
+				if (in_array(0, $customFields)) {
+				} else {
+				?>
+				<legend><span class="legendcolor"><?php echo JText::_('COM_JEM_EVENT_CUSTOMFIELDS_LEGEND') ?></span></legend>
+				<?php
+					foreach ($customFields AS $customField) {
+						echo $this->form->renderField('custom'.$customField);
+					}
+				} }
+				?>
 	</fieldset>
 
 	<!-- REGISTRATION -->
@@ -41,6 +58,16 @@ defined('_JEXEC') or die;
 			<?php endif; ?>
 
 			<?php echo $this->form->renderField('waitinglist');?>
+			
+		<!-- registering field settings -->
+		<fieldset class="form-vertical">
+		<?php foreach($this->form->getGroup('registering') as $field): ?>
+		<div class="control-group">	
+			<div class="control-label"><?php echo $field->label; ?></div>
+			<div class="controls"><?php echo $field->input; ?></div>
+		</div>
+		<?php endforeach; ?>
+		</fieldset>
 	</fieldset>
 
 	<!-- IMAGE -->

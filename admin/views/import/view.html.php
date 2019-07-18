@@ -15,9 +15,6 @@ class JEMViewImport extends JViewLegacy
 
     public function display($tpl = null)
 	{
-		//Load pane behavior
-		//jimport('joomla.html.pane');
-
 		// Load css
 		JHtml::_('stylesheet', 'com_jem/backend.css', array(), true);
 
@@ -81,10 +78,8 @@ class JEMViewImport extends JViewLegacy
 		// add toolbar
 		$this->addToolbar();
 
-		//$this->sidebar = JHtmlSidebar::render();
 		JHtml::_('jquery.framework');
 
-		//JHtml::_('script', 'com_jem/bootstrap-filestyle.js', false, true);
 		parent::display($tpl);
 	}
 

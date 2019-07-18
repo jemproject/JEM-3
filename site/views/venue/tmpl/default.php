@@ -8,26 +8,24 @@
 defined('_JEXEC') or die;
 
 $mapType = $this->mapType;
+$params = $this->params;
 ?>
 
 <div id="jem" class="jem_venue<?php echo $this->pageclass_sfx;?>" itemscope="itemscope" itemtype="http://schema.org/Place">
 <div class="topbox">
-	<div class="btn-group pull-left">
-		<?php echo JEMOutput::statuslabel($this->venue->published); ?>
-	</div>
 	<div class="btn-group pull-right hidden-phone">
 	<?php
 	if ($this->print) {
-		echo JemOutput::printbutton($this->print_link, $this->params);
+		echo JemOutput::printbutton($this->print_link, $params);
 	} else {
 	?>
 	<div class="button_flyer icons">
 	<?php
-		echo JemOutput::printbutton($this->print_link, $this->params);
-		echo JemOutput::mailbutton($this->venue->slug, 'venue', $this->params);
-		echo JemOutput::submitbutton($this->addeventlink, $this->params);
-		echo JemOutput::addvenuebutton($this->addvenuelink, $this->params, $this->jemsettings);
-		echo JemOutput::archivebutton($this->params, $this->task, $this->venue->slug);
+		echo JemOutput::submitbutton($this->submitEventIcon, $params);
+		echo JemOutput::addvenuebutton($this->submitVenueIcon, $params);
+		echo JemOutput::archivebutton($params, $this->task, $this->venue->slug);
+		echo JemOutput::mailbutton($this->venue->slug, 'venue', $params);
+		echo JemOutput::printbutton($this->print_link, $params);
 	?>
 	</div>
 	<?php } ?>
@@ -37,10 +35,10 @@ $mapType = $this->mapType;
 <!-- info -->
 <div class="info_container">
 
-	<?php if ($this->params->get('show_page_heading', 1)) : ?>
+	<?php if ($params->get('show_page_heading', 1)) : ?>
 	<div class="page-header">
 		<h1>
-			<span itemprop="name"><?php echo $this->escape($this->params->get('page_heading')); ?></span>
+			<span itemprop="name"><?php echo $this->escape($params->get('page_heading')); ?></span>
 		</h1>
 	</div>
 	<?php endif; ?>
@@ -50,7 +48,7 @@ $mapType = $this->mapType;
 
 	<h2 class="jem">
 			<?php echo JText::_('COM_JEM_DETAILS'); ?>
-			<?php echo JemOutput::editbutton($this->venue, $this->params, NULL, $this->allowedtoeditvenue, 'venue'); ?>
+			<?php echo JemOutput::editbutton($this->venue, $params, NULL, $this->editVenueIcon, 'venue'); ?>
 	</h2>
 
 	<?php if ($this->limage) { ?>
@@ -90,20 +88,20 @@ $mapType = $this->mapType;
 			</dd>
 			<?php endif; ?>
 
-			<?php if ($this->venue->state) : ?>
+			<?php if ($this->vsettings->get('show_state') && $this->venue->state) : ?>
 			<dt class="venue_state"><?php echo JText::_('COM_JEM_STATE').':'; ?></dt>
 			<dd class="venue_state" itemprop="addressRegion">
 				<?php echo $this->escape($this->venue->state); ?>
 			</dd>
-			<?php endif; ?>
+			<?php endif;  ?>
 
-			<?php if ($this->venue->country) : ?>
+			<?php if ($this->vsettings->get('show_country') && $this->venue->country) : ?>
 			<dt class="venue_country"><?php echo JText::_('COM_JEM_COUNTRY').':'; ?></dt>
 			<dd class="venue_country">
 				<?php echo $this->venue->countryimg ? $this->venue->countryimg : $this->venue->country; ?>
 				<meta itemprop="addressCountry" content="<?php echo $this->venue->country; ?>" />
 			</dd>
-			<?php endif; ?>
+			<?php endif;  ?>
 
 		<div id="venue_contactdetails">
 			<?php if ($this->venue->phone) : ?>
@@ -190,6 +188,10 @@ $mapType = $this->mapType;
 
 	<!--table-->
 	<form action="<?php echo $this->action; ?>" method="post" id="adminForm">
+	
+	<h2 class="jem">
+		<?php echo JText::_('COM_JEM_EVENTS'); ?>
+	</h2>
 		<?php echo $this->loadTemplate('table'); ?>
 
 		<p>

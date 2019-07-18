@@ -17,26 +17,34 @@ $attribs 	= json_decode($this->item->attribs);
 
 JHtml::_('behavior.modal', 'a.flyermodal');
 $mapType = $this->mapType;
+
 ?>
 <?php if ($params->get('access-view')){?>
 <div id="jem" class="event_id<?php echo $this->item->did; ?> jem_event<?php echo $this->pageclass_sfx;?>" itemscope itemtype="http://schema.org/Event">
+
+<?php if ($this->print) { ?>
+<div id="printer_icon">
+	<div class="printer_icon center">
+	<?php
+		echo JemOutput::printbutton($this->print_link, $this->params,'event');
+	?>
+	</div>
+</div>
+<?php } ?>
+
 <div class="topbox">
+<?php if (!$this->print) { ?>
 	<div class="btn-group pull-right hidden-phone">
-		<?php
-			if ($this->print) {
-				echo JemOutput::printbutton($this->print_link, $this->params);
-			} else {
-		?>
 		<div class="button_flyer icons">
 		<?php
-			echo JemOutput::submitbutton($this->addeventlink, $this->params);
-			echo JemOutput::addvenuebutton($this->addvenuelink, $this->params, $this->jemsettings);
+			echo JemOutput::submitbutton($this->submitEventIcon, $this->params);
+			echo JemOutput::addvenuebutton($this->submitVenueIcon, $this->params);
 			if ($params->get('event_show_email_icon',1)) {echo JemOutput::mailbutton($this->item->slug, 'event', $this->params);}
 			if ($params->get('event_show_print_icon',1)) { echo JemOutput::printbutton($this->print_link, $this->params);}
 		?>
 		</div>
-		<?php } ?>
 	</div>
+<?php } ?>
 </div>
 
 <div class="info_container">
@@ -48,11 +56,13 @@ $mapType = $this->mapType;
 	</div>
 	<?php endif; ?>
 
+	<?php echo $this->item->event->beforeDisplayContent; ?>
+	
 <!-- Event -->
 	<h2 class="jem">
 	<?php
 		echo JText::_('COM_JEM_EVENT');
-		echo JemOutput::editbutton($this->item, $params, $attribs, $this->allowedtoeditevent, 'editevent');
+		echo JemOutput::editbutton($this->item, $params, $attribs, $this->editEventIcon, 'editevent');
 		?>
 	</h2>
 
@@ -144,6 +154,7 @@ $mapType = $this->mapType;
 		<?php } ?>
 
 
+		<?php if ($params->get('event_show_where',1)) { ?>
 		<?php if ($this->item->locid != 0) : ?>
 			<dt class="where"><?php echo JText::_('COM_JEM_WHERE').':'; ?></dt>
 		<dd class="where">
@@ -165,20 +176,31 @@ $mapType = $this->mapType;
 				}
 				 ?>
 			</dd>
-		<?php endif;
-			$n = count($this->categories);
-		?>
-
+		<?php endif; 	?>
+		<?php } ?>
+		
+		
+	<?php 
+	
+	if ($params->get('event_show_category')) {
+	
+	$n = count($this->item->categories);
+	?>
 		<dt class="category"><?php echo $n < 2 ? JText::_('COM_JEM_CATEGORY') : JText::_('COM_JEM_CATEGORIES'); ?>:</dt>
 		<dd class="category">
 			<?php
 			$i = 0;
-			foreach ($this->categories as $category) :
+			foreach ($this->item->categories as $category) :
 			?>
+			<?php if ($params->get('event_link_category',1)) { ?>
 				<a
 				href="<?php echo JRoute::_(JemHelperRoute::getCategoryRoute($category->catslug)); ?>">
 					<?php echo $this->escape($category->catname); ?>
 				</a>
+			<?php } else { ?>
+					<?php echo $this->escape($category->catname); ?>
+			<?php } ?>	
+				
 			<?php
 				$i++;
 				if ($i != $n) :
@@ -188,6 +210,8 @@ $mapType = $this->mapType;
 			?>
 		</dd>
 
+		<?php } ?>
+		
 		<?php
 		for($cr = 1; $cr <= 10; $cr++) {
 			$currentRow = $this->item->{'custom'.$cr};
@@ -313,7 +337,7 @@ $mapType = $this->mapType;
 			<?php
 			echo JText::_('COM_JEM_VENUE') ;
 			$itemid = $this->item ? $this->item->id : 0 ;
-			echo JemOutput::editbutton($this->item, $params, $attribs, $this->allowedtoeditvenue, 'editvenue');
+			echo JemOutput::editbutton($this->item, $params, $attribs, $this->editVenueIcon, 'editvenue');
 			?>
 		</h2>
 
@@ -336,11 +360,6 @@ $mapType = $this->mapType;
 			<dt class="venue"><?php echo JText::_('COM_JEM_LOCATION').':'; ?></dt>
 			<dd class="venue">
 			<?php echo "<a href='".JRoute::_(JemHelperRoute::getVenueRoute($this->item->venueslug))."'>".$this->escape($this->item->venue)."</a>"; ?>
-
-			<?php if (!empty($this->item->url)) : ?>
-				&nbsp; - &nbsp;
-				<a target="_blank" href="<?php echo $this->item->url; ?>"> <?php echo JText::_('COM_JEM_WEBSITE'); ?></a>
-			<?php endif; ?>
 			</dd>
 		<?php if ($params->get('event_show_detailsadress','1')) : ?>
 				<?php if ($this->item->street) : ?>
@@ -364,14 +383,14 @@ $mapType = $this->mapType;
 				</dd>
 				<?php endif; ?>
 
-				<?php if ($this->item->state) : ?>
+				<?php if ($params->get('show_state') && $this->item->state) : ?>
 				<dt class="venue_state"><?php echo JText::_('COM_JEM_STATE').':'; ?></dt>
-			<dd class="venue_state" itemprop="addressRegion">
+				<dd class="venue_state" itemprop="addressRegion">
 					<?php echo $this->escape($this->item->state); ?>
 				</dd>
 				<?php endif; ?>
 
-				<?php if ($this->item->country) : ?>
+				<?php if ($params->get('show_country') && $this->item->country) : ?>
 				<dt class="venue_country"><?php echo JText::_('COM_JEM_COUNTRY').':'; ?></dt>
 			<dd class="venue_country">
 					<?php echo $this->item->countryimg ? $this->item->countryimg : $this->item->country; ?>
@@ -381,22 +400,28 @@ $mapType = $this->mapType;
 				<?php endif; ?>
 
 				<div id="venue_contactdetails">
-			<?php if ($this->item->phone) : ?>
+			<?php if ($params->get('event_show_phone') && $this->item->phone) : ?>
 			<dt class="venue_phone"><?php echo JText::_('COM_JEM_PHONE').':'; ?></dt>
 			<dd class="venue_phone">
 				<?php echo $this->escape($this->item->phone); ?>
 			</dd>
 			<?php endif; ?>
-			<?php if ($this->item->fax) : ?>
+			<?php if ($params->get('event_show_fax') && $this->item->fax) : ?>
 			<dt class="venue_fax"><?php echo JText::_('COM_JEM_FAX').':'; ?></dt>
 			<dd class="venue_fax">
 				<?php echo $this->escape($this->item->fax); ?>
 			</dd>
-			<?php endif; ?>
-			<?php if ($this->item->email) : ?>
+			<?php endif; ?>	
+			<?php if ($params->get('event_show_email') && $this->item->email) : ?>
 			<dt class="venue_email"><?php echo JText::_('COM_JEM_EMAIL').':'; ?></dt>
 			<dd class="venue_email">
 				<?php echo $this->escape($this->item->email); ?>
+			</dd>
+			<?php endif; ?>
+			<?php if ($params->get('event_show_website') && $this->item->url) : ?>
+			<dt class="venue_website"><?php echo JText::_('COM_JEM_WEBSITE').':'; ?></dt>
+			<dd class="venue_website">
+				<a target="_blank" href="<?php echo $this->item->url; ?>"> <?php echo $this->escape($this->item->url); ?></a>
 			</dd>
 			<?php endif; ?>
 		</div>
@@ -418,6 +443,7 @@ $mapType = $this->mapType;
 				<?php if ($params->get('event_show_mapserv')== 1) : ?>
 					<?php echo JemOutput::mapicon($this->item,'event',$params); ?>
 				<?php endif; ?>
+				
 			<?php endif; ?>
 		</dl>
 
@@ -489,4 +515,7 @@ $mapType = $this->mapType;
 		<?php echo JemOutput::footer(); ?>
 	</div>
 </div>
-<?php } ?>
+<?php
+	echo $this->item->event->afterDisplayContent;
+ } 
+ 

@@ -57,6 +57,7 @@ class JemViewCategories extends JViewLegacy
 		$this->f_levels = $options;
 
 		$this->addToolbar();
+		$this->sidebar = JHtmlSidebar::render();
 		parent::display($tpl);
 	}
 
@@ -71,7 +72,7 @@ class JemViewCategories extends JViewLegacy
 		$user		= JFactory::getUser();
 
 		// Get the results for each action.
-		$canDo = JEMHelperBackend::getActions(0);
+		$canDo = JEMHelperBackend::getActions('com_jem', 'category', 0);
 
 		JToolBarHelper::title(JText::_('COM_JEM_CATEGORIES'), 'elcategories');
 

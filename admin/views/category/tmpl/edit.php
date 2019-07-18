@@ -26,13 +26,15 @@ $slidesOptions = array(
 			echo $this->form->getField('description')->save();
 			?>
 			Joomla.submitform(task, document.getElementById('item-form'));
-		} else {
-			alert('<?php echo $this->escape(JText::_('JGLOBAL_VALIDATION_FORM_FAILED'));?>');
-		}
+		} 
 	}
 </script>
 		
 <form action="<?php echo JRoute::_('index.php?option=com_jem&layout=edit&id='.(int) $this->item->id); ?>" method="post" name="adminForm" id="item-form" class="form-validate">
+<div id="j-sidebar-container" class="span2">
+		<?php echo $this->sidebar; ?>
+	</div>
+	<div id="j-main-container" class="span10">
 <div class="form-horizontal">	
 	<div class="span12">
 	
@@ -82,6 +84,11 @@ $slidesOptions = array(
 			</div>
 		</fieldset>
 		<?php echo JHtml::_('bootstrap.endTab'); ?>
+		<?php if ($this->canDo->get('core.admin')) : ?>
+			<?php echo JHtml::_('bootstrap.addTab', 'category', 'rules', JText::_('COM_JEM_FIELDSET_RULES', true)); ?>
+			<?php echo $this->form->getInput('rules'); ?>
+			<?php echo JHtml::_('bootstrap.endTab'); ?>
+		<?php endif; ?>
 		<?php echo JHtml::_('bootstrap.endTabSet');?>
 
 		</div><div class="span4">	
@@ -160,5 +167,5 @@ $slidesOptions = array(
 	
 	</div>
 			</div>
-	</div>	
+	</div>	</div>
 </form>

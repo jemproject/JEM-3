@@ -13,6 +13,11 @@ $slidesOptions = array(
 
 ?>
 <form action="<?php echo JRoute::_('index.php?option=com_jem');?>" id="application-form" method="post" name="adminForm" class="form-validate">
+<div id="j-sidebar-container" class="span2">
+		<?php echo $this->sidebar; ?>
+	</div>
+	<div id="j-main-container" class="span10">	
+
 <div class="row-fluid">
 	<div class="span9">	
 					<div class="cpanel">
@@ -152,5 +157,5 @@ $slidesOptions = array(
 			</table>
 			<?php echo JHtml::_('bootstrap.endSlide'); ?>
 			<?php echo JHtml::_('bootstrap.endAccordion'); ?>
-</div></div>
+</div></div></div>
 </form>

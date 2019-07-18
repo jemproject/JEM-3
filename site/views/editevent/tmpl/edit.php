@@ -67,9 +67,7 @@ $settings	= json_decode($this->item->attribs);
 		if (task == 'editevent.cancel' || document.formvalidator.isValid(document.id('adminForm'))) {
 			<?php echo $this->form->getField('articletext')->save(); ?>
 			Joomla.submitform(task);
-		} else {
-			alert('<?php echo $this->escape(JText::_('JGLOBAL_VALIDATION_FORM_FAILED'));?>');
-		}
+		} 
 	}
 </script>
 

@@ -38,13 +38,22 @@ class JemModelCalendar extends JemModelEventslist
 	{
 		# parent::populateState($ordering, $direction);
 		$app 			= JFactory::getApplication();
+		$settings		= JemHelper::globalattribs();
 		$jemsettings	= JemHelper::config();
 		$jinput			= JFactory::getApplication()->input;
 		$itemid 		= $jinput->getInt('id', 0) . ':' . $jinput->getInt('Itemid', 0);
-		$params 		= $app->getParams();
 		$task           = $jinput->getCmd('task');
 
 		# params
+		$global = new JRegistry;
+		$global->loadString($settings);
+		
+		$params = clone $global;
+		$params->merge($global);
+		if ($menu = $app->getMenu()->getActive())
+		{
+			$params->merge($menu->params);
+		}
 		$this->setState('params', $params);
 
 		# publish state
@@ -82,14 +91,26 @@ class JemModelCalendar extends JemModelEventslist
 		$venidsfilter = $params->get('venueidsfilter');
 		$eventidsfilter = $params->get('eventidsfilter');
 
+		$item	= $jinput->getInt('Itemid');
+		
 		if ($catids) {
+			$app->setUserState('com_jem.calendar.catid'.$item,$catids);
+			$app->setUserState('com_jem.calendar.catid_switch'.$item,true);
 			$this->setState('filter.category_id',$catids);
 			$this->setState('filter.category_id.include',$catidsfilter);
+		} else {
+			$app->setUserState('com_jem.calendar.catid'.$item,$catids);
+			$app->setUserState('com_jem.calendar.catid_switch'.$item,true);
 		}
 
 		if ($venids) {
+			$app->setUserState('com_jem.calendar.locid'.$item,$venids);
+			$app->setUserState('com_jem.calendar.locid_switch'.$item,true);
 			$this->setState('filter.venue_id',$venids);
 			$this->setState('filter.venue_id.include',$venidsfilter);
+		} else {
+			$app->setUserState('com_jem.calendar.locid'.$item,$venids);
+			$app->setUserState('com_jem.calendar.locid_switch'.$item,true);
 		}
 
 		if ($eventids) {
